@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Orbit Shuttle</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_shuttle"/>
+	<p>These unarmed and often unmanned craft are built under license in
+	every planetary system. Based on a prototype developed by
+	Saud-Kruger AstroDesign, they are used for cargo ferrying between
+	planet and space station, but can be modified to hospital ships,
+	or orbiting prisons. Favourite targets for small-time criminals,
+	because of their instantaneous release of cargo canisters, they are
+	often followed by single fighter patrol ships.</p>
+	<table>[o]Dimensions:[/o],[o]35x35x62m[/o];
+        Cargo Capacity:,60 TC;
+        Armaments:,None;
+	Maximum Velocity:,0.08 LM;
+	Inservice Date:,2856 Saud-Kruger Astro Design;
+	Crew Number:,6;
+	Hull Stress Factor:,TKo 28;
+	Manouevrability:,CF 4;
+	Drive Motors:,V &amp; K 20.20 StarMat drive;
+	Hyperspace Capability:,No;
+        </table>
+    </Text>
+    <Image name="shuttle"/>
+  </Content>
+  <Next>gui_python</Next>
+  <Previous>gui_mussurana</Previous>
+</Page>
+

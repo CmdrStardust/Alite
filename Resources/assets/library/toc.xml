@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toc>
+  <tocEntry file="intro">
+    Introductory Data
+    <tocEntry file="int_interior">Interior of a Cobra Mk III</tocEntry>
+    <tocEntry file="int_status">The Status Page</tocEntry>
+    <tocEntry file="int_rating">Your Rating as a Combateer</tocEntry>
+  </tocEntry>
+
+  <tocEntry file="navigation">
+    Navigation and Flying
+    <tocEntry file="nav_controls">Navigational Controls</tocEntry>
+    <tocEntry file="nav_coriolis">A Coriolis Space Station</tocEntry>
+    <tocEntry file="nav_leaving">Leaving the Space Station</tocEntry>
+    <tocEntry file="nav_basic_manoeuvres">Basic Manoeuvres</tocEntry>
+    <tocEntry file="nav_console">Console Readings</tocEntry>
+    <tocEntry file="nav_target">Making for Your Target World</tocEntry>
+    <tocEntry file="nav_intergal">Hyperdrive Across Galaxies</tocEntry>
+    <tocEntry file="nav_docking">Docking Procedure</tocEntry>
+  </tocEntry>
+
+  <tocEntry file="interplanet">
+    Interplanetary Travel
+    <tocEntry file="ip_manoeuvring">Manoeuvring</tocEntry>
+    <tocEntry file="ip_danger">Signs of Danger</tocEntry>
+    <tocEntry file="ip_enemies">
+      Likely Enemies
+      <tocEntry file="ip_e_bounty">Bounty hunters</tocEntry>
+      <tocEntry file="ip_e_pirates">Pirate vessels</tocEntry>
+      <tocEntry file="ip_e_police">Police</tocEntry>
+      <tocEntry file="ip_e_thargoids">Thargoid invasion ships and thargons</tocEntry>
+    </tocEntry>
+    <tocEntry file="ip_others">
+      Other Space Types
+      <tocEntry file="ip_o_hermits">Rock hermits</tocEntry>
+      <tocEntry file="ip_o_generation">Generation ships</tocEntry>
+      <tocEntry file="ip_o_dredgers">Space dredgers</tocEntry>
+    </tocEntry>
+    <tocEntry file="ip_console">Combat Console</tocEntry>
+    <tocEntry file="ip_weaponry">
+      Aggressive Weaponry
+      <tocEntry file="ip_w_lasers">Lasers</tocEntry>
+      <tocEntry file="ip_w_missiles">Missiles</tocEntry>
+      <tocEntry file="ip_w_energybombs">Energy bombs</tocEntry>
+    </tocEntry>
+    <tocEntry file="ip_defensive">
+      Defensive Measures
+      <tocEntry file="ip_d_safety">Safety zone</tocEntry>
+      <tocEntry file="ip_d_shields">Shields and energy banks</tocEntry>
+      <tocEntry file="ip_d_ecm">ECM</tocEntry>
+      <tocEntry file="ip_d_escape">Escape capsule</tocEntry>
+    </tocEntry>
+    <tocEntry file="ip_noncombat">
+      Non-Combative Equipment
+      <tocEntry file="ip_n_fuel">Fuel</tocEntry>
+      <tocEntry file="ip_n_fuelscoop">Fuel scoops</tocEntry>
+      <tocEntry file="ip_n_cargo">Cargo bay extension</tocEntry>
+      <tocEntry file="ip_n_docking">Docking computer</tocEntry>
+      <tocEntry file="ip_n_intergal">Intergalactic hyperdrive</tocEntry>
+      <tocEntry file="ip_n_asteroid">Asteroid mining lasers</tocEntry>
+      <tocEntry file="ip_n_retrorockets">Retro Rockets</tocEntry>
+    </tocEntry>
+  </tocEntry>
+
+  <tocEntry file="trading">
+    Intergalactic Trading
+    <tocEntry file="trade_how">How to Trade</tocEntry>
+    <tocEntry file="trade_advice">Advice to Traders</tocEntry>
+    <tocEntry file="trade_alt">
+      Alternatives to Trading
+      <tocEntry file="trade_a_bounty">Bounty Hunting</tocEntry>
+      <tocEntry file="trade_a_piracy">Piracy</tocEntry>
+      <tocEntry file="trade_a_asteroid">Asteroid Mining</tocEntry>
+      <tocEntry file="trade_a_cargo">Free Space Cargo</tocEntry>
+      <tocEntry file="trade_a_illegal">Illegal Trading</tocEntry>
+    </tocEntry>
+  </tocEntry>
+
+  <tocEntry file="politics">
+    Political Profile of the Universe
+    <tocEntry file="pol_t_corp">Corporate States</tocEntry>
+    <tocEntry file="pol_t_dict">Dictatorships</tocEntry>
+    <tocEntry file="pol_t_anar">Anarchy Planets</tocEntry>
+    <tocEntry file="pol_aliens">Alien Races</tocEntry>
+  </tocEntry>
+
+  <tocEntry file="shipguide">
+    Observer&apos;s Guide to Ships in Service
+    <tocEntry file="gui_adder">Adder</tocEntry>
+    <tocEntry file="gui_anaconda">Anaconda</tocEntry>
+    <tocEntry file="gui_asp">Asp Mk II</tocEntry>
+    <tocEntry file="gui_boa">Boa Class Cruiser</tocEntry>
+    <tocEntry file="gui_bushmaster">Bushmaster</tocEntry>
+    <tocEntry file="gui_cobrai">Cobra Mk I</tocEntry>
+    <tocEntry file="gui_cobraiii">Cobra Mk III</tocEntry>
+    <tocEntry file="gui_coral">Coral</tocEntry>
+    <tocEntry file="gui_cottonmouth">Cottonmouth</tocEntry>
+    <tocEntry file="gui_dugite">Dugite</tocEntry>
+    <tocEntry file="gui_ferdelance">Fer-de-Lance</tocEntry>
+    <tocEntry file="gui_gecko">Gecko</tocEntry>
+    <tocEntry file="gui_gopher">Gopher</tocEntry>
+    <tocEntry file="gui_harlequin">Harlequin</tocEntry>
+    <tocEntry file="gui_boomslang">Harken</tocEntry>
+    <tocEntry file="gui_hognose">Hognose</tocEntry>
+    <tocEntry file="gui_indigo">Indigo</tocEntry>
+    <tocEntry file="gui_krait">Krait</tocEntry>
+    <tocEntry file="gui_lora">Lancehead</tocEntry>
+    <tocEntry file="gui_lyre">Lyre</tocEntry>
+    <tocEntry file="gui_mamba">Mamba</tocEntry>
+    <tocEntry file="gui_moray">Moray Star Boat</tocEntry>
+    <tocEntry file="gui_mussurana">Mussurana</tocEntry>
+    <tocEntry file="gui_shuttle">Orbit Shuttle</tocEntry>
+    <tocEntry file="gui_python">Python</tocEntry>
+    <tocEntry file="gui_rattlesnake">Rattlesnake</tocEntry>
+    <tocEntry file="gui_sidewinder">Sidewinder</tocEntry>
+    <tocEntry file="gui_thargoid">Thargoid</tocEntry>
+    <tocEntry file="gui_thargon">Thargon</tocEntry>
+    <tocEntry file="gui_transporter">Transporter</tocEntry>
+    <tocEntry file="gui_viper">Viper</tocEntry>
+    <tocEntry file="gui_wolf">Wolf Mk II</tocEntry>
+    <tocEntry file="gui_yellowbelly">Yellowbelly</tocEntry>
+  </tocEntry>
+</toc>

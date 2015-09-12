@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Combat Console</Header>
+  <Content>
+    <Text>
+        <InlineImage name="ipconsole"/>
+	<p>[pb]1[/bp] Defensive shields take power from two energy bank
+	sources, fore and aft.</p>
+	<p>[pb]2[/bp] Missile status depicts the number of missiles on
+	board and whether they are &apos;targetted&apos; (yellow) or
+	&apos;untargetted&apos; (green) or &apos;locked and ready to
+	fire&apos; (red).</p>
+	<p>[pb]3[/bp] Energy banks will rapidly drain if defensive shields
+	are taking excessive fire. Using lasers or an ECM System will also
+	drain their resources. When the fourth bank is tapped, an [b]ENERGY LOW[/b]
+	warning will flash onto the screen. Eventually, in normal circumstances,
+	the banks will be automatically replenished by surface radiation absorption.</p>
+	<p>[pb]4[/bp] Laser temperature will rise during continuous firing of the
+	ship&apos;s laser(s). As the central housing overheats, a laser will
+	temporarily cut out rather than destroy the system.</p>
+	<p>[pb]5[/bp] The 3-dimensional scanner operates in such a way that you
+	can pinpoint a ship above and below yours, as well as to the front, behind
+	or to the sides. The vertical bars show this clearly.</p>
+    </Text>
+  </Content>
+  <Next>ip_weaponry</Next>
+  <Previous>ip_o_dredgers</Previous>
+</Page>
+

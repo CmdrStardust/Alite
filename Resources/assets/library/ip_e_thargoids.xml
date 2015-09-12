@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Thargoid invasion ships and thargons</Header>
+  <Content>
+    <Text>
+      <p>The Thargoids are humankind&apos;s deadly enemy, and
+      throughout the 8 galaxies there are at least 50 war zones
+      between humanity and Thargoid. This highly technologically
+      advanced insectoid race is also at war with 17 other
+      space-going life-forms.</p>
+      <p>All Thargoid combateers are ruthless in combat, and
+      some may be comparable with élite-status human combat
+      pilots.</p>
+      <p>Though most of the Thargoid Space Fleet is currently
+      engaged by the Galactic Navy in InterGalactic Space, a
+      few of the smaller battle ships make occasional
+      destructor-raids into human space. These ships are
+      extremely fast for their size and invariably have
+      anti-missile (ECM) Systems.</p>
+      <p>Additionally, most Thargoid battle ships carry several
+      small, remote-controlled &apos;Thargons&apos; killer-craft
+      each equipped with a single, but highly advanced, pulse-laser.
+      The Galactic Navy are developing their own deep-space
+      RemCraft, and pay a large bounty for any thargon craft
+      that are brought to them.</p>
+      <p>(N.B. Bounty on Thargoid invasion craft destroyed is
+      very high. Thargoid battle-cruisers are believed to be able to
+      &apos;hover&apos; in Witch-Space (hyperspace) and destroy
+      through-coming craft).</p>
+    </Text>
+    <Image name="thargoid">
+      <Text>
+        The Galactic Banks will
+        pay a handsome bounty
+        for the destruction of a
+        Thargoid invasion ship.
+        Your most dangerous
+        enemy, a Thargoid may --
+        in addition to its own
+        fire-power -- activate
+        remote controlled killer-craft
+        (&apos;Thargons&apos;). Destroy
+        the 8-sided mother ship, however,
+        and the Thargons will cease to
+        pose a threat.
+      </Text>
+    </Image>
+  </Content>
+  <Next>ip_others</Next>
+  <Previous>ip_e_police</Previous>
+</Page>
+

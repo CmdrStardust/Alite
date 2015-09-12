@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Space Dredgers</Header>
+  <Content>
+    <Text>
+      <p>These immense factory ships are to be found wherever
+      there has been a war, or a Thargoid invasion, or a natural
+      catastrophe. More than forty miles long, the dredgers are
+      a life-form to themselves. The Dredgers are huge cities
+      in space, feeding off debris and ruination. Heavily armed,
+      and with fleets of reconditioned fighter ships, they are to
+      be avoided at all cost.</p>
+    </Text>
+  </Content>
+  <Next>ip_console</Next>
+  <Previous>ip_o_generations</Previous>
+</Page>
+

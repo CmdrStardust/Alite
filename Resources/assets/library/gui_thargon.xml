@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Thargon</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_thargon"/>
+	<p>Data missing</p>
+	<table>[o]Dimensions:[/o],[o]46x10x43m[/o];
+        Cargo Capacity:,unknown;
+        Armaments:,unknown;
+	Maximum Velocity:,unknown;
+	Inservice Date:,unknown;
+	Crew Number:,unknown;
+	Hull Stress Factor:,unknown;
+	Manouevrability:,unknown;
+	Drive Motors:,unknown;
+	Hyperspace Capability:,Yes;
+        </table>
+    </Text>
+    <Image name="thargon"/>
+  </Content>
+  <Next>gui_transporter</Next>
+  <Previous>gui_thargoid</Previous>
+</Page>
+

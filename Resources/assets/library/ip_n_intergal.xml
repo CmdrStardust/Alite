@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Intergalactic hyperdrive</Header>
+  <Content>
+    <Text>
+    	<InlineImage name="intergal"/>
+    	<p>The intergalactic hyperdrive is obtainable only from planets at
+    	Tech level 10 or higher, and can only be used once. The intergalatic
+    	hyperdrive is engaged by pressing the button shown above.</p>
+    	<p>[b]IGH specification:[/b] Although a number of manufacturers have
+    	supported a whole range of IGH motors, it is recommended you remain
+    	loyal to Xexor/Hikan who provide the standard hyperspace transit
+    	drives.</p>
+    </Text>
+  </Content>
+  <Next>ip_n_asteroid</Next>
+  <Previous>ip_n_docking</Previous>
+</Page>
+

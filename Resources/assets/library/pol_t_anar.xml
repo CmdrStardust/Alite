@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Anarchy Planets</Header>
+  <Content>
+    <Text>
+        <p>A trader can make his biggest profits here and reach his grave
+        the quickest. Worlds like Onisou and Xeesenri have vast wreck-yards
+        in far orbit, the dead places of ships that came to trade honestly,
+        and fell prey to trickery.</p>
+        <p>These are lawless places, and have usually become so because the
+        original settlers competed too hard when there was too little
+        resource material. Those worlds which survived holocaust did so
+        because of uneasy and bloody alliances between clan families.
+        Pirates and mercenaries were hired for protection and assassination
+        purposes. Anarchic worlds will trade readily in narcotics, slaves,
+        firearms and exotica, and the price will be good... if you get a
+        price at all. These worlds are almost always supplying invisible
+        Masters, usually élite trader/combateers who have turned to crime
+        as the most profitable way of life. Such form loose federations, and
+        trade on the black market extensively throughout the galaxies.</p>
+        <p>These worlds pay highly for goods they cannot produce themselves,
+        because they know that traders avoid them. Their own products need
+        specialised, illegal outlets: weaponry, narcotics, eavesdropping
+        devices... if it&apos;s covert, then anarchic worlds are producing
+        it. Trade in these items and you will get rich quick, or dead quick,
+        or at least become a &apos;Fugitive&apos;.</p>
+    </Text>
+    <Image name="maesin"/>
+  </Content>
+  <Next>pol_aliens</Next>
+  <Previous>pol_t_dict</Previous>
+</Page>
+

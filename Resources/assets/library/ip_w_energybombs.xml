@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Energy Bombs</Header>
+  <Content>
+    <Text>
+    	<InlineImage name="energy_bomb"/>
+    	<p>An energy bomb will be offered for sale at a planet of Tech Level
+    	7 or higher, and can be used only once. It is activated by the button
+    	shown above and will destroy all other ships, asteroids, and missiles
+    	in the vicinity.</p>
+    	<p>[b]Energy bomb specification:[/b] Medusa Pandora Self Homing Energy
+    	Bomb (available at Tech Level 7 worlds or higher) is a tactical
+    	weapon capable of a Megazon Destruct Force 13. Has heat radius of
+    	9000 km. Developed by Klaus-Kline laboratories for multi-role
+    	combat using &apos;launch-and-leave&apos; techniques.</p>
+    </Text>
+  </Content>
+  <Next>ip_defensive</Next>
+  <Previous>ip_w_missiles</Previous>
+</Page>
+

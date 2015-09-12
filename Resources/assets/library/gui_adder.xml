@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Adder</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_adder"/>
+	<p>Manufactured by Outworld Workshops, a rogue breakaway company
+	from Spalder and Prime Inc. which operates without a licence from an
+	unknown location, the Adder-class craft has dual atmospheric-spatial
+	capability and is often used by smugglers. Pregg&apos;s
+	&apos;wingfolding&apos; system permits landing on planetary
+	surfaces. Carries one missile.</p>
+	<table>[o]Dimensions:[/o],[o]70x18x105m[/o];
+        Cargo Capacity:,2TC (Tonne Canisters);
+        Armaments:,Ingram 1928 AZ Beam laser[c];
+        ,Geret Starseeker missile;
+	Maximum Velocity:,0.24 LM (LightMach);
+	Inservice Date:,2914 AD (Outworld Workshop);
+	Crew Number:,2;
+	Hull Stress Factor:,TKo 28;
+	Manouevrability:,CF 4 (Curve Factor);
+	Drive Motors:,AM 18 bi Thrust;
+	Hyperspace Capability:,Yes;
+        </table>
+    </Text>
+    <Image name="adder"/>
+  </Content>
+  <Next>gui_anaconda</Next>
+  <Previous>shipguide</Previous>
+</Page>
+

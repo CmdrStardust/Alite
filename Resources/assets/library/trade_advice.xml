@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Advice to Traders</Header>
+  <Content>
+    <Text>
+        <p>The Cobra trade ship can be fitted with four lasers, four
+        missiles and one energy bomb. This should be sufficient to make
+        trade possible within the System Space of even heavily piratised
+        worlds. But it is strongly recommended that pilots achieve a combat
+        of at least &apos;Deadly&apos; before any worlds designated
+        &apos;Anarchy&apos; or &apos;Feudal&apos; are approached, especially
+        if the cargo is high tech machinery or luxury goods.</p>
+        <p>To make money as a trader is no easy task. Unless you have
+        backing capital you would be well advised to start with foodstuffs,
+        textiles, minerals and luxuries.</p>
+        <p>Demand for goods varies widely and prices within planets
+        fluctuate, but GalCop regulations prohibit planets from advertising
+        their requirements or announcing their market prices beyond their
+        own System Space. Any trader, therefore, approaces all transactions
+        with a certain financial risk.</p>
+        <p>Trade depends upon demand, and selling prices depend upon the
+        [i]level[/i] of demand on the planet, and its available money. None
+        of these factors can be assessed before entering the system.</p>
+        <p>Agricultural planets invariably have excess produce at reasonable
+        purchase prices, and such food sells well at industrialised, middle-
+        to high-technology worlds. Raw materials, and ores, will sell well
+        to middle-tech worlds, which are usually able to refine them, and
+        the refined product can fetch excellent prices at worlds of very
+        high tech status.</p>
+        <p>The rules are complex, and anarchy and piracy has its effect on
+        causing the rules to change.</p>
+        <p>In trading with a planet, consider its economic profile:</p>
+        <p>[b]Agricultural worlds[/b] need specialist food and raw
+        materials, but mostly basic machinery and spare parts. If they are
+        rich, they need luxuries and high tech industrial machines. They
+        produce food in quantity, raw materials and specialised
+        &apos;organic&apos; items, like some textiles</p>
+        <p>[b]Industrial worlds[/b] need agricultural produce; raw materials
+        (for refining); resource exploitation machinery; (if rich) high tech
+        goods. They produce basic items of [i]need[/i] for civilised worlds:
+        beds, seals and gaskets, power storage units, basic weapons, mass
+        produced fertiliser, mass produced medicines etc.</p>
+        <p>Think about a planet&apos;s [i]needs[/i].</p>
+        <p>Think what might make the [i]society[/i] function.</p>
+        <p>Don&apos;t trade expensive trivia to a hungry world.</p>
+        <p>[b]IF THE PROFIT ISN&apos;T WORTH IT, TRADE IT SOMEWHERE ELSE.[/b]</p>
+    </Text>
+  </Content>
+  <Next>trade_alt</Next>
+  <Previous>trade_how</Previous>
+</Page>
+

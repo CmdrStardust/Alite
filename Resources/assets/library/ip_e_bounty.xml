@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Bounty Hunters</Header>
+  <Content>
+    <Text>
+      <p>Unless you have achieved <b>FUGITIVE</b> status, and
+      especially if you are highly ranked as a combateer as well
+      as being a criminal, bounty hunters will not bother a ship
+      as insignificant as a Cobra Mk. III. In fact, many bounty
+      hunters favour Cobra trade-ships as they make an excellent
+      disguise. But the real killers star-ride in the sleek, and
+      highly efficient, Fer-de-Lance Lightspeeder, in which they
+      live for months at a time. Bounty hunters can always be
+      found outside Orbit Space, especially around worlds
+      classified as &apos;dangerous&apos;. They are invariably of combat
+      rating <b>DEADLY</b> or <b>ELITE</b>. Bounty hunters
+      rarely identify themselves to passing ships, and if
+      pestered too closely will usually kill.</p>
+    </Text>
+    <Image name="krait">
+      <Text>
+	A Faulcon deLacy
+	designed vessel. The
+	Krait is favored by both
+	pirates and bounty
+	hunters alike.
+      </Text>
+    </Image>
+  </Content>
+  <Next>ip_e_pirates</Next>
+  <Previous>ip_enemies</Previous>
+</Page>
+

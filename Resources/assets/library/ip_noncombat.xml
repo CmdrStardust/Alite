@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Non-Combative Equipment</Header>
+  <Content>
+    <Text>
+    	<p>In order to explore the universe, your Cobra must constantly be
+    	repaired and refueled. In this section, some of the equipment used
+    	by renowned explorers will be listed. You are well advised to read
+    	this section carefully, so that you can make the most of your
+    	travel through the stars.</p>
+    </Text>
+  </Content>
+  <Next>ip_n_fuel</Next>
+  <Previous>ip_d_escape</Previous>
+</Page>
+

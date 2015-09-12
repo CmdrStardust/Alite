@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Sidewinder Scout Ship</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_sidewinder"/>
+	<p>Designed by Faulcon de Lacy and built in the Onrira Orbital
+	Shipyards by Spalder and Starblaze Inc to Galactic Navy
+	specifications for a multi-purpose support craft. Mainly used for
+	atmosphere and planetary surface scouting, but extensively too for
+	city-strafing, reconnaisance and infantry air support (and by
+	pirates who favour speed and elusiveness, its primary advantage).
+	Has some interspatial capability, not including hyperspace, and
+	must be carried through hyperspace by jump-capable vessels. Hull is
+	too small for the installation of fuel scoops, or more than one
+	missile pod.</p>
+	<table>[o]Dimensions:[/o],[o]128x29x68m[/o];
+        Cargo Capacity:,None;
+        Armaments:,Dual 22-18 lasers[c];
+        ,Seeker missiles;
+	Maximum Velocity:,0.37 LM;
+	Inservice Date:,2982 (Onrira Orbital/spalder &amp; Starblaze);
+	Crew Number:,1;
+	Hull Stress Factor:,Not available;
+	Manouevrability:,CF 9;
+	Drive Motors:,de Lacy Spin Ionic MV;
+	Hyperspace Capability:,No;
+        </table>
+    </Text>
+    <Image name="sidewinder"/>
+  </Content>
+  <Next>gui_thargoid</Next>
+  <Previous>gui_rattlesnake</Previous>
+</Page>
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Cobra Mk I</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_cobramki"/>
+	<p>Combat-trader craft favoured latterly by pirates, the Mark I
+	Cobra was the first trade ship designed and built for the one-man
+	trader. Its special features at the time of manufacture (by Paynou,
+	Prossett and Salem) was its Prossett Drive, which incorporated
+	afterburners with proton-tightened, interior shaft walls. These are
+	now a standard fitting for both internal and external integuments of
+	all PPS made craft.</p>
+	<table>[o]Dimensions:[/o],[o]146x31x114m[/o];
+        Cargo Capacity:,10TC;
+        Armaments:,Hassoni Variscan laser system[c];
+        ,early Lance &amp; Ferman missile system;
+	Maximum Velocity:,0.26 LM;
+	Inservice Date:,2855 AD (Paynou[c] Prossett and Salem);
+	Crew Number:,1;
+	Hull Stress Factor:,TJi 18;
+	Manouevrability:,CF 3;
+	Drive Motors:,Prossett Drive;
+	Hyperspace Capability:,Yes;
+        </table>
+    </Text>
+    <Image name="cobramki"/>
+  </Content>
+  <Next>gui_cobraiii</Next>
+  <Previous>gui_bushmaster</Previous>
+</Page>
+

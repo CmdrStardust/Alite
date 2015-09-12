@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Your Rating as a Combateer</Header>
+  <Content>
+    <Text>
+      <p>To become an élite combateer requires great skill and
+      great patience, because expert trading is essential before
+      the necessary more powerful armaments and equipment
+      available to the Cobra ship can be bought: beam
+      lasers, more missiles, energy bombs, a docking computer,
+      galactic hyperdrive, etc.</p>
+      <p>As you sail through space between the stars, and as you
+      trade, you will [i]live[/i] with your combat rating. You will
+      begin as [b]HARMLESS[/b]. If you survive your first skirmish
+      you may be reclassified as [b]MOSTLY HARMLESS[/b]. But on
+      the slow climb to a status level that reflects a growing
+      talent for combat you will have to engage many different
+      ships, in many different skirmishes, in the System Space
+      of many different worlds. You will be classified as [b]POOR[/b],
+      then [b]AVERAGE[/b], then [b]ABOVE AVERAGE[/b], then [b]COMPETENT[/b].
+      Then you will become [b]DANGEROUS[/b], then
+      [b]DEADLY[/b]. And at last, a few will become [b]ELITE[/b].</p>
+      <p>Your kills are photographed and transmitted by TS
+      ComDirect to the nearest GalCop Federal Law Centre.
+      Your rating as a combateer will increase in direct
+      proportion.</p>
+      <p>Fly your Cobra craft wisely and carefully. Remember:
+      other pilots may be attempting to increase their own
+      combat rating by attacking either innocent traders, or
+      police Vipers (the ships of the GalCop Police Force). If
+      you resort to such tactics (or if you adopt the fast-credit
+      routine and trade in illegal goods) then your combat rating
+      may rise, but your legal status: [b]CLEAN, OFFENDER,
+      FUGITIVE,[/b] will make you Public Enemy Number One
+      with the Federation Crime Monitoring Authority and you
+      will not be left alone.</p>
+    </Text>
+  </Content>
+  <Next>navigation</Next>
+  <Previous>int_status</Previous>
+</Page>
+

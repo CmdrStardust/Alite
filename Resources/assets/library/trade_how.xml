@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>How to trade</Header>
+  <Content>
+    <Text>
+        <p>The [p]Buy Screen[/p] activates a list of basic trade items at
+        current market prices.</p>
+        <p>Shown on this list are the quantities of each item available,
+        and the current market price per unit. Most CorCom Trade Systems
+        deal exclusively under blanket categories, including
+        [i]FOOD, MACHINERY, MINERALS,[/i] and [i]GEMSTONES.[/i]</p>
+        <p>The prices shown at the time of trading represent an offer to you
+        and will be guaranteed while you are in Trading Mode.</p>
+        <p>The purchasing of items is almost instantaneous: If you wish to
+        buy, numerically indicate the amount you wish to purchase; autoSCAM
+        modules will immediately load your purchase into the cargo bay. Your
+        screen will indicate your remaining credit facility.</p>
+	<p>The Cobra trade ship must dock with a Coriolis space station
+	before buying or selling cargo. It has no Free Space trade facility,
+	apart from routine jettisoning of cannisters.</p>
+	<p>Once docked, the selling process is automated, although there
+	is no requirement to sell. On the [p]Inventory Screen[/p] a list
+	of all your purchased items is given. You can choose if you wish
+	to sell your cargo at the current space station or at another
+	one.</p>
+    </Text>
+    <Image name="buy_lave">
+      <Text>
+        The buy screen shows a list of basic trade items at current market
+        prices.
+      </Text>
+    </Image>
+    <Image name="buy_numpad">
+      <Text>
+        Selecting an item twice puts you in purchase mode.
+      </Text>
+    </Image>
+    <Image name="inventory">
+      <Text>
+        The inventory screen shows a list of the items currently in the
+        hold of your Cobra; selecting an item twice, sells it.
+      </Text>
+    </Image>
+  </Content>
+  <Next>trade_advice</Next>
+  <Previous>trading</Previous>
+</Page>
+

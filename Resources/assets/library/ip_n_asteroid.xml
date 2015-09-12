@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Asteroid mining lasers</Header>
+  <Content>
+    <Text>
+    	<p>Asteroid mining involves the fitting of fuel scoops and special
+    	mining lasers to your ship. Ships which always carry them are known
+    	as &apos;Belters&apos;. They search for asteroids and, on finding
+    	one, use the laser to fragment it into pieces sufficiently small to
+    	be taken into the cargo bay.</p>
+    	<p>[b]Mining lasers specification:[/b] Kruger Model ARM64 Sp. Mining
+    	laser is highly recommended as both a trade and combat addition.
+    	Uses variable frequency laser rods fired in wide beam, 100
+    	channels/beam. Automatic debris-pattern lock ensures no fragments of
+    	large size of target asteroid impinging on ship space. Can destroy
+    	asteroids of up to 2KtHH durable Mass. Must be fitted with a fuel
+    	and matter scoop.</p>
+    </Text>
+  </Content>
+  <Next>ip_n_retrorockets</Next>
+  <Previous>ip_n_intergal</Previous>
+</Page>
+

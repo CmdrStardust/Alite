@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Piracy</Header>
+  <Content>
+    <Text>
+        <p>Piracy is widespread throughout the 8 galaxies, and many pirates
+        are not hardened criminals at all, but failed traders who have
+        turned to this way of life in desperation. To survive as a pirate,
+        looting freighter convoys and small ships, requires a high degree
+        of combat experience, since not just Police Vipers will pursue them,
+        but other pirate ships and Bounty Hunters, too, will prey upon
+        them.</p>
+        <p>But the rewards are high. Provided the pirate ship is equipped
+        with a fuel scoop, the jettisoned tonne-cannisters of attacked cargo
+        ships can be scooped up and traded.</p>
+    </Text>
+  </Content>
+  <Next>trade_a_asteroid</Next>
+  <Previous>trade_a_bounty</Previous>
+</Page>
+

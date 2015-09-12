@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Generation Ships</Header>
+  <Content>
+    <Text>
+      <p>Before the devlopment of the WS Thru-Space drive, in
+      all its various forms, interstellar travel occurred in large,
+      self-sustaining environment ships -- Generation Ships --
+      most of which have now been logged and their progress
+      monitored. There are more than seventy thousand of these
+      immense vessels ploughing their way through the galaxy,
+      some of them into their 30th generation. The penalty for
+      interference with such a vessel is marooning.</p>
+    </Text>
+  </Content>
+  <Next>ip_o_dredgers</Next>
+  <Previous>ip_o_hermits</Previous>
+</Page>
+

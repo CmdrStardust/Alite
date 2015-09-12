@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Aggressive Weaponry</Header>
+  <Content>
+    <Text>
+    	<table>[pb]Item[/bp],[r][pb]Tech Level[/bp],[r][pb]Price/Cr[/bp];
+    	       Fuel,Always,Varies;
+    	       Missile,Always,30;
+    	       Large Cargo Bay,Always,400;
+    	       ECM System,2,600;
+    	       Pulse Laser,3,400;
+    	       Beam Laser,4,1000;
+    	       Fuel Scoop,5,525;
+    	       Escape Capsule,6,1000;
+    	       Energy Bomb,7,900;
+    	       Extra Energy Unit,8,1500;
+    	       Docking Computer,9,1500;
+    	       Galactic Hyperdrive,10,5000;
+    	       Mining Lasers,10,800;
+    	       Military Lasers,10,6000;
+    	       Retro Rockets,10,8000;</table>
+        <p> </p>
+    	<p>In the [p]Equipment Section[/p] weapons and other -- non-combative --
+    	hardware are on sale.</p>
+    </Text>
+  </Content>
+  <Next>ip_w_lasers</Next>
+  <Previous>ip_console</Previous>
+</Page>
+

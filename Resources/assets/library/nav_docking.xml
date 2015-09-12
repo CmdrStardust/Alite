@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Docking Procedure</Header>
+  <Content>
+    <Text>
+      <p>Docking with a Coriolis space station is never easy, unless the
+      ship is equipped with an automatic docking computer. The Navy Training
+      Manual recommends the following approach and dock sequence.</p>
+      <p>Locate the Coriolis station and approach it. The entrance tunnels
+      to all these stations face the mother planet. Fly near to the station
+      and then on towards the planet (monitoring altitude carefully). By
+      turning a half circle you will now find your ship orientated towards
+      the entrance.</p>
+      <p>Approach the final moments of docking at [b]DEAD SLOW SPEED.[/b]
+      Failure to dock cleanly can be fatal but may simply result in your
+      scraping the sides of the aperture, with consequent loss of defensive
+      shield(s) and quite possibly your cargo. Manually control the
+      Cobra&apos;s roll motion to match the rotation of the Coriolis station
+      (see illustration). The entry port must be as nearly horizontal as
+      possible.</p>
+      <p>If docking is successful; the protective field across the station
+      entrance is penetrated, and a break pattern appears on your front view
+      screen. Berthing is handled automatically.</p>
+      <p>Docking protocol, and Orbit Space Regulations, are numerous, and
+      are available in the [i]GC Orbit and System Space Code,[/i] published
+      by [i]Federation Planet Bureau.[/i]</p>
+      <p>[b]It is stronly advised that you practise docking before
+      hyperspacing to your target world by re-entering Lave station.[/b]</p>
+    </Text>
+    <Image name="docking_1">
+      <Text>
+      	Accelerate towards Lave, then slow down, stop and loop over to face
+      	the station.
+      </Text>
+    </Image>
+    <Image name="docking_2">
+      <Text>
+      	Set the station in your sights, and make your approach slow and in
+      	the final moments dead slow. When just outside the station egress,
+      	&apos;correct&apos; the gyration of your ship by manipulating the
+      	left/right controls until the entrance tunnel appears horizontal.
+      </Text>
+    </Image>
+    <Image name="docking_3">
+      <Text>
+	Provided velocity is low, even if you scrape the sides of the
+	tunnel, you will survive, though possibly at the expense of some of
+	your defensive shields.
+      </Text>
+    </Image>
+  </Content>
+  <Next>interplanet</Next>
+  <Previous>nav_intergal</Previous>
+</Page>
+

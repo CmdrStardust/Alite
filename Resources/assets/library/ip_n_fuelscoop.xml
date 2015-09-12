@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Fuel Scoops</Header>
+  <Content>
+    <Text>
+    	<p>Fuel Scoops may be fitted to the hull at a planet of Tech level
+    	5 or higher. These enable a ship to obtain free hyperspace fuel by
+    	&apos;skimming the sun&apos; -- flying close to it at high
+    	velocity.</p>
+    	<p>Since fuel scoops utilise powerful electro-magnetic fields to
+    	guide the solar wind into their converters, they may also be used
+    	to pick up miscellaneous space debris. Almost all pirate vessels are
+    	fitted with these so that they can blast their prey apart and sift
+    	among the wreckage, rather than attempt to dock with a hostile
+    	craft.</p>
+    	<p>Once fuel scoops are installed, you can scoop up an object (such
+    	as a cargo canister) by keeping it in the lower half of the screen
+    	view area while flying right up to it.</p>
+    	<p>[b]Fuel scoop specification:[/b] Fuel scoops are considered an
+    	essential for Deep Space, and dangerous zone trading. They have a
+    	standard design, and a standard fitment. They use powerful
+    	electromagnetic fields to guide solar wind or small space debris
+    	into their ReQax convertors.</p>
+    </Text>
+  </Content>
+  <Next>ip_n_cargo</Next>
+  <Previous>ip_n_fuel</Previous>
+</Page>
+

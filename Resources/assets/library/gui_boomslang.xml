@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Harken</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_boomslang"/>
+	<p>Designed by a rich scientist on Gearzaen, the Harken is
+	eccentric in appearance and should only be handled by experienced
+	pilots. Heavily armed the vessel is an excellent bounty hunter, more
+	so because its minimal silhouette provides excellent camouflage.</p>
+	<table>[o]Dimensions:[/o],[o]165x81x118m[/o];
+        Cargo Capacity:,3TC;
+        Armaments:,Hendersson Rapid-Fire Beam Lasers[c];
+        ,Geret Starseeker Missile;
+	Maximum Velocity:,0.34 LM;
+	Inservice Date:,2998 AD (Gearzaen Laboratories);
+	Crew Number:,2;
+	Hull Stress Factor:,TT 20;
+	Manouevrability:,CF 3;
+	Drive Motors:,Innington PowerCoupler;
+	Hyperspace Capability:,Local only;
+	Home Galaxy:,3;
+        </table>
+    </Text>
+    <Image name="boomslang"/>
+  </Content>
+  <Next>gui_hognose</Next>
+  <Previous>gui_harlequin</Previous>
+</Page>
+

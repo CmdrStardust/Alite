@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Leaving The Space Station</Header>
+  <Content>
+    <Text>
+        <InlineImage name="intergal"/>
+    	<p>The intergalactic hyperdrive is expensive and can be obtained
+    	only from planets at Tech level 10 or higher. It can only be used
+    	once, and will take you to a system in a whole new galaxy (i.e. a
+    	new galactic chart). There are 8 such galaxies and making 8 jumps
+    	will return you to your starting galaxy. The intergalactic
+    	hyperdrive is engaged by pressing the button shown above, which
+    	can be found on the second button page on the right hand side.</p>
+    </Text>
+  </Content>
+  <Next>nav_docking</Next>
+  <Previous>nav_target</Previous>
+</Page>
+

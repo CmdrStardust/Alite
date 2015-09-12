@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Police</Header>
+  <Content>
+    <Text>
+      <p>In a Co-operative of Worlds as complex as the 2040
+      planets of the GalCop, the police can be as menacing as
+      they can be helpful. The typical police vessel is a Viper
+      GH Class PulseShip, which is very fast, and very
+      manoeuvrable. They are on constant standby on every Coriolis
+      and Dodec space station, and will attack -- a pirate, or
+      a fugitive trader -- within [i]seconds[/i]. They do [i]not[/i]
+      make arrests, they destroy. There are different police
+      departments serving different purposes -- narcotics,
+      space-drunkenness, psychotic shooting, piracy, slave
+      trading etc. -- but all have small fleets of these
+      very fast Viper patrol craft.</p>
+    </Text>
+    <Image name="viper_id">
+      <Text>
+        The Viper police ship is a
+        highly manoeuvrable
+        short-range &apos;hunter-killer&apos;.
+      </Text>
+    </Image>
+    <Image name="mamba_id">
+      <Text>
+        A clear picture of a
+        Mamba Class Fighter, the
+        pirate's answer to the
+        Viper police ship. Fast and
+        manoeuvrable, it is large
+        enough to carry two
+        homing missiles and ten
+        tonnes of cargo.
+      </Text>
+    </Image>
+  </Content>
+  <Next>ip_e_thargoids</Next>
+  <Previous>ip_e_pirates</Previous>
+</Page>
+

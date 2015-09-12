@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>The Status Page</Header>
+  <Content>
+    <Text>
+      <p>The [ip]Present System[/pi] refers to the planetary system
+      which your ship is currently in; while the [ip]Hyperspace
+      System[/pi] refers to the system onto which the hyperspace
+      is locked.</p>
+      <p>There are four possible [ip]Conditions[/pi]: [b]DOCKED[/b] means
+      that you are docked in a space station at the Present
+      System; [b]GREEN[/b] means that there is no immediate
+      danger; [b]YELLOW[/b] indicates enemy ships in the vicinity;
+      Condition [b]RED[/b] signals a high-risk on-going death-type
+      combat situation.</p>
+      <p>[ip]Legal Status[/pi] refers to your Galactic Police record. If this
+      is [b]CLEAN[/b] you have nothing to worry about, but as an
+      [b]OFFENDER[/b] or, still worse, a [b]FUGITIVE[/b] you are likely to be
+      attacked by police ships.</p>
+      <p>The [ip]Rating[/pi] is a dispassionate assessment of your
+      performance in combat so far.</p>
+      <p>Current cash and fuel are also displayed, along with a list
+      of ship fittings.</p>
+      <p>The status page is always retrievable by pressing the
+      [ip]Status[/pi] button in the navigation bar, or by opening the
+      in-flight menu and choosing [ip]Status[/pi].</p>
+    </Text>
+    <Image name="status">
+      <Text>
+        A new pilot&apos;s rating is
+        &apos;harmless&apos;; his legal
+        status &apos;clean&apos;
+      </Text>
+    </Image>
+    <Image name="moneybag">
+      <Text>
+        Commander MONEYBAG
+        is rather rich, which is
+        quite amazing
+        considering he is still
+        harmless. He has also
+        amassed a large amount
+        of equipment for his ship.
+      </Text>
+    </Image>
+  </Content>
+  <Next>int_rating</Next>
+  <Previous>int_interior</Previous>
+</Page>
+

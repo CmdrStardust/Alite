@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Basic Manoeuvres</Header>
+  <Content>
+    <Text>
+	<p>The Cobra trade ship needs practice to fly well, though it is
+	highly manoeuvrable, very fast, and a good combat vessel. It
+	accelerates and decelerates rapidly using fingertip control, which
+	can be configured to your preferences in the settings.</p>
+	<p>[pb]Anticlockwise roll[/bp] rotate your control device
+	anticlockwise, or touch the left part of the control pad, or touch
+	the left arrow on the HUD.</p>
+	<p>[pb]Clockwise roll[/bp] rotate your control device clockwise, or
+	touch the right part of the control pad, or touch the right arrow
+	on the HUD.</p>
+	<p>[pb]Dive[/bp] tilt your control device away from you, or touch the
+	upper part of the control pad, or touch the up arrow on the HUD.</p>
+        <p>[pb]Climb[/bp] tilt your control device towards you, or touch the
+        lower part of the control pad, or touch the down arrow on the HUD.
+        </p>
+        <p>[pb]Increase speed[/bp] slide your finger from bottom to top in
+        the upper half of your view screen.</p>
+        <p>[pb]Decrease speed[/bp] slide your finger from top to bottom in
+        the upper half of your view screen.</p>
+        <p>Notice the small dot moving around inside the large circle on
+        the dials. This is your compass; the dot corresponds to the position
+        of the space station. If the dot is green then the station is behind
+        you. When the dot is red and in the center of the circle, you should
+        be able to see the space station directly in front of you.</p>
+        <p>Practice rotating the space station off the screen and using the
+        compass to find it again.</p>
+        <p>You might see some Cobra Class ships. These are other traders
+        like yourself, and will not harm you unless you shoot at them. If
+        you do this they will either attack or, alternatively, run away.
+        Should you use them for combat practice, do not expect the space
+        station to turn a blind eye to such unruly behaviour. Nothing will
+        attack you while you are within sight of the space station - unless
+        you make a nuisance of yourself.</p>
+        <p>It is not possible to land on the planet, and flying into planets
+        or space stations is fatal. The altimeter shows your height above
+        the planet&apos;s surface, and you should not let it fall too low.</p>
+        <p>(If you are a new pilot, now is your best chance to practice
+        docking manoeuvres with the space station at Lave. The Lave Orbit
+        Space Authority permits an unlimited number of practice runs by
+        newly appointed pilots, and does not charge. This facility is
+        suspended during attack, or when the Coriolis station has no free
+        docking space. See the illustrated section on docking procedure.)
+        </p>
+    </Text>
+    <Image name="rearview_coriolis">
+      <Text>
+	Looking back at the Coriolis station where your Cobra was berthed.
+      </Text>
+    </Image>
+  </Content>
+  <Next>nav_console</Next>
+  <Previous>nav_leaving</Previous>
+</Page>
+

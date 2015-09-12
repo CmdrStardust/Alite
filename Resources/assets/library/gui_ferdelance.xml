@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Fer-de-Lance</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_ferdelance"/>
+	<p>A Zorgon Petterson Group (Zee Pee Gee) designed vessel favoured
+	by well-heeled bounty hunters and freewheeling business
+	corporations. A sophisticated craft, capable of both limited
+	trading, combat, and leisure function. The spacious hull is mainly
+	given over to sophisticated weaponry, defences and navigation
+	equipment at the expense of cargo capacity. Cabin accomodation is
+	large and luxurious with extensive Owndirt Inc. recycling facilities,
+	encouraging extended live-in periods (useful whilst pursuing a
+	quarry). Fuel scoop is a standard fitting, ensuring complete
+	self-sufficiency.</p>
+	<table>[o]Dimensions:[/o],[o]84x37x160m[/o];
+        Cargo Capacity:,2 TC;
+        Armaments:,Ergan Laser System[c];
+        ,IFS Seek &amp; Hunt missiles;
+	Maximum Velocity:,0.30 LM;
+	Inservice Date:,3100 AD Zorgon Petterson;
+	Crew Number:,12;
+	Hull Stress Factor:,TJi 10;
+	Manouevrability:,CF 5;
+	Drive Motors:,Titronix Intersun Ionic for LT;
+	Hyperspace Capability:,Yes;
+        </table>
+    </Text>
+    <Image name="ferdelance"/>
+  </Content>
+  <Next>gui_gecko</Next>
+  <Previous>gui_dugite</Previous>
+</Page>
+

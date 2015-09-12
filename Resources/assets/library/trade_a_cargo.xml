@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Free Space Cargo</Header>
+  <Content>
+    <Text>
+        <p>Trade ships are often destroyed (by natural catastrophe or enemy
+        action) and their cargo left ungathered. Using a fuel scoop such
+        &apos;free bounty&apos; can be collected. The contents of the
+        canisters will be unknown until they are taken aboard and examined,
+        and may be worthless or worth a fortune. If their contents are
+        illegal goods, they cannot be traded or sold without legal risk.</p>
+        <p>(NB: Pressurised cargo canisters are the Universal means of
+        storing cargo for Interplanetary Space Voyaging. Made of HiFlux
+        Chromon-alloy, they hold one Gal Tonne of goods, under variable
+        pressure and temperature conditions. Tales have been told of such
+        barrels being discovered after over five hundred years on barren
+        moons, and such &apos;Moon salvage&apos; is a remarkable source of
+        historical artefact material.)</p>
+    </Text>
+    <Image name="cargo">
+      <Text>
+	Chromalloy canisters are used to store cargo during space flights.
+	They are extremely resilient and may survive the demise of their
+	holding vessel. Such canisters can be picked up in space with a fuel
+	scoop fitted to the bottom of a ship, but pilots beware picking up
+	contraband by mistake since it may harm status and invite attack.
+      </Text>
+    </Image>
+  </Content>
+  <Next>trade_a_illegal</Next>
+  <Previous>trade_a_asteroid</Previous>
+</Page>
+

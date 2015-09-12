@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Signs of Danger</Header>
+  <Content>
+    <Text>
+      <p>If you cannot make an interspace quick jump (torus drive) towards
+      the planet, there is a ship in the vicinity. It could be dangerous.</p>
+
+      <p>If the status screen, during flight, shows <b>YELLOW</b> or <b>RED</b>,
+      prepare to engage in combat.</p>
+
+      <p>Laser fire striking the defensive shields makes a light screeching sound.
+      Listen for laser fire striking the hull direct. Through damaged screens it
+      makes a low, screeching sound. <b>DANGER</b>.</p>
+
+      <p>An incoming missile will be detected, tracked, and a warning message
+      will be announced and flashed on the main screen.</p>
+
+      <p>Some star pilots are braver than others and pirate ships may break off
+      and run in the face of stiff resistance. Some appear to know no fear --
+      in particular Thargoid vessels, whose captains have had their fear
+      glands surgically removed.</p>
+    </Text>
+  </Content>
+  <Next>ip_enemies</Next>
+  <Previous>ip_manoeuvring</Previous>
+</Page>
+

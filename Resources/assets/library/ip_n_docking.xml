@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Docking computer</Header>
+  <Content>
+    <Text>
+    	<InlineImage name="docking"/>
+    	<p>This is available from all Tech level 9 planets; docking
+    	computers are fitted to the ship&apos;s flight control system and
+    	enable it to dock the ship automatically. The auto-docking sequence
+    	is triggered by the button shown above and switched off by pressing
+    	the button again.</p>
+    	<p>Note that the docking computer can be configured to operate in
+    	&apos;fast&apos;-mode, where it places the pilot into a brief
+    	sleep. However, if the pilot&apos;s legal status is not CLEAN,
+    	sleep will not be triggered, because Vipers might attack
+    	the pilot&apos;s ship and leave it undefended. Instead, the
+    	docking computer will then operate in its default
+    	&apos;slow&apos;-mode.</p>
+    	<p>[b]Docking computer specification:[/b] The SinCorn RemLock D&amp;A
+    	System is a sophisticated and expensive piece of gadgetry. It comes
+    	with MemnSomn pilot interaction to induce hi-cram sleep during the
+    	maoeuvre.</p>
+    </Text>
+  </Content>
+  <Next>ip_n_intergal</Next>
+  <Previous>ip_n_cargo</Previous>
+</Page>
+

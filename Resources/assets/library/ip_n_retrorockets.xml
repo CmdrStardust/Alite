@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Retro rockets</Header>
+  <Content>
+    <Text>
+        <p>It has befuddled scientists over the last decades how a seemingly
+        simple problem can be so hard. Taking all the inertia of a ship and
+        reversing it instantly, even adding thrust in the reversed
+        direction, has only been possible for the last 15 years, when
+        finally reverse thrusters could be fitted, which would not demolish
+        the interior of the ship. Retro rockets can be equipped at any
+        Tech level 10 world or above.</p>
+        <InlineImage name="retro_rockets"/>
+        <p>Engaging a retro rocket burst works by pressing the button shown
+        above and will propel your Cobra backwards instantly. This is very
+        helpful when doing combat against stronger (or faster) opponents,
+        or if you want to reach a target quickly. How many bursts you can
+        get from one set of retro rockets is always a bit of a gamble. It
+        depends on the current load of your ship, but also on the quality of
+        the fuel used during rocket production.</p>
+    	<p>[b]Retro rockets specification:[/b] Xasar Ion retro rockets are
+    	currently the only reliable retro rockets on the market. Coming with
+    	450kPH reversers and a constant g-holding quotient, the pilot does
+    	not notice the sudden change in direction. Fuel is mined from icy
+    	comets around Zamaes, usually yielding clean output.</p>
+    </Text>
+  </Content>
+  <Next>trading</Next>
+  <Previous>ip_n_asteroid</Previous>
+</Page>
+

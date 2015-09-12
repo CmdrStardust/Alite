@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Fuel</Header>
+  <Content>
+    <Text>
+    	<p>Fuel is always available. You can refill your tanks to full (7
+    	light-year) capacity -- no less is permitted.</p>
+    </Text>
+  </Content>
+  <Next>ip_n_fuelscoop</Next>
+  <Previous>ip_noncombat</Previous>
+</Page>
+

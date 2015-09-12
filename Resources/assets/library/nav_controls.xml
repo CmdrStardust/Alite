@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Navigational Controls</Header>
+  <Content>
+    <Text>
+      <p>It is important that you do [b]not[/b] select [ip]Launch[/pi] from
+      the command console for the moment.</p>
+      <p>[pb]Galactic chart.[/bp] This chart shows all registered worlds
+      within the galaxy, and indicates your own coordinate position. The
+      cursor may be used to scan the shown worlds for potentially favourable
+      trade sites.</p>
+      <p>To view the galactic chart, select [ip]Galaxy[/pi] from the
+      command console.</p>
+      <p>Touch a star system with your finger in order to select it, the
+      cursor will then move to the selected system. In order to zoom out or
+      in, use two fingers, put them on the chart and move them apart or
+      together.</p>
+      <p>[pb]Worldata link.[/bp] After you selected a star system on the
+      galactic chart, you may select [ip]Planet[/pi] from the command
+      console in order to bring up information on the selected system.</p>
+      <p>The Orbit Space Authority takes no responsibility for the accuracy
+      of the information registered here, but the trader may gain some idea
+      of the relative wisdom of trading with the world whose data is
+      displayed. The information shown is distance, type of main life form,
+      degree of agricultural or industrial development, with industrial and
+      technological level displayed on a scale of 1-15. The government type,
+      ranging from Corporate State to Anarchy, will be a strong indication
+      of the danger of trading with the system.</p>
+      <p>Use [ip]Galaxy[/pi] to return to the chart and acquire
+      information about some more planets.</p>
+      <p>The red circle is centered around the current position of your ship
+      and indicates how far it can jump with its current hyperspace fuel.
+      </p>
+      <p>Hit the [ip]Home[/pi] button to reset the cursor to your
+      ship&apos;s position.</p>
+      <p>[pb]Local navigational chart.[/bp] This is a high power chart of all
+      planets in the immediate vicinity of your docking world. Since the
+      Cobra ship has a maximum single H-jump range of 7 light years, the
+      target world must be chosen carefully. The target cursor, used in
+      conjunction with the Worldata link, will indicate dangerous or likely
+      worlds for trade.</p>
+      <p>Hit [ip]Local[/pi] on the command console in order to bring up
+      the local navigational chart.</p>
+    </Text>
+    <Image name="planet_reorte">
+      <Text>
+        A planetary status card. Whether you choose to amass kills by bounty
+	hunting or take the less dangerous course of the traditional trader
+	and defensive combateer, the political and economic infrastructure
+	of planets should influence the route you take through a galaxy (see
+	Interplanetary Travel and Trade).
+      </Text>
+    </Image>
+  </Content>
+  <Next>nav_coriolis</Next>
+  <Previous>navigation</Previous>
+</Page>
+

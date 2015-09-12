@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Viper (Police Ship)</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_viper"/>
+	<p>Small, highly manouevrable short range &apos;hunter-killer&apos;,
+	the Viper was specifically designed for GalCop Space Policing
+	purposes by Faulcon Manspace and are built under license on all
+	Medium Tech worlds. The Viper is a single pilot craft, but can carry
+	up to ten humanoid passengers. It has no cargo space, but has a
+	&apos;tug&apos; capability, and can tow a ship of up to 140,000 MTS
+	mass (including the Cobra Mk III). This popular ship is also carried
+	by large freighter convoys, for defensive purposes.</p>
+	<table>[o]Dimensions:[/o],[o]87x27x96m[/o];
+        Cargo Capacity:,None;
+        Armaments:,Ingram MegaBlast Pulse Laser[c];
+        ,Seeker missiles;
+	Maximum Velocity:,0.32 LM;
+	Inservice Date:,2762 AD (Faulcon Manspace, Reorte);
+	Crew Number:,1 (up to 10);
+	Hull Stress Factor:,Varies;
+	Manouevrability:,High (CF 7.4);
+	Drive Motors:,de Lacy Super Thrust VC10;
+	Hyperspace Capability:,No;
+        </table>
+    </Text>
+    <Image name="viper_gui"/>
+  </Content>
+  <Next>gui_wolf</Next>
+  <Previous>gui_transporter</Previous>
+</Page>
+

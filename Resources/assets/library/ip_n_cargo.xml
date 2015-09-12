@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Cargo bay extension</Header>
+  <Content>
+    <Text>
+    	<p>One cargo bay extension can be bought, increasing the hold space
+    	from 20 to 35 tonnes.</p>
+    	<p>[b]Cargo bay extension specification:[/b] Standard model is the
+    	Mariner Freight Chamber.</p>
+    </Text>
+  </Content>
+  <Next>ip_n_docking</Next>
+  <Previous>ip_n_fuelscoop</Previous>
+</Page>
+

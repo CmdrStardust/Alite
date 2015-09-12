@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Lancehead</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_lora"/>
+	<p>The Lancehead was originally designed by Skunkworx as the ultimate royal escort craft.
+	It can be outfitted with some serious firepower and has great manouevrability. However, the
+	Lancehead has very little cargo space. Due to its wing shaped hull it can transition from
+	space to atmospheric flight with ease and is at home in either environment. This ability has
+	made the craft the first choice for rich kids that want to have fun buzzing planets that have
+	not yet developed enough to become space faring.</p>
+	<table>[o]Dimensions:[/o],[o]180x42x177m[/o];
+        Cargo Capacity:,2TC;
+        Armaments:,Ingram 2048 FZY Beam laser[c];
+        ,Geret Starseeker missile;
+	Maximum Velocity:,0.30 LM;
+	Inservice Date:,2999 AD (Skunkworx Labs);
+	Crew Number:,1 to 6;
+	Hull Stress Factor:,TCp 78;
+	Manouevrability:,CF 8;
+	Drive Motors:,Shoemaker X-3;
+	Hyperspace Capability:,Local only;
+	Home Galaxy:,3;
+        </table>
+    </Text>
+    <Image name="lora"/>
+  </Content>
+  <Next>gui_lyre</Next>
+  <Previous>gui_krait</Previous>
+</Page>
+

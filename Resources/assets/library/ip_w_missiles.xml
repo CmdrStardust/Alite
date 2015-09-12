@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Missiles</Header>
+  <Content>
+    <Text>
+    	<p>Missiles are always available, whatever the nature of your destination
+    	world, though no more than four may be carried at any one time. They are
+    	extremely effective weapons and are carried by the larger star ships.
+    	Your ship's computer will warn you when one is fired at you with a
+    	message on-screen and an audible warning. Unless your ship is fitted
+    	with ECM (see below) you will have to outmanouevre the missile, which
+    	will home in on you relentlessly. If a missile hits you, it can almost
+    	completely exhaust a fully charged shield and, if your shields and
+    	energy are low, may well be fatal.</p>
+    	<p>Before a missile can be fired it must be locked onto a target. When
+    	fired, it will home in on that target and destroy it, unless your enemy
+    	successfully takes one of the precautions described above. The missile
+    	launch mechanism is very reliable and hardly ever jams. Missiles can
+    	be locked onto targets in any view (front, right, rear, or left).</p>
+    	<InlineImage name="missile"/>
+    	<p>The targetting sequence is engaged by hitting the button shown above.
+    	The missile status indicator on the astrogation console will then turn
+    	yellow. When any possible target enters the cross-hair region the
+    	missile will lock onto it, the missile status indicator turning red.
+    	A beep will sound to inform you of this.</p>
+    	<p>Pushing the missile button again will fire the missile. Pushing and
+    	holding it for a couple of seconds will unarm the missile and abort
+    	the launch sequence.</p>
+    	<p>[b]Missile specification:[/b] Lance &amp; Ferman Homing Missiles
+    	(4x4) are now recommended for all small class trade-combat ships, but
+    	can be fitted as part of a mixed design weapon rack. LF missiles have
+    	2IL-135 guidance systems, and optional manual directional control
+    	overrides. Warhead packed with Terminal 9 explosive, and the 4x4 is
+    	invulnerable to all known counteraction, except ECM systems. Capable
+    	of Megazon Destruct Force 7. Prototype first used in 2987, during
+    	Ineran Wars.</p>
+    </Text>
+    <Image name="missile_shot">
+      <Text>
+        Readily available and relatively cheap at 30 Credits,
+        missiles are extremely effective weapons. In The picture, this
+        ship's energy banks are about to be substantially reduced.
+      </Text>
+    </Image>
+  </Content>
+  <Next>ip_w_energybombs</Next>
+  <Previous>ip_w_lasers</Previous>
+</Page>
+

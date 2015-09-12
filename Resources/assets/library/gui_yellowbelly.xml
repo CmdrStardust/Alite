@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Yellowbelly</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_yellowbelly"/>
+	<p>Data missing</p>
+	<table>[o]Dimensions:[/o],[o]120x29x243m[/o];
+        Cargo Capacity:,unknown;
+        Armaments:,unknown;
+	Maximum Velocity:,unknown;
+	Inservice Date:,unknown;
+	Crew Number:,unknown;
+	Hull Stress Factor:,unknown;
+	Manouevrability:,unknown;
+	Drive Motors:,unknown;
+	Hyperspace Capability:,Local only;
+	Home Galaxy:,6;
+        </table>
+    </Text>
+    <Image name="yellowbelly"/>
+  </Content>
+  <Previous>gui_wolf</Previous>
+</Page>
+

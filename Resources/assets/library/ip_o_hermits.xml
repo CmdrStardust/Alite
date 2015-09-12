@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Rock Hermits</Header>
+  <Content>
+    <Text>
+      <p>Pirates, ageing bounty hunters, or planetary outcasts,
+      who create living space out of asteroids. They usually
+      choose large asteroids, and set up signal beacons to
+      warn off miners. GalCop Law protects Rock Hermits, but
+      since most of the asteroid is hollowed-out, there is little
+      advantage to be gained by &apos;mining&apos; them anyway.</p>
+    </Text>
+  </Content>
+  <Next>ip_o_generations</Next>
+  <Previous>ip_others</Previous>
+</Page>
+

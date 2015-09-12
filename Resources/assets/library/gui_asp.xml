@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Asp Mk II</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_aspmkii"/>
+	<p>Galactic Navy vessel designed and manufactured in government
+	workshops, incorporating secret self-destruct services which are
+	primed to activate when the astrogation controls are used by
+	unfamiliar hands. Integument has chameleon properties enabling the
+	ship to assume effective camouflage in any type of environment.
+	Intended for reconnaissance and the transport of high-ranking
+	military personnel from cobat it is very fast and manoeuvrable.
+	Despite its hazardous nature it makes an ideal pirate vessel,
+	primarily because of the speed, camouflage and high intensity
+	Hassoni-Kruger Burst-lasers. The Asp Mk II has room for powerful
+	shield generators, but only one missile pod.</p>
+	<table>[o]Dimensions:[/o],[o]128x39x138m[/o];
+        Cargo Capacity:,None;
+        Armaments:,Hassoni-Kruger Burst Laser[c];
+        ,Geret Starseeker missile;
+	Maximum Velocity:,0.40 LM;
+	Inservice Date:,2878 AD (GalCop Workshops);
+	Crew Number:,2;
+	Hull Stress Factor:,TT 16;
+	Manouevrability:,CF 4;
+	Drive Motors:,Voltaire Whiplash HZ Pulsedrive;
+	Hyperspace Capability:,Yes;
+        </table>
+    </Text>
+    <Image name="aspmkii"/>
+  </Content>
+  <Next>gui_boa</Next>
+  <Previous>gui_anaconda</Previous>
+</Page>
+
