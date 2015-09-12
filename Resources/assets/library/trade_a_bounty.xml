@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Bounty Hunting</Header>
+  <Content>
+    <Text>
+        <p>Galactic banks, which insure the larger trading convoys, will pay
+        a large bounty for each pirate ship destroyed. A ship&apos;s
+        computer will transmit photographic evidence of any kill to the
+        GalCop Bank Federation Monitoring Authority. The IR signature of the
+        destroyed ship is then tallied with all known pirate vessels, and
+        the bounty hunter pilot credited accordingly.</p>
+        <p>Bounty hunters commonly have Cobra Class ships in order to
+        masquerade as traders. They simply hyperspace into a system
+        (anarchic and feudal worlds especially) and wait to be attacked,
+        ensuring that they have sufficient hyperspace fuel (Quirium) for
+        a quick escaoe.</p>
+    </Text>
+  </Content>
+  <Next>trade_a_piracy</Next>
+  <Previous>trade_alt</Previous>
+</Page>
+

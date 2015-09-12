@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Corporate States</Header>
+  <Content>
+    <Text>
+        <p>Like [b]ENGEMA[/b] and [b]ZAATXE[/b], these are well-ordered
+        worlds, which have usually developed from settlers who practised a
+        free trade form of competition. Taxation is high on such worlds, but
+        the living standards are high also. Corporate planets wish to
+        [i]protect[/i] their trade, so goods are expensive, but luxuries are
+        welcomed. Import licences are often necessary.</p>
+        <p>Engema is an agricultural world, run as a single farming
+        co-operative. Farmers receive a fixed payment for their crops,
+        whether or not the harvest is good, and selling prices do not vary
+        greatly. It is a dependable market, and customer relations are good.
+        Luxuries, machinery and raw materials sell well here.</p>
+        <p>Zaatxe is an example of a rich, industrial state (Tech level 12).
+        It produces luxury goods, elaborate and innovative machine systems,
+        and specialises in Prototype design. Prices fluctuate depending upon
+        the level of inter-state competition, but it is always a safe bet to
+        buy recently-developed machine items which have not yet spread very
+        far across the galaxy.</p>
+    </Text>
+  </Content>
+  <Next>pol_t_dict</Next>
+  <Previous>politics</Previous>
+</Page>
+

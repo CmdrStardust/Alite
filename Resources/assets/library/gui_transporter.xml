@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Transporter</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_transporter"/>
+	<p>The Lakon Spaceways MC15 QuikTransport Shuttle is the most
+	commonly encountered intermediate range shuttle, with a range of
+	0.1 LY and a full HiGrav Loading facility. It can carry up to 100
+	passengers, and has a cargo capacity of 10 tonnes undefined bulk.
+	Can load on asteroids, space stations, and can skim atmosphere, and
+	touch down on land surfaces and all liquid surfaces except acid.</p>
+	<table>[o]Dimensions:[/o],[o]100x33x116m[/o];
+	Inservice Date:,unknown[c] but probably pre-2500 AD.;
+	,Known prototype built on;
+	,SpaceLink Shipyards[c] Mars Orbit (Old Earth).
+        </table>
+    </Text>
+    <Image name="transporter"/>
+  </Content>
+  <Next>gui_viper</Next>
+  <Previous>gui_thargon</Previous>
+</Page>
+

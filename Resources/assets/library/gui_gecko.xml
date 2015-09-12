@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Gecko</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_gecko"/>
+	<p>Patented by Robert Bream, but not manufactured until Ace and
+	Faber improved upon the original design specifications after the
+	death of the inventor. Later the design was stolen and widely
+	circulated to a number of &apos;backyard&apos; workshops who
+	produced the ship in vast numbers with many individual variances to
+	protect companies against lawsuits. Mainly used as a single-pilot
+	combat craft, typically pirates.</p>
+	<table>[o]Dimensions:[/o],[o]132x24x81m[/o];
+        Cargo Capacity:,3 TC;
+        Armaments:,Ingram 1919 A4 laser[c];
+        ,LM Homing missile;
+	Maximum Velocity:,0.30 LM;
+	Inservice Date:,2852 (Ace &amp; Faber HullWorks, Lerelace);
+	Crew Number:,1 or 2;
+	Hull Stress Factor:,Tto 48-94;
+	Manouevrability:,CF 7;
+	Drive Motors:,BreamPulse Light XL;
+	Hyperspace Capability:,Not available;
+        </table>
+    </Text>
+    <Image name="gecko"/>
+  </Content>
+  <Next>gui_gopher</Next>
+  <Previous>gui_ferdelance</Previous>
+</Page>
+

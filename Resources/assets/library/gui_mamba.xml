@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Mamba</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_mamba"/>
+	<p>Fighter which grew out of custom-built craft primarily designed
+	for racing purposes but adopted and armed by pirates due to its high
+	speed and manoeuvrability. Cargo space was added later when Raddlett
+	and Rayburn Shipyards (based at Reorte) standardised the variances
+	and began manufacturing the craft in large numbers.</p>
+	<table>[o]Dimensions:[/o],[o]140x25x118m[/o];
+        Cargo Capacity:,10 TC;
+        Armaments:,Ergon laser;
+	Maximum Velocity:,0.32 LM;
+	Inservice Date:,3110 AD (Reorte Ship Federation);
+	Crew Number:,unknown;
+	Hull Stress Factor:,TKi 10;
+	Manouevrability:,CF 9;
+	Drive Motors:,Seeklight HV Thrust;
+	Hyperspace Capability:,No;
+        </table>
+    </Text>
+    <Image name="mamba"/>
+  </Content>
+  <Next>gui_moray</Next>
+  <Previous>gui_lyre</Previous>
+</Page>
+

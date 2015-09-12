@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Cobra Mk III</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_cobramkiii"/>
+	<p>Larger, more popular version of the Cobra Mk I (the Mk II only
+	reached prototype stage and was abandoned due to a design fault in
+	the hull; it was not convex). This ship is equipped with several
+	special features, including Zieman Energy Deflection Shields, fore
+	and aft, and mountings for four Ingram Pulse lasers. The Cobra is
+	much favored by lone-wolf traders who wish to combine potential
+	superior combat qualities with adequate cargo space.</p>
+	<table>[o]Dimensions:[/o],[o]180x41x90m[/o];
+        Cargo Capacity:,20TC;
+        Armaments:,Ingram laser system[c];
+        ,Lance &amp; Ferman Seek &amp; Kill missile system;
+	Maximum Velocity:,0.30 LM;
+	Inservice Date:,3100 AD (Cowell &amp; MgRath Shipyards[c] Lave);
+	Crew Number:,1 or 2;
+	Hull Stress Factor:,TJi 18;
+	Manouevrability:,CF 8;
+	Drive Motors:,Kruger &apos;Lightfast&apos; motors;
+	,Irrikan ThruSpace;
+	Hyperspace Capability:,Yes;
+        </table>
+    </Text>
+    <Image name="cobramkiii"/>
+  </Content>
+  <Next>gui_coral</Next>
+  <Previous>gui_cobrai</Previous>
+</Page>
+

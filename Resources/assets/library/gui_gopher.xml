@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Gopher</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_gopher"/>
+	<p>Data missing</p>
+	<table>[o]Dimensions:[/o],[o]100x38x177m[/o];
+        Cargo Capacity:,unknown;
+        Armaments:,unknown;
+	Maximum Velocity:,unknown;
+	Inservice Date:,unknown;
+	Crew Number:,unknown;
+	Hull Stress Factor:,unknown;
+	Manouevrability:,unknown;
+	Drive Motors:,unknown;
+	Hyperspace Capability:,Local only;
+	Home Galaxy:,4;
+        </table>
+    </Text>
+    <Image name="gopher"/>
+  </Content>
+  <Next>gui_harlequin</Next>
+  <Previous>gui_gecko</Previous>
+</Page>
+

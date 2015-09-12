@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Political Profile of the Universe</Header>
+  <Content>
+    <Text>
+        <p>To trade successfully, and profitably, will almost certainly
+        require you to fly the Cobra trade ship into politically unstable
+        planetary systems. Pirate and freebooter activity is high in many
+        solar systems, and adequate ship defences are essential if the
+        rewards of higher selling prices are to be reaped.</p>
+        <p>For the benefit of new traders, a brief political summary is
+        given below, but reference should be made to Kroweki &amp;
+        Carr&apos;s [i]PsychoHistory and Economic Theory in the GalFederation[/i],
+        2845</p>
+        <p>Planetary governments, or federations, determine the relative
+        safety of their Solar Space. Ranked in the decreasing order of
+        safety, the 2048 officially registered worlds of the Galactic
+        Federation can be classified as</p>
+        <table>[m]Corporate States;
+        Democracies;
+        Confederacies;
+        Communist States;
+        Dictatorships;
+        Multi-Governments;
+        Feudal Worlds;
+        Anarchies;
+        </table>
+    </Text>
+  </Content>
+  <Next>pol_t_corp</Next>
+  <Previous>trade_a_illegal</Previous>
+</Page>
+

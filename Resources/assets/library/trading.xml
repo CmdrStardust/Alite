@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Intergalactic Trading</Header>
+  <Content>
+    <Text>
+        <p>The Cobra Mk. III, designed primarily as a trading ship, combines
+        combat efficiency and manoeuvrability with substantial cargo space
+        (20 Tonne Canisters) and with scoop attachments for space debris,
+        jettisoned cargo and space rock.</p>
+        <p>Most space stations have made the process of trading very simple,
+        in order to facilitate a fast turnover in goods and ships. Import
+        and export tariffs -- which are high on some worlds -- are
+        automatically added or deducted and this is reflected in the prices
+        shown. The auto-trader system, employed by the Cobra, does not allow
+        for more specific trading deals to be performed.</p>
+    	<p>A selection of the more valuable alien items that are tradeable
+    	is given in this manual, but the trader must deal with them in
+    	person.</p>
+    	<p>Once docked you are linked directly with the CorCom Trade System.
+    	At your request you can obtain a list of basic trade items available
+    	for purchase.</p>
+    	<p>Slaves are measured by the tonne in galactic trading. This may
+    	seem a little strange, but it includes the cryogenic suspension
+    	system necessary to keep them alive during space travel. The slave
+    	trade, once almost eliminated by the Galactic Government is now
+    	returning, despite the efforts of the Galactic Police Force to
+    	suppress it.</p>
+
+    	<table>,[pb]Item[/bp],[pb]Description[/bp],[r][pb]Average Price/Cr[/bp],[pb]Unit[/bp];
+    	       ,Food,Simple organic products[c] see below,4.8,tonne;
+    	       ,Textiles,Unprocessed fabrics,7.1,tonne;
+    	       ,Radioactives,Ores and by-products,22.8,tonne;
+	       *,Slaves,Usually humanoid,14.7,tonne;
+    	       ,Liquor/Wines,Exotic spirits from unearthly flora,28.6,tonne;
+    	       ,Luxuries,Perfumes[c] Spices[c] Coffee,91.3,tonne;
+    	       *,Narcotics,Tobacco[c] Arcturan Megaweed,161.1,tonne;
+    	       ,Computers,Intelligent machinery,83.1,tonne;
+    	       ,Machinery,Factory and farm equipment,56.9,tonne;
+    	       ,Alloys,Industrial Metals,38.7,tonne;
+    	       *,Firearms,Small-scale artillery[c] sidearms etc.,83.0,tonne;
+    	       ,Furs,Includes leathers[c] Millennium Wompom Pelts,69.4,tonne;
+    	       ,Minerals,Unrefined rock containing trace elements,8.7,kg;
+    	       ,Gold,,38.5,kg;
+    	       ,Platinum,,71.4,kg;
+    	       ,Gem-stones,Includes jewellery,19.4,g;
+    	       ,Alien Items,Artefacts[c] Weapons etc.,44.7,tonne;
+    	       ,Medical Supplies,Pills[c] ointments[c] syringes etc.,96.5,tonne;</table>
+    	<p>* These items are defined as illegal by the Galactic Government,
+    	so trading them is risky.</p>
+    </Text>
+  </Content>
+  <Next>trade_how</Next>
+  <Previous>ip_n_retrorockets</Previous>
+</Page>
+

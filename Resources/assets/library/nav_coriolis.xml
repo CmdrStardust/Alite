@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>A Coriolis Space Station</Header>
+  <Content>
+    <Text>
+	<p>Every world registered with the Galactic Co-operative has several
+	Coriolis space stations in orbit at various altitudes. Coriolis
+	stations are &apos;neutral&apos; territory, controlled equally by
+	GalCop and the Planetary Government.</p>
+	<p>A new dodecahedral design (the so-called &apos;Dodo&apos;
+	stations) is replacing the Coriolis design in the more advanced
+	systems. Coriolis stations are hexagonal in approximate shape. They
+	spin along a single axis running vertically from the planet below.
+	One side of the station always faces the planet, and it is on this
+	facet that the access tunnel is located.</p>
+	<p>Coriolis stations were designed at the GASEC (Galactic
+	Astronautic and Space Exploration Centre) Laboratories on the planet
+	Vetitice. The first station was in orbit around the world Lave in
+	2752.</p>
+	<p>Coriolis stations have powerful defensive shields (against pirate
+	attack and inept docking) and a large fleet of Viper fighters, and
+	several larger types of ships. The inside of the station is
+	free-space, and on each inner facet of the station there are
+	berthing and refuelling facilities, as well as cities, hospitals,
+	farmlands and leisure-scapes.</p>
+	<p>Each Coriolis station has a diameter of 1 standard kilometre.
+	They can berth 2000 ships, and support a fair-sized colonial life
+	development of humanoids.</p>
+    </Text>
+    <Image name="coriolis_station">
+      <Text>
+      	Space stations are cargo transition points for interplanetary
+      	trading vessels and shuttle craft. They also provide entertainment
+      	and lodging facilities for pilots not wishing to go
+      	&apos;planet-side&apos;.
+      </Text>
+    </Image>
+  </Content>
+  <Next>nav_leaving</Next>
+  <Previous>nav_controls</Previous>
+</Page>
+

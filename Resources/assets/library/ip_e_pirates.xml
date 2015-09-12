@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Pirate Vessels</Header>
+  <Content>
+    <Text>
+      <p>There are several ways of identifying a space-going ship
+      as &apos;pirate occupied&apos;, and this is essential since pirates
+      and renegades will take [i]any[/i] ship for their purpose, from
+      a Worm to a massive Python. Pirates exist everywhere in
+      the galaxy, but cluster mainly around unstable GalCop
+      worlds, especially worlds run on a feudal or anarchic
+      system.</p>
+
+      <p>Small ships hovering very distant from a planet are
+      pirates. Large ships accompanied by a mixture of small
+      fighter types are pirates. Ships that refuse to
+      acknowledge identification signals are pirates. Around
+      worlds run by autocracies, or clans, pirates will very
+      often have been paid to leave trade ships alone. Piracy is
+      a huge, and complex, business, and any life-respecting
+      trader will learn the tell-tale signs of pirate presence.</p>
+    </Text>
+  </Content>
+  <Next>ip_e_police</Next>
+  <Previous>ip_e_bounty</Previous>
+</Page>
+

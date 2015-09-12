@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Interplanetary Travel</Header>
+  <Content>
+    <Text>
+      <p>Not all ships in deep space, even small fighters, are pirates. Most
+      ships will respond to hostile action with hostile action. If you attack
+      a police ship or trade in contraband goods (see Trading), your legal
+      status will be changed to [b]OFFENDER[/b], or even higher. If you destroy
+      pirate ships, or Thargoid invaders, (or asteroids) you will receive a
+      bounty payment. If you shoot at the Coriolis space station, its own
+      defensive ships (Viper class fighters) will attack you.</p>
+    </Text>
+    <Image name="viper">
+      <Text>
+      Here, a viper can
+      clearly be seen leaving
+      their Coriolis station,
+      probably on a routine
+      patrol exercise.
+      </Text>
+    </Image>
+  </Content>
+  <Next>ip_manoeuvring</Next>
+  <Previous>nav_docking</Previous>
+</Page>
+

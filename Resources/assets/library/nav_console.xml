@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Console Readings</Header>
+  <Content>
+    <Text>
+        <InlineImage name="console"/>
+	<p>[pb]1[/bp] Fuel level. Indicates how far your Cobra can travel
+	in hyperspace.</p>
+	<p>[pb]2[/bp] Cabin temperature will increase and the console register
+	this when your ship flies too close to a star.</p>
+	<p>[pb]3[/bp] Altimeter. Your altitude above your destination planet
+	can be crucial. Flying too near to its surface will be fatal.</p>
+	<p>[pb]4[/bp] Radar magnification level if zoomed in.</p>
+	<p>[pb]5[/bp] Flight grid scanner. This sophisticated instrument
+	displays a three-dimensional view of space in the immediate vicinity
+	of your ship, seen from a point behind and above it. The precise
+	position of any ship within its range can be pinpointed.</p>
+	<p>[pb]6[/bp] Compass. This instrument first picks up a target planet
+	while it remains out of range of the main flight-path scanner. When
+	the planet's space station nearest to you comes within range of it,
+	the compass picks up that instead. When the dot is green, the object
+	is behind you; when red and in the centre of the compass circle, it
+	should be visible through your front view.</p>
+	<p>[pb]7[/bp] Gyro orient bar indicators show right/left roll and
+	dive/climb status.</p>
+	<p>[pb]8[/bp] S refers to the space station and indicates that you are
+	on target for it and within its protective range (the safe zone).
+	</p>
+	<p>[pb]9[/bp] Forward velocity should be maintained at maximum on
+	planetary approach. Keep it low during space station approach, and
+	minimal for final docking.</p>
+    </Text>
+  </Content>
+  <Next>nav_target</Next>
+  <Previous>nav_basic_manoeuvres</Previous>
+</Page>
+

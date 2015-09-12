@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Navigation and Flying</Header>
+  <Content>
+    <Text>
+      <p>The Galactic Co-operative is only one - although the
+      largest - of several planetary federations, and maintains
+      trade and diplomatic links with over 2000 planets spread
+      throughout 8 galaxies. The political profile of a planet is
+      an important navigational consideration as many are in a
+      state of anarchy and are unsafe to visit in poorly
+      equipped ships. Important too is its economic profile, as
+      will be discussed in the section about trading.</p>
+
+      <p>Navigational strategy depends of course upon your aims
+      in life. If you think you have what it takes to become élite,
+      you will need to chart your path through the galaxies
+      with care and great precision. You will wish to equip your
+      ship as fully and as early as possible. You will, therefore,
+      need to study the trading section of this library so that
+      you can work out a profitable trading route in order to be
+      able to afford the weaponry you will require. You will
+      have to make decisions about how dangerous a life you
+      wish to lead; in general, the more risks you take
+      (traveling to dangerous planets or trading in contraband
+      goods), the faster you may equip your ship but the
+      quicker you will be killed. You will discover that life in the
+      8 galaxies is a question of fine balance. Although it may
+      seem, at first, that indiscriminate carnage is a soft option
+      (kills improve your rating, after all), as your skills and
+      experience of living in space mature, you will quickly
+      discover that piracy is a short-lived career.</p>
+
+      <p>Success in this context is a mosaic of talents: combative,
+      certainly, but thinking and decision-making talents, too.</p>
+
+      <p>Here you are introduced to all the controls which will
+      eventually be useful to you in developing a route
+      through the 8 galaxies.</p>
+    </Text>
+    <Image name="galchart">
+      <Text>
+        There are 8 galaxies (of
+        which this is one), and
+        over 250 recognized
+        planets in each galaxy. So
+        massive a universe
+        contains very little that is
+        completely predictable,
+        and offers infinite
+        opportunities for
+        adventure.
+      </Text>
+    </Image>
+  </Content>
+  <Next>nav_controls</Next>
+  <Previous>int_rating</Previous>
+</Page>
+

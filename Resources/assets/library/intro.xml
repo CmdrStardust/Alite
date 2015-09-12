@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Introductory Data</Header>
+  <Content>
+    <Text>
+      <p>Welcome aboard this Cobra Mk III trading and combat
+      craft. The ship has been supplied to you by Faulcon
+      deLacy Spaceways, by arrangement with the Galactic
+      Co-operative of Worlds whose Space and Interstellar
+      Pilot&apos;s Exams you have just successfully completed. The
+      small flight manual supplied with the craft is designed to
+      familiarize you with all aspects of space flight, combat,
+      and trading, and we hope that it will be of use to you.</p>
+      <p>You begin your career, your ship equipped with a single
+      forward-firing pulse laser, three homing missiles, 7 light
+      years of fuel, and the sum of 100 Credits (Cr), ready to
+      embark from a space station in orbit around the planet
+      Lave.</p>
+      <p>The Cobra Mk III is the best of the medium-range,
+      medium capacity fighter-traders, and is an ideal ship for
+      new traders intent on building their fortunes, or new
+      combateers who will constantly need to finance the cost
+      of both armaments and non-combative equipment.</p>
+      <p>The ship is highly manoeuvrable, has a good C-holding
+      factor during hyperspace transit, can hold sufficient
+      Quirium H-fuel for a 7-light-year single jump and has full
+      AutoTrading Systems Link for use at space stations.
+      Further, it is protected by dual Zieman Energy Deflection
+      Shields, powered by four energy banks, and has a
+      powerful, rapid-fire pulse laser mounted on the forward
+      hull segment. Flight controls are elegant and simple, and
+      the bridge is equipped with both HoloDirect, and
+      ThruSpace GravDistort communications systems. Its life
+      support functions are varied and flexible to ensure
+      maximum comfort during trading or hunting operations.</p>
+      <p>Pilot licenses are issued only at the planet Lave, and it is
+      likely, therefore, that you are now docked at a Coriolis
+      station in orbit around that particular world. Lave is a
+      rich, agricultural dictatorship, but is a reasonably safe
+      world at which to begin your endeavours. GalCop and
+      the Lave Authorities allow practice docking and departure
+      runs to all their space stations here, and you would
+      be advised to take advantage of this facility.</p>
+    </Text>
+    <Image name="cobra">
+      <Text>
+        The Cobra Mk III
+        incorporates Zieman
+        Deflection Shields, fore
+        and aft, 4 hull mountings
+        for Ingram &apos;rapid-fire&apos;
+        pulse lasers, a Lance &amp;
+        Ferman &apos;seek &amp; kill&apos;
+        missile system, a
+        Holodirect &amp; ThruSpace
+        GravDistort
+        communications system,
+        and provision for a cargo
+        bay extension.
+      </Text>
+    </Image>
+  </Content>
+  <Next>int_interior</Next>
+</Page>
+

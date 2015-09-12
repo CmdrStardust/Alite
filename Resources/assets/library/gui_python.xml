@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Python</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_python"/>
+	<p>One of the larger trading vessels manufactured in Inera Orbit
+	Space by Whatt and Pritney ShipConstruct. Cabin accommodation is
+	cramped and spartan in contract to facilities for cargo and
+	&apos;alien environment&apos; transport. Though slow and ponderous,
+	the craft has powerful CC-Voltaire shields and Volt-Variscan Pulse
+	lasers, earning it the nichname of the &apos;space porcupine&apos;.
+	Not commonly attacked by pirate ships, but a popular craft for
+	freebooters, usually used as a way-station and storage hulk.</p>
+	<table>[o]Dimensions:[/o],[o]206x103x336m[/o];
+        Cargo Capacity:,100 TC;
+        Armaments:,Volt-Variscan Pulse Lasers;
+	Maximum Velocity:,0.20 LM;
+	Inservice Date:,2700 AD Whatt and Pritney ShipConstruct;
+	Crew Number:,20-30;
+	Hull Stress Factor:,TYo 20;
+	Manouevrability:,CF 3;
+	Drive Motors:,4 C40K V Ames Drive Exlon 76NN Model;
+	Hyperspace Capability:,Yes;
+        </table>
+    </Text>
+    <Image name="python"/>
+  </Content>
+  <Next>gui_rattlesnake</Next>
+  <Previous>gui_shuttle</Previous>
+</Page>
+

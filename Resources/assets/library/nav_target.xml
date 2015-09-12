@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Making For Your Target World</Header>
+  <Content>
+    <Text>
+    	<p>Having left the space station you will be in low orbit above the
+    	planet Lave, moving at low velocity. Decrease your velocity to
+    	absolute minimum before coding the astrogation console for
+    	Hyperspace Jump.</p>
+    	<p>During space flight, you can access the four different views
+    	around your ship by tapping the respective section on the scanner,
+    	or by sliding your finger horizontally over the scanner.</p>
+	<InlineImage name="in_flight_buttons"/>
+	<p>Use the button [pb]1[/bp] to display the on board computer. You can
+	use the command console to go to the galactic or local chart and
+	pick a planet in order to set it as your hyperspace target. Caution:
+	Do not forget that your Cobra continues flying while you interact
+	with the computer.</p>
+	<p>When you have selected a target in range of your current
+	hyperspace fuel, the hyperspace button [pb]2[/bp] will appear. Once
+	you tap it, the hyperjump motors will engage after a short delay.
+	</p>
+	<p>On arrival in a new planetary system, after transit from
+	hyperspace, you will find yourself at some distance from your target
+	world. This conforms with GC Flight Law.</p>
+	<p>Even in the safest systems there can be unseen dangers, and you
+	will be well advised to approach orbit space, and the safety of the
+	space station, as quickly as possible. Increase forward velocity to
+	maximum. At this point, you can take full advantage of the torus
+	drive ([pb]3[/bp]). Inter-space jumping does not function (because of
+	interference patterns) if there is another ship, a planet, or a star
+	in the immediate vicinity.</p>
+	<p>Soon your ship&apos;s computer will pick up the beacon signals of
+	the nearest orbital space station and will re-engage the compass to
+	track that instead of the target planet. Once the Cobra is within
+	scanning and protective range of the Coriolis station, the flight
+	grid scanner will begin to track it. Its own defenses are now
+	available for your protection. The scan console will register the
+	letter [bp]S[/pb] as long as the space station is within range.
+	</p>
+    </Text>
+    <Image name="views">
+      <Text>
+      	You can tap the different zones of your flight grid scanner to
+        change the current view. You can look to your right, behind you, to
+        your left, or forward again, by tapping the respective section of
+        the scanner, or by sliding your finger horizontally over the scanner
+        (depending on your personal settings).
+      </Text>
+    </Image>
+  </Content>
+  <Next>nav_intergal</Next>
+  <Previous>nav_console</Previous>
+</Page>
+

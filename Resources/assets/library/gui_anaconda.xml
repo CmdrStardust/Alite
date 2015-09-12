@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Anaconda</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_anaconda"/>
+	<p>The largest known freighter with a cargo bay designed by Beerbaum
+	and ThruSpace Inc., the Anaconda is the only freighter fitted with
+	Dizaoner SpaceWares swing-float platforms. These load-balance
+	metering devices enable the loadmaster to rearrange the cargo within
+	seconds to increase manoeuvrability of the great ship. Equipped only
+	with laser weaponry (the 500 Gigazap front-firing pulse), and
+	sometimes with missiles, the Anaconda range of craft usually have
+	fighter escorts. In trader parlance, the Anaconda is built as strong
+	as a rogue asteroid, and steers like one.</p>
+	<table>[o]Dimensions:[/o],[o]137x110x312m[/o];
+        Cargo Capacity:,750TC;
+        Armaments:,Front-fire Hassoni HiRad Pulse laser[c];
+        ,ColtMaster Starlasers[c];
+        ,Geret Starseeker missile;
+	Maximum Velocity:,0.14 LM;
+	Inservice Date:,2856 AD (RimLiner Galactic);
+	Crew Number:,40-72;
+	Hull Stress Factor:,TJi 57;
+	Manouevrability:,CF 3;
+	Drive Motors:,V&amp;K32.24 Ergmasters[c];
+	,with under-and-over firing tubes;
+	Hyperspace Capability:,Yes;
+        </table>
+    </Text>
+    <Image name="anaconda"/>
+  </Content>
+  <Next>gui_asp</Next>
+  <Previous>gui_adder</Previous>
+</Page>
+
