@@ -44,7 +44,7 @@ public class SpriteObject extends AliteObject implements Geometry {
 	}
 
 	public void render() {
-		sprite.render();
+	  sprite.simpleRender();
 	}
 
 	@Override

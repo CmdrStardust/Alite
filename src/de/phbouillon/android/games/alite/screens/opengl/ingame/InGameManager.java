@@ -1034,8 +1034,8 @@ public class InGameManager implements Serializable {
 				}
 			}
 			AliteLog.d("----Debugging Objects End----", "--------Debugging Objects End--------");
-		}
-		for (DepthBucket bucket: objects) {			
+		}		
+		for (DepthBucket bucket: objects) {
 			if (bucket.near > 0 && bucket.far > 0) {
 				GLES11.glPushMatrix();
 				GLES11.glMatrixMode(GLES11.GL_PROJECTION);

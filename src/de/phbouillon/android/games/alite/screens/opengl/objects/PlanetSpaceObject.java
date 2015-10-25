@@ -42,19 +42,17 @@ public class PlanetSpaceObject extends AliteObject implements Geometry, Serializ
 	private boolean visibleOnHud = false;
 	protected final float [] displayMatrix = new float[16];
 	private transient Alite alite;
-	private boolean preview;
 	
 	public PlanetSpaceObject(Alite alite, SystemData system, boolean preview) {
 		super("Planet");
 		if (system == null) {
 			system = alite.getGenerator().getSystems()[0];
 		}
-		this.preview = preview;
 		final float planetRadius    = preview ? 10000.0f : 30000.0f;
 		final float ringStart       = preview ? 11000.0f : 31000.0f;
 		final float ringSize        = preview ? 25000.0f : 55000.0f;
 		final float cloudStart      = preview ? 10150.0f : 30150.0f;
-		final float atmosphereStart = preview ? 10300.0f : 30300.0f;
+		final float atmosphereStart = preview ? 10300.0f : 30800.0f; //30300.0f;
 		
 		this.alite = alite;
 		if (alite.getGenerator().getCurrentGalaxyFromSeed() == 1 && system.getIndex() == 7) {
@@ -115,27 +113,20 @@ public class PlanetSpaceObject extends AliteObject implements Geometry, Serializ
 		if (clouds != null) {
 			clouds.render();
 		}				
-		GLES11.glEnable(GLES11.GL_DEPTH_TEST);
 		GLES11.glEnable(GLES11.GL_BLEND);
 		GLES11.glDisable(GLES11.GL_CULL_FACE);
-		if (preview) {
-			GLES11.glBlendFunc(GLES11.GL_ONE, GLES11.GL_ONE);
-			atmosphere.render();
-		}
-		
+		GLES11.glBlendFunc(GLES11.GL_ONE, GLES11.GL_ONE);
+		GLES11.glEnable(GLES11.GL_DEPTH_TEST);
+		atmosphere.render();
+
 		GLES11.glEnable(GLES11.GL_LIGHTING);		
 		GLES11.glBlendFunc(GLES11.GL_SRC_ALPHA, GLES11.GL_ONE_MINUS_SRC_ALPHA);
-		if (rings != null) {
+		if (rings != null) {			
 			rings.render();
-			ringShadow.render();
-		}				
+			ringShadow.render();			
+		}	
 		GLES11.glDisable(GLES11.GL_DEPTH_TEST);
 		
-		if (!preview) {
-			GLES11.glBlendFunc(GLES11.GL_ONE, GLES11.GL_ONE);
-			atmosphere.render();		
-			GLES11.glBlendFunc(GLES11.GL_SRC_ALPHA, GLES11.GL_ONE_MINUS_SRC_ALPHA);
-		}
 		GLES11.glEnable(GLES11.GL_CULL_FACE);
 		alite.getTextureManager().setTexture(null);				
 	}

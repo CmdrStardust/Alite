@@ -42,7 +42,7 @@ import de.phbouillon.android.games.alite.screens.opengl.ingame.FlightScreen;
 //This screen never needs to be serialized, as it is not part of the InGame state.
 @SuppressWarnings("serial")
 public class OptionsScreen extends AliteScreen {
-	public static boolean SHOW_DEBUG_MENU = false;
+	public static boolean SHOW_DEBUG_MENU = !false;
 	
 	private Button resetGame;
 	private Button about;

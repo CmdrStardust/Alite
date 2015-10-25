@@ -57,17 +57,11 @@ public class CougarScreen extends AliteScreen {
 	private final float [] lightDiffuse  = { 0.4f, 0.4f, 0.8f, 1.0f };
 	private final float [] lightSpecular = { 0.5f, 0.5f, 1.0f, 1.0f };
 	private final float [] lightPosition = { 100.0f, 30.0f, -10.0f, 1.0f };
-
-	private final float [] matAmbient   = { 0.8f, 0.8f, 0.8f, 0.0f };
-	private final float [] matDiffuse   = { 0.6f, 0.6f, 0.6f, 0.0f };
-	private final float [] matSpecular  = { 1.0f, 1.0f, 1.0f, 0.0f };
 	
 	private final float [] sunLightAmbient  = {1.0f, 1.0f, 1.0f, 1.0f};
 	private final float [] sunLightDiffuse  = {1.0f, 1.0f, 1.0f, 1.0f};
 	private final float [] sunLightSpecular = {1.0f, 1.0f, 1.0f, 1.0f};
 	private final float [] sunLightPosition = {0.0f, 0.0f, 0.0f, 1.0f};	
-
-	private final float [] matShininess = { 1.0f };
 
 	private MissionLine missionLine;	
 	private int lineIndex = 0;
@@ -158,11 +152,6 @@ public class CougarScreen extends AliteScreen {
 
 		GLES11.glEnable(GLES11.GL_LIGHTING);
 		
-		GLES11.glMaterialfv(GLES11.GL_FRONT, GLES11.GL_AMBIENT, matAmbient, 0);
-		GLES11.glMaterialfv(GLES11.GL_FRONT, GLES11.GL_DIFFUSE, matDiffuse, 0);
-	    GLES11.glMaterialfv(GLES11.GL_FRONT, GLES11.GL_SPECULAR, matSpecular, 0);
-	    GLES11.glMaterialfv(GLES11.GL_FRONT, GLES11.GL_POSITION, matShininess, 0);
-
 		GLES11.glClear(GLES11.GL_COLOR_BUFFER_BIT);
 		GLES11.glHint(GLES11.GL_PERSPECTIVE_CORRECTION_HINT, GLES11.GL_NICEST);
 		GLES11.glHint(GLES11.GL_POLYGON_SMOOTH_HINT, GLES11.GL_NICEST);

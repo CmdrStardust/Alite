@@ -37,7 +37,6 @@ import de.phbouillon.android.framework.impl.gl.GlUtils;
 import de.phbouillon.android.framework.math.Vector3f;
 import de.phbouillon.android.games.alite.Alite;
 import de.phbouillon.android.games.alite.AliteLog;
-import de.phbouillon.android.games.alite.AliteStartManager;
 import de.phbouillon.android.games.alite.Assets;
 import de.phbouillon.android.games.alite.Button;
 import de.phbouillon.android.games.alite.ScreenCodes;
@@ -90,6 +89,7 @@ import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.Yell
 //This screen never needs to be serialized, as it is not part of the InGame state.
 @SuppressWarnings("serial")
 public class ShipIntroScreen extends AliteScreen {
+  private static final boolean ON_SIMULATOR = true;
 	private static final boolean DEBUG_EXHAUST = false;		
 	private static final boolean ONLY_CHANGE_SHIPS_AFTER_SWEEP = false;
 	
@@ -102,11 +102,6 @@ public class ShipIntroScreen extends AliteScreen {
 	private final float [] sunLightDiffuse  = {1.0f, 1.0f, 1.0f, 1.0f};
 	private final float [] sunLightSpecular = {1.0f, 1.0f, 1.0f, 1.0f};
 	private final float [] sunLightPosition = {0.0f, 0.0f, 0.0f, 1.0f};	
-
-	private final float [] matAmbient   = { 0.8f, 0.8f, 0.8f, 0.0f };
-	private final float [] matDiffuse   = { 0.6f, 0.6f, 0.6f, 0.0f };
-	private final float [] matSpecular  = { 1.0f, 1.0f, 1.0f, 0.0f };
-	private final float [] matShininess = { 1.0f };
 	
 	private SkySphereSpaceObject skysphere;
 	private AliteObject currentShip;
@@ -167,14 +162,14 @@ public class ShipIntroScreen extends AliteScreen {
 		GlUtils.setViewport(visibleArea);
 		GLES11.glDisable(GLES11.GL_FOG);
 		GLES11.glPointSize(1.0f);
-        GLES11.glLineWidth(1.0f);
+    GLES11.glLineWidth(1.0f);
 
-        GLES11.glBlendFunc(GLES11.GL_ONE, GLES11.GL_ONE_MINUS_SRC_ALPHA);
-        GLES11.glDisable(GLES11.GL_BLEND);
+    GLES11.glBlendFunc(GLES11.GL_ONE, GLES11.GL_ONE_MINUS_SRC_ALPHA);
+    GLES11.glDisable(GLES11.GL_BLEND);
         
 		GLES11.glMatrixMode(GLES11.GL_PROJECTION);
 		GLES11.glLoadIdentity();		
-		GlUtils.gluPerspective(game, 45.0f, ratio, 1.0f, 100000.0f);
+		GlUtils.gluPerspective(game, 45.0f, ratio, 1.0f, 900000.0f);
 		GLES11.glMatrixMode(GLES11.GL_MODELVIEW);
 		GLES11.glLoadIdentity();
 
@@ -195,11 +190,6 @@ public class ShipIntroScreen extends AliteScreen {
 
 		GLES11.glEnable(GLES11.GL_LIGHTING);
 		
-		GLES11.glMaterialfv(GLES11.GL_FRONT, GLES11.GL_AMBIENT, matAmbient, 0);
-		GLES11.glMaterialfv(GLES11.GL_FRONT, GLES11.GL_DIFFUSE, matDiffuse, 0);
-	    GLES11.glMaterialfv(GLES11.GL_FRONT, GLES11.GL_SPECULAR, matSpecular, 0);
-	    GLES11.glMaterialfv(GLES11.GL_FRONT, GLES11.GL_POSITION, matShininess, 0);
-
 		GLES11.glClear(GLES11.GL_COLOR_BUFFER_BIT);
 		GLES11.glHint(GLES11.GL_PERSPECTIVE_CORRECTION_HINT, GLES11.GL_NICEST);
 		GLES11.glHint(GLES11.GL_POLYGON_SMOOTH_HINT, GLES11.GL_NICEST);
@@ -229,6 +219,7 @@ public class ShipIntroScreen extends AliteScreen {
 				displayMode = DisplayMode.ZOOM_OUT;
 			}
 			if (touch.x2 > 0) {
+			  AliteLog.d("TouchSweep", touch.x + ", " + touch.x2 + ", " + touch.y + ", " + touch.y2);
 				selectPreviousShip = true;
 			}
 		}	
@@ -305,7 +296,7 @@ public class ShipIntroScreen extends AliteScreen {
 		GLES11.glEnable(GLES11.GL_CULL_FACE);				
 		GLES11.glMatrixMode(GLES11.GL_PROJECTION);
 		GLES11.glLoadIdentity();
-		GlUtils.gluPerspective(game, 45.0f, aspectRatio, 1.0f, 100000.0f);
+		GlUtils.gluPerspective(game, 45.0f, aspectRatio, 1.0f, 900000.0f);
 		GLES11.glMatrixMode(GLES11.GL_MODELVIEW);		
 		GLES11.glLoadIdentity();
 		
@@ -540,7 +531,7 @@ public class ShipIntroScreen extends AliteScreen {
 	private AliteObject getShipForCurrentIndex() {
 		Alite alite = (Alite) game;
 		switch (currentShipIndex) {
-			case  0: if (AliteStartManager.IS_NEXUS_9_VERSION) {
+			case  0: if (ON_SIMULATOR) {
 						currentShipIndex = 1;		 
 						return new CobraMkIII(alite);						
 					 } else {
@@ -589,6 +580,7 @@ public class ShipIntroScreen extends AliteScreen {
 	}
 	
 	private AliteObject getNextShip() {
+	  AliteLog.d("SPS", "SPS == " + selectPreviousShip + ", CSI == " + currentShipIndex);
 		if (selectPreviousShip) {
 			selectPreviousShip = false;
 			currentShipIndex--;

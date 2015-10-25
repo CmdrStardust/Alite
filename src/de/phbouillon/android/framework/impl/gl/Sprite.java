@@ -174,14 +174,14 @@ public class Sprite implements Serializable {
 		GLES11.glTexCoordPointer(2, GLES11.GL_FLOAT, 0, texCoordBuffer);
 
 		alite.getTextureManager().setTexture(textureFilename);
-
+		
 		GLES11.glDisable(GLES11.GL_CULL_FACE);
 		GLES11.glEnable(GLES11.GL_BLEND);
 		GLES11.glBlendFunc(GLES11.GL_ONE, GLES11.GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	public void render() {
-		setUp();
+	  setUp();
 		GLES11.glDrawArrays(GLES11.GL_TRIANGLE_STRIP, 0, 4);
 		cleanUp();
 	}

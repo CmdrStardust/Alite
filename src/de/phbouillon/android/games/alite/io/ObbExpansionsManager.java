@@ -92,8 +92,11 @@ public class ObbExpansionsManager {
             AliteLog.d(TAG, "Patch file not found");
         }
     }
-
-        
+   
+    private void unmountMain(OnObbStateChangeListener listener) {
+        sm.unmountObb(mainFile.getAbsolutePath(), true, listener);        
+    }
+    
     // Making the listener into an instance variable ensures that the reference is not lost 
     // and zeroed in the storage manager before it can be used..
     OnObbStateChangeListener mainObbStateChangeListener = new OnObbStateChangeListener() {
@@ -128,7 +131,6 @@ public class ObbExpansionsManager {
 
     public String getMainRoot() {
         String result = sm.getMountedObbPath(mainFile.getAbsolutePath());
-        AliteLog.d("ObbExpansionsManager.GMR", "GMR == " + result);
         if (result == null) {
         	return null;
         }
@@ -150,13 +152,17 @@ public class ObbExpansionsManager {
         return instance;
     }
 
+    public static void destroyInstance(OnObbStateChangeListener listener) {
+        instance.unmountMain(listener);
+        instance = null;
+    }
+    
     /**
      * Use this method to get existing instance of manager
      *
      * @return instance of manager. If null - call createNewInstance to create new one
      */
     public static ObbExpansionsManager getInstance() {
-    	AliteLog.d("ObbExpansionsManager.GI", "I == " + instance);
         return instance;
     }
 

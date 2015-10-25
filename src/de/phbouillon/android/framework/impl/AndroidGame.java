@@ -129,18 +129,22 @@ public abstract class AndroidGame extends Activity implements Game, Renderer {
 	@Override
 	public void onResume() {
 		super.onResume();
+    if (glView != null) { 
+      glView.onResume();
+    }
+    if (screen != null) {
+      screen.resume();
+    } 
 		state = GLGameState.Running;
-		if (graphics != null && getCurrentView() == glView) {
-			glView.onResume();
-		}		
-		if (screen != null) {
-			screen.resume();
-		} 
+//		if (graphics != null && getCurrentView() == glView) {
+//      glView.onResume();
+//    }
 	}
 	
 	@Override
 	public void onPause() {
 		super.onPause();	
+		glView.onPause();
 		SoundManager.stopAll();
 		if (screen != null) {			
 			if (fatalException == null) {
@@ -158,8 +162,7 @@ public abstract class AndroidGame extends Activity implements Game, Renderer {
 			state = GLGameState.Finished;
 		} else {
 			state = GLGameState.Paused;
-		}
-		glView.onPause();
+		}		
 		if (isFinishing() && screen != null) {
 			screen.dispose();
 			screen = null;
@@ -266,7 +269,7 @@ public abstract class AndroidGame extends Activity implements Game, Renderer {
 		graphics = new AndroidGraphics(fileIO, scaleFactor, aspect, textureManager);
 		
 		screen = getStartScreen();
-		glView.onResume();
+//		glView.onResume();
 		afterSurfaceCreated();
 
 		AliteLog.d("AndroidGame", "Calling activation on " + screen.getClass().getName());

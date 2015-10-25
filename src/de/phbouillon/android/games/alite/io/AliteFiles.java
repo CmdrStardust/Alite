@@ -19,6 +19,7 @@ package de.phbouillon.android.games.alite.io;
  */
 
 import android.content.Context;
+import android.os.storage.OnObbStateChangeListener;
 import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.screens.canvas.tutorial.IMethodHook;
 
@@ -47,5 +48,27 @@ public class AliteFiles {
 				errorHook.execute(0);
 			}
 		});
+	}
+	
+	public static void performUnmount() {
+	  if (ObbExpansionsManager.getInstance() == null) {
+	    return;
+	  }
+	  AliteLog.d("Performing Unmount", "Unmounting obb");
+	  ObbExpansionsManager.destroyInstance(new OnObbStateChangeListener() {
+	    public void onObbStateChange(String path, int state) {
+        super.onObbStateChange(path, state);
+        switch (state) {
+          case MOUNTED: AliteLog.e("Obb UNmount callback", "New OBB state is mounted! Fishy..."); break;
+          case UNMOUNTED: AliteLog.d("Obb UNmount callback", "OBB unmounted successfully."); break;
+          case ERROR_INTERNAL: AliteLog.e("Obb UNmount callback", "Internal Error"); break;
+          case ERROR_COULD_NOT_MOUNT: AliteLog.e("Obb UNmount callback", "Could not mount"); break;
+          case ERROR_COULD_NOT_UNMOUNT: AliteLog.e("Obb UNmount callback", "Could not unmount"); break;
+          case ERROR_NOT_MOUNTED: AliteLog.e("Obb UNmount callback", "OBB was not mounted"); break;
+          case ERROR_ALREADY_MOUNTED: AliteLog.e("Obb UNmount callback", "OBB already mounted"); break;
+          case ERROR_PERMISSION_DENIED: AliteLog.e("Obb UNmount callback", "Permission denied"); break;        
+        }
+	    }
+    });
 	}
 }

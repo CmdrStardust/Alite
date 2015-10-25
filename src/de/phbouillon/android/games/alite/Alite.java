@@ -70,7 +70,7 @@ import de.phbouillon.android.games.alite.screens.opengl.ingame.LaserManager;
 import de.phbouillon.android.games.alite.screens.opengl.sprites.AliteFont;
 
 public class Alite extends AndroidGame {
-	public static final String VERSION_STRING = "1.1.2 " + (AliteStartManager.HAS_EXTENSION_APK ? "OBB" : "SFI") + (AliteStartManager.IS_NEXUS_9_VERSION ? " N9" : ""); 
+	public static final String VERSION_STRING = "1.2 " + (AliteStartManager.HAS_EXTENSION_APK ? "OBB" : "SFI"); 
 	public static final String LOG_IS_INITIALIZED = "logIsInitialized";
 	
 	private Player player;
@@ -389,8 +389,8 @@ public class Alite extends AndroidGame {
 			} catch (InterruptedException e) {
 			}
 		}
-		AliteLog.e("OnStop", "Stopping Alite Done.");		
-		super.onStop();
+		AliteLog.e("OnStop", "Stopping Alite Done.");				
+		super.onStop();		
 	}
 
 	public synchronized void setSaving(boolean b) {
@@ -407,19 +407,21 @@ public class Alite extends AndroidGame {
 	}
 	
 	@Override
-	public void onResume() {		
-		textureManager.clear();
+	public void onResume() {	
+		if (textureManager != null) {
+			textureManager.clear();
+		}
 		super.onResume();
 	}
 
 	@Override
-	public void afterSurfaceCreated() {
-		navigationBar = new NavigationBar(this);
-		navigationBar.add("Launch", Assets.launchIcon, null);
-		int intergalId = navigationBar.add("Gal. Jump", Assets.launchIcon, null);
-		navigationBar.setVisible(intergalId, false);
-		navigationBar.add("Status", Assets.statusIcon, "StatusScreen");
-		navigationBar.add("Buy", Assets.buyIcon, "BuyScreen");
+  public void afterSurfaceCreated() {
+    navigationBar = new NavigationBar(this);
+    navigationBar.add("Launch", Assets.launchIcon, null);
+    int intergalId = navigationBar.add("Gal. Jump", Assets.launchIcon, null);
+    navigationBar.setVisible(intergalId, false);
+    navigationBar.add("Status", Assets.statusIcon, "StatusScreen");
+    navigationBar.add("Buy", Assets.buyIcon, "BuyScreen");
 		navigationBar.add("Inventory", Assets.inventoryIcon, "InventoryScreen");
 		navigationBar.add("Equip", Assets.equipIcon, "EquipmentScreen");
 		navigationBar.add("Galaxy", Assets.galaxyIcon, "GalaxyScreen");

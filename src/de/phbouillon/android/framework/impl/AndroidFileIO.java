@@ -37,7 +37,6 @@ import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.os.Environment;
 import de.phbouillon.android.framework.FileIO;
-import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.AliteStartManager;
 import de.phbouillon.android.games.alite.io.ObbExpansionsManager;
 
@@ -362,7 +361,6 @@ public class AndroidFileIO implements FileIO {
 			if (!(new File(path).exists())) {
 				throw new FileNotFoundException(path + " not found.");
 			}
-			AliteLog.d("Path (valid)", "Path == " + path);
 			return path;
 		} 
 		throw new IOException("Cannot access local assets via path. Use AssetDescriptor instead.");
