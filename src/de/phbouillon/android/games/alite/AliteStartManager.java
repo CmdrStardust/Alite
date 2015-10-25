@@ -46,7 +46,7 @@ import de.phbouillon.android.games.alite.io.AliteFiles;
 import de.phbouillon.android.games.alite.screens.canvas.tutorial.IMethodHook;
 
 public class AliteStartManager extends Activity implements IDownloaderClient {
-	public static final boolean HAS_EXTENSION_APK = false;
+	public static final boolean HAS_EXTENSION_APK = true;
 	public static final int EXTENSION_FILE_VERSION = 2180;
 	private static final long EXTENSION_FILE_LENGTH = 427117633l;
 	                                                  

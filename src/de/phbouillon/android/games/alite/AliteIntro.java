@@ -84,22 +84,23 @@ public class AliteIntro extends Activity implements OnClickListener {
 	}
 	
 	private int determineIntroId(int quality) {
-		switch (quality) {
-			case 0: AliteLog.d("Video Playback", "Using video resolution 1920x1080");
-			        return R.raw.alite_intro_b1920;
-			case 1: AliteLog.d("Video Playback", "Using video resolution 1280x720");
-				    return R.raw.alite_intro_b1280;
-			case 2:	AliteLog.d("Video Playback", "Using video resolution 640x360");
-					return R.raw.alite_intro_b640;					
-			case 3: AliteLog.d("Video Playback", "Using video resolution 320x180");
-					return R.raw.alite_intro_b320;
-			case 4: AliteLog.d("Video Playback", "Failsafe mode 1: 288");
-					return R.raw.alite_intro_288;
-			case 5: AliteLog.d("Video Playback", "Failsafe mode 2: 240");
-					return R.raw.alite_intro_b240;
-			default: AliteLog.d("Video Playback", "No mode found. Giving up :(.");
-					 return -1;
-		}
+//		switch (quality) {
+//			case 0: AliteLog.d("Video Playback", "Using video resolution 1920x1080");
+//			        return R.raw.alite_intro_b1920;
+//			case 1: AliteLog.d("Video Playback", "Using video resolution 1280x720");
+//				    return R.raw.alite_intro_b1280;
+//			case 2:	AliteLog.d("Video Playback", "Using video resolution 640x360");
+//					return R.raw.alite_intro_b640;					
+//			case 3: AliteLog.d("Video Playback", "Using video resolution 320x180");
+//					return R.raw.alite_intro_b320;
+//			case 4: AliteLog.d("Video Playback", "Failsafe mode 1: 288");
+//					return R.raw.alite_intro_288;
+//			case 5: AliteLog.d("Video Playback", "Failsafe mode 2: 240");
+//					return R.raw.alite_intro_b240;
+//			default: AliteLog.d("Video Playback", "No mode found. Giving up :(.");
+//					 return -1;
+//		}
+		return -1;
 	}
 
 	private String determineIntroFilename(int quality) {
@@ -175,7 +176,7 @@ public class AliteIntro extends Activity implements OnClickListener {
 		if (Settings.introVideoQuality == 255) {
 			cyclingThroughVideoQualities = 0;
 			AliteLog.d("Video Playback", "Using video resolution 1920x1080");
-			introId = R.raw.alite_intro_b1920;
+			introId = -1; //R.raw.alite_intro_b1920;
 		} else {
 			introId = determineIntroId(Settings.introVideoQuality);
 		}

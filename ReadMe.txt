@@ -1,4 +1,4 @@
-Alite v. 1.1.2 by Philipp Bouillon and Duane McDonnell
+Alite v. 1.2 by Philipp Bouillon and Duane McDonnell
 
 About
 -----
