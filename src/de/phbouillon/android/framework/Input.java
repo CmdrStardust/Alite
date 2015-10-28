@@ -48,6 +48,8 @@ public interface Input {
 	public float getAccelX();
 	public float getAccelY();
 	public float getAccelZ();
+	public float getGyroPitch();
+	public float getGyroRoll();
 	public Vector <TouchEvent> getTouchEvents();
 	public Vector <TouchEvent> getAndRetainTouchEvents();
 	public void dispose();
