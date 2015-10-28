@@ -28,13 +28,14 @@ import android.view.OrientationEventListener;
 import android.view.WindowManager;
 import de.phbouillon.android.games.alite.Settings;
 
-public class AccelerometerHandler implements SensorEventListener {
-	private float [] accelValues = new float[3];
+public class GyroscopeHandler implements SensorEventListener {
+	private float [] values = new float[3];
 	private float [] adjustedValues = new float[3];
 	private final AndroidGame game;
 	private int defaultOrientation;
 	private boolean reversedLandscape = false;
 	private final DeviceOrientationManager deviceOrientationManager;
+	private final float filterThreshold = 0.01f; // Filter the sensor noise
 	
 	private class DeviceOrientationManager extends OrientationEventListener {
 		public DeviceOrientationManager() {
@@ -82,23 +83,23 @@ public class AccelerometerHandler implements SensorEventListener {
 					reversedLandscape = orientation > 60 && orientation < 120;
 				} else {
 					reversedLandscape = orientation < 240 || orientation > 300;
-				}					
+				}
 			}
 		}
-	};		
+	};
 
-	public AccelerometerHandler(AndroidGame game) {
+	public GyroscopeHandler(AndroidGame game) {
 		this.game = game;
-		defaultOrientation = getDeviceDefaultOrientation();		
+		defaultOrientation = getDeviceDefaultOrientation();
 		deviceOrientationManager = new DeviceOrientationManager();
 		SensorManager manager = (SensorManager) game.getSystemService(Context.SENSOR_SERVICE);
-		if (manager.getSensorList(Sensor.TYPE_ACCELEROMETER).size() > 0) {
-			Sensor accelerometer = manager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
-			manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+		if (manager.getSensorList(Sensor.TYPE_GYROSCOPE).size() > 0) {
+			Sensor gyroscope = manager.getSensorList(Sensor.TYPE_GYROSCOPE).get(0);
+			manager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_GAME);
 		} 
 		deviceOrientationManager.enable();
 	}
-	   	
+	
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// Nothing to do		
@@ -108,51 +109,43 @@ public class AccelerometerHandler implements SensorEventListener {
 		return ((WindowManager) game.getSystemService(Activity.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
 	}
 
-	public void adjustAccelOrientation(float [] eventValues)  { 
-		if (defaultOrientation == 0 || defaultOrientation == 2) {
-			// Landscape
-			adjustedValues[0] = eventValues[0];
-			adjustedValues[1] = -eventValues[2];
-			adjustedValues[2] = eventValues[1];
+	public void adjustOrientation()  { 
+		if (reversedLandscape) {
+			adjustedValues[0] = -values[0];
+			adjustedValues[1] = -values[1];
+			adjustedValues[2] = values[2];
 		} else {
-			// Portrait
-			adjustedValues[0] = eventValues[0];
-			adjustedValues[1] = eventValues[1];
-			adjustedValues[2] = eventValues[2];
+			adjustedValues[0] = values[0];
+			adjustedValues[1] = values[1];
+			adjustedValues[2] = values[2];
 		}
 	}
-		
+
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 		switch (event.sensor.getType()) {
-			case Sensor.TYPE_ACCELEROMETER:
+			case Sensor.TYPE_GYROSCOPE:
 				for (int i = 0; i < 3; i++) {
-					accelValues[i] = event.values[i];
+					if (Math.abs(event.values[i]) > filterThreshold) {
+						values[i] += event.values[i];
+					}
 				}
 				break;
 		}
-
-		float roll  = (float) Math.atan2(accelValues[0], accelValues[2]);
-		float pitch = (float) Math.atan2(accelValues[1], accelValues[2]);
-
-		accelValues[2] = -roll;
-		accelValues[1] = -pitch;
-		accelValues[0] = 0;
-		adjustAccelOrientation(accelValues);
-	}
-		
-	public float getAccelX() {
-		return reversedLandscape ? -adjustedValues[0] : adjustedValues[0];
+		adjustOrientation();
 	}
 
-	public float getAccelY() {
-		return reversedLandscape ? -adjustedValues[1] : adjustedValues[1];
+	public float getPitch() {
+		values[1] = 0.0f;
+		return -adjustedValues[1];
 	}
-	
-	public float getAccelZ() {
-		return reversedLandscape ? -adjustedValues[2] : adjustedValues[2];
+
+	public float getRoll() {
+		values[2] = 0.0f;
+		values[0] = 0.0f;
+		return adjustedValues[2] + adjustedValues[0];
 	}
-	
+
 	public void dispose() {
 		deviceOrientationManager.disable();
 	}
