@@ -64,14 +64,7 @@ public class ObbExpansionsManager {
         mainFile = new File(Environment.getExternalStorageDirectory() + "/Android/obb/" + packageName + "/"
                 + "main." + packageVersion + "." + packageName + ".obb");
 
-        AliteLog.d(TAG, "Check if main file already mounted: " + sm.isObbMounted(mainFile.getAbsolutePath()));
-        if (sm.isObbMounted(mainFile.getAbsolutePath())) {
-            AliteLog.d(TAG, "Main file already mounted.");
-            main = sm.getMountedObbPath(mainFile.getAbsolutePath());
-            listener.onMountSuccess();
-        } else {
-            mountMain();
-        }
+        mountMain();
 
         if (!mainFile.exists()) {
             AliteLog.d(TAG, "No expansion files found!");

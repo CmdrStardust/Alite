@@ -406,11 +406,18 @@ public class InGameManager implements Serializable {
 		if (hud != null) {
 			deltaOrientation.z = hud.getZ();
 			deltaOrientation.y = hud.getY();
+			if (Settings.gyroscopeEnabled) {
+				deltaOrientation.z += alite.getInput().getGyroPitch() * 1.0f;
+				deltaOrientation.y += alite.getInput().getGyroRoll() * 1.0f;
+				deltaOrientation.z = clamp(deltaOrientation.z, -2.0f, 2.0f);
+				deltaOrientation.y = clamp(deltaOrientation.y, -2.0f, 2.0f);
+		}
+
 			deltaYawRollPitch.z = (float) (30.0f * Math.PI / 180.0f) * deltaOrientation.z;
 			deltaYawRollPitch.y = (float) (30.0f * Math.PI / 180.0f) * deltaOrientation.y;
-		} 		
+		}
 	}
-		
+
 	private void updateShipOrientation() {
 		if (!playerControl) {
 			return;

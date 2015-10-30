@@ -26,10 +26,12 @@ import de.phbouillon.android.framework.Input;
 
 public class AndroidInput implements Input {
 	private final AccelerometerHandler accelHandler;
+	private final GyroscopeHandler gyroHandler;
 	private final TouchHandler touchHandler;
 		
 	public AndroidInput(AndroidGame game, View view, float scaleX, float scaleY, int offsetX, int offsetY) {
 		accelHandler = new AccelerometerHandler(game);
+		gyroHandler = new GyroscopeHandler(game);
 		int sdkVersion = VERSION.SDK_INT;		
 		touchHandler = sdkVersion < 5 ? 
 				new SingleTouchHandler(view, scaleX, scaleY, offsetX, offsetY) :
@@ -72,6 +74,16 @@ public class AndroidInput implements Input {
 	@Override
 	public float getAccelZ() {
 		return accelHandler.getAccelZ();
+	}
+
+	@Override
+	public float getGyroPitch() {
+		return gyroHandler.getPitch();
+	}
+
+	@Override
+	public float getGyroRoll() {
+		return gyroHandler.getRoll();
 	}
 
 	@Override

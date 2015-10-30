@@ -60,6 +60,7 @@ public class Settings {
 	public static float voiceVolume = 1.0f;
 	public static ShipControl controlMode = ShipControl.ACCELEROMETER;
 	public static int controlPosition = 1;
+	public static boolean gyroscopeEnabled = true;
 	public static int introVideoQuality = 255;
 	public static boolean unlimitedFuel = false;
 	public static boolean enterInSafeZone = false;
@@ -130,6 +131,7 @@ public class Settings {
 			colorScheme = Integer.parseInt(in.readLine());
 			targetBox = Boolean.parseBoolean(in.readLine());
 			autoId = Boolean.parseBoolean(in.readLine());
+			gyroscopeEnabled = Boolean.parseBoolean(in.readLine());
 		} catch (Throwable t) {
 			// Ignore
 		} finally {
@@ -183,6 +185,7 @@ public class Settings {
 			out.write(Integer.toString(colorScheme) + "\n");
 			out.write(Boolean.toString(targetBox) + "\n");
 			out.write(Boolean.toString(autoId) + "\n");
+			out.write(Boolean.toString(gyroscopeEnabled) + "\n");
 		} catch (Exception e) {
 			// Ignore
 		} finally {

@@ -41,6 +41,7 @@ import de.phbouillon.android.games.alite.screens.canvas.tutorial.TutIntroduction
 public class ControlOptionsScreen extends OptionsScreen {
 	private Button shipControlMode;
 	private Button controlDisplaySide;
+	private Button controlUseGyroscope;
 	private Button keyboardLayout;
 	private Button dockingSpeed;
 	private Button laserAutoFire;
@@ -60,8 +61,10 @@ public class ControlOptionsScreen extends OptionsScreen {
 	@Override
 	public void activate() {
 		shipControlMode       = createButton(0, "Ship Control: " + Settings.controlMode.getDescription());
-		controlDisplaySide    = createButton(1, computeControlDisplaySideText()); 
+		controlDisplaySide    = createSmallButton(1, true, computeControlDisplaySideText());
 		controlDisplaySide.setVisible(Settings.controlMode != ShipControl.ACCELEROMETER);
+		controlUseGyroscope   = createSmallButton(1, false, "Gyroscope: " + (Settings.gyroscopeEnabled ? "On" : "Off"));
+		controlUseGyroscope.setVisible(Settings.controlMode != ShipControl.ACCELEROMETER);
 		
 		autoId                = createSmallButton(2, true, "Auto Id: " + (Settings.autoId ? "On" : "Off"));
 		buttonPositionOptions = createSmallButton(2, false, "Configure Button Positions");
@@ -96,6 +99,7 @@ public class ControlOptionsScreen extends OptionsScreen {
 		displayTitle("Control Options");
 		shipControlMode.render(g);
 		controlDisplaySide.render(g);
+		controlUseGyroscope.render(g);
 		autoId.render(g);
 		buttonPositionOptions.render(g);
 		dockingSpeed.render(g);
@@ -124,11 +128,18 @@ public class ControlOptionsScreen extends OptionsScreen {
 				shipControlMode.setText("Ship Control: " + Settings.controlMode.getDescription());
 				controlDisplaySide.setVisible(Settings.controlMode != ShipControl.ACCELEROMETER);
 				controlDisplaySide.setText(computeControlDisplaySideText());
+				controlUseGyroscope.setVisible(Settings.controlMode != ShipControl.ACCELEROMETER);
+				controlUseGyroscope.setText("Gyroscope: " + (Settings.gyroscopeEnabled ? "On" : "Off"));
 				Settings.save(game.getFileIO());
 			} else if (controlDisplaySide.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);
-                Settings.controlPosition = -Settings.controlPosition + 1;
-                controlDisplaySide.setText(computeControlDisplaySideText());
+				Settings.controlPosition = -Settings.controlPosition + 1;
+				controlDisplaySide.setText(computeControlDisplaySideText());
+				Settings.save(game.getFileIO());
+			} else if (controlUseGyroscope.isTouched(touch.x, touch.y)) {
+				SoundManager.play(Assets.click);
+				Settings.gyroscopeEnabled = !Settings.gyroscopeEnabled;
+				controlUseGyroscope.setText("Gyroscope: " + (Settings.gyroscopeEnabled ? "On" : "Off"));
 				Settings.save(game.getFileIO());
 			} else if (autoId.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);
