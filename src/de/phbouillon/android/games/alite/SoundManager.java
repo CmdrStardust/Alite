@@ -89,6 +89,7 @@ public class SoundManager {
 		stopInternal(Assets.altitudeLow);
 		stopInternal(Assets.error);
 		stopInternal(Assets.fireLaser);
+		stopInternal(Assets.torus);
 		stopInternal(Assets.fireMissile);
 		stopInternal(Assets.hullDamage);
 		stopInternal(Assets.kaChing);

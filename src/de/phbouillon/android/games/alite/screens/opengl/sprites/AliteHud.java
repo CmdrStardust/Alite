@@ -356,11 +356,14 @@ public class AliteHud extends Sprite implements Serializable {
 	}
 	
 	public void mapDirections(boolean left, boolean right, boolean up, boolean down) {
+		boolean u = Settings.reversePitch ? down : up;
+		boolean d = Settings.reversePitch ? up : down;
+		
 		if (controlPad != null) {
-			controlPad.setActiveIndex(left, right, up, down);
+			controlPad.setActiveIndex(left, right, u, d);
 		}
 		if (controlKeys != null) {
-			controlKeys.setHighlight(left, right, up, down);
+			controlKeys.setHighlight(left, right, u, d);
 		}
 	}
 	

@@ -142,7 +142,7 @@ public class AndroidGraphics implements Graphics {
 			float middleY = newHeight / 2.0f;
 
 			scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
-			
+						
 			canvas.setBitmap(scaledBitmap);
 			canvas.setMatrix(scaleMatrix);
 			canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, filterPaint);
@@ -200,7 +200,7 @@ public class AndroidGraphics implements Graphics {
 	
 	private final int determineTextureSize(int size) {
 		int tSize = 64;
-		while (tSize < size && tSize < 2048) {
+		while (tSize < size && tSize < 4096) {
 			tSize <<= 1;
 		}
 		return tSize;

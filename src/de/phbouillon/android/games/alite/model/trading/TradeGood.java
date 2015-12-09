@@ -27,15 +27,16 @@ import de.phbouillon.android.games.alite.AliteLog;
 public class TradeGood implements Serializable {
 	private static final long serialVersionUID = 5358106266043560822L;
 
-	private final int    basePrice;
-	private final int    gradient;
-	private final int    baseQuantity;
-	private final int    maskByte;
-	private final float  legalityType;
-	private final Unit   unit;
-	private final String name;
-
-	public TradeGood(int basePrice, int gradient, int baseQuantity, int maskByte, Unit unit, String name) {
+	private final int       basePrice;
+	private final int       gradient;
+	private final int       baseQuantity;
+	private final int       maskByte;
+	private final float     legalityType;
+	private final Unit      unit;
+	private final String    name;
+	private final int    [] averagePrice;
+	
+	public TradeGood(int basePrice, int gradient, int baseQuantity, int maskByte, Unit unit, String name, int ...averagePrice) {
 		this.basePrice    = basePrice;
 		this.gradient     = gradient;
 		this.baseQuantity = baseQuantity;
@@ -43,9 +44,10 @@ public class TradeGood implements Serializable {
 		this.unit         = unit;
 		this.name         = name;
 		this.legalityType = 0;
+		this.averagePrice = averagePrice;
 	}
 
-	public TradeGood(int basePrice, int gradient, int baseQuantity, int maskByte, float legalityType, Unit unit, String name) {
+	public TradeGood(int basePrice, int gradient, int baseQuantity, int maskByte, float legalityType, Unit unit, String name, int ...averagePrice) {
 		this.basePrice    = basePrice;
 		this.gradient     = gradient;
 		this.baseQuantity = baseQuantity;
@@ -53,6 +55,7 @@ public class TradeGood implements Serializable {
 		this.unit         = unit;
 		this.name         = name;
 		this.legalityType = legalityType;
+		this.averagePrice = averagePrice;
 	}
 	
 	private void writeObject(ObjectOutputStream out)
@@ -91,5 +94,9 @@ public class TradeGood implements Serializable {
 	
 	public float getLegalityType() {
 		return legalityType;
+	}
+	
+	public int getAveragePrice(int galaxyNumber) {
+		return galaxyNumber > 0 && galaxyNumber < 9 ? averagePrice[galaxyNumber] : averagePrice[0];
 	}
 }

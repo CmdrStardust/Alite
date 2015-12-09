@@ -209,7 +209,9 @@ public class InGameHelper implements Serializable {
 	}
 
 	final void scoop(SpaceObject cargo) {
-		if (!alite.getCobra().isEquipmentInstalled(EquipmentStore.fuelScoop)) {
+		// Fuel scoop must be installed and cargo must be in the lower half of the screen...
+		if (!alite.getCobra().isEquipmentInstalled(EquipmentStore.fuelScoop) ||
+		     cargo.getDisplayMatrix()[13] >= 0) {
 			ramCargo(cargo);
 			if (scoopCallback != null) {
 				scoopCallback.rammed(cargo);
@@ -217,14 +219,6 @@ public class InGameHelper implements Serializable {
 			return;			
 		}
 
-		// Cargo must be in the lower half of the screen...
-		if (cargo.getDisplayMatrix()[13] >= 0) {
-			ramCargo(cargo);
-			if (scoopCallback != null) {
-				scoopCallback.rammed(cargo);
-			}
-			return;
-		}
 		if (cargo instanceof CargoCanister && ((CargoCanister) cargo).getEquipment() != null) {
 			cargo.applyDamage(4000.0f);
 			SoundManager.play(Assets.scooped);
@@ -253,7 +247,7 @@ public class InGameHelper implements Serializable {
 				cargo instanceof CargoCanister ? ((CargoCanister) cargo).getContent() :
 				cargo instanceof EscapeCapsule ? TradeGoodStore.get().slaves() :
 				cargo instanceof Thargon ? TradeGoodStore.get().alienItems() :
-				TradeGoodStore.get().alloys(), quantity);
+				TradeGoodStore.get().alloys(), quantity, 0);
 		if (cargo instanceof CargoCanister) {
 			alite.getPlayer().setLegalValue(
 					alite.getPlayer().getLegalValue() + (int) (((CargoCanister) cargo).getContent().getLegalityType() * quantity.getQuantityInAppropriateUnit()));					

@@ -111,8 +111,8 @@ public abstract class TradeScreen extends AliteScreen {
 					//tradeButton[x][y].setBorderColors(AliteColors.get().coloredFrameLight(), AliteColors.get().coloredFrameDark());
 					tradeButton[x][y].render(g);
 				}				
-				String price = getCost(y, x);				
-				int halfWidth = g.getTextWidth(price, Assets.regularFont) >> 1;
+				String price = getCost(y, x);	
+				int halfWidth =  g.getTextWidth(price, Assets.regularFont) >> 1;
 				g.drawText(price, x * GAP_X + X_OFFSET + (SIZE >> 1) - halfWidth, y * GAP_Y + Y_OFFSET + SIZE + 35, AliteColors.get().price(), Assets.regularFont);
 				drawAdditionalTradeGoodInformation(y, x, deltaTime);
 			}

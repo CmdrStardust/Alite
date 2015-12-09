@@ -37,6 +37,7 @@ public class Assets {
 	public static Pixmap academyIcon;
 	public static Pixmap libraryIcon;
 	public static Pixmap hackerIcon;
+	public static Pixmap quitIcon;
 	public static Pixmap aliteLogoSmall;
 	
 	public static GLText regularFont;

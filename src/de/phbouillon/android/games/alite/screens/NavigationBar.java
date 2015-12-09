@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.opengl.GLES11;
-
 import de.phbouillon.android.framework.Game;
 import de.phbouillon.android.framework.Graphics;
 import de.phbouillon.android.framework.Pixmap;
@@ -37,6 +36,7 @@ import de.phbouillon.android.games.alite.ScreenCodes;
 import de.phbouillon.android.games.alite.SoundManager;
 import de.phbouillon.android.games.alite.colors.AliteColors;
 import de.phbouillon.android.games.alite.screens.canvas.DiskScreen;
+import de.phbouillon.android.games.alite.screens.canvas.QuitScreen;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.FlightScreen;
 
 public class NavigationBar {	
@@ -84,6 +84,7 @@ public class NavigationBar {
 		Assets.libraryIcon   = game.getGraphics().newPixmap("navigation_icons/library_icon.png", true);
 		Assets.academyIcon   = game.getGraphics().newPixmap("navigation_icons/academy_icon.png", true);
 		Assets.hackerIcon    = game.getGraphics().newPixmap("navigation_icons/hacker_icon.png", true);
+		Assets.quitIcon      = game.getGraphics().newPixmap("navigation_icons/quit_icon.png", true);
 	}
 	
 	public void moveToScreen(int screenCode) {
@@ -418,7 +419,11 @@ public class NavigationBar {
 				SoundManager.play(Assets.click);
 				((FlightScreen) game.getCurrentScreen()).setForwardView();
 				((FlightScreen) game.getCurrentScreen()).setInformationScreen(null);
-			} 
+			} else if (entry.title.equals("Quit")) {
+			  SoundManager.play(Assets.click);
+			  FlightScreen fs = game.getCurrentScreen() instanceof FlightScreen ? (FlightScreen) game.getCurrentScreen() : null;
+			  newScreen = new QuitScreen(game, fs);
+			}
 		}
 		return newScreen;
 	}

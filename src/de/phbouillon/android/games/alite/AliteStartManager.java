@@ -45,11 +45,12 @@ import de.phbouillon.android.games.alite.io.AliteDownloaderService;
 import de.phbouillon.android.games.alite.io.AliteFiles;
 import de.phbouillon.android.games.alite.screens.canvas.tutorial.IMethodHook;
 
-public class AliteStartManager extends Activity implements IDownloaderClient {
+public class AliteStartManager extends Activity implements IDownloaderClient {	
 	public static final boolean HAS_EXTENSION_APK = true;
-	public static final int EXTENSION_FILE_VERSION = 2180;
-	private static final long EXTENSION_FILE_LENGTH = 427117633l;
-	                                                  
+	public static final int EXTENSION_FILE_VERSION = 2186;
+	private static final long EXTENSION_FILE_LENGTH = 427199553l;
+	public static final int ALITE_RESULT_CLOSE_ALL = 78615265;
+	
 	public static final String ALITE_STATE_FILE = "current_state.dat";
 		
 	private IStub downloaderClientStub;
@@ -127,13 +128,14 @@ public class AliteStartManager extends Activity implements IDownloaderClient {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);		
 		if (fileIO == null) {
 			fileIO = new AndroidFileIO(this);
 		}
 		if (!AliteLog.isInitialized()) {
 			AliteLog.initialize(fileIO);
 		}
+		AliteLog.d("AliteStartManager.onCreate", "onCreate begin");
 		final Thread.UncaughtExceptionHandler oldHandler = Thread.getDefaultUncaughtExceptionHandler();
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			@Override
@@ -154,6 +156,7 @@ public class AliteStartManager extends Activity implements IDownloaderClient {
 		} else {
 			startGame();
 		}
+		AliteLog.d("AliteStartManager.onCreate", "onCreate end");
 	}
 	
 //	private void checkSHA() {
@@ -173,14 +176,14 @@ public class AliteStartManager extends Activity implements IDownloaderClient {
 		AliteLog.d("Alite Start Manager", "Starting INTRO!");
 		Intent intent = new Intent(this, AliteIntro.class);
 		intent.putExtra(Alite.LOG_IS_INITIALIZED, true);
-		startActivity(intent);	
+		startActivityForResult(intent, 0);	
 	}
 	
 	private void startAlite() {
 		AliteLog.d("Alite Start Manager", "Starting Alite.");
 		Intent intent = new Intent(this, Alite.class);
 		intent.putExtra(Alite.LOG_IS_INITIALIZED, true);
-		startActivity(intent);	
+		startActivityForResult(intent, 0);	
 	}
 
 	private void loadCurrentGame(AndroidFileIO fileIO) {
@@ -193,15 +196,14 @@ public class AliteStartManager extends Activity implements IDownloaderClient {
 				if (b == null || b.length != 1) {
 					// Fallback in case of an error
 					AliteLog.d("Alite Start Manager", "Reading screen code failed. b == " + (b == null ? "<null>" : b) + " -- " + (b == null ? "<null>" : b.length));
-					startAliteIntro();
+					startAlite();
 				} else {
-					if (b[0] == ScreenCodes.INTRO_SCREEN) {
-						AliteLog.d("Alite Start Manager", "Saved screen code == " + ((int) b[0]) + " - loading intro.");
-						startAliteIntro();
-					} else {
-						AliteLog.d("Alite Start Manager", "Saved screen code == " + ((int) b[0]) + " - starting game.");
-						startAlite();
-					}
+					// We used to parse the first byte here, to determine if we want to resume the intro.
+					// However, if the game crashes right after the intro (probably because of the
+					// Activity change), we don't have a fallback. Hence, we simply prohibit resuming
+					// the intro...
+					AliteLog.d("Alite Start Manager", "Saved screen code == " + ((int) b[0]) + " - starting game.");
+					startAlite();
 				}
 			} else {
 				AliteLog.d("Alite Start Manager", "No state file present: Starting intro.");
@@ -216,25 +218,29 @@ public class AliteStartManager extends Activity implements IDownloaderClient {
 	
 	@Override
 	protected void onPause() {
-		AliteLog.d("Alite Start Manager", "ASM has been paused.");
+		AliteLog.d("AliteStartManager.onPause", "onPause begin");
 		super.onPause();		
+		AliteLog.d("AliteStartManager.onPause", "onPause end");
 	}
 		
 	@Override
 	protected void onResume() {
+		AliteLog.d("AliteStartManager.onResume", "onResume begin");
 		if (null != downloaderClientStub) {
 	        downloaderClientStub.connect(this);
 	    }
 		super.onResume();
-		AliteLog.d("Alite Start Manager", "ASM has been resumed.");
+		AliteLog.d("AliteStartManager.onResume", "onResume end");
 	}
 	
 	@Override
 	protected void onStop() {
+		AliteLog.d("AliteStartManager.onStop", "onStop begin");
 		if (null != downloaderClientStub) {
 	        downloaderClientStub.disconnect(this);
 	    }		
 		super.onStop();
+		AliteLog.d("AliteStartManager.onStop", "onStop end");
 	}
 
 	@Override
@@ -273,5 +279,14 @@ public class AliteStartManager extends Activity implements IDownloaderClient {
 		((ProgressBar) findViewById(R.id.downloadProgressBar)).setProgress((int) progress.mOverallProgress);
 		((TextView) findViewById(R.id.downloadProgressPercentTextView)).setText((int) (((float) progress.mOverallProgress / (float) progress.mOverallTotal * 100.0f)) + "%"); 
 		AliteLog.d("Progress", "Current Speed: " + progress.mCurrentSpeed + ", Overall progress: " + progress.mOverallProgress + ", Total progress: " + progress.mOverallTotal + ", Time Remaining: " + progress.mTimeRemaining);
-	}	
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	  if (resultCode == ALITE_RESULT_CLOSE_ALL) {
+	    setResult(ALITE_RESULT_CLOSE_ALL);
+	    finish();
+	  }
+	  super.onActivityResult(requestCode, resultCode, data);
+	}
 }

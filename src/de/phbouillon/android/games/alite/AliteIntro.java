@@ -130,6 +130,7 @@ public class AliteIntro extends Activity implements OnClickListener {
 		if (intent == null || !intent.getBooleanExtra(Alite.LOG_IS_INITIALIZED, false)) {
 			AliteLog.initialize(fileIO);			
 		}
+		AliteLog.d("AliteIntro.onCreate", "onCreate begin");
 		final Thread.UncaughtExceptionHandler oldHandler = Thread.getDefaultUncaughtExceptionHandler();
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			@Override
@@ -168,6 +169,7 @@ public class AliteIntro extends Activity implements OnClickListener {
 		} else {
 			playVideoFromRawFolder();
 		}
+		AliteLog.d("AliteIntro.onCreate", "onCreate end");
 	}
 	
 	private void playVideoFromRawFolder() {
@@ -384,6 +386,7 @@ public class AliteIntro extends Activity implements OnClickListener {
 	
 	@Override
 	protected void onPause() {
+		AliteLog.d("AliteIntro.onPause", "onPause begin");
 		if (videoView == null) {
 			AliteLog.e("Alite Intro", "Video view is not found. [onPause]");
 			super.onPause();
@@ -402,6 +405,7 @@ public class AliteIntro extends Activity implements OnClickListener {
 		}
 		super.onPause();
 		isResumed = false;		
+		AliteLog.d("AliteIntro.onPause", "onPause end");
 	}
 	
 	@Override
@@ -475,13 +479,14 @@ public class AliteIntro extends Activity implements OnClickListener {
 			Intent intent = new Intent(this, Alite.class);
 			intent.putExtra(Alite.LOG_IS_INITIALIZED, true);
 			AliteLog.d("startAlite", "Calling startActivity");
-			startActivity(intent);
+			startActivityForResult(intent, 0);
 			AliteLog.d("startAlite", "Done");
 		}
 	}
 	
 	@Override
 	protected void onResume() {
+		AliteLog.d("AliteIntro.onResume", "onResume begin");
 		super.onResume();
 		isResumed = true;
 		if (videoView == null) {
@@ -494,5 +499,15 @@ public class AliteIntro extends Activity implements OnClickListener {
 		} else {
 			needsToPlay = true;
 		}
+		AliteLog.d("AliteIntro.onResume", "onResume end");
 	}
+	
+	 @Override
+	  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    if (resultCode == AliteStartManager.ALITE_RESULT_CLOSE_ALL) {
+	      setResult(AliteStartManager.ALITE_RESULT_CLOSE_ALL);
+	      finish();
+	    }
+	    super.onActivityResult(requestCode, resultCode, data);
+	  }
 }

@@ -70,7 +70,7 @@ import de.phbouillon.android.games.alite.screens.opengl.ingame.LaserManager;
 import de.phbouillon.android.games.alite.screens.opengl.sprites.AliteFont;
 
 public class Alite extends AndroidGame {
-	public static final String VERSION_STRING = "1.2 " + (AliteStartManager.HAS_EXTENSION_APK ? "OBB" : "SFI"); 
+	public static final String VERSION_STRING = "1.3.1 " + (AliteStartManager.HAS_EXTENSION_APK ? "OBB" : "SFI"); 
 	public static final String LOG_IS_INITIALIZED = "logIsInitialized";
 	
 	private Player player;
@@ -101,11 +101,11 @@ public class Alite extends AndroidGame {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		AliteLog.d("Alite.onCreate", "onCreate begin");
 		Intent intent = getIntent();
 		if (intent == null || !intent.getBooleanExtra(LOG_IS_INITIALIZED, false)) {
 			AliteLog.initialize(getFileIO());			
 		}
+		AliteLog.d("Alite.onCreate", "onCreate begin");
 		final Thread.UncaughtExceptionHandler oldHandler = Thread.getDefaultUncaughtExceptionHandler();
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			@Override
@@ -127,7 +127,7 @@ public class Alite extends AndroidGame {
 			case 1: setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); break;
 			case 2: setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE); break;
 		}				
-		AliteLog.d("Alite.onCreate", "onCreate done");
+		AliteLog.d("Alite.onCreate", "onCreate end");
 	}
 	
 	public void initialize() {
@@ -345,6 +345,7 @@ public class Alite extends AndroidGame {
 		
 	@Override
 	public void onPause() {
+		AliteLog.d("Alite.onPause", "onPause begin");
 		if (getCurrentScreen() != null && !(getCurrentScreen() instanceof FlightScreen)) {
 			try {
 				AliteLog.d("[ALITE]", "Performing autosave.");
@@ -362,11 +363,12 @@ public class Alite extends AndroidGame {
 		if (textureManager != null) {
 			textureManager.freeAllTextures();
 		}
+		AliteLog.d("Alite.onPause", "onPause end");
 	}
 
 	@Override
 	public void onDestroy() {
-		AliteLog.e("OnDestroy", "Destroying Alite...");
+		AliteLog.e("Alite.OnDestroy", "Destroying Alite...");
 		while (saving) {
 			AliteLog.e("OnDestroy", "Still saving...");
 			try {
@@ -374,13 +376,13 @@ public class Alite extends AndroidGame {
 			} catch (InterruptedException e) {
 			}
 		}
-		AliteLog.e("OnDestroy", "Destroying Alite Done.");				
+		AliteLog.e("Alite.OnDestroy", "Destroying Alite Done.");
 		super.onDestroy();
 	}
 
 	@Override
 	public void onStop() {
-		AliteLog.e("OnStop", "Stopping Alite...");
+		AliteLog.e("Alite.OnStop", "Stopping Alite...");
 		getInput().dispose();
 		while (saving) {
 			AliteLog.e("OnStop", "Still saving...");
@@ -389,7 +391,7 @@ public class Alite extends AndroidGame {
 			} catch (InterruptedException e) {
 			}
 		}
-		AliteLog.e("OnStop", "Stopping Alite Done.");				
+		AliteLog.e("Alite.OnStop", "Stopping Alite Done.");				
 		super.onStop();		
 	}
 
@@ -408,10 +410,12 @@ public class Alite extends AndroidGame {
 	
 	@Override
 	public void onResume() {	
+		AliteLog.d("Alite.onResume", "onResume begin");
 		if (textureManager != null) {
 			textureManager.clear();
 		}
 		super.onResume();
+		AliteLog.d("Alite.onResume", "onResume end");
 	}
 
 	@Override
@@ -433,7 +437,8 @@ public class Alite extends AndroidGame {
 		navigationBar.add("Academy", Assets.academyIcon, "AcademyScreen");		
 		hackerId = navigationBar.add("Hacker", Assets.hackerIcon, "HackerScreen");
 		navigationBar.setVisible(hackerId, false);
-		navigationBar.setActiveIndex(2);
+    navigationBar.add("Quit", Assets.quitIcon, null);
+		navigationBar.setActiveIndex(2);		
 		
 		AliteFont.ct = new DefaultCoordinateTransformer(this);
 		font = new AliteFont(this);

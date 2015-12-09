@@ -86,8 +86,9 @@ public class InGameManager implements Serializable {
 	private transient AliteScreen       postDockingScreen = null;
 	private transient IMethodHook       postDockingHook   = null;
 	private transient IMethodHook       hyperspaceHook    = null;	
+	private transient String            feeText           = null;
 	private transient Alite             alite;
-
+	
 	private final Vector3f              zero                  = new Vector3f(0, 0, 0);
 	private final Vector3f              deltaOrientation      = new Vector3f(0, 0, 0);
 	private final Vector3f              deltaYawRollPitch     = new Vector3f(0, 0, 0);
@@ -309,6 +310,46 @@ public class InGameManager implements Serializable {
 		}
 	}
 
+	public void toggleStationHandsDocking() {
+		if (!((SpaceStation) getStation()).accessAllowed()) {
+			SoundManager.play(Assets.com_accessDeclined);
+			return;
+		}
+		if (feeText != null || dockingComputerAI.isActive()) {
+			// Once station hands initiated docking, there's nothing you can do
+			// to stop it again...
+			return; 
+		} else {
+		  long dockingFee = Math.max(alite.getPlayer().getCurrentSystem().getStationHandsDockingFee(), (long) (alite.getPlayer().getCash() * 0.1f));
+			feeText = String.format("The fee for assisted docking is %s.%s Cr. Accept?", dockingFee / 10, dockingFee % 10);
+		}
+	}
+
+	private void initiateStationHandsDocking() {
+		// TODO different sound ("Transaction has been received. Lean back and enjoy the flight.")
+		SoundManager.play(Assets.com_dockingComputerEngaged);
+		dockingComputerAI.engage();
+	}
+	
+	public void yesSelected() {
+		if (feeText == null) {
+			return;
+		}
+		feeText = null;
+		SoundManager.play(Assets.click);
+		long dockingFee = Math.max(alite.getPlayer().getCurrentSystem().getStationHandsDockingFee(), (long) (alite.getPlayer().getCash() * 0.1f));
+		alite.getPlayer().setCash(alite.getPlayer().getCash() - dockingFee);
+		initiateStationHandsDocking();
+	}
+	
+	public void noSelected() {
+		if (feeText == null) {
+			return;
+		}
+		SoundManager.play(Assets.click);
+		feeText = null;
+	}
+	
 	void setPlanet(AliteObject planet) {
 		this.planet = planet;
 	}
@@ -396,8 +437,11 @@ public class InGameManager implements Serializable {
 			deltaOrientation.x = -clamp(((int) ((alite.getInput().getAccelX() - zero.x) * 10.0f)) / 4.0f, -2.0f, 2.0f);
 			deltaOrientation.y =  clamp(((int) ((alite.getInput().getAccelY() - zero.y) * 50.0f)) / 10.0f, -2.0f, 2.0f);
 			deltaOrientation.z = -clamp(((int) ((alite.getInput().getAccelZ() - zero.z) * 50.0f)) / 10.0f, -2.0f, 2.0f);
-
+			
 			deltaYawRollPitch.z = (float) (30.0f * Math.PI / 180.0f) * deltaOrientation.z;
+			if (Settings.reversePitch) {
+				deltaYawRollPitch.z = -deltaYawRollPitch.z;
+			}
 			deltaYawRollPitch.y = (float) (30.0f * Math.PI / 180.0f) * deltaOrientation.y;
 		}				
 	}
@@ -407,6 +451,9 @@ public class InGameManager implements Serializable {
 			deltaOrientation.z = hud.getZ();
 			deltaOrientation.y = hud.getY();
 			deltaYawRollPitch.z = (float) (30.0f * Math.PI / 180.0f) * deltaOrientation.z;
+			if (Settings.reversePitch) {
+				deltaYawRollPitch.z = -deltaYawRollPitch.z;
+			}
 			deltaYawRollPitch.y = (float) (30.0f * Math.PI / 180.0f) * deltaOrientation.y;
 		} 		
 	}
@@ -818,6 +865,7 @@ public class InGameManager implements Serializable {
 		if (hud == null) {
 			return false;
 		}
+		buttons.checkFireRelease(e);
 		if (isPlayerControl()) {
 			if (hud.handleUI(e)) {
 				return false;
@@ -1215,6 +1263,11 @@ public class InGameManager implements Serializable {
 			message.render(alite);
 			if (scrollingText != null) {
 				scrollingText.render(deltaTime);
+			} else if (feeText != null) {
+				GLES11.glColor4f(0.94f, 0.94f, 0.0f, 0.6f);
+				alite.getFont().drawText(feeText, 960, 150, true, 1.0f);
+				GLES11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+				buttons.renderYesNoButtons();
 			}
 			if (Settings.displayFrameRate) {
 				OnScreenDebug.debugFPS(alite);

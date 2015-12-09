@@ -35,6 +35,7 @@ import de.phbouillon.android.games.alite.ScreenCodes;
 import de.phbouillon.android.games.alite.Settings;
 import de.phbouillon.android.games.alite.SoundManager;
 import de.phbouillon.android.games.alite.colors.AliteColors;
+import de.phbouillon.android.games.alite.model.InventoryItem;
 import de.phbouillon.android.games.alite.model.Player;
 import de.phbouillon.android.games.alite.model.PlayerCobra;
 import de.phbouillon.android.games.alite.model.Weight;
@@ -49,11 +50,11 @@ import de.phbouillon.android.games.alite.model.trading.Unit;
 public class InventoryScreen extends TradeScreen {	
 	static class InventoryPair {
 		TradeGood good;
-		Weight weight;
+		InventoryItem item;
 		
-		InventoryPair(TradeGood good, Weight weight) {
+		InventoryPair(TradeGood good, InventoryItem item) {
 			this.good = good;
-			this.weight = weight;
+			this.item = item;
 		}
 	}
 	
@@ -125,13 +126,13 @@ public class InventoryScreen extends TradeScreen {
 	@Override
 	protected void createButtons() {
 		PlayerCobra cobra = ((Alite) game).getPlayer().getCobra();
-		Weight [] inventory = cobra.getInventory();
+		InventoryItem [] inventory = cobra.getInventory();
 		inventoryList.clear();
 		
 		int counter = 0;
-		for (Weight w: inventory) {
-			if (w.getWeightInGrams() != 0) {
-				inventoryList.add(new InventoryPair(TradeGoodStore.get().goods()[counter], w));
+		for (InventoryItem item: inventory) {
+			if (item.getWeight().getWeightInGrams() != 0) {
+				inventoryList.add(new InventoryPair(TradeGoodStore.get().goods()[counter], item));
 			}
 			counter++;
 		}
@@ -195,11 +196,25 @@ public class InventoryScreen extends TradeScreen {
 		Market market = ((Alite) game).getPlayer().getMarket();
 		
 		int factor = pair.good.getUnit() == Unit.TON ? 1000000 : pair.good.getUnit() == Unit.KILOGRAM ? 1000 : 1;
-		long price = computePrice(market, factor, pair.weight.getWeightInGrams(), pair.good);
+		long price = computePrice(market, factor, pair.item.getWeight().getWeightInGrams(), pair.good);
 		
 		return String.format(Locale.getDefault(), "%d.%d Cr", price / 10, price % 10);		
 	}
 	
+	private String computeGainLossString(InventoryPair pair) {
+		Market market = ((Alite) game).getPlayer().getMarket();
+		
+		int factor = pair.good.getUnit() == Unit.TON ? 1000000 : pair.good.getUnit() == Unit.KILOGRAM ? 1000 : 1;
+		long price = computePrice(market, factor, pair.item.getWeight().getWeightInGrams(), pair.good);
+		long gain = price - pair.item.getPrice();
+		boolean loss = false;
+		if (gain < 0) {
+			loss = true;
+			gain = -gain;
+		}
+		return (loss ? "Loss: -" : "Gain: ") + String.format(Locale.getDefault(), "%d.%d Cr", gain / 10, gain % 10);		
+	}
+
 	@Override
 	protected String getCost(int row, int column) {
 		int index = row * COLUMNS + column;
@@ -207,7 +222,7 @@ public class InventoryScreen extends TradeScreen {
 			return "";
 		}
 		InventoryPair pair = inventoryList.get(index); 
-		return pair.weight.getFormattedString();
+		return pair.item.getWeight().getFormattedString();
 	}
 	
 	private void presentTradeStatus() {
@@ -264,7 +279,13 @@ public class InventoryScreen extends TradeScreen {
 		}
 		InventoryPair pair = inventoryList.get(index); 
 		TradeGood tradeGood = pair.good;
-		game.getGraphics().drawText(tradeGood.getName() + " - worth: " + computeCashString(pair) + ". " + INVENTORY_HINT, X_OFFSET, 1050, AliteColors.get().message(), Assets.regularFont);
+		String worthText = tradeGood.getName() + " - worth: " + computeCashString(pair) + ". ";
+		int width = game.getGraphics().getTextWidth(worthText, Assets.regularFont);
+		game.getGraphics().drawText(worthText, X_OFFSET, 1050, AliteColors.get().message(), Assets.regularFont);
+		String gainText = computeGainLossString(pair) + ". ";
+		int widthComplete = width + game.getGraphics().getTextWidth(gainText, Assets.regularFont);
+		game.getGraphics().drawText(gainText, X_OFFSET + width, 1050, gainText.startsWith("Loss") ? AliteColors.get().conditionRed() : AliteColors.get().conditionGreen(), Assets.regularFont);
+		game.getGraphics().drawText(INVENTORY_HINT, X_OFFSET + widthComplete, 1050, AliteColors.get().message(), Assets.regularFont);
 	}
 			
     @Override
@@ -281,11 +302,10 @@ public class InventoryScreen extends TradeScreen {
     			return;
     		}
     	}
-    	Market market = player.getMarket();
-    	player.getCobra().removeTradeGood(tradeGood);
-		
+    	Market market = player.getMarket();    			
 		int factor = pair.good.getUnit() == Unit.TON ? 1000000 : pair.good.getUnit() == Unit.KILOGRAM ? 1000 : 1;
-		long price = computePrice(market, factor, pair.weight.getWeightInGrams(), pair.good);
+		long price = computePrice(market, factor, pair.item.getWeight().getWeightInGrams(), pair.good);
+		player.getCobra().removeTradeGood(tradeGood);
     	player.setCash(player.getCash() + price);
     	cashLeft = String.format("Cash: %d.%d Cr", player.getCash() / 10, player.getCash() % 10);    
 		SoundManager.play(Assets.kaChing);		
@@ -383,5 +403,5 @@ public class InventoryScreen extends TradeScreen {
 	@Override
 	public int getScreenCode() {
 		return ScreenCodes.INVENTORY_SCREEN;
-	}	
+	}
 }

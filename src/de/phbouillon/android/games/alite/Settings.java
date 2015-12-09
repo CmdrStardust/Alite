@@ -76,12 +76,13 @@ public class Settings {
     public static boolean engineExhaust = true;
     public static boolean targetBox = true;
     public static int lockScreen = 0;
-    public static int colorScheme = 0;
-    
+    public static int colorScheme = 0;    
     public static int laserPowerOverride = 0;
     public static int shieldPowerOverride = 0;
     public static boolean freePath = false;
-    public static boolean autoId = true;
+    public static boolean autoId = true;    
+    public static boolean reversePitch = false;
+    public static boolean flatButtonDisplay = false;
     
 	public static void load(FileIO files) {
 		for (int i = 0; i < 12; i++) {
@@ -130,6 +131,8 @@ public class Settings {
 			colorScheme = Integer.parseInt(in.readLine());
 			targetBox = Boolean.parseBoolean(in.readLine());
 			autoId = Boolean.parseBoolean(in.readLine());
+			reversePitch = Boolean.parseBoolean(in.readLine());
+			flatButtonDisplay = Boolean.parseBoolean(in.readLine());
 		} catch (Throwable t) {
 			// Ignore
 		} finally {
@@ -183,6 +186,8 @@ public class Settings {
 			out.write(Integer.toString(colorScheme) + "\n");
 			out.write(Boolean.toString(targetBox) + "\n");
 			out.write(Boolean.toString(autoId) + "\n");
+			out.write(Boolean.toString(reversePitch) + "\n");
+			out.write(Boolean.toString(flatButtonDisplay) + "\n");
 		} catch (Exception e) {
 			// Ignore
 		} finally {

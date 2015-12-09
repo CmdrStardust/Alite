@@ -53,6 +53,7 @@ import de.phbouillon.android.games.alite.ScreenBuilder;
 import de.phbouillon.android.games.alite.model.CommanderData;
 import de.phbouillon.android.games.alite.model.Equipment;
 import de.phbouillon.android.games.alite.model.EquipmentStore;
+import de.phbouillon.android.games.alite.model.InventoryItem;
 import de.phbouillon.android.games.alite.model.Laser;
 import de.phbouillon.android.games.alite.model.LegalStatus;
 import de.phbouillon.android.games.alite.model.Player;
@@ -362,7 +363,7 @@ public class FileUtils {
 			player.getMarket().setQuantity(tg, dis.read());
 		}
 		for (TradeGood tg: TradeGoodStore.get().goods()) {
-			cobra.addTradeGood(tg, Weight.grams(dis.readInt()));
+			cobra.addTradeGood(tg, Weight.grams(dis.readInt()), 0);
 		}
 		player.setLegalValue(dis.readInt());
 		cobra.setRetroRocketsUseCount(dis.readInt());
@@ -463,6 +464,15 @@ public class FileUtils {
 			AliteLog.e("[ALITE] loadCommander", "Old version. Cmdr data lacks mission data", e);
 			// Alite commander file version 1: Did not store mission data. Ignore...
 		}
+		try {
+			InventoryItem [] inventory = cobra.getInventory();
+			for (int i = 0; i < 18; i++) {
+				long price = dis.readLong();
+				cobra.setTradeGood(TradeGoodStore.get().fromNumber(i), inventory[i].getWeight(), price);
+			}
+		} catch (IOException e) {
+			AliteLog.e("[ALITE] loadCommander", "Old version. Cmdr data lacks price data for inventory", e);
+		}
 		AliteLog.d("[ALITE] loadCommander", String.format("Loaded Commander '%s', galaxyNumber: %d, seed: %04x %04x %04x", player.getName(), generator.getCurrentGalaxy(), (int) generator.getCurrentSeed()[0], (int) generator.getCurrentSeed()[1], (int) generator.getCurrentSeed()[2]));		
 	}
 	
@@ -542,8 +552,8 @@ public class FileUtils {
 		for (int quantity: quantities) {
 			dos.write(quantity);
 		}
-		for (Weight w: cobra.getInventory()) {
-			dos.writeInt((int) w.getWeightInGrams());
+		for (InventoryItem w: cobra.getInventory()) {
+			dos.writeInt((int) w.getWeight().getWeightInGrams());
 		}
 		dos.writeInt(player.getLegalValue());
 		dos.writeInt(cobra.getRetroRocketsUseCount());
@@ -603,6 +613,9 @@ public class FileUtils {
 		}
 		for (Mission m: player.getCompletedMissions()) {
 			dos.writeInt(m.getId());
+		}
+		for (InventoryItem item: cobra.getInventory()) {
+			dos.writeLong(item.getPrice());
 		}
 	}
 	

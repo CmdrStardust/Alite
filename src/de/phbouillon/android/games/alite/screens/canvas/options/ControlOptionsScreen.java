@@ -47,6 +47,8 @@ public class ControlOptionsScreen extends OptionsScreen {
 	private Button radarTapZoom;
 	private Button autoId;
     private Button buttonPositionOptions;
+    private Button reverseDiveClimb;
+    private Button flatButtons;
     
 	private Button back;
 	private boolean forwardToIntroduction;
@@ -72,7 +74,10 @@ public class ControlOptionsScreen extends OptionsScreen {
 		laserAutoFire         = createSmallButton(4, true, "Laser: " + (Settings.laserButtonAutofire ? "Auto Fire" : "Single Shot"));
 		radarTapZoom          = createSmallButton(4, false, "Change View: " + (Settings.tapRadarToChangeView ? "Tap" : "Slide"));
 				
-		back                  = createButton(5, forwardToIntroduction ? "Start Training" : "Back");
+		reverseDiveClimb      = createSmallButton(5, true, "Reverse Climb: " + (Settings.reversePitch ? "Yes" : "No"));
+		flatButtons           = createSmallButton(5, false, "Linear Layout: " + (Settings.flatButtonDisplay ? "Yes" : "No"));
+		
+		back                  = createButton(6, forwardToIntroduction ? "Start Training" : "Back");
 	}
 			
 	private String computeControlDisplaySideText() {
@@ -102,7 +107,9 @@ public class ControlOptionsScreen extends OptionsScreen {
 		keyboardLayout.render(g);		
 		laserAutoFire.render(g);
 		radarTapZoom.render(g);
-
+		reverseDiveClimb.render(g);
+		flatButtons.render(g);
+		
 		back.render(g);
 		if (forwardToIntroduction) {
 			centerText("Please review your Control Settings before we begin your training.",
@@ -138,6 +145,16 @@ public class ControlOptionsScreen extends OptionsScreen {
 			} else if (buttonPositionOptions.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);
 				newScreen = new InFlightButtonsOptionsScreen(game);				
+			} else if (reverseDiveClimb.isTouched(touch.x, touch.y)) {
+				SoundManager.play(Assets.click);
+				Settings.reversePitch = !Settings.reversePitch;
+				reverseDiveClimb.setText("Reverse Climb: " + (Settings.reversePitch ? "Yes" : "No"));
+				Settings.save(game.getFileIO());
+			} else if (flatButtons.isTouched(touch.x, touch.y)) {
+				SoundManager.play(Assets.click);
+				Settings.flatButtonDisplay = !Settings.flatButtonDisplay;
+				flatButtons.setText("Linear Layout: " + (Settings.flatButtonDisplay ? "Yes" : "No"));
+				Settings.save(game.getFileIO());
 			} else if (back.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);
 				newScreen = forwardToIntroduction ? new TutIntroduction((Alite) game) : new OptionsScreen(game);

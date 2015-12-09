@@ -55,19 +55,21 @@ public class CursorKeys implements Serializable {
 		WIDTH = 192;
 		HEIGHT = 192;
 		GAP = 16;		
-		if (split) {	
-			CPX = Settings.controlPosition == 0 ? 120 : 1394;
-			CPX2 = Settings.controlPosition == 1 ? 120 : 1394;
-			CPY  = 740;
+		if (split) {			  
+			int x1 = Settings.flatButtonDisplay ? 20 : 120;
+			int x2 = Settings.flatButtonDisplay ? (Settings.controlPosition == 1 ? 1900 - WIDTH : 1494) : 1394;
+			CPX = Settings.controlPosition == 0 ? x1 : x2;
+			CPX2 = Settings.controlPosition == 1 ? x1 : x2;
+			CPY  = Settings.flatButtonDisplay ? 350 : 740;
 			CPY2 = CPY + HEIGHT + GAP;
-			buttonCoordinates[0] = new Rect(CPX + (WIDTH >> 1), CPY - (HEIGHT >> 1), WIDTH, HEIGHT);
+			buttonCoordinates[0] = new Rect(CPX + (Settings.flatButtonDisplay ? 0 : (WIDTH >> 1)), CPY - (HEIGHT >> 1), WIDTH, HEIGHT);
 			buttonCoordinates[1] = new Rect(CPX2 + WIDTH + GAP, CPY, WIDTH, HEIGHT);
-			buttonCoordinates[2] = new Rect(CPX + (WIDTH >> 1), CPY - (HEIGHT >> 1) + GAP + HEIGHT, WIDTH, HEIGHT);
+			buttonCoordinates[2] = new Rect(CPX + (Settings.flatButtonDisplay ? 0 : (WIDTH >> 1)), CPY - (HEIGHT >> 1) + GAP + HEIGHT, WIDTH, HEIGHT);
 			buttonCoordinates[3] = new Rect(CPX2, CPY, WIDTH, HEIGHT);
 		} else {
 			CPX = Settings.controlPosition == 0 ? 30 : 1304;
 			CPX2 = Settings.controlPosition == 1 ? 30 : 1304;
-			CPY  = 670;
+			CPY  = Settings.flatButtonDisplay ? 270 : 670;
 			CPY2 = CPY + HEIGHT + GAP;
 			buttonCoordinates[0] = new Rect(CPX + WIDTH + GAP, CPY, WIDTH, HEIGHT);
 			buttonCoordinates[1] = new Rect(CPX + ((WIDTH + GAP) << 1), CPY2, WIDTH, HEIGHT);

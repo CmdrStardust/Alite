@@ -51,11 +51,11 @@ public class OptionsScreen extends AliteScreen {
 	private Button controlOptions;
 	private Button audioOptions;
 	private boolean confirmReset = false;
-	protected int rowSize = 150;
-	protected int buttonSize = 120;
+	protected int rowSize = 130;
+	protected int buttonSize = 100;
 	
 	public OptionsScreen(Game game) {
-		super(game);		
+		super(game);	
 	}
 
 	protected Button createButton(int row, String text) {
@@ -135,7 +135,7 @@ public class OptionsScreen extends AliteScreen {
 					alite.setGameTime(0);
 					Intent intent = new Intent(alite, AliteIntro.class);
 					intent.putExtra(Alite.LOG_IS_INITIALIZED, true);
-					alite.startActivity(intent);
+					alite.startActivityForResult(intent, 0);
 				}
 			}
 			if (displayOptions.isTouched(touch.x, touch.y)) {

@@ -1,5 +1,7 @@
 package de.phbouillon.android.games.alite.model.generator;
 
+import de.phbouillon.android.games.alite.model.trading.TradeGood;
+
 /* Alite - Discover the Universe on your Favorite Android Device
  * Copyright (C) 2015 Philipp Bouillon
  * 
@@ -138,5 +140,9 @@ public class GalaxyGenerator {
 	
 	public SystemData getSystem(int index) {
 		return system[index];
+	}
+
+	public int getAveragePrice(TradeGood tradeGood) {
+		return tradeGood.getAveragePrice(currentGalaxy);
 	}
 }

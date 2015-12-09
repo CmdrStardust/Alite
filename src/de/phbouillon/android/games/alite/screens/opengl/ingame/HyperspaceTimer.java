@@ -40,6 +40,7 @@ public class HyperspaceTimer extends TimedEvent {
 		countDown--;
 		SoundManager.play(Assets.click);
 		if (countDown == 0) {
+			SoundManager.stopAll();
 			if (inGame.getHyperspaceHook() != null) {
 				inGame.getHyperspaceHook().execute(0);
 			} else {

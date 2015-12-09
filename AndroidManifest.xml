@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.phbouillon.android.games.alite"
-    android:versionCode="2184"
-    android:versionName="1.2.1"
+    android:versionCode="2186"
+    android:versionName="1.3.1"
     android:installLocation="auto" xmlns:tools="http://schemas.android.com/tools">
     
     <uses-sdk
@@ -18,7 +18,8 @@
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="Alite"
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+        android:allowClearUserData="true">
         <service android:name=".io.AliteDownloaderService"/>
         <receiver android:name=".io.AliteAlarmReceiver"/>        
         

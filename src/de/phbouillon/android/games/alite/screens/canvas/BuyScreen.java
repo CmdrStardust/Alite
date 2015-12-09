@@ -143,7 +143,7 @@ public class BuyScreen extends TradeScreen {
 		int price = market.getPrice(TradeGoodStore.get().goods()[row * COLUMNS + column]);
 		return String.format(Locale.getDefault(), "%d.%d Cr", price / 10, price % 10);
 	}
-	
+		
 	public void resetSelection() {
 		selection = null;
 	}
@@ -225,7 +225,9 @@ public class BuyScreen extends TradeScreen {
 	protected void presentSelection(int row, int column) {
 		TradeGood tradeGood = TradeGoodStore.get().goods()[row * COLUMNS + column];
 		int avail = ((Alite) game).getPlayer().getMarket().getQuantity(tradeGood);
-		game.getGraphics().drawText(tradeGood.getName() + " - " + avail + tradeGood.getUnit().toUnitString() + " available. "+ MARKET_HINT, X_OFFSET, 1050, AliteColors.get().message(), Assets.regularFont);
+		int avgPrice = ((Alite) game).getGenerator().getAveragePrice(tradeGood);
+		String average = String.format(Locale.getDefault(), "%d.%d Cr ", avgPrice / 10, avgPrice % 10);
+		game.getGraphics().drawText(tradeGood.getName() + " - " + avail + tradeGood.getUnit().toUnitString() + " available. Average Price: " + average + MARKET_HINT, X_OFFSET, 1050, AliteColors.get().message(), Assets.regularFont);
 	}
 		
 	public void setBoughtAmountString(String s) {
@@ -285,7 +287,7 @@ public class BuyScreen extends TradeScreen {
     			return;
     		}    		    		
     		market.setQuantity(tradeGood, (int) (market.getQuantity(tradeGood) - buyAmount));
-    		player.getCobra().addTradeGood(tradeGood, buyWeight);
+    		player.getCobra().addTradeGood(tradeGood, buyWeight, totalPrice);
     		player.setCash(player.getCash() - totalPrice);
     		SoundManager.play(Assets.kaChing);
     		cashLeft = String.format("Cash left: %d.%d Cr", player.getCash() / 10, player.getCash() % 10);

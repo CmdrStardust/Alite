@@ -127,7 +127,7 @@ public class FatalExceptionScreen extends AliteScreen {
 				} else if (restartAlite.isTouched(t.x, t.y)) {
 					Intent intent = new Intent((Alite) game, AliteIntro.class);
 					intent.putExtra(Alite.LOG_IS_INITIALIZED, true);
-					((Alite) game).startActivity(intent);
+					((Alite) game).startActivityForResult(intent, 0);
 				}
 			} 
 		}

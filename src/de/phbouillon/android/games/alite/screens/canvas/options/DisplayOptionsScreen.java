@@ -52,8 +52,6 @@ public class DisplayOptionsScreen extends OptionsScreen {
 	
 	public DisplayOptionsScreen(Game game) {
 		super(game);	
-		rowSize = 130;
-		buttonSize = 100;
 	}
 	
 	@Override

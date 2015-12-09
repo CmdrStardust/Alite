@@ -32,8 +32,8 @@ import de.phbouillon.android.games.alite.ShipControl;
 
 public class ControlPad implements Serializable {
 	private static final long serialVersionUID = -3050741925963060286L;
-	private final int CPX = Settings.controlPosition == 0 ? 150 : 1424;
-	private final int CPY = 680;
+	private final int CPX = Settings.controlPosition == 0 ? (Settings.flatButtonDisplay ? 50 : 150) : Settings.flatButtonDisplay ? 1524 : 1424;
+	private final int CPY = Settings.flatButtonDisplay ? 300 : 680;
 	private final int WIDTH = 350;
 	private final int HEIGHT = 350;
 

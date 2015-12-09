@@ -51,7 +51,7 @@ public class PlayerCobra {
 	private final Equipment [] equipment;
 	private final boolean [] equipmentInstalled;
 	private Weight maxCargoHold = Weight.tonnes(20);	
-	private Weight [] inventory = new Weight[TradeGoodStore.get().goods().length];
+	private final InventoryItem [] inventory;
 	private int retroRocketsUseCount = 0;
 	private final Map <String, Weight> specialCargo = new HashMap<String, Weight>();
 	
@@ -71,6 +71,10 @@ public class PlayerCobra {
 	public PlayerCobra() {
 		equipment = new Equipment[EQUIPMENT_ITEMS];
 		equipmentInstalled = new boolean[EQUIPMENT_ITEMS];
+		inventory = new InventoryItem[TradeGoodStore.get().goods().length];
+		for (int i = 0; i < inventory.length; i++) {
+		  inventory[i] = new InventoryItem();
+		}
 		fillEquipment();
 		fillTradeGoods();
 		lasers[0] = EquipmentStore.pulseLaser;
@@ -108,7 +112,7 @@ public class PlayerCobra {
 	
 	private void fillTradeGoods() {
 		for (int i = 0; i < TradeGoodStore.get().goods().length; i++) {
-			inventory[i] = Weight.grams(0);
+			inventory[i].clear();
 		}
 	}
 	
@@ -122,20 +126,20 @@ public class PlayerCobra {
 		return lasers[where];
 	}
 	
-	public void addTradeGood(TradeGood good, Weight weight) {
+	public void addTradeGood(TradeGood good, Weight weight, long price) {
 		int ordinal = TradeGoodStore.get().ordinal(good);
-		inventory[ordinal] = inventory[ordinal].add(weight);
+		inventory[ordinal].add(weight, price);
 	}
 	
-	public void setTradeGood(TradeGood good, Weight weight) {
+	public void setTradeGood(TradeGood good, Weight weight, long price) {
 		int ordinal = TradeGoodStore.get().ordinal(good);
-		inventory[ordinal] = inventory[ordinal].set(weight);		
+		inventory[ordinal].set(weight, price);		
 	}
 	
 	public Weight removeTradeGood(TradeGood good) {
 		int ordinal = TradeGoodStore.get().ordinal(good);
-		Weight currentWeight = inventory[ordinal];
-		inventory[ordinal] = Weight.grams(0);
+		Weight currentWeight = inventory[ordinal].getWeight();
+		inventory[ordinal].clear();
 		return currentWeight;
 	}
 	
@@ -216,8 +220,8 @@ public class PlayerCobra {
 	
 	public Weight getFreeCargo() {
 		Weight freeCargo = maxCargoHold;
-		for (Weight w: inventory) {
-			freeCargo = freeCargo.sub(w);
+		for (InventoryItem i: inventory) {
+			freeCargo = freeCargo.sub(i.getWeight());
 		}
 		for (Weight w: specialCargo.values()) {
 			freeCargo = freeCargo.sub(w);
@@ -225,13 +229,13 @@ public class PlayerCobra {
 		return freeCargo;
 	}
 	
-	public Weight [] getInventory() {
+	public InventoryItem [] getInventory() {
 		return inventory;
 	}
 	
 	public boolean hasCargo() {
 		for (int i = 0; i < TradeGoodStore.get().goods().length; i++) {
-			if (inventory[i].getWeightInGrams() > 0) {
+			if (inventory[i].getWeight().getWeightInGrams() > 0) {
 				return true;
 			}
 		}

@@ -260,7 +260,7 @@ public class AliteLog {
 			emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] { mailAddress });
 			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
 			emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, message);
-			game.startActivity(Intent.createChooser(emailIntent, "Sending email..."));
+			game.startActivityForResult(Intent.createChooser(emailIntent, "Sending email..."), 0);
 		} catch (Throwable t) {
 			Toast.makeText(game, "Request failed try again: " + t.toString(), Toast.LENGTH_LONG).show();
 		}

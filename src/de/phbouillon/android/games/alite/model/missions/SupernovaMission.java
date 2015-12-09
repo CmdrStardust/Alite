@@ -129,7 +129,7 @@ public class SupernovaMission extends Mission {
 	public void onMissionComplete() {
 		active = false;
 		alite.getCobra().removeSpecialCargo("Unhappy Refugees");
-		alite.getCobra().addTradeGood(TradeGoodStore.get().gemStones(), Weight.kilograms(1));
+		alite.getCobra().addTradeGood(TradeGoodStore.get().gemStones(), Weight.kilograms(1), 0);
 	}
 
 	@Override

@@ -44,7 +44,6 @@ import de.phbouillon.android.games.alite.SoundManager;
 import de.phbouillon.android.games.alite.colors.AliteColors;
 import de.phbouillon.android.games.alite.screens.opengl.objects.AliteObject;
 import de.phbouillon.android.games.alite.screens.opengl.objects.SkySphereSpaceObject;
-import de.phbouillon.android.games.alite.screens.opengl.objects.SpriteObject;
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.AIState;
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.SpaceObject;
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.Adder;
@@ -89,7 +88,6 @@ import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.Yell
 //This screen never needs to be serialized, as it is not part of the InGame state.
 @SuppressWarnings("serial")
 public class ShipIntroScreen extends AliteScreen {
-  private static final boolean ON_SIMULATOR = true;
 	private static final boolean DEBUG_EXHAUST = false;		
 	private static final boolean ONLY_CHANGE_SHIPS_AFTER_SWEEP = false;
 	
@@ -107,9 +105,6 @@ public class ShipIntroScreen extends AliteScreen {
 	private AliteObject currentShip;
 	
 	private static final float START_Z    = -40000.0f;
-	private static final float LOGO_X     = -960.0f;
-	private static final float LOGO_Y     = -440.0f;
-	private static final float LOGO_Z_FAR = -1400.0f;
 
 	private long startTime;
 	private long lastChangeTime;
@@ -200,7 +195,7 @@ public class ShipIntroScreen extends AliteScreen {
 	public void update(float deltaTime) {
 		updateWithoutNavigation(deltaTime);
 		updateAxes();	
-		if (currentShip != null && !(currentShip instanceof SpriteObject)) {
+		if (currentShip != null) {
 			currentShip.applyDeltaRotation(currentDeltaX, currentDeltaY, currentDeltaZ);
 			((SpaceObject) currentShip).update(deltaTime);
 		}
@@ -278,9 +273,7 @@ public class ShipIntroScreen extends AliteScreen {
 		if (showLoadNewCommander) {
 			g.drawText("Load New Commander?", 400, 1010, AliteColors.get().mainText(), Assets.titleFont);
 		} 
-		if (!(currentShip instanceof SpriteObject)) {
-			centerTextWide(currentShip.getName(), 80, Assets.titleFont, AliteColors.get().shipTitle());
-		}
+		centerTextWide(currentShip.getName(), 80, Assets.titleFont, AliteColors.get().shipTitle());
 		g.drawText("Alite is inspired by classic Elite", 1450, 1020, AliteColors.get().mainText(), Assets.smallFont);
 		g.drawText("© Acornsoft, Bell & Braben", 1450, 1050, AliteColors.get().mainText(), Assets.smallFont);
 		debugExhausts();
@@ -317,21 +310,10 @@ public class ShipIntroScreen extends AliteScreen {
 		GLES11.glDepthFunc(GLES11.GL_LESS);
 		GLES11.glClear(GLES11.GL_DEPTH_BUFFER_BIT);
 
-		if (currentShip instanceof SpriteObject) {			
-			GLES11.glEnable(GLES11.GL_BLEND);
-		    GLES11.glBlendFunc(GLES11.GL_SRC_ALPHA, GLES11.GL_ONE_MINUS_SRC_ALPHA);
-			GLES11.glDisable(GLES11.GL_CULL_FACE);
-		} else {
-			GLES11.glDisable(GLES11.GL_BLEND);
-		}
+		GLES11.glDisable(GLES11.GL_BLEND);
 	}
 	
 	private void endDisplay(final Rect visibleArea) {
-		if (currentShip instanceof SpriteObject) {
-			GLES11.glDisable(GLES11.GL_BLEND);
-			GLES11.glEnable(GLES11.GL_CULL_FACE);
-		}
-			
 		GLES11.glDisable(GLES11.GL_DEPTH_TEST);		
 		GLES11.glDisable(GLES11.GL_TEXTURE_2D);
 				
@@ -356,11 +338,7 @@ public class ShipIntroScreen extends AliteScreen {
 		initGl();	
 		skysphere = new SkySphereSpaceObject((Alite) game, "skysphere", 8000.0f, 16, 16, "textures/star_map.png");		
 		AliteObject ao = getShipForCurrentIndex();		
-		if (ao instanceof SpriteObject) {
-			ao.setPosition(LOGO_X, LOGO_Y, LOGO_Z_FAR);
-		} else {
-			ao.setPosition(0.0f, 0.0f, -(((SpaceObject) ao).getMaxExtentWithoutExhaust()) * 2.0f);	
-		}		
+		ao.setPosition(0.0f, 0.0f, -(((SpaceObject) ao).getMaxExtentWithoutExhaust()) * 2.0f);	
 		
 		targetDeltaX = Math.random() < 0.5 ? (float) Math.random() * 2.0f + 2.0f : -(float) Math.random() * 2.0f - 2.0f;
 		targetDeltaY = Math.random() < 0.5 ? (float) Math.random() * 2.0f + 2.0f : -(float) Math.random() * 2.0f - 2.0f;
@@ -472,11 +450,7 @@ public class ShipIntroScreen extends AliteScreen {
 			startTime = System.nanoTime();
 			lastChangeTime = startTime;			
 		}
-		if (currentShip instanceof SpriteObject) {
-			currentShip.setPosition(LOGO_X, LOGO_Y, newZ);
-		} else {
-			currentShip.setPosition(0, 0, newZ);
-		}
+		currentShip.setPosition(0, 0, newZ);
 	}
 	
 	private final void dance(float deltaTime) {
@@ -498,21 +472,17 @@ public class ShipIntroScreen extends AliteScreen {
 		}
 		Vector3f pos = currentShip.getPosition();
 		float newZ = pos.z - deltaTime * 30000.0f;
-		float threshold = currentShip instanceof SpriteObject ? 2.0f * START_Z : START_Z;
+		float threshold = START_Z;
 		if (newZ <= threshold) {				
 			if (currentShip instanceof SpaceObject) {
 				((SpaceObject) currentShip).dispose();
 			}
 			currentShip = getNextShip();
-			newZ = currentShip instanceof SpaceObject ? START_Z : 2.0f * START_Z;
+			newZ = START_Z;
 			displayMode = DisplayMode.ZOOM_IN;
 			startTime = System.nanoTime();
 		}
-		if (currentShip instanceof SpriteObject) {
-			currentShip.setPosition(LOGO_X, LOGO_Y, newZ);
-		} else {
-			currentShip.setPosition(0, 0, newZ);
-		}
+		currentShip.setPosition(0, 0, newZ);
 	}
 	
 	private final void updateAxes() {
@@ -531,66 +501,59 @@ public class ShipIntroScreen extends AliteScreen {
 	private AliteObject getShipForCurrentIndex() {
 		Alite alite = (Alite) game;
 		switch (currentShipIndex) {
-			case  0: if (ON_SIMULATOR) {
-						currentShipIndex = 1;		 
-						return new CobraMkIII(alite);						
-					 } else {
-						 return new SpriteObject((Alite) game, 227.0f, 980.0f, 1693.0f, 0.0f, 0.0f, 0.0f, 1.0f, 684.0f / 1024.0f, "title_logo_small.png"); 
-					 }
-			case  1: return new CobraMkIII(alite);
-			case  2: return new Krait(alite);
-			case  3: return new Thargoid(alite);
-			case  4: return new BoaClassCruiser(alite);
-			case  5: return new Gecko(alite);
-			case  6: return new MorayStarBoat(alite);
-			case  7: return new Adder(alite);
-			case  8: return new Mamba(alite);
-			case  9: return new Viper(alite);
-			case 10: return new FerDeLance(alite);
-			case 11: return new CobraMkI(alite);
-			case 12: return new Python(alite);
-			case 13: return new Anaconda(alite);
-			case 14: return new AspMkII(alite);
-			case 15: return new Sidewinder(alite);
-			case 16: return new WolfMkII(alite);
-			case 17: return new OrbitShuttle(alite);
-			case 18: return new Transporter(alite);					
-			case 19: return new Boomslang(alite);
-			case 20: return new Constrictor(alite);
-			case 21: return new Cottonmouth(alite);
-			case 22: return new Cougar(alite);
-			case 23: return new EscapeCapsule(alite);			
-			case 24: return new Hognose2(alite);
-			case 25: return new Lora(alite);
-			case 26: return new Missile(alite);
-			case 27: return new Gopher(alite);
-			case 28: return new Coral(alite);
-			case 29: return new Bushmaster(alite);
-			case 30: return new Rattlesnake(alite);
-			case 31: return new Mussurana(alite);
-			case 32: return new Dugite(alite);
-			case 33: return new Yellowbelly(alite);
-			case 34: return new Indigo(alite);
-			case 35: return new Harlequin(alite);
-			case 36: return new TieFighter(alite);
-			case 37: return new Lyre(alite);
-			case 38: return new Thargon(alite);
+			case  0: return new CobraMkIII(alite);
+			case  1: return new Krait(alite);
+			case  2: return new Thargoid(alite);
+			case  3: return new BoaClassCruiser(alite);
+			case  4: return new Gecko(alite);
+			case  5: return new MorayStarBoat(alite);
+			case  6: return new Adder(alite);
+			case  7: return new Mamba(alite);
+			case  8: return new Viper(alite);
+			case  9: return new FerDeLance(alite);
+			case 10: return new CobraMkI(alite);
+			case 11: return new Python(alite);
+			case 12: return new Anaconda(alite);
+			case 13: return new AspMkII(alite);
+			case 14: return new Sidewinder(alite);
+			case 15: return new WolfMkII(alite);
+			case 16: return new OrbitShuttle(alite);
+			case 17: return new Transporter(alite);					
+			case 18: return new Boomslang(alite);
+			case 19: return new Constrictor(alite);
+			case 20: return new Cottonmouth(alite);
+			case 21: return new Cougar(alite);
+			case 22: return new EscapeCapsule(alite);			
+			case 23: return new Hognose2(alite);
+			case 24: return new Lora(alite);
+			case 25: return new Missile(alite);
+			case 26: return new Gopher(alite);
+			case 27: return new Coral(alite);
+			case 28: return new Bushmaster(alite);
+			case 29: return new Rattlesnake(alite);
+			case 30: return new Mussurana(alite);
+			case 31: return new Dugite(alite);
+			case 32: return new Yellowbelly(alite);
+			case 33: return new Indigo(alite);
+			case 34: return new Harlequin(alite);
+			case 35: return new TieFighter(alite);
+			case 36: return new Lyre(alite);
+			case 37: return new Thargon(alite);
 		}
 		return new CobraMkIII(alite);		
 	}
 	
 	private AliteObject getNextShip() {
-	  AliteLog.d("SPS", "SPS == " + selectPreviousShip + ", CSI == " + currentShipIndex);
 		if (selectPreviousShip) {
 			selectPreviousShip = false;
 			currentShipIndex--;
 			if (currentShipIndex < 0) {
-				currentShipIndex = (DEBUG_EXHAUST ? 38 : 18);
+				currentShipIndex = (DEBUG_EXHAUST ? 37 : 17);
 			}
 		} else {
 			currentShipIndex++;
 		}
-		if (currentShipIndex == (DEBUG_EXHAUST ? 39 : 19)) {
+		if (currentShipIndex == (DEBUG_EXHAUST ? 38 : 18)) {
 			currentShipIndex = 0;
 		}
 		AliteObject ao = getShipForCurrentIndex();

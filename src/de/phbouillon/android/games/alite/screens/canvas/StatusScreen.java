@@ -235,7 +235,7 @@ public class StatusScreen extends AliteScreen {
 			if (!(((Alite) game).getCurrentScreen() instanceof FlightScreen)) {
 				if (touch.x > 30 && touch.x < 960 && touch.y > 1020) {
 					Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://alite.mobi"));
-					((Alite) game).startActivity(browserIntent);
+					((Alite) game).startActivityForResult(browserIntent, 0);
 				}
 			}
 		}
@@ -262,7 +262,11 @@ public class StatusScreen extends AliteScreen {
 		Player player = ((Alite) game).getPlayer();
 		g.clear(AliteColors.get().background());
 		displayTitle("Commander " + player.getName());
-		g.drawPixmap(cobra, SHIP_X, SHIP_Y);			      
+		if (cobra == null) {
+		  loadAssets();
+		} else {
+		  g.drawPixmap(cobra, SHIP_X, SHIP_Y);
+		}
 		
 		drawInformation(g);
 		drawEquipment(g);		

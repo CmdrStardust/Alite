@@ -167,6 +167,8 @@ public class SystemData implements Serializable {
 	int                     cloudsTexture; // Index of the cloud texture or 0 for no clouds
 	int                     starTexture;   // 0-22 O-M class stars with 3 different luminosity settings,
 	                                       // and two dwarf types.
+	int                     dockingFee;    // Fee for automatic docking, if no docking computer is
+	                                       // installed. 400-3300.
 	
 	final List <SystemData> reachableSystems = new ArrayList<SystemData>();
 				
@@ -199,6 +201,7 @@ public class SystemData implements Serializable {
 		result.computeFuelPrice(seed);
 		
 		result.computeTextures(seed);
+		result.computeDockingFee(seed);
 		
 		return result;
 	}
@@ -263,6 +266,10 @@ public class SystemData implements Serializable {
 		ringsTexture  = seed.getLoByte(1) < 128 ? (seed.getLoByte(1) % 15) + 1 : 0;
 		cloudsTexture = seed.getHiByte(2) % 9;
 		starTexture   = (seed.getLoByte(2) + seed.getHiByte(1)) % 21 + (seed.getHiByte(0) > 240 ? 2 : seed.getHiByte(0) > 220 ? 1 : 0);
+	}
+	
+	private void computeDockingFee(SeedType seed) {
+		dockingFee = (8 - govType.ordinal()) * 50;
 	}
 	
 	/**
@@ -558,5 +565,9 @@ public class SystemData implements Serializable {
 	
 	public int getStarTexture() {
 	    return starTexture;
+	}
+
+	public long getStationHandsDockingFee() {
+		return dockingFee;
 	}
 }

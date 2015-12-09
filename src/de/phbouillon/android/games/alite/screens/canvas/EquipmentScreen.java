@@ -164,7 +164,6 @@ public class EquipmentScreen extends TradeScreen {
 		return equipmentPrice;
 	}
 	
-
 	@Override
 	public void present(float deltaTime) {
 		if (disposed) {
@@ -383,6 +382,10 @@ public class EquipmentScreen extends TradeScreen {
 						} else {
 							equippedEquipment = null;
 							errorText = null;
+							int oldSelectionIndex = selectionIndex;
+							if (oldSelectionIndex != -1) {
+							  disposeEquipmentAnimation(selectionIndex);
+							}
 							selectionIndex = y * COLUMNS + x;
 							if (Settings.animationsEnabled) {
 								loadEquipmentAnimation(game.getGraphics(), selectionIndex, paths[selectionIndex]);
@@ -418,9 +421,9 @@ public class EquipmentScreen extends TradeScreen {
 	}
 
     private void loadEquipmentAnimation(final Graphics g, int offset, String path) {
-		for (int i = 1; i <= 15; i++) {
-			equipment[offset][i] = g.newPixmap(path + "/" + i + ".png", true);
-		}    	
+      for (int i = 1; i <= 15; i++) {
+        equipment[offset][i] = g.newPixmap(path + "/" + i + ".png", true);
+      }    	
     }
     
     private void disposeEquipmentAnimation(int offset) {

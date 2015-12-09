@@ -102,5 +102,5 @@ public abstract class TradeGoodStore {
 	public TradeGood gemStones()         { return goods[GEM_STONES];       }
 	public TradeGood alienItems()        { return goods[ALIEN_ITEMS];      }
 	public TradeGood medicalSupplies()   { return goods[MEDICAL_SUPPLIES]; }	
-	public TradeGood thargoidDocuments() { return new TradeGood(0, 0, 0, 0, Unit.GRAM, "Thargoid Documents"); }
+	public TradeGood thargoidDocuments() { return new TradeGood(0, 0, 0, 0, Unit.GRAM, "Thargoid Documents", 0); }
 }

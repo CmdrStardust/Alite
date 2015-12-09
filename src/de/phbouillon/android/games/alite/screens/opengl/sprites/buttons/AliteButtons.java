@@ -76,6 +76,9 @@ public class AliteButtons implements Serializable {
 	private Sprite redOverlay;
 	private Sprite cycleLeft;
 	private Sprite cycleRight;
+	private Sprite yesButton;
+	private Sprite noButton;
+
 	private final String textureFilename;
 	private final ICoordinateTransformer ct;
 	protected transient Alite alite;
@@ -89,11 +92,16 @@ public class AliteButtons implements Serializable {
 	private boolean actionPerformed = false;
 	private boolean sweepLeftDown = false;
 	private boolean sweepRightDown = false;
+	private boolean yesTouched = false;
+	private boolean noTouched = false;
 	private long downTime = -1;
+	private transient int [] sweepLeftPos = new int[2];
+	private transient int [] sweepRightPos = new int[2];
 	
 	private final TorusBlockingTraverser torusTraverser;
 	private final EnergyBombTraverser energyBombTraverser;
 	private final ECMTraverser ecmTraverser;
+	private int fireButtonPressed = -1;
 	
 	public AliteButtons(Alite alite, GraphicObject ship, InGameManager inGame) {
 		ct = new DefaultCoordinateTransformer(alite);
@@ -106,11 +114,18 @@ public class AliteButtons implements Serializable {
 		createButtonGroups();
 		createButtons();
 						
+		sweepLeftPos[0]  = Settings.flatButtonDisplay ?  800 :  250;
+		sweepLeftPos[1]  = Settings.flatButtonDisplay ?   50 :  400;
+    sweepRightPos[0] = Settings.flatButtonDisplay ? 1020 : 1560;
+    sweepRightPos[1] = Settings.flatButtonDisplay ?   50 :  400;
+		
 		overlay       = new Sprite(alite, 0, 0, 20, 20, 200.0f / 1024.0f, 600.0f / 1024.0f, 400.0f / 1024.0f,  800.0f / 1024.0f, textureFilename);
 		yellowOverlay = new Sprite(alite, 0, 0, 20, 20, 600.0f / 1024.0f,             0.0f, 800.0f / 1024.0f,  200.0f / 1024.0f, textureFilename);
 		redOverlay    = new Sprite(alite, 0, 0, 20, 20, 400.0f / 1024.0f, 800.0f / 1024.0f, 600.0f / 1024.0f, 1000.0f / 1024.0f, textureFilename);
-		cycleLeft     = new Sprite(alite, ct.getTextureCoordX(250), ct.getTextureCoordY(400), ct.getTextureCoordX(350), ct.getTextureCoordY(500), 800.0f / 1024.0f, 800.0f / 1024.0f, 900.0f / 1024.0f,  900.0f / 1024.0f, textureFilename);
-		cycleRight    = new Sprite(alite, ct.getTextureCoordX(1560), ct.getTextureCoordY(400), ct.getTextureCoordX(1660), ct.getTextureCoordY(500), 800.0f / 1024.0f, 800.0f / 1024.0f, 900.0f / 1024.0f,  900.0f / 1024.0f, textureFilename);
+    cycleLeft     = new Sprite(alite, ct.getTextureCoordX(sweepLeftPos[0]), ct.getTextureCoordY(sweepLeftPos[1]), ct.getTextureCoordX(sweepLeftPos[0] + 100), ct.getTextureCoordY(sweepLeftPos[1] + 100), 800.0f / 1024.0f, 800.0f / 1024.0f, 900.0f / 1024.0f,  900.0f / 1024.0f, textureFilename);
+    cycleRight    = new Sprite(alite, ct.getTextureCoordX(sweepRightPos[0]), ct.getTextureCoordY(sweepRightPos[1]), ct.getTextureCoordX(sweepRightPos[0] + 100), ct.getTextureCoordY(sweepRightPos[1] + 100), 800.0f / 1024.0f, 800.0f / 1024.0f, 900.0f / 1024.0f,  900.0f / 1024.0f, textureFilename);
+		yesButton     = new Sprite(alite, ct.getTextureCoordX(500), ct.getTextureCoordY(250), ct.getTextureCoordX(700), ct.getTextureCoordY(450), 600.0f / 1024.0f, 600.0f / 1024.0f, 800.0f / 1024.0f,  800.0f / 1024.0f, textureFilename);
+		noButton      = new Sprite(alite, ct.getTextureCoordX(1220), ct.getTextureCoordY(250), ct.getTextureCoordX(1420), ct.getTextureCoordY(450), 600.0f / 1024.0f, 800.0f / 1024.0f, 800.0f / 1024.0f, 1000.0f / 1024.0f, textureFilename);
 		newScreen     = null;
 		
 		torusTraverser = new TorusBlockingTraverser(inGame);
@@ -121,6 +136,12 @@ public class AliteButtons implements Serializable {
 	public void reset() {
 		createButtonGroups();
 		createButtons();		
+    sweepLeftPos[0]  = Settings.flatButtonDisplay ?  800 :  250;
+    sweepLeftPos[1]  = Settings.flatButtonDisplay ?   50 :  400;
+    sweepRightPos[0] = Settings.flatButtonDisplay ? 1020 : 1560;
+    sweepRightPos[1] = Settings.flatButtonDisplay ?   50 :  400;
+    cycleLeft     = new Sprite(alite, ct.getTextureCoordX(sweepLeftPos[0]), ct.getTextureCoordY(sweepLeftPos[1]), ct.getTextureCoordX(sweepLeftPos[0] + 100), ct.getTextureCoordY(sweepLeftPos[1] + 100), 800.0f / 1024.0f, 800.0f / 1024.0f, 900.0f / 1024.0f,  900.0f / 1024.0f, textureFilename);
+    cycleRight    = new Sprite(alite, ct.getTextureCoordX(sweepRightPos[0]), ct.getTextureCoordY(sweepRightPos[1]), ct.getTextureCoordX(sweepRightPos[0] + 100), ct.getTextureCoordY(sweepRightPos[1] + 100), 800.0f / 1024.0f, 800.0f / 1024.0f, 900.0f / 1024.0f,  900.0f / 1024.0f, textureFilename);
 	}
 	
 	private void readObject(ObjectInputStream in) throws IOException {
@@ -129,6 +150,12 @@ public class AliteButtons implements Serializable {
 			in.defaultReadObject();
 			AliteLog.e("readObject", "AliteButtons.readObject I");
 			this.alite     = Alite.get();
+			sweepLeftPos = new int[2];
+			sweepRightPos = new int[2];
+	    sweepLeftPos[0]  = Settings.flatButtonDisplay ?  800 :  250;
+	    sweepLeftPos[1]  = Settings.flatButtonDisplay ?   50 :  400;
+	    sweepRightPos[0] = Settings.flatButtonDisplay ? 1020 : 1560;
+	    sweepRightPos[1] = Settings.flatButtonDisplay ?   50 :  400;
 			AliteLog.e("readObject", "AliteButtons.readObject II");
 		} catch (ClassNotFoundException e) {
 			AliteLog.e("Class not found", e.getMessage(), e);
@@ -175,20 +202,34 @@ public class AliteButtons implements Serializable {
 	}
 	
 	private ButtonData genButtonData(float x, float y, int positionIndex, String name) {
-		// Linke Seite: (0, 0), (1, 1), (0, 2)
-		// Rechte Seite: (11.4, 0), (10.4, 1), (11.4, 2)
+		// Left Side: (0, 0), (1, 1), (0, 2)
+		// Right Side: (11.4, 0), (10.4, 1), (11.4, 2)
 		float xt, yt;
 		int groupIndex;
-		if (positionIndex < 6) {
-			// Linke Seite
-			xt = ((positionIndex % 3) % 2) == 0 ? 0.0f : 1.0f;
-			groupIndex = positionIndex < 3 ? 0 : 1;
+		if (Settings.flatButtonDisplay) {
+			if (positionIndex < 6) {
+				// Left Side
+				xt = (positionIndex % 3) * 1.5f; // 0 1.5 3
+				groupIndex = positionIndex < 3 ? 0 : 1;
+			} else {
+				// Right Side
+				xt = 8.4f + (positionIndex % 3) * 1.5f; // 8.4 9.9 11.4
+				groupIndex = positionIndex < 9 ? 2 : 3;
+			}
+			yt = 0;
 		} else {
-			// Rechte Seite
-			xt = ((positionIndex % 3) % 2) == 0 ? 11.4f : 10.4f;
-			groupIndex = positionIndex < 9 ? 2 : 3;
+			if (positionIndex < 6) {
+				// Left Side
+				xt = ((positionIndex % 3) % 2) == 0 ? 0.0f : 1.0f;
+				groupIndex = positionIndex < 3 ? 0 : 1;
+			} else {
+				// Right Side
+				xt = ((positionIndex % 3) % 2) == 0 ? 11.4f : 10.4f;
+				groupIndex = positionIndex < 9 ? 2 : 3;
+			}
+			yt = positionIndex % 3;
 		}
-		yt = positionIndex % 3;
+		
 		
 		ButtonData result = new ButtonData(new Sprite(alite, ct.getTextureCoordX(xt * 150.0f), ct.getTextureCoordY(yt * 150.0f), ct.getTextureCoordX(xt * 150.0f + 200.0f), ct.getTextureCoordY(yt * 150.0f + 200.0f),
                 (x * 200.0f) / 1024.0f, (y * 200.0f) / 1024.0f, ((x + 1.0f) * 200.0f) / 1024.0f, ((y + 1.0f) * 200.0f) / 1024.0f, textureFilename),
@@ -207,6 +248,11 @@ public class AliteButtons implements Serializable {
 		if (buttons[FIRE] != null) {
 			buttons[FIRE].active = alite.getCobra().getLaser(inGame.getViewDirection()) != null;
 			buttons[FIRE].yellow = alite.getLaserManager() != null && alite.getLaserManager().isAutoFire();
+			if (!Settings.laserButtonAutofire) {
+				// Hack to prevent a green highlight if some other button was pressed
+				// during single shot finger-down...
+				buttons[FIRE].selected = false;
+			}
 		}
 		if (buttons[MISSILE] != null) {
 			if (downTime != -1 && (System.nanoTime() - downTime) > 1500000000l && buttons[MISSILE].red) {
@@ -238,7 +284,12 @@ public class AliteButtons implements Serializable {
 					                           !inGame.isWitchSpace();
 		}
 		if (buttons[DOCKING_COMPUTER] != null) {
-			buttons[DOCKING_COMPUTER].active = alite.getCobra().isEquipmentInstalled(EquipmentStore.dockingComputer) &&
+//			long dockingFee = Math.max(alite.getPlayer().getCurrentSystem().getStationHandsDockingFee(), (long) (alite.getPlayer().getCash() * 0.1f));
+		  buttons[DOCKING_COMPUTER].active = 
+//					(alite.getCobra().isEquipmentInstalled(EquipmentStore.dockingComputer) || 
+//					 alite.getPlayer().getCash() >= dockingFee &&
+//					 alite.getPlayer().getLegalStatus() == LegalStatus.CLEAN) &&
+		      alite.getCobra().isEquipmentInstalled(EquipmentStore.dockingComputer) &&
 					inGame.isInSafeZone();
 			buttons[DOCKING_COMPUTER].yellow = inGame.isDockingComputerActive();
 		}
@@ -320,7 +371,22 @@ public class AliteButtons implements Serializable {
 		}
 		GLES11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
-			
+		
+	public void renderYesNoButtons() {
+		GLES11.glColor4f(Settings.alpha, Settings.alpha, Settings.alpha, Settings.alpha);
+		yesButton.render();
+		noButton.render();
+		if (yesTouched) {
+			overlay.setPosition(yesButton.getPosition());
+			overlay.render();
+		}
+		if (noTouched) {
+			overlay.setPosition(noButton.getPosition());
+			overlay.render();
+		}
+		GLES11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	}
+	
 	private void sweepLeft() {
 		int activeIndex = 0;
 		for (int i = 0, n = buttonGroup.length; i < n; i++) {
@@ -371,9 +437,30 @@ public class AliteButtons implements Serializable {
 		}
 	}
 
+	public void checkFireRelease(TouchEvent e) {
+		if (e.pointer == fireButtonPressed && e.type == TouchEvent.TOUCH_UP) {		
+			fireButtonPressed = -1;
+		} 
+		if (fireButtonPressed == -1 && !Settings.laserButtonAutofire) {
+			deactivateFire();
+		} 
+	}
+	
 	public boolean handleTouch(TouchEvent e) {
 		boolean result = false;
-		boolean fireButtonPressed = false;
+		if (e.type == TouchEvent.TOUCH_DOWN) {
+			yesTouched = (e.x - 600) * (e.x - 600) + (e.y - 350) * (e.y - 350) <= 10000.0f;
+			noTouched  = (e.x - 1320) * (e.x - 1320) + (e.y - 350) * (e.y - 350) <= 10000.0f;
+		} else if (e.type == TouchEvent.TOUCH_UP) {
+			yesTouched = false;
+			noTouched = false;
+			if ((e.x - 600) * (e.x - 600) + (e.y - 350) * (e.y - 350) <= 10000.0f) {
+				inGame.yesSelected();				
+			}
+			if ((e.x - 1320) * (e.x - 1320) + (e.y - 350) * (e.y - 350) <= 10000.0f) {
+				inGame.noSelected();
+			}
+		}
 		for (int i = 0; i < buttons.length; i++) {
 			ButtonData bd = buttons[i];
 			if (bd == null || !bd.active || !bd.parent.active) {
@@ -387,10 +474,10 @@ public class AliteButtons implements Serializable {
 						downTime = System.nanoTime();
 					}
 					if (source == buttons[FIRE] && !Settings.laserButtonAutofire) {
-						fireButtonPressed = true;
-						toggleAutoFire();
+						fireButtonPressed = e.pointer;
+						alite.getLaserManager().setAutoFire(true);
 					}
-				} else if (e.type == TouchEvent.TOUCH_UP) {
+				} else if (e.type == TouchEvent.TOUCH_UP) {					
 					if (source != null) {
 						source.selected = false;
 					}
@@ -415,22 +502,15 @@ public class AliteButtons implements Serializable {
 						case MISSILE:          updateMissileState();       break;
 						case CLOAKING_DEVICE:  toggleCloakingDevice();     break;
 					}
-				} else {
-					if (bd == buttons[FIRE]) {
-						fireButtonPressed = true;
-					}
-				}
+				} 
 				result = true;
 			} 
 		}
-		if (!fireButtonPressed && !Settings.laserButtonAutofire) {
-			deactivateFire();
-		}
 		if (e.type == TouchEvent.TOUCH_DOWN) {
-			if (sweepLeftPossible && e.x >= 250 && e.x <= 350 && e.y >= 400 && e.y <= 500) {
+			if (sweepLeftPossible && e.x >= sweepLeftPos[0] && e.x <= sweepLeftPos[0] + 100 && e.y >= sweepLeftPos[1] && e.y <= sweepLeftPos[1] + 100) {
 				sweepLeftDown = true;
 			}
-			if (sweepRightPossible && e.x >= 1560 && e.x <= 1660 && e.y >= 400 && e.y <= 500) {
+			if (sweepRightPossible && e.x >= sweepRightPos[0] && e.x <= sweepRightPos[0] + 100 && e.y >= sweepRightPos[1] && e.y <= sweepRightPos[1] + 100) {
 				sweepRightDown = true;
 			}			
 		}
@@ -440,11 +520,11 @@ public class AliteButtons implements Serializable {
 				source.selected = false;
 				source = null;
 			}
-			if (sweepLeftDown && e.x >= 250 && e.x <= 350 && e.y >= 400 && e.y <= 500) {
+			if (sweepLeftDown && e.x >= sweepLeftPos[0] && e.x <= sweepLeftPos[0] + 100 && e.y >= sweepLeftPos[1] && e.y <= sweepLeftPos[1] + 100) {
 				sweepLeft();
 				actionPerformed = true;				
 			}
-			if (sweepRightDown && e.x >= 1560 && e.x <= 1660 && e.y >= 400 && e.y <= 500) {
+			if (sweepRightDown && e.x >= sweepRightPos[0] && e.x <= sweepRightPos[0] + 100 && e.y >= sweepRightPos[1] && e.y <= sweepRightPos[1] + 100) {
 				sweepRight();
 				actionPerformed = true;				
 			}
@@ -467,7 +547,7 @@ public class AliteButtons implements Serializable {
 	}
 	
 	private void toggleAutoFire() {
-		if (OVERRIDE_LASER) {
+		if (OVERRIDE_LASER || !Settings.laserButtonAutofire) {
 			return;
 		}
 		if (alite.getLaserManager() != null) {
@@ -561,6 +641,7 @@ public class AliteButtons implements Serializable {
 			return;
 		}
 		if (alite.getCurrentScreen() instanceof FlightScreen) {
+			deactivateFire();
 			StatusScreen screen = new StatusScreen(alite);		
 			alite.getNavigationBar().setFlightMode(true);
 			alite.getNavigationBar().setActiveIndex(2);
@@ -595,7 +676,11 @@ public class AliteButtons implements Serializable {
 	}
 	
 	private void engageDockingComputer() {	
-		inGame.toggleDockingComputer(true);
+		if (!alite.getCobra().isEquipmentInstalled(EquipmentStore.dockingComputer)) {
+			inGame.toggleStationHandsDocking();
+		} else {
+			inGame.toggleDockingComputer(true);
+		}
 	}
 	
 	private void engageEnergyBomb() {

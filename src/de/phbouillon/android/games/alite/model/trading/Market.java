@@ -55,7 +55,7 @@ public abstract class Market {
 	
 	public int getPrice(TradeGood good) {
 		return price.get(good);
-	}
+	}	
 	
 	public int getQuantity(TradeGood good) {
 		return quantity.get(good);
