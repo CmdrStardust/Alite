@@ -428,7 +428,9 @@ public class EquipmentScreen extends TradeScreen {
     
     private void disposeEquipmentAnimation(int offset) {
     	for (int i = 1; i <= 15; i++) {
-    		equipment[offset][i].dispose();
+    		if (equipment[offset][i] != null) {
+    			equipment[offset][i].dispose();
+    		}
     		equipment[offset][i] = null;
     	}
     }

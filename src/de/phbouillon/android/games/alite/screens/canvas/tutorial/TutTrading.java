@@ -26,6 +26,7 @@ import de.phbouillon.android.framework.Input.TouchEvent;
 import de.phbouillon.android.games.alite.Alite;
 import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.ScreenCodes;
+import de.phbouillon.android.games.alite.model.InventoryItem;
 import de.phbouillon.android.games.alite.model.Weight;
 import de.phbouillon.android.games.alite.model.trading.TradeGood;
 import de.phbouillon.android.games.alite.model.trading.TradeGoodStore;
@@ -46,7 +47,7 @@ public class TutTrading extends TutorialScreen {
 	private boolean success = false;
 	private long savedCash;
 	private int savedFoodQuantity;
-	private Weight [] savedInventory;
+	private InventoryItem [] savedInventory;
 	private int screenToInitialize = 0;
 	
 	public TutTrading(final Alite alite) {
@@ -54,8 +55,12 @@ public class TutTrading extends TutorialScreen {
 
 		savedCash = alite.getPlayer().getCash();
 		savedFoodQuantity = alite.getPlayer().getMarket().getQuantity(TradeGoodStore.get().food());
-		savedInventory = new Weight[TradeGoodStore.get().goods().length];
-		System.arraycopy(alite.getCobra().getInventory(), 0, savedInventory, 0, alite.getCobra().getInventory().length);
+		savedInventory = new InventoryItem[TradeGoodStore.get().goods().length];
+		InventoryItem [] currentItems = alite.getCobra().getInventory();
+		for (int i = 0; i < TradeGoodStore.get().goods().length; i++) {
+			savedInventory[i] = new InventoryItem();
+			savedInventory[i].set(currentItems[i].getWeight(), currentItems[i].getPrice());
+		}
 
 		initLine_00();
 		initLine_01();
@@ -386,9 +391,10 @@ public class TutTrading extends TutorialScreen {
 			tt.currentLineIndex = dis.readInt();
 			tt.screenToInitialize = dis.readByte();
 			tt.savedCash = dis.readLong();
-			tt.savedInventory = new Weight[dis.readInt()];
+			tt.savedInventory = new InventoryItem[dis.readInt()];
 			for (int i = 0; i < tt.savedInventory.length; i++) {
-				tt.savedInventory[i] = Weight.grams(dis.readLong());
+				tt.savedInventory[i] = new InventoryItem();
+				tt.savedInventory[i].set(Weight.grams(dis.readLong()), dis.readLong());
 			}
 			tt.savedFoodQuantity = dis.readInt();
 		} catch (Exception e) {
@@ -411,8 +417,9 @@ public class TutTrading extends TutorialScreen {
 		}
 		dos.writeLong(savedCash);
 		dos.writeInt(savedInventory.length);
-		for (Weight w: savedInventory) {
-			dos.writeLong(w.getWeightInGrams());
+		for (InventoryItem w: savedInventory) {
+			dos.writeLong(w.getWeight().getWeightInGrams());
+			dos.writeLong(w.getPrice());
 		}
 		dos.writeInt(savedFoodQuantity);
 	}

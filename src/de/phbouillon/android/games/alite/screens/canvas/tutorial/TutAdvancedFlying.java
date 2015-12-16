@@ -35,6 +35,7 @@ import de.phbouillon.android.games.alite.Settings;
 import de.phbouillon.android.games.alite.SoundManager;
 import de.phbouillon.android.games.alite.model.Equipment;
 import de.phbouillon.android.games.alite.model.EquipmentStore;
+import de.phbouillon.android.games.alite.model.InventoryItem;
 import de.phbouillon.android.games.alite.model.Laser;
 import de.phbouillon.android.games.alite.model.LegalStatus;
 import de.phbouillon.android.games.alite.model.PlayerCobra;
@@ -71,8 +72,9 @@ public class TutAdvancedFlying extends TutorialScreen {
 	private int savedLegalValue;
 	private TutAdvancedFlying switchScreen = null;
 	private long time = -1;
+	private int savedMarketFluct;
 	private Adder adder = null;
-	private Weight [] savedInventory;
+	private InventoryItem [] savedInventory;
 	private LegalStatus savedLegalStatus;
 	private int [] savedButtonConfiguration = new int[Settings.buttonPosition.length];
 	
@@ -95,17 +97,23 @@ public class TutAdvancedFlying extends TutorialScreen {
 		savedLasers[1] = alite.getCobra().getLaser(PlayerCobra.DIR_RIGHT);
 		savedLasers[2] = alite.getCobra().getLaser(PlayerCobra.DIR_REAR);
 		savedLasers[3] = alite.getCobra().getLaser(PlayerCobra.DIR_LEFT);
+		savedMarketFluct = alite.getPlayer().getMarket().getFluct();
 		savedFuel = alite.getCobra().getFuel();
 		savedDisableTraders = Settings.disableTraders;
 		savedDisableAttackers = Settings.disableAttackers;
 		savedMissiles = alite.getCobra().getMissiles();
-		savedInventory = new Weight[TradeGoodStore.get().goods().length];
 		savedLegalStatus = alite.getPlayer().getLegalStatus();
 		savedLegalValue = alite.getPlayer().getLegalValue();
 		savedCredits = alite.getPlayer().getCash();
 		savedScore = alite.getPlayer().getScore();
 		System.arraycopy(Settings.buttonPosition, 0, savedButtonConfiguration, 0, Settings.buttonPosition.length);
-		System.arraycopy(alite.getCobra().getInventory(), 0, savedInventory, 0, alite.getCobra().getInventory().length);
+		savedInventory = new InventoryItem[TradeGoodStore.get().goods().length];
+		InventoryItem [] currentItems = alite.getCobra().getInventory();
+		for (int i = 0; i < TradeGoodStore.get().goods().length; i++) {
+			savedInventory[i] = new InventoryItem();
+			savedInventory[i].set(currentItems[i].getWeight(), currentItems[i].getPrice());
+		}
+
 		
 		for (Equipment e: savedInstalledEquipment) {
 			alite.getCobra().removeEquipment(e);
@@ -253,7 +261,7 @@ public class TutAdvancedFlying extends TutorialScreen {
 							switchScreen.savedCredits = savedCredits;
 							switchScreen.savedScore = savedScore;
 							switchScreen.savedLegalStatus = savedLegalStatus;
-							switchScreen.savedInventory = new Weight[savedInventory.length];
+							switchScreen.savedInventory = new InventoryItem[savedInventory.length];
 							for (int i = 0; i < switchScreen.savedInventory.length; i++) {
 								switchScreen.savedInventory[i] = savedInventory[i];
 							}
@@ -739,11 +747,13 @@ public class TutAdvancedFlying extends TutorialScreen {
 			ta.savedCredits = dis.readLong();
 			ta.savedScore = dis.readInt();
 			ta.savedLegalStatus = LegalStatus.values()[dis.readInt()];
-			ta.savedInventory = new Weight[dis.readInt()];
+			ta.savedInventory = new InventoryItem[dis.readInt()];
 			for (int i = 0; i < ta.savedInventory.length; i++) {
-				ta.savedInventory[i] = Weight.grams(dis.readLong());
+				ta.savedInventory[i] = new InventoryItem();
+				ta.savedInventory[i].set(Weight.grams(dis.readLong()), dis.readLong());
 			}
 			ta.time = dis.readLong();
+			ta.savedMarketFluct = dis.readInt();
 			ta.adder = (Adder) ta.flight.findObjectByName("Adder");
 			if (ta.adder != null) {
 				ta.adder.setSaving(false);
@@ -797,10 +807,12 @@ public class TutAdvancedFlying extends TutorialScreen {
 		dos.writeInt(savedScore);
 		dos.writeInt(savedLegalStatus.ordinal());
 		dos.writeInt(savedInventory.length);
-		for (Weight w: savedInventory) {
-			dos.writeLong(w.getWeightInGrams());
+		for (InventoryItem w: savedInventory) {
+			dos.writeLong(w.getWeight().getWeightInGrams());
+			dos.writeLong(w.getPrice());
 		}
 		dos.writeLong(time);
+		dos.writeInt(savedMarketFluct);
 	}
 
 	@Override
@@ -886,6 +898,8 @@ public class TutAdvancedFlying extends TutorialScreen {
 		alite.getGenerator().setCurrentGalaxy(alite.getGenerator().getCurrentGalaxyFromSeed());
 		alite.getPlayer().setCurrentSystem(savedPresentSystem); 
 		alite.getPlayer().setHyperspaceSystem(savedHyperspaceSystem);
+		alite.getPlayer().getMarket().setFluct(savedMarketFluct);
+		alite.getPlayer().getMarket().generate();
 		alite.getCobra().setFuel(savedFuel);
 		alite.getCobra().setMissiles(savedMissiles);
 		alite.getCobra().setInventory(savedInventory);

@@ -246,8 +246,11 @@ public class PlayerCobra {
 		fillTradeGoods();
 	}
 	
-	public void setInventory(Weight [] data) {
-		System.arraycopy(data, 0, inventory, 0, data.length);
+	public void setInventory(InventoryItem [] data) {
+		clearInventory();
+		for (int i = 0; i < data.length; i++) {
+			setTradeGood(TradeGoodStore.get().goods()[i], data[i].getWeight(), data[i].getPrice());
+		}
 	}
 	
 	public int getMissiles() {

@@ -74,6 +74,7 @@ public class TutBasicFlying extends TutorialScreen {
 	private Buoy target2;
 	private Buoy dockingBuoy;
 	private int [] savedButtonConfiguration = new int[Settings.buttonPosition.length];
+	private int savedMarketFluct;
 	
 	public TutBasicFlying(final Alite alite) {
 		this(alite, null);
@@ -99,6 +100,7 @@ public class TutBasicFlying extends TutorialScreen {
 		savedScore = alite.getPlayer().getScore();
 		savedLegalStatus = alite.getPlayer().getLegalStatus();
 		savedLegalValue = alite.getPlayer().getLegalValue();
+		savedMarketFluct = alite.getPlayer().getMarket().getFluct();
 		
 		ObjectSpawnManager.SHUTTLES_ENABLED = false;
 		ObjectSpawnManager.ASTEROIDS_ENABLED = false;
@@ -934,7 +936,8 @@ public class TutBasicFlying extends TutorialScreen {
 			tb.savedScore = dis.readInt();
 			tb.savedLegalStatus = LegalStatus.values()[dis.readInt()];
 			tb.resetShipPosition = dis.readBoolean();
-
+			tb.savedMarketFluct = dis.readInt();
+			
 			tb.target1 = (Buoy) tb.flight.findObjectByName("Yellow Target");
 			if (tb.target1 != null) {
 				tb.target1.setSaving(false);
@@ -994,6 +997,7 @@ public class TutBasicFlying extends TutorialScreen {
 		dos.writeInt(savedScore);
 		dos.writeInt(savedLegalStatus.ordinal());
 		dos.writeBoolean(resetShipPosition);	
+		dos.writeInt(savedMarketFluct);
 	}
 	
 	@Override
@@ -1079,6 +1083,8 @@ public class TutBasicFlying extends TutorialScreen {
 		alite.getGenerator().buildGalaxy(savedGalaxySeed[0], savedGalaxySeed[1], savedGalaxySeed[2]);
 		alite.getGenerator().setCurrentGalaxy(alite.getGenerator().getCurrentGalaxyFromSeed());
 		alite.getPlayer().setCurrentSystem(savedPresentSystem); 
+		alite.getPlayer().getMarket().setFluct(savedMarketFluct);
+		alite.getPlayer().getMarket().generate();
 		alite.getPlayer().setHyperspaceSystem(savedHyperspaceSystem);
 		alite.getCobra().setFuel(savedFuel);
 		alite.getCobra().setMissiles(savedMissiles);

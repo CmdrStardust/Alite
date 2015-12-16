@@ -1,4 +1,4 @@
-Alite v. 1.3.1 by Philipp Bouillon and Duane McDonnell
+Alite v. 1.3.3 by Philipp Bouillon and Duane McDonnell
 
 About
 -----
