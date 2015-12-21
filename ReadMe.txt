@@ -1,4 +1,4 @@
-Alite v. 1.3.3 by Philipp Bouillon and Duane McDonnell
+Alite v. 1.3.4 by Philipp Bouillon and Duane McDonnell
 
 About
 -----
@@ -15,6 +15,52 @@ skills.
 
 Designed specifically for Android devices, Alite brings space action and
 exploration directly to you - wherever you are.
+
+Version History
+---------------
+
+Version 1.3.4 Fixes a bug in the Galaxy and Local Screens. The background was
+              not cleared correctly on some devices. [12/21/2015]
+
+Version 1.3.3 Fixes a bug in the "Trading" and "Basic Flying" tutorials, which
+              was introduced in version 1.3.0. [12/15/2015]
+
+Version 1.3.2 Fixes a bug in the Equipment screen: If you had turned off
+              animations (via Options/Display Options), the game would crash.
+              [12/12/2015]
+
+Version 1.3.1 Introduces the display of expected gain (or loss) from a trade and
+              the "flat button layout" (detailed here:
+              http://alite.mobi/node/30). For screens larger than 1920x1080,
+              library and disk screens now work, too. You can set the laser
+              firing to single shot and can still change speed while firing.
+              Some sound effects have been fixed (most notably, the torus drive
+              sound stops playing when entering hyperspace). [12/06/2015]
+
+Version 1.3.0 Lets you invert the controls and fixes a small overlay bug in the
+              Cursor keys. [12/01/2015]
+
+Version 1.2.1 Turns the cheat mode back off :). Ooops... I left it in
+              acidentally in version 1.2.0. [10/28/2015]
+
+Version 1.2.0 Finally fixes the vanishing objects bug and works on Nexus 9/10
+              devices. [10/25/2015]
+
+Version 1.1.2 Boomslang rename was buggy. Now the Bushmaster is really called
+              "Harken". First Source code release. [09/12/2015]
+
+Version 1.1.1 The application doesn't crash anymore when its state is restored
+              (bug introduced with version 1.1). Lasers now correctly vanish
+              when they hit an object. Button images in the ShipIntroScreen are
+              scaled again (another bug introduced with version 1.1).
+              [09/06/2015]
+
+Version 1.1 Comes with Chris Huelsbeck's rendition of the Blue Danube. Two ships
+            have been renamed to "Harken" and "Lancehead", respectively.
+            [08/30/2015]
+
+Version 1.0 First release of Alite. [08/05/2015]
+
 
 Build instructions
 ------------------
