@@ -385,7 +385,7 @@ public class TutAdvancedFlying extends TutorialScreen {
 					flight.getInGameManager().setPlayerControl(true);
 					flight.setHandleUI(true);
 				}								
-				if (alite.getCobra().getSpeed() < -PlayerCobra.MAX_SPEED) {
+				if (alite.getCobra().getSpeed() < -PlayerCobra.TORUS_TEST_SPEED) {
 					if (time == -1) {
 						time = System.nanoTime();
 					} else {

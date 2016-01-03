@@ -73,6 +73,7 @@ public abstract class AndroidGame extends Activity implements Game, Renderer {
 	private long startTime = System.nanoTime();
 	private long lastTime = startTime;
 	private int frames = 0;
+	private float timeFactor = 1.0f;
 	public static float fps;
 	public static float scaleFactor;
 	protected final TextureManager textureManager;
@@ -353,4 +354,11 @@ public abstract class AndroidGame extends Activity implements Game, Renderer {
 	
 	public void afterSurfaceCreated() {		
 	}	
+	
+	public float getTimeFactor() {
+		return timeFactor;
+	}
+	public void setTimeFactor(float tf) {
+		timeFactor = tf;
+	}
 }

@@ -484,7 +484,7 @@ public class FlightScreen extends GlScreen implements Serializable {
 			if (isDisposed || inGame == null) {
 				return;
 			}
-			inGame.performUpdate(deltaTime, allObjects);
+			inGame.performUpdate(deltaTime * ((Alite) game).getTimeFactor(), allObjects);
 		
 			if (informationScreen != null) {
 				informationScreen.update(deltaTime);

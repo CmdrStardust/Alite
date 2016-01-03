@@ -120,6 +120,8 @@ public class Player {
 
 	public void setCondition(Condition newCondition) {
 		condition = newCondition;
+		if((condition != Condition.GREEN) && (condition != Condition.YELLOW))
+			alite.setTimeFactor(1.0f);
 	}
 	
 	public LegalStatus getLegalStatus() {
