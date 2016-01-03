@@ -181,18 +181,21 @@ public class BuyScreen extends TradeScreen {
 		Graphics g = game.getGraphics();
 		String cash = String.format(Locale.getDefault(), "%d.%d", player.getCash() / 10, player.getCash() % 10);
 		String freeCargo = player.getCobra().getFreeCargo().getStringWithoutUnit();
-		String unit = Weight.getUnitString(player.getCobra().getFreeCargo().getAppropriateUnit());
-		int halfWidth = g.getTextWidth("Cash:_" + cash + "_Cr      Hold:_" + freeCargo + unit + "_spare", Assets.regularFont) >> 1;
+		String wunit = Weight.getUnitString(player.getCobra().getFreeCargo().getAppropriateUnit()) + " spare";
+		int wd1 = g.getTextWidth("Cash:_", Assets.regularFont), wd2 = g.getTextWidth(cash, Assets.regularFont);
+		int wd3 = g.getTextWidth("Cr      Hold:_", Assets.regularFont), wd4 = g.getTextWidth(freeCargo, Assets.regularFont);
+		int wdu = g.getTextWidth("_", Assets.regularFont);
+		int halfWidth = (wd1+wd2+wdu+wd3+wd4+wdu+g.getTextWidth(wunit, Assets.regularFont)) >> 1;
 		int currentX = 860 - halfWidth;
 		g.drawText("Cash: ", currentX, 1000, AliteColors.get().informationText(), Assets.regularFont);
-		currentX += g.getTextWidth("Cash:_", Assets.regularFont);
+		currentX += wd1;
 		g.drawText(cash, currentX, 1000, AliteColors.get().additionalText(), Assets.regularFont);
-		currentX += g.getTextWidth(cash + "_", Assets.regularFont);
+		currentX += wd2+wdu;
 		g.drawText("Cr      Hold: ", currentX, 1000, AliteColors.get().informationText(), Assets.regularFont);
-		currentX += g.getTextWidth("Cr      Hold:_", Assets.regularFont);
+		currentX += wd3;
 		g.drawText(freeCargo, currentX, 1000, AliteColors.get().additionalText(), Assets.regularFont);
-		currentX += g.getTextWidth(freeCargo, Assets.regularFont);
-		g.drawText(unit + " spare", currentX, 1000, AliteColors.get().informationText(), Assets.regularFont);
+		currentX += wd4+wdu;
+		g.drawText(wunit, currentX, 1000, AliteColors.get().informationText(), Assets.regularFont);
 	}
 
 	@Override
