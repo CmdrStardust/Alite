@@ -18,6 +18,8 @@ package de.phbouillon.android.games.alite.screens.canvas;
  * http://http://www.gnu.org/licenses/gpl-3.0.txt.
  */
 
+import java.util.Locale;
+
 import android.opengl.GLES11;
 import de.phbouillon.android.framework.Game;
 import de.phbouillon.android.framework.Graphics;
@@ -29,6 +31,8 @@ import de.phbouillon.android.games.alite.Button;
 import de.phbouillon.android.games.alite.Settings;
 import de.phbouillon.android.games.alite.SoundManager;
 import de.phbouillon.android.games.alite.colors.AliteColors;
+import de.phbouillon.android.games.alite.model.Player;
+import de.phbouillon.android.games.alite.model.Weight;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.FlightScreen;
 
 //This screen never needs to be serialized, as it is not part of the InGame state.
@@ -85,6 +89,34 @@ public abstract class TradeScreen extends AliteScreen {
 		}
 	}
 	
+	protected void presentTradeStatus() {
+		Player player = ((Alite) game).getPlayer();
+		Graphics g = game.getGraphics();
+		String cash = String.format(Locale.getDefault(), "%d.%d", player.getCash() / 10, player.getCash() % 10);
+		String freeCargo = player.getCobra().getFreeCargo().getStringWithoutUnit();
+		String spareText = Weight.getUnitString(player.getCobra().getFreeCargo().getAppropriateUnit()) + " spare";
+		int cashTextWidth = g.getTextWidth("Cash:_", Assets.regularFont);
+		int cashWidth = g.getTextWidth(cash, Assets.regularFont);
+		int holdTextWidth = g.getTextWidth("Cr      Hold:_", Assets.regularFont);
+		int freeCargoWidth = g.getTextWidth(freeCargo, Assets.regularFont);
+		int spaceWidth = g.getTextWidth("_", Assets.regularFont);
+		
+		int halfWidth = (cashTextWidth + cashWidth + spaceWidth + 
+				         holdTextWidth + freeCargoWidth + spaceWidth + 
+				         g.getTextWidth(spareText, Assets.regularFont)) >> 1;
+		int currentX = 860 - halfWidth;
+		
+		g.drawText("Cash: ", currentX, 1000, AliteColors.get().informationText(), Assets.regularFont);
+		currentX += cashTextWidth;
+		g.drawText(cash, currentX, 1000, AliteColors.get().additionalText(), Assets.regularFont);
+		currentX += cashWidth + spaceWidth;
+		g.drawText("Cr      Hold: ", currentX, 1000, AliteColors.get().informationText(), Assets.regularFont);
+		currentX += holdTextWidth;
+		g.drawText(freeCargo, currentX, 1000, AliteColors.get().additionalText(), Assets.regularFont);
+		currentX += freeCargoWidth + spaceWidth;
+		g.drawText(spareText, currentX, 1000, AliteColors.get().informationText(), Assets.regularFont);
+	}
+
 	public void presentTradeGoods(float deltaTime) {
 		Graphics g = game.getGraphics();
 		
