@@ -27,7 +27,7 @@ public class SoundManager {
 			AliteLog.dumpStack("Sound == null", "Sound == null");
 			return;
 		}
-		sound.play(sound.isVoice() ? Settings.voiceVolume : Settings.effectsVolume);
+		sound.play(Settings.volumes[sound.getType().getValue()]);
 	}
 	
 	public static void playOnce(Sound sound, long delayInMs) {
@@ -35,7 +35,7 @@ public class SoundManager {
 			AliteLog.dumpStack("Sound == null", "Sound == null");
 			return;
 		}
-		sound.playOnce(sound.isVoice() ? Settings.voiceVolume : Settings.effectsVolume, delayInMs);
+		sound.playOnce(Settings.volumes[sound.getType().getValue()], delayInMs);
 	}
 
 	public static boolean isPlaying(Sound sound) {
@@ -51,7 +51,7 @@ public class SoundManager {
 			AliteLog.dumpStack("Sound == null", "Sound == null");
 			return;
 		}
-		sound.repeat(sound.isVoice() ? Settings.voiceVolume : Settings.effectsVolume);
+		sound.repeat(Settings.volumes[sound.getType().getValue()]);
 	}
 	
 	public static void stop(Sound sound) {

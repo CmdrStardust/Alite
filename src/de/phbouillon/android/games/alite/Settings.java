@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import de.phbouillon.android.framework.FileIO;
+import de.phbouillon.android.framework.Sound;
 
 public class Settings {
 	private static final boolean ALWAYS_WRITE_LOG = false;
@@ -55,9 +56,7 @@ public class Settings {
 	public static int colorDepth = 1;
 	public static float alpha = 0.75f;
 	public static float controlAlpha = 0.5f;
-	public static float musicVolume = 0.5f;
-	public static float effectsVolume = 0.5f;
-	public static float voiceVolume = 1.0f;
+	public static float volumes[] = { 1.0f, 0.5f, 0.5f, 0.5f };
 	public static ShipControl controlMode = ShipControl.ACCELEROMETER;
 	public static int controlPosition = 1;
 	public static int introVideoQuality = 255;
@@ -105,9 +104,10 @@ public class Settings {
 			textureLevel = Integer.parseInt(in.readLine());
 			colorDepth = Integer.parseInt(in.readLine());
 			alpha = Float.parseFloat(in.readLine());
-			musicVolume = Float.parseFloat(in.readLine());
-			effectsVolume = Float.parseFloat(in.readLine());
-			voiceVolume = Float.parseFloat(in.readLine());
+			volumes[Sound.SoundType.MUSIC.getValue()] = Float.parseFloat(in.readLine());
+			volumes[Sound.SoundType.SOUND_FX.getValue()] = Float.parseFloat(in.readLine());
+			volumes[Sound.SoundType.VOICE.getValue()] = Float.parseFloat(in.readLine());
+			volumes[Sound.SoundType.COMBAT_FX.getValue()] = volumes[Sound.SoundType.SOUND_FX.getValue()];
 			controlMode = ShipControl.values()[Integer.parseInt(in.readLine())];
 			controlPosition = Integer.parseInt(in.readLine());
 			controlAlpha = Float.parseFloat(in.readLine());
@@ -133,6 +133,7 @@ public class Settings {
 			autoId = Boolean.parseBoolean(in.readLine());
 			reversePitch = Boolean.parseBoolean(in.readLine());
 			flatButtonDisplay = Boolean.parseBoolean(in.readLine());
+			volumes[Sound.SoundType.COMBAT_FX.getValue()] = Float.parseFloat(in.readLine());
 		} catch (Throwable t) {
 			// Ignore
 		} finally {
@@ -160,9 +161,9 @@ public class Settings {
 			out.write(Integer.toString(textureLevel) + "\n");
 			out.write(Integer.toString(colorDepth) + "\n");
 			out.write(Float.toString(alpha) + "\n");
-			out.write(Float.toString(musicVolume) + "\n");
-			out.write(Float.toString(effectsVolume) + "\n");
-			out.write(Float.toString(voiceVolume) + "\n");
+			out.write(Float.toString(volumes[Sound.SoundType.MUSIC.getValue()]) + "\n");
+			out.write(Float.toString(volumes[Sound.SoundType.SOUND_FX.getValue()]) + "\n");
+			out.write(Float.toString(volumes[Sound.SoundType.VOICE.getValue()]) + "\n");
 			out.write(Integer.toString(controlMode.ordinal()) + "\n");
 			out.write(Integer.toString(controlPosition) + "\n");
 			out.write(Float.toString(controlAlpha) + "\n");
@@ -188,6 +189,7 @@ public class Settings {
 			out.write(Boolean.toString(autoId) + "\n");
 			out.write(Boolean.toString(reversePitch) + "\n");
 			out.write(Boolean.toString(flatButtonDisplay) + "\n");
+			out.write(Float.toString(volumes[Sound.SoundType.COMBAT_FX.getValue()]) + "\n");
 		} catch (Exception e) {
 			// Ignore
 		} finally {

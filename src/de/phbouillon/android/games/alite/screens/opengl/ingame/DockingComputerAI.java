@@ -23,6 +23,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 import android.opengl.Matrix;
+import de.phbouillon.android.framework.Sound;
 import de.phbouillon.android.framework.Updater;
 import de.phbouillon.android.framework.math.Vector3f;
 import de.phbouillon.android.games.alite.Alite;
@@ -66,7 +67,7 @@ final class DockingComputerAI implements AiStateCallbackHandler, Serializable {
 			AliteLog.e("readObject", "DockingComputerAI.readObject II");
 			if (isActive()) {
 				if (Assets.danube == null) {
-					Assets.danube = alite.getAudio().newMusic("music/blue_danube.ogg", false, false);
+					Assets.danube = alite.getAudio().newMusic("music/blue_danube.ogg", Sound.SoundType.MUSIC);
 				}
 				// Do not start music playback here: The game is in paused state, so play music
 				// only after resume is called.
@@ -121,7 +122,7 @@ final class DockingComputerAI implements AiStateCallbackHandler, Serializable {
 	final void resumeMusic() {
 		if (active) {
 			if (Assets.danube == null) {
-				Assets.danube = alite.getAudio().newMusic("music/blue_danube.ogg", false, false);
+				Assets.danube = alite.getAudio().newMusic("music/blue_danube.ogg", Sound.SoundType.MUSIC);
 			}
 			if (Assets.danube == null) {
 				inGame.setMessage("The Blue Danube now playing in your head.");
@@ -148,7 +149,7 @@ final class DockingComputerAI implements AiStateCallbackHandler, Serializable {
 		inGame.setPlayerControl(false);
 		dcaUpdater.orientationFound = false;
 		if (Assets.danube == null) {
-			Assets.danube = alite.getAudio().newMusic("music/blue_danube.ogg", false, false);
+			Assets.danube = alite.getAudio().newMusic("music/blue_danube.ogg", Sound.SoundType.MUSIC);
 		}
 		if (Assets.danube == null) {
 			inGame.setMessage("The Blue Danube now playing in your head.");

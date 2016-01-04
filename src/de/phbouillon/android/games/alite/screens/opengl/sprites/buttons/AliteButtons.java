@@ -67,8 +67,9 @@ public class AliteButtons implements Serializable {
 	private static final int RETRO_ROCKETS    =  8;	
 	private static final int ECM_JAMMER       =  9;	
 	private static final int CLOAKING_DEVICE  = 10;
-    private static final int MISSILE          = 11;
-    private static final int FIRE             = 12;
+	private static final int MISSILE          = 11;
+	private static final int FIRE             = 12;
+	private static final int TIME_DRIVE       = 13;
     
 	private ButtonData [] buttons = new ButtonData[15];	
 	private Sprite overlay;
@@ -176,7 +177,7 @@ public class AliteButtons implements Serializable {
 		buttons[ENERGY_BOMB].active      = alite.getPlayer().getCobra().isEquipmentInstalled(EquipmentStore.energyBomb);
 		
 		buttons[STATUS]                  = genButtonData(2, 2, Settings.buttonPosition[Settings.STATUS], "Status");
-		// Torus drive and docking computer button are always in the same position, as they're mutually exclusive.
+		// Torus drive, time drive and docking computer button are always in the same position, as they're mutually exclusive.
 		buttons[TORUS_DRIVE]             = genButtonData(2, 1, Settings.buttonPosition[Settings.TORUS], "Torus Drive");
 		buttons[TORUS_DRIVE].active      = false;
 		buttons[DOCKING_COMPUTER]        = genButtonData(0, 0, Settings.buttonPosition[Settings.TORUS], "Docking Computer");

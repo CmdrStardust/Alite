@@ -22,6 +22,7 @@ import java.io.DataInputStream;
 
 import de.phbouillon.android.framework.Game;
 import de.phbouillon.android.framework.Graphics;
+import de.phbouillon.android.framework.Sound;
 import de.phbouillon.android.framework.Input.TouchEvent;
 import de.phbouillon.android.games.alite.Alite;
 import de.phbouillon.android.games.alite.Assets;
@@ -36,7 +37,8 @@ import de.phbouillon.android.games.alite.colors.AliteColors;
 @SuppressWarnings("serial")
 public class AudioOptionsScreen extends OptionsScreen {
 	private Slider musicVolume;
-	private Slider effectsVolume;
+	private Slider soundFxVolume;
+	private Slider combatFxVolume;
 	private Slider voiceVolume;
 	private Button back;
 	
@@ -46,9 +48,10 @@ public class AudioOptionsScreen extends OptionsScreen {
 	
 	@Override
 	public void activate() {
-		musicVolume = createFloatSlider(0, 0, 1, "Music Volume", Settings.musicVolume);
-		effectsVolume = createFloatSlider(1, 0, 1, "Effects Volume", Settings.effectsVolume);
-		voiceVolume = createFloatSlider(2, 0, 1, "Voice Volume", Settings.voiceVolume);
+		musicVolume = createFloatSlider(0, 0, 1, "Music Volume", Settings.volumes[Sound.SoundType.MUSIC.getValue()]);
+		soundFxVolume = createFloatSlider(1, 0, 1, "Sound FX Volume", Settings.volumes[Sound.SoundType.SOUND_FX.getValue()]);
+		combatFxVolume = createFloatSlider(2, 0, 1, "Combat FX Volume", Settings.volumes[Sound.SoundType.COMBAT_FX.getValue()]);
+		voiceVolume = createFloatSlider(3, 0, 1, "Voice Volume", Settings.volumes[Sound.SoundType.VOICE.getValue()]);
 		back = createButton(5, "Back");
 	}
 		
@@ -63,7 +66,8 @@ public class AudioOptionsScreen extends OptionsScreen {
 		
 		displayTitle("Audio Options");
 		musicVolume.render(g);
-		effectsVolume.render(g);
+		soundFxVolume.render(g);
+		combatFxVolume.render(g);
 		voiceVolume.render(g);
 		back.render(g);
 	}
@@ -71,15 +75,19 @@ public class AudioOptionsScreen extends OptionsScreen {
 	@Override
 	protected void processTouch(TouchEvent touch) {
 		if (musicVolume.checkEvent(touch)) {
-			Settings.musicVolume = musicVolume.getCurrentValue();
+			Settings.volumes[Sound.SoundType.MUSIC.getValue()] = musicVolume.getCurrentValue();
 			Settings.save(game.getFileIO());
 		}
-		if (effectsVolume.checkEvent(touch)) {
-			Settings.effectsVolume = effectsVolume.getCurrentValue();
+		if (soundFxVolume.checkEvent(touch)) {
+			Settings.volumes[Sound.SoundType.SOUND_FX.getValue()] = soundFxVolume.getCurrentValue();
+			Settings.save(game.getFileIO());
+		}
+		if (combatFxVolume.checkEvent(touch)) {
+			Settings.volumes[Sound.SoundType.COMBAT_FX.getValue()] = combatFxVolume.getCurrentValue();
 			Settings.save(game.getFileIO());
 		}
 		if (voiceVolume.checkEvent(touch)) {
-			Settings.voiceVolume = voiceVolume.getCurrentValue();
+			Settings.volumes[Sound.SoundType.VOICE.getValue()] = voiceVolume.getCurrentValue();
 			Settings.save(game.getFileIO());
 		}
 

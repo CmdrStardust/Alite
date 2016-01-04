@@ -32,6 +32,7 @@ import de.phbouillon.android.framework.Graphics;
 import de.phbouillon.android.framework.Input.TouchEvent;
 import de.phbouillon.android.framework.Music;
 import de.phbouillon.android.framework.Pixmap;
+import de.phbouillon.android.framework.Sound;
 import de.phbouillon.android.framework.impl.AndroidGraphics;
 import de.phbouillon.android.framework.impl.gl.GlUtils;
 import de.phbouillon.android.framework.math.Vector3f;
@@ -369,7 +370,7 @@ public class ShipIntroScreen extends AliteScreen {
 
 	@Override
 	public void loadAssets() {
-		theChase = game.getAudio().newMusic("music/the_chase.mp3", false, false);
+		theChase = game.getAudio().newMusic("music/the_chase.mp3", Sound.SoundType.MUSIC);
 		yesIcon = game.getGraphics().newPixmap("yes_icon_small.png", true);
 		noIcon = game.getGraphics().newPixmap("no_icon_small.png", true);
 	}

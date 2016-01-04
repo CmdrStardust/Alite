@@ -26,29 +26,28 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import de.phbouillon.android.framework.Music;
+import de.phbouillon.android.framework.Sound;
 import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.Settings;
 
 public class AndroidMusic implements Music, OnCompletionListener {
 	private final MediaPlayer mediaPlayer;
 	private boolean isPrepared = false;
-	private final boolean effect;
-	private final boolean voice;
+	private final Sound.SoundType soundType;
 	
-	public AndroidMusic(AndroidFileIO afi, String path, boolean isVoice, boolean isEffect) throws IOException {
+	public AndroidMusic(AndroidFileIO afi, String path, Sound.SoundType soundType) throws IOException {
 		mediaPlayer = new MediaPlayer();
 		FileInputStream fis = null;
 		Object musicObject;
 		musicObject = afi.getPrivatePath(path);
 		try {
-			AliteLog.d("Loading Music", "Loading Music " + path + ", Voice: " + isVoice + ", Effect: " + isEffect);
+			AliteLog.d("Loading Music", "Loading Music " + path + ", Type: " + soundType);
 			fis = new FileInputStream((String) musicObject);
 			mediaPlayer.setDataSource(fis.getFD());
 			mediaPlayer.prepare();
 			isPrepared = true;
 			mediaPlayer.setOnCompletionListener(this);
-			this.effect = isEffect;
-			this.voice = isVoice;
+			this.soundType = soundType;
 		} catch (Exception e) {
 			AliteLog.e("Loading Music caused an Error", e.getMessage(), e);
 			throw new RuntimeException("Couldn't load music.");
@@ -63,7 +62,7 @@ public class AndroidMusic implements Music, OnCompletionListener {
 		}
 	}
 	
-	public AndroidMusic(AssetFileDescriptor afd, boolean isVoice, boolean isEffect) throws IOException {
+	public AndroidMusic(AssetFileDescriptor afd, Sound.SoundType soundType) throws IOException {
 		mediaPlayer = new MediaPlayer();
 		try {
 			mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -71,8 +70,7 @@ public class AndroidMusic implements Music, OnCompletionListener {
 			mediaPlayer.prepare();
 			isPrepared = true;
 			mediaPlayer.setOnCompletionListener(this);
-			this.effect = isEffect;
-			this.voice = isVoice;
+			this.soundType = soundType;
 		} catch (Exception e) {
 			AliteLog.e("Loading Music caused an Error", e.getMessage(), e);
 			throw new RuntimeException("Couldn't load music.");
@@ -91,7 +89,7 @@ public class AndroidMusic implements Music, OnCompletionListener {
 		if (mediaPlayer.isPlaying()) {
 			return;
 		}
-		setVolume(voice ? Settings.voiceVolume : effect ? Settings.effectsVolume : Settings.musicVolume);
+		setVolume(Settings.volumes[soundType.getValue()]);
 		try {
 			synchronized(this) {
 				if (!isPrepared) {
