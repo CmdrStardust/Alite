@@ -180,7 +180,7 @@ public class AliteButtons implements Serializable {
 		// Torus drive, time drive and docking computer buttons are always in the same position, as they're mutually exclusive.
 		buttons[TORUS_DRIVE]             = genButtonData(2, 1, Settings.buttonPosition[Settings.TORUS], "Torus Drive");
 		buttons[TORUS_DRIVE].active      = false;
-		buttons[TIME_DRIVE]              = genButtonData(2, 0, Settings.buttonPosition[Settings.TORUS], "Time Drive");
+		buttons[TIME_DRIVE]              = genButtonData(4, 1, Settings.buttonPosition[Settings.TORUS], "Time Drive");
 		buttons[TIME_DRIVE].active       = false;
 		buttons[DOCKING_COMPUTER]        = genButtonData(0, 0, Settings.buttonPosition[Settings.TORUS], "Docking Computer");
 		buttons[DOCKING_COMPUTER].active = false;

@@ -105,7 +105,10 @@ a command prompt or shell in that directory and type:
 java -jar jobb.jar -d Resources -o main.<VERSION>.de.phbouillon.android.games.alite.obb -pn de.phbouillon.android.games.alite -pv <VERSION>
 
 and make sure that <VERSION> _exactly!_ matches the version number you
-specified in the AliteStartManager (currently 2180).
+specified in the AliteStartManager, see EXTENSION_FILE_VERSION.
+
+Once built set EXTENSION_FILE_LENGTH in AliteStartManager to the size of your
+new obb file in bytes and rebuild & install Alite. 
 
 Why is that so complicated?! I wish I knew :). The thing is that the jobb tool
 is pretty buggy and if you really must have an obb file, this version of the
