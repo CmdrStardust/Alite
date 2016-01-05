@@ -67,8 +67,9 @@ public class AliteButtons implements Serializable {
 	private static final int RETRO_ROCKETS    =  8;	
 	private static final int ECM_JAMMER       =  9;	
 	private static final int CLOAKING_DEVICE  = 10;
-    private static final int MISSILE          = 11;
-    private static final int FIRE             = 12;
+	private static final int MISSILE          = 11;
+	private static final int FIRE             = 12;
+	private static final int TIME_DRIVE       = 13;
     
 	private ButtonData [] buttons = new ButtonData[15];	
 	private Sprite overlay;
@@ -176,9 +177,11 @@ public class AliteButtons implements Serializable {
 		buttons[ENERGY_BOMB].active      = alite.getPlayer().getCobra().isEquipmentInstalled(EquipmentStore.energyBomb);
 		
 		buttons[STATUS]                  = genButtonData(2, 2, Settings.buttonPosition[Settings.STATUS], "Status");
-		// Torus drive and docking computer button are always in the same position, as they're mutually exclusive.
+		// Torus drive, time drive and docking computer buttons are always in the same position, as they're mutually exclusive.
 		buttons[TORUS_DRIVE]             = genButtonData(2, 1, Settings.buttonPosition[Settings.TORUS], "Torus Drive");
 		buttons[TORUS_DRIVE].active      = false;
+		buttons[TIME_DRIVE]              = genButtonData(2, 0, Settings.buttonPosition[Settings.TORUS], "Time Drive");
+		buttons[TIME_DRIVE].active       = false;
 		buttons[DOCKING_COMPUTER]        = genButtonData(0, 0, Settings.buttonPosition[Settings.TORUS], "Docking Computer");
 		buttons[DOCKING_COMPUTER].active = false;
 		buttons[HYPERSPACE]              = genButtonData(0, 1, Settings.buttonPosition[Settings.HYPERSPACE], "Hyperspace");
@@ -277,42 +280,61 @@ public class AliteButtons implements Serializable {
 		}
 		if (buttons[DOCKING_COMPUTER] != null) {
 //			long dockingFee = Math.max(alite.getPlayer().getCurrentSystem().getStationHandsDockingFee(), (long) (alite.getPlayer().getCash() * 0.1f));
-			if((buttons[DOCKING_COMPUTER].active = 
+			boolean active = 
 //					(alite.getCobra().isEquipmentInstalled(EquipmentStore.dockingComputer) || 
 //					 alite.getPlayer().getCash() >= dockingFee &&
 //					 alite.getPlayer().getLegalStatus() == LegalStatus.CLEAN) &&
-			    alite.getCobra().isEquipmentInstalled(EquipmentStore.dockingComputer) && inGame.isInSafeZone()))
-			{
+				    alite.getCobra().isEquipmentInstalled(EquipmentStore.dockingComputer) && inGame.isInSafeZone();
+			buttons[DOCKING_COMPUTER].active = active;
+			if (active) {
 				buttons[DOCKING_COMPUTER].yellow = inGame.isDockingComputerActive();
 				alite.setTimeFactor(1.0f);
 			}
 		}
 		if (buttons[TORUS_DRIVE] != null) {
-			if(alite.getCobra().getSpeed() < -PlayerCobra.TORUS_TEST_SPEED)
-				buttons[TORUS_DRIVE].active = true;
-			else if(alite.getCobra().getSpeed() > -PlayerCobra.MAX_SPEED)
-				buttons[TORUS_DRIVE].active = false;
-			else if(!inGame.isInExtendedSafeZone() && !inGame.isWitchSpace() &&
-				(alite.getCobra().getCabinTemperature() == 0) &&
-				!inGame.traverseObjects(torusTraverser))
+			if (((buttons[DOCKING_COMPUTER] == null) || !buttons[DOCKING_COMPUTER].active) &&
+			   (alite.getCobra().getSpeed() <= -PlayerCobra.MAX_SPEED) &&
+			   !inGame.isInExtendedSafeZone() && !inGame.isWitchSpace() &&
+			   (alite.getCobra().getCabinTemperature() == 0) &&
+			   !inGame.traverseObjects(torusTraverser))
 			{
 				buttons[TORUS_DRIVE].active = true;
-				buttons[TORUS_DRIVE].yellow = false;
-				if(alite.getTimeFactor() > 1.0f)
+				if (alite.getCobra().getSpeed() < -PlayerCobra.TORUS_TEST_SPEED)	{
+					buttons[TORUS_DRIVE].yellow = true;
+				}
+				else if (alite.getTimeFactor() > 1.0f)
 				{
+					// time drive currently engaged, auto change to torus drive
 					alite.setTimeFactor(1.0f);
+					engageTorusDrive();
+					buttons[TORUS_DRIVE].yellow = true;
+				} else {
+					buttons[TORUS_DRIVE].yellow = false;
+				}
+			} else {
+				buttons[TORUS_DRIVE].active = false;
+				if (alite.getCobra().getSpeed() < -PlayerCobra.TORUS_TEST_SPEED)	{
 					engageTorusDrive();
 				}
 			}
-			else if(alite.getCobra().isEquipmentInstalled(EquipmentStore.dockingComputer) &&
-				(alite.getPlayer().getCondition() != Condition.RED) &&
-				((buttons[DOCKING_COMPUTER] == null) || !buttons[DOCKING_COMPUTER].active))
+		}
+		if (buttons[TIME_DRIVE] != null) {
+			if (((buttons[DOCKING_COMPUTER] == null) || !buttons[DOCKING_COMPUTER].active) &&
+			   ((buttons[TORUS_DRIVE] == null) || !buttons[TORUS_DRIVE].active) &&
+			   (alite.getCobra().getSpeed() <= -PlayerCobra.MAX_SPEED) &&
+			   (alite.getPlayer().getCondition() != Condition.RED) &&
+			   alite.getCobra().isEquipmentInstalled(EquipmentStore.dockingComputer))
 			{
-				buttons[TORUS_DRIVE].active = true;
-				buttons[TORUS_DRIVE].yellow = true;
+				buttons[TIME_DRIVE].active = true;
+				if (alite.getTimeFactor() > 1.0f) {
+					buttons[TIME_DRIVE].yellow = true;
+				} else {
+					buttons[TIME_DRIVE].yellow = false;
+				}
 			}
-			else
-				buttons[TORUS_DRIVE].active = false;
+			else {
+				buttons[TIME_DRIVE].active = false;
+			}
 		}
 		if (buttons[HYPERSPACE] != null) {
 			buttons[HYPERSPACE].active = alite.isHyperspaceTargetValid() && 
@@ -510,6 +532,7 @@ public class AliteButtons implements Serializable {
 					SoundManager.play(Assets.click);
 					switch (i) {
 						case TORUS_DRIVE:      engageTorusDrive();         break;
+						case TIME_DRIVE:       engageTimeDrive();          break;
 						case HYPERSPACE:       engageHyperspace();         break;
 						case GAL_HYPERSPACE:   engageGalacticHyperspace(); break;
 						case ECM:              engageECM();                break;
@@ -689,14 +712,20 @@ public class AliteButtons implements Serializable {
 		}
 		if (ship.getSpeed() < -PlayerCobra.TORUS_TEST_SPEED) {
 			inGame.getSpawnManager().leaveTorus();
-		} else if(alite.getTimeFactor() > 1.0f) {
-			alite.setTimeFactor(1.0f);
-		} else if(buttons[TORUS_DRIVE].yellow)
-			alite.setTimeFactor(PlayerCobra.SPEED_UP_FACTOR);
-		else {
+		} else {
 			inGame.getSpawnManager().enterTorus();
 			ship.setSpeed(-PlayerCobra.TORUS_SPEED);
 			inGame.setPlayerControl(false);
+		}
+	}
+	private void engageTimeDrive() {
+		if (OVERRIDE_TORUS) {
+			return;
+		}
+		if ((alite.getTimeFactor() > 1.0f) || (ship.getSpeed() < -PlayerCobra.TORUS_TEST_SPEED)) {
+			alite.setTimeFactor(1.0f);
+		} else {
+			alite.setTimeFactor(PlayerCobra.SPEED_UP_FACTOR);
 		}
 	}
 	
