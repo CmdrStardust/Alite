@@ -488,8 +488,8 @@ public class InGameHelper implements Serializable {
 			return;
 		}
 		if (alite.getCobra().getEnergy() < PlayerCobra.MAX_ENERGY_BANK || 
-			alite.getCobra().getCabinTemperature() > 24	               ||
-			alite.getCobra().getAltitude() < 6                         ||
+			alite.getCobra().getCabinTemperature() > 24	       ||
+			alite.getCobra().getAltitude() < 6                     ||
 			inGame.getWitchSpace() != null) {
 			alite.getPlayer().setCondition(Condition.RED);
 			return;
