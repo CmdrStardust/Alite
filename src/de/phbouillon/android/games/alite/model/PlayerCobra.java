@@ -46,7 +46,8 @@ public class PlayerCobra {
 	public static final float MAX_CABIN_TEMPERATURE = 30;
 	public static final float MAX_LASER_TEMPERATURE = 48;
 	public static final float MAX_ALTITUDE          = 30;
-	public static final float MAX_ENERGY_BANK       = 24;
+	public static final int   MAX_ENERGY_BANK       = 24;
+	public static final int   MAX_ENERGY            = 96;
 
 	private int fuel;
 	private int missiles;	
@@ -278,10 +279,10 @@ public class PlayerCobra {
 	public void resetEnergy() {
 		frontShield   = (int) MAX_SHIELD;
 		rearShield    = (int) MAX_SHIELD;
-		energyBank[0] = (int) MAX_ENERGY_BANK;
-		energyBank[1] = (int) MAX_ENERGY_BANK;
-		energyBank[2] = (int) MAX_ENERGY_BANK;
-		energyBank[3] = (int) MAX_ENERGY_BANK;
+		energyBank[0] = MAX_ENERGY_BANK;
+		energyBank[1] = MAX_ENERGY_BANK;
+		energyBank[2] = MAX_ENERGY_BANK;
+		energyBank[3] = MAX_ENERGY_BANK;
 	}
 	
 	public int getFrontShield() {
@@ -321,16 +322,16 @@ public class PlayerCobra {
 	}
 	
 	public void setEnergy(int newVal) {
-		if (newVal > MAX_ENERGY_BANK * 4) {
-			newVal = (int) MAX_ENERGY_BANK * 4;
+		if (newVal > MAX_ENERGY) {
+			newVal = MAX_ENERGY;
 		}
 		if (newVal < 0) {
 			newVal = 0;
 		}
-		energyBank[0] = (int) MAX_ENERGY_BANK;
-		energyBank[1] = (int) MAX_ENERGY_BANK;
-		energyBank[2] = (int) MAX_ENERGY_BANK;
-		energyBank[3] = (int) MAX_ENERGY_BANK;
+		energyBank[0] = MAX_ENERGY_BANK;
+		energyBank[1] = MAX_ENERGY_BANK;
+		energyBank[2] = MAX_ENERGY_BANK;
+		energyBank[3] = MAX_ENERGY_BANK;
 		if (newVal <= 0) {
 			energyBank[0] = 0;
 			energyBank[1] = 0;
@@ -338,14 +339,14 @@ public class PlayerCobra {
 			energyBank[3] = 0;			
 		} else {
 			if (newVal > 3 * MAX_ENERGY_BANK) {
-				energyBank[0] = (int) (newVal - 3 * MAX_ENERGY_BANK);				
+				energyBank[0] = newVal - (3 * MAX_ENERGY_BANK);				
 			} else if (newVal > 2 * MAX_ENERGY_BANK) {
 				energyBank[0] = 0;
-				energyBank[1] = (int) (newVal - 2 * MAX_ENERGY_BANK);
+				energyBank[1] = newVal - (2 * MAX_ENERGY_BANK);
 			} else if (newVal > MAX_ENERGY_BANK) {
 				energyBank[0] = 0;
 				energyBank[1] = 0;
-				energyBank[2] = (int) (newVal - MAX_ENERGY_BANK);
+				energyBank[2] = newVal - MAX_ENERGY_BANK;
 			} else {
 				energyBank[0] = 0;
 				energyBank[1] = 0;

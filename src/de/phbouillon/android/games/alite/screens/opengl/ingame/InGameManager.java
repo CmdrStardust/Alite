@@ -765,8 +765,11 @@ public class InGameManager implements Serializable {
 					// No speed change if retro rockets are being fired right now...
 					changingSpeed = true;
 					float newSpeed = ship.getSpeed() + diffY / 1.4f;
-					if (newSpeed > 0.0f) {
-						newSpeed = 0.0f;
+					if (diffY > 0) {
+						if (newSpeed > 0.0f) {
+							newSpeed = 0.0f;
+						}
+						alite.setTimeFactor(1.0f);
 					} else if (newSpeed < -PlayerCobra.MAX_SPEED) {
 						newSpeed = -PlayerCobra.MAX_SPEED;
 					}

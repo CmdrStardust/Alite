@@ -219,7 +219,7 @@ public class FlightScreen extends GlScreen implements Serializable {
 		cobra.setLaserTemperature(0);
 		cobra.setCabinTemperature(0);
 		cobra.setAltitude(fromStation ? PlayerCobra.MAX_ALTITUDE / 2 : PlayerCobra.MAX_ALTITUDE);
-		cobra.setEnergy((int) (PlayerCobra.MAX_ENERGY_BANK * 4));
+		cobra.setEnergy(PlayerCobra.MAX_ENERGY);
 		cobra.setFrontShield((int) PlayerCobra.MAX_SHIELD); 
 		cobra.setRearShield((int) PlayerCobra.MAX_SHIELD);
 		if (fromStation) {
@@ -484,7 +484,8 @@ public class FlightScreen extends GlScreen implements Serializable {
 			if (isDisposed || inGame == null) {
 				return;
 			}
-			inGame.performUpdate(deltaTime * ((Alite) game).getTimeFactor(), allObjects);
+			float dtf = deltaTime * ((Alite) game).getTimeFactor();
+			inGame.performUpdate(dtf, allObjects);
 		
 			if (informationScreen != null) {
 				informationScreen.update(deltaTime);
@@ -514,7 +515,7 @@ public class FlightScreen extends GlScreen implements Serializable {
 					if (resetSpaceStation) {
 						performResetSpaceStation();
 					}				
-					spaceStation.applyDeltaRotation(0.0f, 0.0f, (float) Math.toDegrees(SPACE_STATION_ROTATION_SPEED * deltaTime));
+					spaceStation.applyDeltaRotation(0.0f, 0.0f, (float) Math.toDegrees(SPACE_STATION_ROTATION_SPEED * dtf));
 				}
 			}
 		} catch (NullPointerException e) {

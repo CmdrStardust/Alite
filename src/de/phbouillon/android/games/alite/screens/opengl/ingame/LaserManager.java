@@ -353,7 +353,7 @@ public class LaserManager implements Serializable {
 				int newEnergy = alite.getCobra().getEnergy() - damage;
 				alite.getCobra().setEnergy(newEnergy);
 				checkEnergyLow();
-				if (newEnergy <= PlayerCobra.MAX_ENERGY_BANK * 2.0f) {
+				if (newEnergy <= (2 * PlayerCobra.MAX_ENERGY_BANK)) {
 					if (Math.random() * 256 < 20) {
 						if (!inGame.getMessage().isActive()) {
 							if (Math.random() * 20 < 1) {
@@ -651,23 +651,18 @@ public class LaserManager implements Serializable {
 
 			@Override
 			public void doPerform() {
-				if (alite.getCobra().isEquipmentInstalled(EquipmentStore.navalEnergyUnit)) {
-					if (delay != NAVAL_REFRESH_RATE) {
-						updateDelay(NAVAL_REFRESH_RATE);
-					}
-				} else {
-					if (delay != NORMAL_REFRESH_RATE) {
-						updateDelay(NORMAL_REFRESH_RATE);
-					}
+				long nd = ((alite.getCobra().isEquipmentInstalled(EquipmentStore.navalEnergyUnit)) ? NAVAL_REFRESH_RATE:NORMAL_REFRESH_RATE) / ((long) (1.0f * alite.getTimeFactor()));
+				if (delay != nd) {
+					updateDelay(nd);
 				}
 				alite.getCobra().setLaserTemperature(alite.getCobra().getLaserTemperature() - 1);
+				
 				int energy = alite.getCobra().getEnergy();
-				boolean updateFrontRearShields = energy == 96 || 
-						                         alite.getCobra().isEquipmentInstalled(EquipmentStore.extraEnergyUnit) ||
-						                         alite.getCobra().isEquipmentInstalled(EquipmentStore.navalEnergyUnit);
-				if (energy < 96) {
-					energy++;
-					alite.getCobra().setEnergy(energy);
+				boolean updateFrontRearShields = (energy == PlayerCobra.MAX_ENERGY) || 
+					    alite.getCobra().isEquipmentInstalled(EquipmentStore.extraEnergyUnit) ||
+					    alite.getCobra().isEquipmentInstalled(EquipmentStore.navalEnergyUnit);
+				if (energy < PlayerCobra.MAX_ENERGY) {
+					alite.getCobra().setEnergy(energy + 1);
 				} 
 				if (updateFrontRearShields) {
 					alite.getCobra().setFrontShield(alite.getCobra().getFrontShield() + 1);
