@@ -40,6 +40,7 @@ import de.phbouillon.android.framework.Game;
 import de.phbouillon.android.framework.Graphics;
 import de.phbouillon.android.framework.Input;
 import de.phbouillon.android.framework.Screen;
+import de.phbouillon.android.framework.TimeFactorChangeListener;
 import de.phbouillon.android.framework.impl.gl.GlUtils;
 import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.AliteStartManager;
@@ -79,13 +80,18 @@ public abstract class AndroidGame extends Activity implements Game, Renderer {
 	protected final TextureManager textureManager;
 	private int [] sizeArray = null;
 	private FatalExceptionScreen fatalException = null;
+	private TimeFactorChangeListener timeFactorChangeListener = null;
 
 	public AndroidGame(int targetWidth, int targetHeight) {
 		this.targetHeight = targetHeight;
 		this.targetWidth = targetWidth;
 		textureManager = new TextureManager(this);
 	}
-				
+			
+	public void setTimeFactorChangeListener(TimeFactorChangeListener tfl) {
+		timeFactorChangeListener = tfl;
+	}
+		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
@@ -359,6 +365,9 @@ public abstract class AndroidGame extends Activity implements Game, Renderer {
 		return timeFactor;
 	}
 	public void setTimeFactor(float tf) {
-		timeFactor = tf;
+		if (timeFactorChangeListener != null && Math.abs(timeFactor - tf) < 0.0001f) {			
+			timeFactorChangeListener.timeFactorChanged(timeFactor, tf);			
+		}
+		timeFactor = tf;		
 	}
 }

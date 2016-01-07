@@ -24,6 +24,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import android.opengl.Matrix;
+import de.phbouillon.android.framework.TimeFactorChangeListener;
 import de.phbouillon.android.framework.Updater;
 import de.phbouillon.android.framework.math.Vector3f;
 import de.phbouillon.android.games.alite.Alite;
@@ -299,6 +300,27 @@ public class ObjectSpawnManager implements Serializable {
 			inGame.addTimedEvent(shuttleOrTransportTimer.event);
 			inGame.addTimedEvent(viperTimer.event);
 		}
+		alite.setTimeFactorChangeListener(new TimeFactorChangeListener() {			
+			@Override
+			public void timeFactorChanged(float oldTimeFactor, float newTimeFactor) {
+				updateTimers(oldTimeFactor / newTimeFactor);
+			}
+		});
+	}
+	
+	private void updateTimerInternal(float factor, SpawnTimer timer) {
+		if (timer != null && timer.event != null) {
+			timer.event.updateDelay((long) (timer.event.timeToNextTrigger() * factor));
+		}		
+	}
+	
+	private void updateTimers(float factor) {
+		updateTimerInternal(factor, conditionRedTimer);
+		updateTimerInternal(factor, traderTimer);
+		updateTimerInternal(factor, asteroidTimer);
+		updateTimerInternal(factor, shuttleOrTransportTimer);
+		updateTimerInternal(factor, viperTimer);
+		
 	}
 	
 	public void lockConditionRedEvent() {
@@ -637,7 +659,7 @@ public class ObjectSpawnManager implements Serializable {
 	}
 
 	private void spawnTrader() {
-		traderTimer.event.updateDelay((long) (((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l));
+		traderTimer.event.updateDelay((long) ((((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l) / alite.getTimeFactor()));
 		if (inGame.getWitchSpace() != null) {
 			return;
 		}
@@ -727,7 +749,7 @@ public class ObjectSpawnManager implements Serializable {
 	}
 	
 	private void spawnAsteroid() {	
-		asteroidTimer.event.updateDelay((long) (((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l));
+		asteroidTimer.event.updateDelay((long) ((((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l) / alite.getTimeFactor()));
 		if (inGame.getWitchSpace() != null) {
 			return;
 		}
@@ -776,7 +798,7 @@ public class ObjectSpawnManager implements Serializable {
 	}
 
 	private void spawnShuttleOrTransporter() {	
-		shuttleOrTransportTimer.event.updateDelay((long) (((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l));
+		shuttleOrTransportTimer.event.updateDelay((long) ((((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l) / alite.getTimeFactor()));
 		if (inGame.getWitchSpace() != null || !inGame.isInSafeZone()) {
 			return;
 		}
