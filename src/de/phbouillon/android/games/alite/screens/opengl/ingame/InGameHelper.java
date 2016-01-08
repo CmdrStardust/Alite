@@ -34,6 +34,7 @@ import de.phbouillon.android.games.alite.model.LegalStatus;
 import de.phbouillon.android.games.alite.model.PlayerCobra;
 import de.phbouillon.android.games.alite.model.Weight;
 import de.phbouillon.android.games.alite.model.statistics.WeaponType;
+import de.phbouillon.android.games.alite.model.trading.TradeGood;
 import de.phbouillon.android.games.alite.model.trading.TradeGoodStore;
 import de.phbouillon.android.games.alite.screens.opengl.objects.AliteObject;
 import de.phbouillon.android.games.alite.screens.opengl.objects.ObjectUtils;
@@ -243,22 +244,23 @@ public class InGameHelper implements Serializable {
 		if (scoopCallback != null) {
 			scoopCallback.scooped(cargo);
 		}
-		alite.getCobra().addTradeGood(
-				cargo instanceof CargoCanister ? ((CargoCanister) cargo).getContent() :
-				cargo instanceof EscapeCapsule ? TradeGoodStore.get().slaves() :
-				cargo instanceof Thargon ? TradeGoodStore.get().alienItems() :
-				TradeGoodStore.get().alloys(), quantity, 0);
-		if (cargo instanceof CargoCanister) {
-			alite.getPlayer().setLegalValue(
-					alite.getPlayer().getLegalValue() + (int) (((CargoCanister) cargo).getContent().getLegalityType() * quantity.getQuantityInAppropriateUnit()));					
-		} else if (cargo instanceof EscapeCapsule) {
-			alite.getPlayer().setLegalValue(
-					alite.getPlayer().getLegalValue() + (int) (TradeGoodStore.get().slaves().getLegalityType() * quantity.getQuantityInAppropriateUnit()));								
-		}
-		inGame.getMessage().setText(cargo instanceof CargoCanister ? ((CargoCanister) cargo).getContent().getName() :
-			            cargo instanceof EscapeCapsule ? TradeGoodStore.get().slaves().getName() :
-			            cargo instanceof Thargon ? TradeGoodStore.get().alienItems().getName() :
-			            TradeGoodStore.get().alloys().getName());
+		TradeGood scoopedTradeGood = cargo instanceof CargoCanister ? ((CargoCanister) cargo).getContent() :
+			cargo instanceof EscapeCapsule ? TradeGoodStore.get().slaves() :
+			cargo instanceof Thargon ? TradeGoodStore.get().alienItems() :
+			TradeGoodStore.get().alloys(); 
+		long price = cargo instanceof CargoCanister ? ((CargoCanister) cargo).getPrice() : 0;
+		if (!alite.getCobra().hasCargo(scoopedTradeGood) && cargo instanceof CargoCanister) {
+			// This makes sure that if a player scoops his dropped cargo back up, the
+			// gain/loss calculation stays accurate			
+			alite.getCobra().addTradeGood(scoopedTradeGood, quantity, price);
+			if (price == 0) {
+				alite.getCobra().addUnpunishedTradeGood(scoopedTradeGood, quantity);
+			} 			
+		} else {
+			alite.getCobra().addTradeGood(scoopedTradeGood, quantity, 0);
+			alite.getCobra().addUnpunishedTradeGood(scoopedTradeGood, quantity);			
+		}		
+		inGame.getMessage().setText(scoopedTradeGood.getName());
 	}	
 	
 	public void automaticDockingSequence() {

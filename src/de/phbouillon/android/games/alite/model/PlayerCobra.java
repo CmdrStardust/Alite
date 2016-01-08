@@ -135,9 +135,25 @@ public class PlayerCobra {
 		inventory[ordinal].add(weight, price);
 	}
 	
+	public void addUnpunishedTradeGood(TradeGood good, Weight weight) {
+		int ordinal = TradeGoodStore.get().ordinal(good);		
+		inventory[ordinal].addUnpunished(weight);
+	}
+
+	public void subUnpunishedTradeGood(TradeGood good, Weight weight) {
+		int ordinal = TradeGoodStore.get().ordinal(good);
+		inventory[ordinal].subUnpunished(weight);
+	}
+
 	public void setTradeGood(TradeGood good, Weight weight, long price) {
 		int ordinal = TradeGoodStore.get().ordinal(good);
 		inventory[ordinal].set(weight, price);		
+	}
+	
+	public void setUnpunishedTradeGood(TradeGood good, Weight unpunished) {
+		int ordinal = TradeGoodStore.get().ordinal(good);		
+		inventory[ordinal].resetUnpunished();
+		inventory[ordinal].addUnpunished(unpunished);				
 	}
 	
 	public Weight removeTradeGood(TradeGood good) {
@@ -246,6 +262,10 @@ public class PlayerCobra {
 		return false;
 	}
 	
+	public boolean hasCargo(TradeGood good) {		
+		return inventory[TradeGoodStore.get().ordinal(good)].getWeight().getWeightInGrams() > 0;
+	}
+
 	public void clearInventory() {
 		fillTradeGoods();
 	}
@@ -254,6 +274,7 @@ public class PlayerCobra {
 		clearInventory();
 		for (int i = 0; i < data.length; i++) {
 			setTradeGood(TradeGoodStore.get().goods()[i], data[i].getWeight(), data[i].getPrice());
+			setUnpunishedTradeGood(TradeGoodStore.get().goods()[i], data[i].getUnpunished());
 		}
 	}
 	

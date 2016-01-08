@@ -46,6 +46,7 @@ import de.phbouillon.android.games.alite.model.PlayerCobra;
 import de.phbouillon.android.games.alite.model.Rating;
 import de.phbouillon.android.games.alite.model.Weight;
 import de.phbouillon.android.games.alite.model.statistics.WeaponType;
+import de.phbouillon.android.games.alite.model.trading.TradeGood;
 import de.phbouillon.android.games.alite.screens.opengl.objects.AliteObject;
 import de.phbouillon.android.games.alite.screens.opengl.objects.Explosion;
 import de.phbouillon.android.games.alite.screens.opengl.objects.LaserCylinder;
@@ -62,12 +63,13 @@ public class LaserManager implements Serializable {
 	private static final long  NORMAL_REFRESH_RATE   = 1437125748l;	
 	public  static final float MAX_ENEMY_DISTANCE_SQ = 603979776; // (16384 + 8192) squared
 	
-	public  static final int   MAX_LASERS            = 500; 
-	public  static final float LASER_SPEED           = 12400.0f;
-	public  static final float LASER_BEAM_SPEED      = 124000.0f;
-	private static final float DIST_FRONT            = -10.0f;
-	private static final float DIST_RIGHT            = 30.0f;
-	private static final float DIST_CONVERGE         = 24000.0f;
+	public  static final int   MAX_LASERS                       = 500; 
+	public  static final float LASER_SPEED                      = 12400.0f;
+	public  static final float LASER_BEAM_SPEED                 = 124000.0f;
+	private static final float DIST_FRONT                       = -10.0f;
+	private static final float DIST_RIGHT                       = 30.0f;
+	private static final float DIST_CONVERGE                    = 24000.0f;
+	private static final float CARGO_CANISTER_EJECTION_DISTANCE = 800.0f;
 
 	private transient Alite alite;
 	private final Vector3f shotOrigin;
@@ -77,6 +79,7 @@ public class LaserManager implements Serializable {
 	private long lastLaserFireUp = 0;
 	private boolean autoFire = false;
 	private final Vector3f tempVector = new Vector3f(0, 0, 0);
+	private final Vector3f tempVector2 = new Vector3f(0, 0, 0);
 	private final float [] tempVecArray = new float [] {0.0f, 0.0f, 0.0f, 0.0f};
 	private final float [] tempVecArray2 = new float [] {0.0f, 0.0f, 0.0f, 0.0f};
 	private final List <LaserCylinder> createdLasers = new ArrayList<LaserCylinder>();
@@ -159,7 +162,7 @@ public class LaserManager implements Serializable {
 		}
 	}
 	
-	private void tumbleObject(final SpaceObject explodedObject, final SpaceObject createdObject) {
+	private void tumbleObject(final SpaceObject explodedObject, final SpaceObject createdObject, Vector3f offset) {
 		tempVector.x = (float) (-2.0 + Math.random() * 4.0);
 		tempVector.y = (float) (-2.0 + Math.random() * 4.0);
 		tempVector.z = (float) (-2.0 + Math.random() * 4.0);
@@ -177,7 +180,10 @@ public class LaserManager implements Serializable {
 
 		createdObject.setSpeed(0.0f);
 		final float speed = 0.2f + ((createdObject.getMaxSpeed() - 0.2f) * (float) Math.random());
-		createdObject.setPosition(explodedObject.getPosition().x, explodedObject.getPosition().y, explodedObject.getPosition().z);
+		float x = explodedObject.getPosition().x + (offset == null ? 0 : offset.x);
+		float y = explodedObject.getPosition().y + (offset == null ? 0 : offset.y);
+		float z = explodedObject.getPosition().z + (offset == null ? 0 : offset.z);
+		createdObject.setPosition(x, y, z);
 		createdObject.setUpdater(new Updater() {			
 			private static final long serialVersionUID = -303661146540057753L;
 
@@ -192,6 +198,19 @@ public class LaserManager implements Serializable {
 			}
 		});		
 		inGame.addObject(createdObject);			
+	}
+	
+	private void tumbleObject(final SpaceObject explodedObject, final SpaceObject createdObject) {
+		tumbleObject(explodedObject, createdObject, null);
+	}
+	
+	public void ejectPlayerCargoCanister(final SpaceObject so, TradeGood tradeGood, Weight weight, long price) {
+		final CargoCanister cargo = new CargoCanister(alite);
+		cargo.setContent(tradeGood, weight);
+		cargo.setPrice(price);
+		so.getForwardVector().copy(tempVector2);
+		tempVector2.scale(CARGO_CANISTER_EJECTION_DISTANCE);
+		tumbleObject(so, cargo, tempVector2);		
 	}
 	
  	private final void spawnCargoCanisters(final SpaceObject so, int forceCount, WeaponType weaponType) {

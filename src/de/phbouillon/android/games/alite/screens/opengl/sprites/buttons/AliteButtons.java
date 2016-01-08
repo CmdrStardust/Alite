@@ -39,6 +39,7 @@ import de.phbouillon.android.games.alite.model.PlayerCobra;
 import de.phbouillon.android.games.alite.model.trading.TradeGood;
 import de.phbouillon.android.games.alite.model.trading.TradeGoodStore;
 import de.phbouillon.android.games.alite.screens.canvas.StatusScreen;
+import de.phbouillon.android.games.alite.screens.canvas.tutorial.TutorialScreen;
 import de.phbouillon.android.games.alite.screens.opengl.DefaultCoordinateTransformer;
 import de.phbouillon.android.games.alite.screens.opengl.ICoordinateTransformer;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.FlightScreen;
@@ -337,7 +338,8 @@ public class AliteButtons implements Serializable {
 		if (((buttons[DOCKING_COMPUTER] == null) || !buttons[DOCKING_COMPUTER].active) &&
 		    ((buttons[TORUS_DRIVE] == null) || !buttons[TORUS_DRIVE].active) &&			   
 		    alite.getPlayer().getCondition() != Condition.RED &&
-		    !inGame.isInSafeZone()) {
+		    inGame.getHud() != null && !inGame.isInSafeZone()) {
+			// Check for Hud to compensate for brief flickering if come back from Information screen
 			buttons[TIME_DRIVE].active = true;
 			buttons[TIME_DRIVE].yellow = alite.getTimeFactor() > 1.0f;
 		} else {
@@ -758,7 +760,7 @@ public class AliteButtons implements Serializable {
 		}
 	}
 	private void engageTimeDrive() {
-		if (OVERRIDE_TORUS) {
+		if (OVERRIDE_TORUS || alite.getCurrentScreen() instanceof TutorialScreen) {
 			return;
 		}
 		if ((alite.getTimeFactor() > 1.0f) || (ship.getSpeed() < -PlayerCobra.TORUS_TEST_SPEED)) {
