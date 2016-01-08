@@ -488,8 +488,8 @@ public class InGameHelper implements Serializable {
 			return;
 		}
 		if (alite.getCobra().getEnergy() < PlayerCobra.MAX_ENERGY_BANK || 
-			alite.getCobra().getCabinTemperature() > 24	       ||
-			alite.getCobra().getAltitude() < 6                     ||
+			alite.getCobra().getCabinTemperature() > 24	||
+			alite.getCobra().getAltitude() < 6 ||
 			inGame.getWitchSpace() != null) {
 			alite.getPlayer().setCondition(Condition.RED);
 			return;
@@ -498,7 +498,13 @@ public class InGameHelper implements Serializable {
 			if (alite.getPlayer().getLegalStatus() == LegalStatus.CLEAN) {
 				alite.getPlayer().setCondition(Condition.GREEN);
 			} else {
+				Condition conditionOld = alite.getPlayer().getCondition();
 				alite.getPlayer().setCondition(inGame.getNumberOfObjects(ObjectType.Viper) > 0 ? Condition.RED : Condition.YELLOW);
+				Condition conditionNew = alite.getPlayer().getCondition();
+				if (conditionOld != conditionNew && conditionNew == Condition.RED) {
+					SoundManager.play(Assets.com_conditionRed);
+					inGame.repeatMessage("Condition Red!", 3);
+				}
 			}
 		} else {
 			alite.getPlayer().setCondition(Condition.YELLOW);
