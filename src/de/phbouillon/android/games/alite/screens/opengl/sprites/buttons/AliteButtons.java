@@ -320,8 +320,7 @@ public class AliteButtons implements Serializable {
 		}
 		if (buttons[TIME_DRIVE] != null) {
 			if (((buttons[DOCKING_COMPUTER] == null) || !buttons[DOCKING_COMPUTER].active) &&
-			   ((buttons[TORUS_DRIVE] == null) || !buttons[TORUS_DRIVE].active) &&
-			   (alite.getCobra().getSpeed() <= -PlayerCobra.MAX_SPEED) &&
+			   ((buttons[TORUS_DRIVE] == null) || !buttons[TORUS_DRIVE].active) &&			   
 			   (alite.getPlayer().getCondition() != Condition.RED) &&
 			   alite.getCobra().isEquipmentInstalled(EquipmentStore.dockingComputer))
 			{

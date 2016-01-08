@@ -365,7 +365,7 @@ public abstract class AndroidGame extends Activity implements Game, Renderer {
 		return timeFactor;
 	}
 	public void setTimeFactor(float tf) {
-		if (timeFactorChangeListener != null && Math.abs(timeFactor - tf) < 0.0001f) {			
+		if (timeFactorChangeListener != null && Math.abs(timeFactor - tf) > 0.0001f) {			
 			timeFactorChangeListener.timeFactorChanged(timeFactor, tf);			
 		}
 		timeFactor = tf;		

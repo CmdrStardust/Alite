@@ -769,7 +769,6 @@ public class InGameManager implements Serializable {
 						if (newSpeed > 0.0f) {
 							newSpeed = 0.0f;
 						}
-						alite.setTimeFactor(1.0f);
 					} else if (newSpeed < -PlayerCobra.MAX_SPEED) {
 						newSpeed = -PlayerCobra.MAX_SPEED;
 					}

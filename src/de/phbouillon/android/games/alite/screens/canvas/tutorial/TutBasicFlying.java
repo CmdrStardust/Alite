@@ -87,7 +87,10 @@ public class TutBasicFlying extends TutorialScreen {
 		savedGalaxySeed = alite.getGenerator().getCurrentSeed();
 		savedPresentSystem = alite.getPlayer().getCurrentSystem();
 		savedHyperspaceSystem = alite.getPlayer().getHyperspaceSystem();
-		savedInstalledEquipment = alite.getCobra().getInstalledEquipment();
+		savedInstalledEquipment = new ArrayList<Equipment>();
+		for (Equipment e: alite.getCobra().getInstalledEquipment()) {
+			savedInstalledEquipment.add(e);
+		}
 		savedLasers[0] = alite.getCobra().getLaser(PlayerCobra.DIR_FRONT);
 		savedLasers[1] = alite.getCobra().getLaser(PlayerCobra.DIR_RIGHT);
 		savedLasers[2] = alite.getCobra().getLaser(PlayerCobra.DIR_REAR);

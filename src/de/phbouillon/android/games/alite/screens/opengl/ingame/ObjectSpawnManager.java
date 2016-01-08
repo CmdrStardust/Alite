@@ -107,7 +107,7 @@ public class ObjectSpawnManager implements Serializable {
 		private long pauseTime = -1;
 		private boolean locked = false;
 		private long lastExecutionTime = -1;
-		
+				
 		private void clearTimes() {
 			pauseTime         = -1;
 			lastExecutionTime = -1;
@@ -122,7 +122,6 @@ public class ObjectSpawnManager implements Serializable {
 		}
 		
 		private void initialize(long delay, final IMethodHook method) {
-			AliteLog.d("INIT", "Initialize " + delay + ", " + lastExecutionTime + ", " + pauseTime);
 			event = new TimedEvent(delay, lastExecutionTime, pauseTime, locked) {				
 				private static final long serialVersionUID = -92934290891367981L;
 
