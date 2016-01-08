@@ -63,7 +63,7 @@ public class ObjectSpawnManager implements Serializable {
 	public static boolean THARGOIDS_ENABLED             = true;
 	public static boolean THARGONS_ENABLED              = true;
 	
-	private static final int MAX_TRADE_SHIP_COUNT = 3;
+	private static final int MAX_TRADE_SHIP_COUNT = 2;
 	private static final int MAX_ASTEROID_COUNT   = 4;
 	private static final int MAX_SHUTTLE_COUNT    = 2;
 	private static final int MAX_THARGOID_COUNT   = 4;
