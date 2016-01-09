@@ -89,7 +89,7 @@ public abstract class TradeGoodStore {
 		
 		do {
 			num = (int) (Math.random() * NUMBER_OF_GOODS);
-		} while (num == MEDICAL_SUPPLIES);
+		} while (num == ALIEN_ITEMS);
 		
 		return goods[num];
 	}
