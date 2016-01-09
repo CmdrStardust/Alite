@@ -84,6 +84,16 @@ public abstract class TradeGoodStore {
 		return goods[number];
 	}
 	
+	public TradeGood getRandomTradeGoodForContainer() {
+		int num;
+		
+		do {
+			num = (int) (Math.random() * NUMBER_OF_GOODS);
+		} while (num == MEDICAL_SUPPLIES);
+		
+		return goods[num];
+	}
+	
 	public TradeGood food()              { return goods[FOOD];             }
 	public TradeGood textiles()          { return goods[TEXTILES];         }
 	public TradeGood radioactives()      { return goods[RADIOACTIVES];     }

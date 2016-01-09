@@ -47,6 +47,7 @@ import de.phbouillon.android.games.alite.model.Rating;
 import de.phbouillon.android.games.alite.model.Weight;
 import de.phbouillon.android.games.alite.model.statistics.WeaponType;
 import de.phbouillon.android.games.alite.model.trading.TradeGood;
+import de.phbouillon.android.games.alite.model.trading.TradeGoodStore;
 import de.phbouillon.android.games.alite.screens.opengl.objects.AliteObject;
 import de.phbouillon.android.games.alite.screens.opengl.objects.Explosion;
 import de.phbouillon.android.games.alite.screens.opengl.objects.LaserCylinder;
@@ -220,13 +221,17 @@ public class LaserManager implements Serializable {
 			return;
 		}
 		if (so.getCargoType() == null || !so.spawnsCargoCanisters()) {
+			// Legacy: The cargo type is still declared at a ship, but not longer used...
+			// However, if it was defined that a ship has no carho type, we still
+			// exit here...
 			return;
 		}
 		
 		int numberOfCanistersToSpawn = forceCount > 0 ? forceCount : (int) (Math.random() * (so.getMaxCargoCanisters() + 1)); 
 		for (int i = 0; i < numberOfCanistersToSpawn; i++) {
 			final CargoCanister cargo = new CargoCanister(alite);
-			cargo.setContent(so.getCargoType(), Weight.unit(so.getCargoType().getUnit(), (int) (Math.random() * 3 + 1)));
+			TradeGood tradeGood = TradeGoodStore.get().getRandomTradeGoodForContainer();
+			cargo.setContent(tradeGood, Weight.unit(tradeGood.getUnit(), (int) (Math.random() * 3 + 1)));
 			tumbleObject(so, cargo);
 		}
 	}
@@ -306,6 +311,7 @@ public class LaserManager implements Serializable {
 		alite.getCobra().removeEquipment(lostEquip);
 		if (lostEquip == EquipmentStore.dockingComputer) {
 			SoundManager.play(Assets.com_lostDockingComputer);
+			inGame.getDockingComputerAI().disengage();
 		} else if (lostEquip == EquipmentStore.ecmSystem) {
 			SoundManager.play(Assets.com_lostEcm);
 		} else if (lostEquip == EquipmentStore.fuelScoop) {

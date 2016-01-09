@@ -330,6 +330,7 @@ public class ObjectSpawnManager implements Serializable {
 	
 	public void unlockConditionRedEvent() {
 		if (conditionRedTimer.event != null) {
+			conditionRedTimer.event.updateDelay(getDelayToConditionRedEncounter());
 			conditionRedTimer.event.unlock();
 		}		
 	}
@@ -420,7 +421,7 @@ public class ObjectSpawnManager implements Serializable {
 				@Override
 				public void onDestruction() {
 					if (inGame.getNumberOfObjects(ObjectType.EnemyShip) == 0 && conditionRedTimer.event != null) {						
-						conditionRedTimer.event.unlock();
+						unlockConditionRedEvent();
 					} 
 				}
 

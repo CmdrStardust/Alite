@@ -36,6 +36,7 @@ import de.phbouillon.android.games.alite.model.Weight;
 import de.phbouillon.android.games.alite.model.statistics.WeaponType;
 import de.phbouillon.android.games.alite.model.trading.TradeGood;
 import de.phbouillon.android.games.alite.model.trading.TradeGoodStore;
+import de.phbouillon.android.games.alite.screens.canvas.StatusScreen;
 import de.phbouillon.android.games.alite.screens.opengl.objects.AliteObject;
 import de.phbouillon.android.games.alite.screens.opengl.objects.ObjectUtils;
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.AIState;
@@ -271,6 +272,14 @@ public class InGameHelper implements Serializable {
 		SoundManager.stopAll();
 		inGame.getMessage().clearRepetition();
 		alite.getNavigationBar().setFlightMode(false);
+		if (inGame.getPostDockingScreen() instanceof StatusScreen) {
+			try {
+				AliteLog.d("[ALITE]", "Performing autosave. [Docked]");
+				alite.getFileUtils().autoSave(alite);
+			} catch (Exception e) {
+				AliteLog.e("[ALITE]", "Autosaving commander failed.", e);
+			}			
+		}
 		inGame.setNewScreen(inGame.getPostDockingScreen());
 	}
 

@@ -489,6 +489,12 @@ public class InGameManager implements Serializable {
 		witchSpace = null;
 		message.clearRepetition();
 		alite.getNavigationBar().setFlightMode(false);
+		try {
+			AliteLog.d("[ALITE]", "Performing autosave. [Docked]");
+			alite.getFileUtils().autoSave(alite);
+		} catch (Exception e) {
+			AliteLog.e("[ALITE]", "Autosaving commander failed.", e);
+		}
 		newScreen = new StatusScreen(alite);		
 	}
 
