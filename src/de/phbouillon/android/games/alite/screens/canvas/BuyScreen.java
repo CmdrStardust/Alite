@@ -214,8 +214,7 @@ public class BuyScreen extends TradeScreen {
 	public void setBoughtAmountString(String s) {
 		this.boughtAmount = s;
 	}
-	
-	
+		
     @Override
 	public void performTrade(int row, int column) {    	
     	TradeGood tradeGood = TradeGoodStore.get().goods()[row * COLUMNS + column];

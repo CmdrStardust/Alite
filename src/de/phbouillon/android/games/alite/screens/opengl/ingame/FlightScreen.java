@@ -198,14 +198,6 @@ public class FlightScreen extends GlScreen implements Serializable {
 			setPause(true);
 			return;
 		}
- 		if (fromStation) {
-			try {
-				AliteLog.d("[ALITE]", "Performing autosave.");
-				((Alite) game).getFileUtils().autoSave((Alite) game);
-			} catch (Exception e) {
-				AliteLog.e("[ALITE]", "Autosaving commander failed.", e);
-			}
-		}
 		Rect visibleArea = ((AndroidGraphics) game.getGraphics()).getVisibleArea();
 		windowWidth = visibleArea.width();
 		windowHeight = visibleArea.height();

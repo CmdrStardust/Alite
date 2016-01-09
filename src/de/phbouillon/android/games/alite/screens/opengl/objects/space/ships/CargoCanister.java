@@ -41,6 +41,7 @@ public class CargoCanister extends SpaceObject {
     private TradeGood content;
     private Weight weight;
     private Equipment specialContent;
+    private long price;
     
     private static final float [] VERTEX_DATA = new float [] {
           48.00f,   32.00f,    0.00f,   48.00f,   10.00f,   30.00f,
@@ -158,5 +159,13 @@ public class CargoCanister extends SpaceObject {
     @Override
     public boolean avoidObstacles() {
     	return false;
+    }
+    
+    public long getPrice() {
+    	return price;
+    }
+    
+    public void setPrice(long price) {
+    	this.price = price;
     }
 }

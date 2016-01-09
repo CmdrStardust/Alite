@@ -117,6 +117,11 @@ public abstract class TradeScreen extends AliteScreen {
 		g.drawText(spareText, currentX, 1000, AliteColors.get().informationText(), Assets.regularFont);
 	}
 
+	protected void performTradeWhileInFlight(int row, int column) {
+		SoundManager.play(Assets.error);
+		errorText = "Not Docked.";										
+	}
+
 	public void presentTradeGoods(float deltaTime) {
 		Graphics g = game.getGraphics();
 		
@@ -174,8 +179,7 @@ public abstract class TradeScreen extends AliteScreen {
 						handled = true;
 						if (selection == tradeButton[x][y]) {							
 							if (((Alite) game).getCurrentScreen() instanceof FlightScreen) {
-								SoundManager.play(Assets.error);
-								errorText = "Not Docked.";								
+								performTradeWhileInFlight(y, x);
 							} else {
 								SoundManager.play(Assets.click);
 								performTrade(y, x);

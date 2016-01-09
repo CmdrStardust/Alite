@@ -60,6 +60,7 @@ public class TutTrading extends TutorialScreen {
 		for (int i = 0; i < TradeGoodStore.get().goods().length; i++) {
 			savedInventory[i] = new InventoryItem();
 			savedInventory[i].set(currentItems[i].getWeight(), currentItems[i].getPrice());
+			savedInventory[i].addUnpunished(currentItems[i].getUnpunished());
 		}
 
 		initLine_00();
@@ -395,6 +396,7 @@ public class TutTrading extends TutorialScreen {
 			for (int i = 0; i < tt.savedInventory.length; i++) {
 				tt.savedInventory[i] = new InventoryItem();
 				tt.savedInventory[i].set(Weight.grams(dis.readLong()), dis.readLong());
+				tt.savedInventory[i].addUnpunished(Weight.grams(dis.readLong()));
 			}
 			tt.savedFoodQuantity = dis.readInt();
 		} catch (Exception e) {
@@ -420,6 +422,7 @@ public class TutTrading extends TutorialScreen {
 		for (InventoryItem w: savedInventory) {
 			dos.writeLong(w.getWeight().getWeightInGrams());
 			dos.writeLong(w.getPrice());
+			dos.writeLong(w.getUnpunished().getWeightInGrams());
 		}
 		dos.writeInt(savedFoodQuantity);
 	}

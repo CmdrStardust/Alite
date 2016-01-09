@@ -489,6 +489,12 @@ public class InGameManager implements Serializable {
 		witchSpace = null;
 		message.clearRepetition();
 		alite.getNavigationBar().setFlightMode(false);
+		try {
+			AliteLog.d("[ALITE]", "Performing autosave. [Docked]");
+			alite.getFileUtils().autoSave(alite);
+		} catch (Exception e) {
+			AliteLog.e("[ALITE]", "Autosaving commander failed.", e);
+		}
 		newScreen = new StatusScreen(alite);		
 	}
 
@@ -769,7 +775,6 @@ public class InGameManager implements Serializable {
 						if (newSpeed > 0.0f) {
 							newSpeed = 0.0f;
 						}
-						alite.setTimeFactor(1.0f);
 					} else if (newSpeed < -PlayerCobra.MAX_SPEED) {
 						newSpeed = -PlayerCobra.MAX_SPEED;
 					}

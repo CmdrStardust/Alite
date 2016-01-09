@@ -34,7 +34,9 @@ import de.phbouillon.android.games.alite.model.LegalStatus;
 import de.phbouillon.android.games.alite.model.PlayerCobra;
 import de.phbouillon.android.games.alite.model.Weight;
 import de.phbouillon.android.games.alite.model.statistics.WeaponType;
+import de.phbouillon.android.games.alite.model.trading.TradeGood;
 import de.phbouillon.android.games.alite.model.trading.TradeGoodStore;
+import de.phbouillon.android.games.alite.screens.canvas.StatusScreen;
 import de.phbouillon.android.games.alite.screens.opengl.objects.AliteObject;
 import de.phbouillon.android.games.alite.screens.opengl.objects.ObjectUtils;
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.AIState;
@@ -243,22 +245,23 @@ public class InGameHelper implements Serializable {
 		if (scoopCallback != null) {
 			scoopCallback.scooped(cargo);
 		}
-		alite.getCobra().addTradeGood(
-				cargo instanceof CargoCanister ? ((CargoCanister) cargo).getContent() :
-				cargo instanceof EscapeCapsule ? TradeGoodStore.get().slaves() :
-				cargo instanceof Thargon ? TradeGoodStore.get().alienItems() :
-				TradeGoodStore.get().alloys(), quantity, 0);
-		if (cargo instanceof CargoCanister) {
-			alite.getPlayer().setLegalValue(
-					alite.getPlayer().getLegalValue() + (int) (((CargoCanister) cargo).getContent().getLegalityType() * quantity.getQuantityInAppropriateUnit()));					
-		} else if (cargo instanceof EscapeCapsule) {
-			alite.getPlayer().setLegalValue(
-					alite.getPlayer().getLegalValue() + (int) (TradeGoodStore.get().slaves().getLegalityType() * quantity.getQuantityInAppropriateUnit()));								
-		}
-		inGame.getMessage().setText(cargo instanceof CargoCanister ? ((CargoCanister) cargo).getContent().getName() :
-			            cargo instanceof EscapeCapsule ? TradeGoodStore.get().slaves().getName() :
-			            cargo instanceof Thargon ? TradeGoodStore.get().alienItems().getName() :
-			            TradeGoodStore.get().alloys().getName());
+		TradeGood scoopedTradeGood = cargo instanceof CargoCanister ? ((CargoCanister) cargo).getContent() :
+			cargo instanceof EscapeCapsule ? TradeGoodStore.get().slaves() :
+			cargo instanceof Thargon ? TradeGoodStore.get().alienItems() :
+			TradeGoodStore.get().alloys(); 
+		long price = cargo instanceof CargoCanister ? ((CargoCanister) cargo).getPrice() : 0;
+		if (!alite.getCobra().hasCargo(scoopedTradeGood) && cargo instanceof CargoCanister) {
+			// This makes sure that if a player scoops his dropped cargo back up, the
+			// gain/loss calculation stays accurate			
+			alite.getCobra().addTradeGood(scoopedTradeGood, quantity, price);
+			if (price == 0) {
+				alite.getCobra().addUnpunishedTradeGood(scoopedTradeGood, quantity);
+			} 			
+		} else {
+			alite.getCobra().addTradeGood(scoopedTradeGood, quantity, 0);
+			alite.getCobra().addUnpunishedTradeGood(scoopedTradeGood, quantity);			
+		}		
+		inGame.getMessage().setText(scoopedTradeGood.getName());
 	}	
 	
 	public void automaticDockingSequence() {
@@ -269,6 +272,14 @@ public class InGameHelper implements Serializable {
 		SoundManager.stopAll();
 		inGame.getMessage().clearRepetition();
 		alite.getNavigationBar().setFlightMode(false);
+		if (inGame.getPostDockingScreen() instanceof StatusScreen) {
+			try {
+				AliteLog.d("[ALITE]", "Performing autosave. [Docked]");
+				alite.getFileUtils().autoSave(alite);
+			} catch (Exception e) {
+				AliteLog.e("[ALITE]", "Autosaving commander failed.", e);
+			}			
+		}
 		inGame.setNewScreen(inGame.getPostDockingScreen());
 	}
 
@@ -488,8 +499,8 @@ public class InGameHelper implements Serializable {
 			return;
 		}
 		if (alite.getCobra().getEnergy() < PlayerCobra.MAX_ENERGY_BANK || 
-			alite.getCobra().getCabinTemperature() > 24	       ||
-			alite.getCobra().getAltitude() < 6                     ||
+			alite.getCobra().getCabinTemperature() > 24	||
+			alite.getCobra().getAltitude() < 6 ||
 			inGame.getWitchSpace() != null) {
 			alite.getPlayer().setCondition(Condition.RED);
 			return;
@@ -498,7 +509,13 @@ public class InGameHelper implements Serializable {
 			if (alite.getPlayer().getLegalStatus() == LegalStatus.CLEAN) {
 				alite.getPlayer().setCondition(Condition.GREEN);
 			} else {
+				Condition conditionOld = alite.getPlayer().getCondition();
 				alite.getPlayer().setCondition(inGame.getNumberOfObjects(ObjectType.Viper) > 0 ? Condition.RED : Condition.YELLOW);
+				Condition conditionNew = alite.getPlayer().getCondition();
+				if (conditionOld != conditionNew && conditionNew == Condition.RED) {
+					SoundManager.play(Assets.com_conditionRed);
+					inGame.repeatMessage("Condition Red!", 3);
+				}
 			}
 		} else {
 			alite.getPlayer().setCondition(Condition.YELLOW);

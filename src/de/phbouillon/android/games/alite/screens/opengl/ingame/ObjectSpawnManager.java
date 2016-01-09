@@ -24,6 +24,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import android.opengl.Matrix;
+import de.phbouillon.android.framework.TimeFactorChangeListener;
 import de.phbouillon.android.framework.Updater;
 import de.phbouillon.android.framework.math.Vector3f;
 import de.phbouillon.android.games.alite.Alite;
@@ -62,7 +63,7 @@ public class ObjectSpawnManager implements Serializable {
 	public static boolean THARGOIDS_ENABLED             = true;
 	public static boolean THARGONS_ENABLED              = true;
 	
-	private static final int MAX_TRADE_SHIP_COUNT = 3;
+	private static final int MAX_TRADE_SHIP_COUNT = 2;
 	private static final int MAX_ASTEROID_COUNT   = 4;
 	private static final int MAX_SHUTTLE_COUNT    = 2;
 	private static final int MAX_THARGOID_COUNT   = 4;
@@ -106,7 +107,7 @@ public class ObjectSpawnManager implements Serializable {
 		private long pauseTime = -1;
 		private boolean locked = false;
 		private long lastExecutionTime = -1;
-		
+				
 		private void clearTimes() {
 			pauseTime         = -1;
 			lastExecutionTime = -1;
@@ -121,7 +122,6 @@ public class ObjectSpawnManager implements Serializable {
 		}
 		
 		private void initialize(long delay, final IMethodHook method) {
-			AliteLog.d("INIT", "Initialize " + delay + ", " + lastExecutionTime + ", " + pauseTime);
 			event = new TimedEvent(delay, lastExecutionTime, pauseTime, locked) {				
 				private static final long serialVersionUID = -92934290891367981L;
 
@@ -299,6 +299,27 @@ public class ObjectSpawnManager implements Serializable {
 			inGame.addTimedEvent(shuttleOrTransportTimer.event);
 			inGame.addTimedEvent(viperTimer.event);
 		}
+		alite.setTimeFactorChangeListener(new TimeFactorChangeListener() {			
+			@Override
+			public void timeFactorChanged(float oldTimeFactor, float newTimeFactor) {
+				updateTimers(oldTimeFactor / newTimeFactor);
+			}
+		});
+	}
+	
+	private void updateTimerInternal(float factor, SpawnTimer timer) {
+		if (timer != null && timer.event != null) {
+			timer.event.updateDelay((long) (timer.event.timeToNextTrigger() * factor));
+		}		
+	}
+	
+	private void updateTimers(float factor) {
+		updateTimerInternal(factor, conditionRedTimer);
+		updateTimerInternal(factor, traderTimer);
+		updateTimerInternal(factor, asteroidTimer);
+		updateTimerInternal(factor, shuttleOrTransportTimer);
+		updateTimerInternal(factor, viperTimer);
+		
 	}
 	
 	public void lockConditionRedEvent() {
@@ -309,6 +330,7 @@ public class ObjectSpawnManager implements Serializable {
 	
 	public void unlockConditionRedEvent() {
 		if (conditionRedTimer.event != null) {
+			conditionRedTimer.event.updateDelay(getDelayToConditionRedEncounter());
 			conditionRedTimer.event.unlock();
 		}		
 	}
@@ -399,7 +421,7 @@ public class ObjectSpawnManager implements Serializable {
 				@Override
 				public void onDestruction() {
 					if (inGame.getNumberOfObjects(ObjectType.EnemyShip) == 0 && conditionRedTimer.event != null) {						
-						conditionRedTimer.event.unlock();
+						unlockConditionRedEvent();
 					} 
 				}
 
@@ -637,7 +659,7 @@ public class ObjectSpawnManager implements Serializable {
 	}
 
 	private void spawnTrader() {
-		traderTimer.event.updateDelay((long) (((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l));
+		traderTimer.event.updateDelay((long) ((((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l) / alite.getTimeFactor()));
 		if (inGame.getWitchSpace() != null) {
 			return;
 		}
@@ -727,7 +749,7 @@ public class ObjectSpawnManager implements Serializable {
 	}
 	
 	private void spawnAsteroid() {	
-		asteroidTimer.event.updateDelay((long) (((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l));
+		asteroidTimer.event.updateDelay((long) ((((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l) / alite.getTimeFactor()));
 		if (inGame.getWitchSpace() != null) {
 			return;
 		}
@@ -776,7 +798,7 @@ public class ObjectSpawnManager implements Serializable {
 	}
 
 	private void spawnShuttleOrTransporter() {	
-		shuttleOrTransportTimer.event.updateDelay((long) (((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l));
+		shuttleOrTransportTimer.event.updateDelay((long) ((((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l) / alite.getTimeFactor()));
 		if (inGame.getWitchSpace() != null || !inGame.isInSafeZone()) {
 			return;
 		}

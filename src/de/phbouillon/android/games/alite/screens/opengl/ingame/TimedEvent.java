@@ -66,6 +66,10 @@ public abstract class TimedEvent implements Serializable {
 		pauseTime = -1;
 	}
 	
+	public long timeToNextTrigger() {
+		return delay - (System.nanoTime() - lastExecutionTime);
+	}
+	
 	public void perform(long time) {
 		if (pauseTime != -1 || locked) {
 			return;

@@ -410,6 +410,12 @@ public class NavigationBar {
 		else {
 			if (entry.title.equals("Launch")) {
 				SoundManager.play(Assets.click);
+				try {
+					AliteLog.d("[ALITE]", "Performing autosave. [Launch]");
+					((Alite) game).getFileUtils().autoSave((Alite) game);
+				} catch (Exception e) {
+					AliteLog.e("[ALITE]", "Autosaving commander failed.", e);
+				}
 //				newScreen = new AutomaticLaunchScreen(game);
 				newScreen = new FlightScreen(game, true);
 			} else if (entry.title.equals("Gal. Jump")) {

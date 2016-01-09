@@ -473,6 +473,15 @@ public class FileUtils {
 		} catch (IOException e) {
 			AliteLog.e("[ALITE] loadCommander", "Old version. Cmdr data lacks price data for inventory", e);
 		}
+		try {
+			for (int i = 0; i < 18; i++) {
+				long weightInGrams = dis.readLong();
+				cobra.setUnpunishedTradeGood(TradeGoodStore.get().fromNumber(i), Weight.grams(weightInGrams));
+			}
+		} catch (IOException e) {
+			AliteLog.e("[ALITE] loadCommander", "Old version. Cmdr data lacks unpunished data for inventory", e);
+		}
+
 		AliteLog.d("[ALITE] loadCommander", String.format("Loaded Commander '%s', galaxyNumber: %d, seed: %04x %04x %04x", player.getName(), generator.getCurrentGalaxy(), (int) generator.getCurrentSeed()[0], (int) generator.getCurrentSeed()[1], (int) generator.getCurrentSeed()[2]));		
 	}
 	
@@ -616,6 +625,9 @@ public class FileUtils {
 		}
 		for (InventoryItem item: cobra.getInventory()) {
 			dos.writeLong(item.getPrice());
+		}
+		for (InventoryItem item: cobra.getInventory()) {
+			dos.writeLong(item.getUnpunished().getWeightInGrams());
 		}
 	}
 	

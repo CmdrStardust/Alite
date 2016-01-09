@@ -91,7 +91,10 @@ public class TutAdvancedFlying extends TutorialScreen {
 		savedGalaxySeed = alite.getGenerator().getCurrentSeed();
 		savedPresentSystem = alite.getPlayer().getCurrentSystem();
 		savedHyperspaceSystem = alite.getPlayer().getHyperspaceSystem();		
-		savedInstalledEquipment = alite.getCobra().getInstalledEquipment();
+		savedInstalledEquipment = new ArrayList<Equipment>();
+		for (Equipment e: alite.getCobra().getInstalledEquipment()) {
+			savedInstalledEquipment.add(e);
+		}
 		AliteLog.w("Setting installed Equipment [constructor]", "Number of Equipment items: " + savedInstalledEquipment.size());
 		savedLasers[0] = alite.getCobra().getLaser(PlayerCobra.DIR_FRONT);
 		savedLasers[1] = alite.getCobra().getLaser(PlayerCobra.DIR_RIGHT);
@@ -112,9 +115,9 @@ public class TutAdvancedFlying extends TutorialScreen {
 		for (int i = 0; i < TradeGoodStore.get().goods().length; i++) {
 			savedInventory[i] = new InventoryItem();
 			savedInventory[i].set(currentItems[i].getWeight(), currentItems[i].getPrice());
+			savedInventory[i].addUnpunished(currentItems[i].getUnpunished());
 		}
-
-		
+	
 		for (Equipment e: savedInstalledEquipment) {
 			alite.getCobra().removeEquipment(e);
 		}
@@ -245,7 +248,7 @@ public class TutAdvancedFlying extends TutorialScreen {
 							switchScreen.savedPresentSystem = savedPresentSystem;
 							switchScreen.savedHyperspaceSystem = savedHyperspaceSystem;
 							switchScreen.savedInstalledEquipment = new ArrayList<Equipment>();
-							for (int i = 0; i < savedInstalledEquipment.size(); i++) {
+							for (int i = 0; i < savedInstalledEquipment.size(); i++) {								
 								switchScreen.savedInstalledEquipment.add(savedInstalledEquipment.get(i));
 							}
 							switchScreen.savedFuel = savedFuel;
@@ -751,6 +754,7 @@ public class TutAdvancedFlying extends TutorialScreen {
 			for (int i = 0; i < ta.savedInventory.length; i++) {
 				ta.savedInventory[i] = new InventoryItem();
 				ta.savedInventory[i].set(Weight.grams(dis.readLong()), dis.readLong());
+				ta.savedInventory[i].addUnpunished(Weight.grams(dis.readLong()));
 			}
 			ta.time = dis.readLong();
 			ta.savedMarketFluct = dis.readInt();
@@ -810,6 +814,7 @@ public class TutAdvancedFlying extends TutorialScreen {
 		for (InventoryItem w: savedInventory) {
 			dos.writeLong(w.getWeight().getWeightInGrams());
 			dos.writeLong(w.getPrice());
+			dos.writeLong(w.getUnpunished().getWeightInGrams());
 		}
 		dos.writeLong(time);
 		dos.writeInt(savedMarketFluct);

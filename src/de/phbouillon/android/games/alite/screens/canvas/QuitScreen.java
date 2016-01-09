@@ -25,6 +25,7 @@ import de.phbouillon.android.framework.Input.TouchEvent;
 import de.phbouillon.android.framework.Screen;
 import de.phbouillon.android.framework.impl.AndroidGraphics;
 import de.phbouillon.android.games.alite.Alite;
+import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.AliteStartManager;
 import de.phbouillon.android.games.alite.Assets;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.FlightScreen;
@@ -67,6 +68,12 @@ public class QuitScreen extends AliteScreen {
 		super.processTouch(touch);
 		if (messageResult != 0) {
 			if (messageResult == 1) {
+				try {
+					AliteLog.d("[ALITE]", "Performing autosave. [Quit]");
+					((Alite) game).getFileUtils().autoSave(((Alite) game));
+				} catch (Exception e) {
+					AliteLog.e("[ALITE]", "Autosaving commander failed.", e);
+				}
 			  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 			    ((Alite) game).finishAffinity();
 			  } else {

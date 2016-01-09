@@ -35,6 +35,7 @@ import de.phbouillon.android.games.alite.ScreenCodes;
 import de.phbouillon.android.games.alite.Settings;
 import de.phbouillon.android.games.alite.SoundManager;
 import de.phbouillon.android.games.alite.colors.AliteColors;
+import de.phbouillon.android.games.alite.model.EquipmentStore;
 import de.phbouillon.android.games.alite.model.InventoryItem;
 import de.phbouillon.android.games.alite.model.Player;
 import de.phbouillon.android.games.alite.model.PlayerCobra;
@@ -44,6 +45,8 @@ import de.phbouillon.android.games.alite.model.trading.Market;
 import de.phbouillon.android.games.alite.model.trading.TradeGood;
 import de.phbouillon.android.games.alite.model.trading.TradeGoodStore;
 import de.phbouillon.android.games.alite.model.trading.Unit;
+import de.phbouillon.android.games.alite.screens.opengl.ingame.FlightScreen;
+import de.phbouillon.android.games.alite.screens.opengl.ingame.InGameManager;
 
 //This screen never needs to be serialized, as it is not part of the InGame state.
 @SuppressWarnings("serial")
@@ -59,6 +62,7 @@ public class InventoryScreen extends TradeScreen {
 	}
 	
 	private static final String INVENTORY_HINT = "(Tap again to sell)";
+	private static final String EJECT_HINT = "(Tap again to eject)";
 	private final ArrayList<InventoryPair> inventoryList = new ArrayList<InventoryPair>();
 	private Pixmap [] tradegoods;
 	private Pixmap [] beam;
@@ -266,9 +270,43 @@ public class InventoryScreen extends TradeScreen {
 		String gainText = computeGainLossString(pair) + ". ";
 		int widthComplete = width + game.getGraphics().getTextWidth(gainText, Assets.regularFont);
 		game.getGraphics().drawText(gainText, X_OFFSET + width, 1050, gainText.startsWith("Loss") ? AliteColors.get().conditionRed() : AliteColors.get().conditionGreen(), Assets.regularFont);
-		game.getGraphics().drawText(INVENTORY_HINT, X_OFFSET + widthComplete, 1050, AliteColors.get().message(), Assets.regularFont);
+		Alite alite = (Alite) game;
+		if (alite.getCurrentScreen() instanceof FlightScreen && alite.getCobra().isEquipmentInstalled(EquipmentStore.fuelScoop)) {
+			game.getGraphics().drawText(EJECT_HINT, X_OFFSET + widthComplete, 1050, AliteColors.get().message(), Assets.regularFont);			
+		} else {
+			game.getGraphics().drawText(INVENTORY_HINT, X_OFFSET + widthComplete, 1050, AliteColors.get().message(), Assets.regularFont);
+		}
 	}
-			
+	
+	protected void performTradeWhileInFlight(int row, int column) {
+		if (!((Alite) game).getCobra().isEquipmentInstalled(EquipmentStore.fuelScoop)) {
+			super.performTradeWhileInFlight(row, column);
+			return;
+		}
+		SoundManager.play(Assets.retroRocketsOrEscapeCapsuleFired);
+		int index = row * COLUMNS + column;
+		if (index >= inventoryList.size()) {
+			return;
+		}
+		InventoryPair pair = inventoryList.get(index); 
+		TradeGood tradeGood = pair.good;
+    	Player player = ((Alite) game).getPlayer();
+    	Weight ejectedWeight;
+    	long ejectedPrice = pair.item.getPrice();
+    	if (pair.item.getWeight().compareTo(Weight.tonnes(4)) < 0) {
+    		ejectedWeight = pair.item.getWeight();    		
+    		player.getCobra().removeTradeGood(tradeGood);    		 
+    	} else {    		
+    		ejectedWeight = Weight.tonnes(4);
+    		player.getCobra().setTradeGood(tradeGood, pair.item.getWeight().sub(ejectedWeight), pair.item.getPrice());    		
+    		player.getCobra().subUnpunishedTradeGood(tradeGood, ejectedWeight);
+    	}
+    	InGameManager manager = ((FlightScreen) ((Alite) game).getCurrentScreen()).getInGameManager(); 
+    	manager.getLaserManager().ejectPlayerCargoCanister(manager.getShip(), tradeGood, ejectedWeight, ejectedPrice);
+		
+    	createButtons();		
+	}
+
     @Override
 	public void performTrade(int row, int column) {
 		int index = row * COLUMNS + column;
@@ -286,6 +324,8 @@ public class InventoryScreen extends TradeScreen {
     	Market market = player.getMarket();    			
 		int factor = pair.good.getUnit() == Unit.TON ? 1000000 : pair.good.getUnit() == Unit.KILOGRAM ? 1000 : 1;
 		long price = computePrice(market, factor, pair.item.getWeight().getWeightInGrams(), pair.good);
+		((Alite) game).getPlayer().setLegalValue(
+				((Alite) game).getPlayer().getLegalValue() + (int) (tradeGood.getLegalityType() * pair.item.getUnpunished().getQuantityInAppropriateUnit()));
 		player.getCobra().removeTradeGood(tradeGood);
     	player.setCash(player.getCash() + price);
     	cashLeft = String.format("Cash: %d.%d Cr", player.getCash() / 10, player.getCash() % 10);    
