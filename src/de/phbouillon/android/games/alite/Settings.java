@@ -57,6 +57,7 @@ public class Settings {
 	public static float alpha = 0.75f;
 	public static float controlAlpha = 0.5f;
 	public static float volumes[] = { 1.0f, 0.5f, 0.5f, 0.5f };
+	public static float vibrateLevel = 0.5f;
 	public static ShipControl controlMode = ShipControl.ACCELEROMETER;
 	public static int controlPosition = 1;
 	public static int introVideoQuality = 255;

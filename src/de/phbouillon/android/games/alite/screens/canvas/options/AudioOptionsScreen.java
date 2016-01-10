@@ -40,6 +40,7 @@ public class AudioOptionsScreen extends OptionsScreen {
 	private Slider soundFxVolume;
 	private Slider combatFxVolume;
 	private Slider voiceVolume;
+	private Slider vibrateLevel;
 	private Button back;
 	
 	public AudioOptionsScreen(Game game) {
@@ -52,7 +53,8 @@ public class AudioOptionsScreen extends OptionsScreen {
 		soundFxVolume = createFloatSlider(1, 0, 1, "Sound FX Volume", Settings.volumes[Sound.SoundType.SOUND_FX.getValue()]);
 		combatFxVolume = createFloatSlider(2, 0, 1, "Combat FX Volume", Settings.volumes[Sound.SoundType.COMBAT_FX.getValue()]);
 		voiceVolume = createFloatSlider(3, 0, 1, "Voice Volume", Settings.volumes[Sound.SoundType.VOICE.getValue()]);
-		back = createButton(5, "Back");
+		vibrateLevel = createFloatSlider(4, 0, 1, "Vibrate Level", Settings.vibrateLevel);
+		back = createButton(6, "Back");
 	}
 		
 	
@@ -69,6 +71,7 @@ public class AudioOptionsScreen extends OptionsScreen {
 		soundFxVolume.render(g);
 		combatFxVolume.render(g);
 		voiceVolume.render(g);
+		vibrateLevel.render(g);
 		back.render(g);
 	}
 
@@ -88,6 +91,10 @@ public class AudioOptionsScreen extends OptionsScreen {
 		}
 		if (voiceVolume.checkEvent(touch)) {
 			Settings.volumes[Sound.SoundType.VOICE.getValue()] = voiceVolume.getCurrentValue();
+			Settings.save(game.getFileIO());
+		}
+		if (vibrateLevel.checkEvent(touch)) {
+			Settings.vibrateLevel = vibrateLevel.getCurrentValue();
 			Settings.save(game.getFileIO());
 		}
 
