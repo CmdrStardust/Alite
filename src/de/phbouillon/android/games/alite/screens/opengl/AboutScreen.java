@@ -91,7 +91,7 @@ public class AboutScreen extends GlScreen {
 	                               "[ 602.0y]Philipp Bouillon\n" +
 			                       
 			                       "[2501.5w]Additional Programming\n" +
-			                       "[ 601.5y]Steven Phillips\n" +
+			                       "[ 602.0y]Steven Phillips\n" +
 
 	                               "[2501.5y]Alite is inspired by classic Elite\n" +
 			                       "[ 601.5y]© Acornsoft, Bell & Braben\n" +
