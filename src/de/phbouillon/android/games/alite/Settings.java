@@ -135,6 +135,7 @@ public class Settings {
 			reversePitch = Boolean.parseBoolean(in.readLine());
 			flatButtonDisplay = Boolean.parseBoolean(in.readLine());
 			volumes[Sound.SoundType.COMBAT_FX.getValue()] = Float.parseFloat(in.readLine());
+			vibrateLevel = Float.parseFloat(in.readLine());
 		} catch (Throwable t) {
 			// Ignore
 		} finally {
@@ -191,6 +192,7 @@ public class Settings {
 			out.write(Boolean.toString(reversePitch) + "\n");
 			out.write(Boolean.toString(flatButtonDisplay) + "\n");
 			out.write(Float.toString(volumes[Sound.SoundType.COMBAT_FX.getValue()]) + "\n");
+			out.write(Float.toString(vibrateLevel)  + "\n");
 		} catch (Exception e) {
 			// Ignore
 		} finally {

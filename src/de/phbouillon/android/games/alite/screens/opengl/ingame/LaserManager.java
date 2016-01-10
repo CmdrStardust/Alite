@@ -369,8 +369,7 @@ public class LaserManager implements Serializable {
 				alite.getCobra().setEnergy(0);
 				inGame.gameOver();
 				vbLen <<= 1;
-			}
-			else {
+			} else {
 				alite.getCobra().setEnergy(newVal);
 				checkEnergyLow();
 				if (newVal <= (2 * PlayerCobra.MAX_ENERGY_BANK)) {
@@ -389,8 +388,9 @@ public class LaserManager implements Serializable {
 		}
 		if (vbLen > 0) {
 			Vibrator vb = (Vibrator) alite.getSystemService(Context.VIBRATOR_SERVICE);
-			if(vb != null)
+			if (vb != null) {
 				vb.vibrate(vbLen);
+			}
 		}
 	}
 
@@ -407,7 +407,7 @@ public class LaserManager implements Serializable {
 			}
 			laser.setVisible(false);
 			laser.clearTwins();
-			damageShip(8,shotDirection.dot(ship.getForwardVector()) >= 0);
+			damageShip(8, shotDirection.dot(ship.getForwardVector()) >= 0);
 		}
 	}
 
