@@ -3,13 +3,13 @@
   <Header>Illegal Trading</Header>
   <Content>
     <Text>
-        <p>It is surprising how many planetary systems will allow the
-        purchasing of illegal trade items, notably firearms, narcotics
+        <p>Most systems will penalize either buying or selling
+        of illegal trade items, notably firearms, narcotics
         (especially Arcturan Megaweed) and slaves. Slaves are supplied in
         cryosuspension in transporter coffins, and often turn out to be
-        old and sick specimens of vaguely humanoid life forms. Nonetheless,
-        few systems will allow the [i]selling[/i] of these items without
-        taking recriminatory action.</p>
+        old and sick specimens of vaguely humanoid life forms. Most
+        systems take recriminatory action if you trade those items on
+        their station.</p>
     </Text>
   </Content>
   <Next>politics</Next>

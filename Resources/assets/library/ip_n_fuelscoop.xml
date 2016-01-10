@@ -16,6 +16,11 @@
     	<p>Once fuel scoops are installed, you can scoop up an object (such
     	as a cargo canister) by keeping it in the lower half of the screen
     	view area while flying right up to it.</p>
+    	<p>A fuel scoop also allows you to jettison any cargo you contain
+    	in your hold. In order to eject a cargo canister, go to your
+    	inventory screen and tap the item you wish to dump twice, while
+    	flying in space. Note that you lose all money spent for that item
+    	in the process.</p>
     	<p>[b]Fuel scoop specification:[/b] Fuel scoops are considered an
     	essential for Deep Space, and dangerous zone trading. They have a
     	standard design, and a standard fitment. They use powerful
