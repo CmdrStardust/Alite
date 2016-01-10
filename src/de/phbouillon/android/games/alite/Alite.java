@@ -70,7 +70,7 @@ import de.phbouillon.android.games.alite.screens.opengl.ingame.LaserManager;
 import de.phbouillon.android.games.alite.screens.opengl.sprites.AliteFont;
 
 public class Alite extends AndroidGame {
-	public static final String VERSION_STRING = "1.3.3 " + (AliteStartManager.HAS_EXTENSION_APK ? "OBB" : "SFI"); 
+	public static final String VERSION_STRING = "1.4.0 " + (AliteStartManager.HAS_EXTENSION_APK ? "OBB" : "SFI"); 
 	public static final String LOG_IS_INITIALIZED = "logIsInitialized";
 	
 	private Player player;

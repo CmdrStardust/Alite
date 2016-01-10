@@ -1,4 +1,4 @@
-Alite v. 1.3.4 by Philipp Bouillon and Duane McDonnell
+Alite v. 1.4.0 by Philipp Bouillon and Duane McDonnell
 
 About
 -----
@@ -18,6 +18,14 @@ exploration directly to you - wherever you are.
 
 Version History
 ---------------
+
+Version 1.4.0 Introduces the TimeWarp feature, implemented by Steven Phillips.
+              The TimeWarp lets you pass those regions in space where the torus
+              drive is not an option. Furthermore, 1.4.0 comes with the ability
+              to eject cargo, and does not punish the player for scooping up
+              contraband goods anymore. You can now also alter the sound volume
+              for different sets of effects. Some bugfixes were made and a
+              (configurable) vibration effect was added. [01/10/2016]
 
 Version 1.3.4 Fixes a bug in the Galaxy and Local Screens. The background was
               not cleared correctly on some devices. [12/21/2015]
@@ -108,7 +116,7 @@ and make sure that <VERSION> _exactly!_ matches the version number you
 specified in the AliteStartManager, see EXTENSION_FILE_VERSION.
 
 Once built set EXTENSION_FILE_LENGTH in AliteStartManager to the size of your
-new obb file in bytes and rebuild & install Alite. 
+new obb file in bytes and rebuild & install Alite.
 
 Why is that so complicated?! I wish I knew :). The thing is that the jobb tool
 is pretty buggy and if you really must have an obb file, this version of the

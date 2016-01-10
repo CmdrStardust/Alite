@@ -47,9 +47,10 @@ import de.phbouillon.android.games.alite.screens.canvas.tutorial.IMethodHook;
 
 public class AliteStartManager extends Activity implements IDownloaderClient {	
 	public static final boolean HAS_EXTENSION_APK = true;
-	public static final int EXTENSION_FILE_VERSION = 2189;
-	private static final long EXTENSION_FILE_LENGTH = 427139137l;
+	public static final int EXTENSION_FILE_VERSION = 2191;
+	private static final long EXTENSION_FILE_LENGTH = 427312705l;
 	public static final int ALITE_RESULT_CLOSE_ALL = 78615265;
+	
 	
 	public static final String ALITE_STATE_FILE = "current_state.dat";
 		

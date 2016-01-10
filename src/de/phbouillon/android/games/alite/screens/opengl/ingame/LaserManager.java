@@ -91,8 +91,6 @@ public class LaserManager implements Serializable {
 	private final List <Explosion> activeExplosions = new ArrayList<Explosion>();
 	private InGameManager inGame;
 
-	private boolean frontShieldWarningIssued = false;
-	private boolean aftShieldWarningIssued = false;
 	private long lockTime = -1;
 
 	class LaserCylinderFactory implements PoolObjectFactory <LaserCylinder> {
@@ -707,12 +705,6 @@ public class LaserManager implements Serializable {
 				if (updateFrontRearShields) {
 					alite.getCobra().setFrontShield(alite.getCobra().getFrontShield() + 1);
 					alite.getCobra().setRearShield(alite.getCobra().getRearShield() + 1);
-					if (alite.getCobra().getFrontShield() == PlayerCobra.MAX_SHIELD) {
-						frontShieldWarningIssued = false;
-					}
-					if (alite.getCobra().getRearShield() == PlayerCobra.MAX_SHIELD) {
-						aftShieldWarningIssued = false;
-					}
 				}
 				checkEnergyLow();
 			}
