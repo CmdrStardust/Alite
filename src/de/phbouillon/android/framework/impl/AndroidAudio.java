@@ -46,20 +46,20 @@ public class AndroidAudio implements Audio {
 	}
 	
 	@Override
-	public Music newMusic(String fileName, boolean isEffect, boolean isVoice) {
+	public Music newMusic(String fileName, Sound.SoundType soundType) {
 		if (AliteStartManager.HAS_EXTENSION_APK) {
 			try {
-				return new AndroidMusic(fileIO, fileName, isVoice, isEffect);
+				return new AndroidMusic(fileIO, fileName, soundType);
 			} catch (IOException e) {
 				AliteLog.e("Cannot load music", "Music " + fileName + " not found.");
 				return null;
 			}			
 		} else {
 			try {
-				AliteLog.d("Loading Music", "Loading music " + fileName + (isEffect ? " (effect)" : isVoice ? " (voice)" : ""));
+				AliteLog.d("Loading Music", "Loading music " + fileName + ", Type:" + soundType);
 				AssetFileDescriptor assetDescriptor = assets.openFd(fileName);
 				AliteLog.d("Loading Music", "Loading music " + assetDescriptor.getStartOffset() + ", " + assetDescriptor.getLength() + ", " + assetDescriptor.getFileDescriptor().valid());
-				return new AndroidMusic(assetDescriptor, isVoice, isEffect);
+				return new AndroidMusic(assetDescriptor, soundType);
 			} catch (IOException e) {
 				AliteLog.e("Cannot load music", "Music " + fileName + " not found.");
 				return null;
@@ -68,25 +68,12 @@ public class AndroidAudio implements Audio {
 	}
 
 	@Override
-	public Sound newSound(String fileName) {
+	public Sound newSound(String fileName, Sound.SoundType soundType) {
 		try {			
 			int soundId = AliteStartManager.HAS_EXTENSION_APK ? 
 					soundPool.load(fileIO.getPrivatePath(fileName), 0) :
 					soundPool.load(fileIO.getFileDescriptor(fileName), 0);
-			return new AndroidSound(soundPool, soundId);
-		} catch (IOException e) {
-			AliteLog.e("Cannot load sound", "Sound " + fileName + " not found.");
-			return null;			
-		}
-	}
-	
-	@Override
-	public Sound newVoice(String fileName) {
-		try {
-			int soundId = AliteStartManager.HAS_EXTENSION_APK ? 
-					soundPool.load(fileIO.getPrivatePath(fileName), 0) :
-					soundPool.load(fileIO.getFileDescriptor(fileName), 0);
-			return new AndroidSound(soundPool, soundId, true);
+			return new AndroidSound(soundPool, soundId, soundType);
 		} catch (IOException e) {
 			AliteLog.e("Cannot load sound", "Sound " + fileName + " not found.");
 			return null;			

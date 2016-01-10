@@ -19,7 +19,6 @@ package de.phbouillon.android.framework;
  */
 
 public interface Audio {
-	public Music newMusic(String fileName, boolean isEffect, boolean isVoice);
-	public Sound newSound(String fileName);
-	public Sound newVoice(String fileName);
+	public Music newMusic(String fileName, Sound.SoundType st);
+	public Sound newSound(String fileName, Sound.SoundType st);
 }

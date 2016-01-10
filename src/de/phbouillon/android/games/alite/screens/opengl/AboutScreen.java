@@ -30,6 +30,7 @@ import de.phbouillon.android.framework.Game;
 import de.phbouillon.android.framework.GlScreen;
 import de.phbouillon.android.framework.Input.TouchEvent;
 import de.phbouillon.android.framework.Music;
+import de.phbouillon.android.framework.Sound;
 import de.phbouillon.android.framework.impl.AndroidGraphics;
 import de.phbouillon.android.framework.impl.gl.GlUtils;
 import de.phbouillon.android.framework.impl.gl.Sprite;
@@ -77,7 +78,7 @@ public class AboutScreen extends GlScreen {
 	private AliteFont font;
 	private boolean end = false;
 	private boolean returnToOptions = false;
-	private float musicVolume = Settings.musicVolume;
+	private float musicVolume = Settings.volumes[Sound.SoundType.MUSIC.getValue()];
 	
 	private int pendingMode = -1;
 	
@@ -213,7 +214,7 @@ public class AboutScreen extends GlScreen {
 		windowHeight = visibleArea.height();
 		startTime = System.nanoTime();		
 		lastTime = startTime;
-		endCreditsMusic = game.getAudio().newMusic("music/end_credits.mp3", false, false);
+		endCreditsMusic = game.getAudio().newMusic("music/end_credits.mp3", Sound.SoundType.MUSIC);
 		texts = new ArrayList<TextData>();
 		int curY = 0;
 		for (String s: credits.split("\n")) {

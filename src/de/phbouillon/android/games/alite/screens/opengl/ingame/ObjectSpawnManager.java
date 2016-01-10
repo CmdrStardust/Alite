@@ -650,8 +650,7 @@ public class ObjectSpawnManager implements Serializable {
 							inGame.getShip().setUpdater(null);
 							return;
 						}
-						SoundManager.play(Assets.hullDamage);
-						inGame.getHelper().damageShip(15, true);
+						inGame.getLaserManager().damageShip(15, true);
 					}
 				}
 			});

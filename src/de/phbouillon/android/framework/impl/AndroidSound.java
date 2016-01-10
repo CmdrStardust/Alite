@@ -25,24 +25,18 @@ public class AndroidSound implements Sound {
 	private final int soundId;
 	private final SoundPool soundPool;
 	private int currentStreamId = -1;
-	private final boolean voice;
+	private final SoundType soundType;
 	private long delayToNextPlay = -1;
 	
-	public AndroidSound(SoundPool soundPool, int soundId) {
+	public AndroidSound(SoundPool soundPool, int soundId, SoundType st) {
 		this.soundId = soundId;
 		this.soundPool = soundPool;
-		this.voice = false;
-	}
-
-	public AndroidSound(SoundPool soundPool, int soundId, boolean voice) {
-		this.soundId = soundId;
-		this.soundPool = soundPool;
-		this.voice = voice;
+		this.soundType = st;
 	}
 
 	@Override
-	public boolean isVoice() {
-		return voice;
+	public SoundType getType() {
+		return soundType;
 	}
 	
 	@Override

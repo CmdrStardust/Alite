@@ -27,6 +27,7 @@ import de.phbouillon.android.framework.math.Vector3f;
 import de.phbouillon.android.games.alite.Alite;
 import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.Assets;
+import de.phbouillon.android.games.alite.Settings;
 import de.phbouillon.android.games.alite.SoundManager;
 import de.phbouillon.android.games.alite.model.Condition;
 import de.phbouillon.android.games.alite.model.EquipmentStore;
@@ -61,8 +62,6 @@ public class InGameHelper implements Serializable {
 	private final Vector3f tempVector;
 	private float fuelScoopFuel = 0.0f;
 	private long lastMissileWarning = -1;
-	private long lastFrontWarning = -1;
-	private long lastRearWarning = -1;
 	private final AttackTraverser attackTraverser;
 	private transient ScoopCallback scoopCallback = null;
 	
@@ -93,54 +92,9 @@ public class InGameHelper implements Serializable {
 		return scoopCallback;
 	}
 
-	void damageShip(int amount, boolean front) {
-		if (!inGame.isPlayerAlive()) {
-			return;
-		}
-		int shield = front ? alite.getCobra().getFrontShield() : alite.getCobra().getRearShield();
-		if (shield == 0) {
-			int newVal = alite.getCobra().getEnergy() - amount;
-			if (newVal < 0) {
-				newVal = 0;
-			}
-			alite.getCobra().setEnergy(newVal);
-		} else {
-			int remainingAmount = amount - shield;
-			shield -= amount;
-			if (shield < 0) {
-				shield = 0;
-			}
-			if (remainingAmount > 0) {
-				int newVal = alite.getCobra().getEnergy() - remainingAmount;
-				if (newVal < 0) {
-					newVal = 0;
-				}
-				alite.getCobra().setEnergy(newVal);				
-			}
-			if (front) {
-				if (shield <= 0 && (lastFrontWarning == -1 || lastFrontWarning < System.nanoTime())) {
-					SoundManager.play(Assets.com_frontShieldHasFailed);
-					lastFrontWarning = System.nanoTime() + 4000000000l;
-				}
-				alite.getCobra().setFrontShield(shield);
-			} else {
-				if (shield <= 0 && (lastRearWarning == -1 || lastRearWarning < System.nanoTime())) {
-					SoundManager.play(Assets.com_aftShieldHasFailed);
-					lastRearWarning = System.nanoTime() + 4000000000l;
-				}
-				alite.getCobra().setRearShield(shield);
-			}			
-		}
-		inGame.getLaserManager().checkEnergyLow();
-		if (alite.getCobra().getEnergy() <= 0) {
-			inGame.gameOver();
-		}
-	}
-	
 	final void ramCargo(SpaceObject rammedObject) {
 		rammedObject.applyDamage(4000.0f);
-		damageShip(10, true);
-		SoundManager.play(Assets.hullDamage);		
+		inGame.getLaserManager().damageShip(10, true);
 	}
 	
 	void checkShipStationProximity() {
@@ -301,8 +255,7 @@ public class InGameHelper implements Serializable {
 						inGame.clearMissileLock();
 						automaticDockingSequence();
 					} else {
-						SoundManager.play(Assets.hullDamage);
-						damageShip(5, ((SpaceObject) object).getDisplayMatrix()[14] < 0);
+						inGame.getLaserManager().damageShip(5, ((SpaceObject) object).getDisplayMatrix()[14] < 0);
 						inGame.getShip().setSpeed(0.0f);
 					}
 				} else if (object.getName().equals("Cargo Canister") ||
@@ -317,15 +270,17 @@ public class InGameHelper implements Serializable {
 					           object.getName().equals("Glow"))) {
 						continue;
 					}
-					SoundManager.play(Assets.hullDamage);
 					if (object instanceof SpaceObject && ((SpaceObject) object).getHullStrength() > 0) {
 						AliteLog.d("Crash Occurred", object.getName() + " crashed into player. " + ((SpaceObject) object).getCurrentAIStack());
-						damageShip(20, ((SpaceObject) object).getDisplayMatrix()[14] < 0);
+						inGame.getLaserManager().damageShip(20, ((SpaceObject) object).getDisplayMatrix()[14] < 0);
 						((SpaceObject) object).setHullStrength(0);
 						((SpaceObject) object).setRemove(true);
 						inGame.computeBounty((SpaceObject) object, WeaponType.Collision);
 						inGame.explode((SpaceObject) object, true, WeaponType.Collision);
-					} 				
+					}
+ 					else {
+						SoundManager.play(Assets.hullDamage);
+					} 
 				} 
 			}
 		}		
@@ -432,8 +387,7 @@ public class InGameHelper implements Serializable {
 							}
 						} else {
 							if (missile.getTarget() == inGame.getShip()) {
-								SoundManager.play(Assets.hullDamage);
-								damageShip(40, missile.getDisplayMatrix()[14] < 0);
+								inGame.getLaserManager().damageShip(40, missile.getDisplayMatrix()[14] < 0);
 							} else {
 								missile.getTarget().setHullStrength(0);
 								missile.getTarget().setRemove(true);

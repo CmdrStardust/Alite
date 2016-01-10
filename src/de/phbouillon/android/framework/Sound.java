@@ -19,11 +19,28 @@ package de.phbouillon.android.framework;
  */
 
 public interface Sound {
+	public static enum SoundType {
+		VOICE(0),
+		SOUND_FX(1),
+		COMBAT_FX(2),
+		MUSIC(3);
+
+		private final int value;
+
+		SoundType(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return this.value;
+		}
+	}
+
 	public void play(float volume);
 	public void playOnce(float volume, long delayInMs);
 	public void repeat(float volume);
 	public boolean isPlaying();
 	public void stop();
 	public void dispose();
-	public boolean isVoice();
+	public SoundType getType();
 }
