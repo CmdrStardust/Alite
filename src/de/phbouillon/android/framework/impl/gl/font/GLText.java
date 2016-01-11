@@ -45,13 +45,13 @@ public class GLText {
 	public final static int CHAR_START = 32; // First Character (ASCII Code)
 	public final static int CHAR_END = 126; // Last Character (ASCII Code)
 
-	// 169: ©	
-	// 201: É
-	// 233: é
-	// 235: ë
-	// 176: °
+	// 169: copyright
+	// 201: E-acute
+	// 233: e-acute
+	// 235: e-diaeresis
+	// 176: degree sign
 	public final static int [] ADDITIONAL_CHARS = new int [] {169, 201, 233, 235, 176};	
-	public final static char [] ADDITIONAL_CHARS_STR = new char [] {'©', 'É', 'é', 'ë', '°'};
+	public final static char [] ADDITIONAL_CHARS_STR = new char [] { '\u00a9', '\u00c9', '\u00e9', '\u00eb', '\u00b0' };
 	
 	public final static int CHAR_CNT = (((CHAR_END - CHAR_START + ADDITIONAL_CHARS.length) + 1) + 1); // Character
 																			// Count
