@@ -770,7 +770,9 @@ public class ObjectSpawnManager implements Serializable {
 		final float rx = vector.x;
 		final float ry = vector.y;
 		final float rz = vector.z;
-		inGame.getShip().getPosition().sub(asteroid.getPosition(), vector);
+		vector.x = (float) (-2.0 + Math.random() * 4.0);
+		vector.y = (float) (-2.0 + Math.random() * 4.0);
+		vector.z = (float) (-2.0 + Math.random() * 4.0);
 		vector.normalize();
 		final float ix = vector.x;
 		final float iy = vector.y;

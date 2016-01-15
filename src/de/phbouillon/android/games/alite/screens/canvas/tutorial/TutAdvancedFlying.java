@@ -130,6 +130,7 @@ public class TutAdvancedFlying extends TutorialScreen {
 		alite.getPlayer().setCurrentSystem(alite.getGenerator().getSystem(7)); // Lave
 		alite.getPlayer().setHyperspaceSystem(alite.getGenerator().getSystem(129)); // Zaonce
 		alite.getCobra().setFuel(70);
+		alite.getPlayer().setLegalValue(0);
 		for (int i = 0; i < Settings.buttonPosition.length; i++) {
 			Settings.buttonPosition[i] = i;
 		}
@@ -750,6 +751,7 @@ public class TutAdvancedFlying extends TutorialScreen {
 			ta.savedCredits = dis.readLong();
 			ta.savedScore = dis.readInt();
 			ta.savedLegalStatus = LegalStatus.values()[dis.readInt()];
+			ta.savedLegalValue = dis.readInt();
 			ta.savedInventory = new InventoryItem[dis.readInt()];
 			for (int i = 0; i < ta.savedInventory.length; i++) {
 				ta.savedInventory[i] = new InventoryItem();
@@ -810,6 +812,7 @@ public class TutAdvancedFlying extends TutorialScreen {
 		dos.writeLong(savedCredits);
 		dos.writeInt(savedScore);
 		dos.writeInt(savedLegalStatus.ordinal());
+		dos.writeInt(savedLegalValue);
 		dos.writeInt(savedInventory.length);
 		for (InventoryItem w: savedInventory) {
 			dos.writeLong(w.getWeight().getWeightInGrams());

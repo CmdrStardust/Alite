@@ -453,6 +453,13 @@ public class PlanetScreen extends AliteScreen {
 		displayText(g, inhabitantTextData);		
 	}
 	
+	private int computeDistance() {
+		SystemData currentSystem = ((Alite) game).getPlayer().getCurrentSystem();		
+		int dx = (currentSystem == null ? ((Alite) game).getPlayer().getPosition().x : currentSystem.getX()) - system.getX();
+		int dy = (currentSystem == null ? ((Alite) game).getPlayer().getPosition().y : currentSystem.getY()) - system.getY();
+		return (int) Math.sqrt(dx * dx + dy * dy) << 2;
+	}
+
 	private void displayInformation(final Graphics g, SystemData system) {
 		g.drawText("Economy:",          450, 150, AliteColors.get().informationText(), Assets.regularFont);
 		g.drawText("Government:",       450, 190, AliteColors.get().informationText(), Assets.regularFont);
@@ -469,7 +476,7 @@ public class PlanetScreen extends AliteScreen {
 		
 		int halfWidth = g.getTextWidth("Light Years", Assets.regularFont) >> 1;
 		g.drawText("Light Years", 860 - halfWidth, 605, AliteColors.get().shipDistance(), Assets.regularFont);
-		int dist = system.computeDistance(((Alite) game).getPlayer().getCurrentSystem());
+		int dist = computeDistance();
 		String distString = String.format(Locale.getDefault(), "%d.%d", dist / 10, dist % 10);
 		halfWidth = g.getTextWidth(distString, Assets.regularFont) >> 1;
 		g.drawText(distString, 860 - halfWidth, 545, AliteColors.get().shipDistance(), Assets.regularFont);
