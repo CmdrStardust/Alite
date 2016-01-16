@@ -65,8 +65,8 @@ public final class SpaceObjectAI implements Serializable {
 	private final List <WayPoint> waypoints = new ArrayList<WayPoint>();
 	private float currentDistance = -1;
 	private boolean pitchingOver = false;
-    private float flightRoll = 0.0f;
-    private float flightPitch = 0.0f;
+	private float flightRoll = 0.0f;
+	private float flightPitch = 0.0f;
 	private boolean waitForSafeZoneExit = false;
 	private long lastShootCheck = -1;
 	private Curve curve = null;
@@ -89,8 +89,8 @@ public final class SpaceObjectAI implements Serializable {
 		Quaternion.fromMatrix(so.getMatrix(), q1);		
 		q1.normalize();
 		
-    	so.getPosition().sub(targetPosition, v0);    	
-    	v0.normalize();
+		so.getPosition().sub(targetPosition, v0);    	
+		v0.normalize();
 		
 		targetUp.cross(v0, v1);
 		v1.normalize();
@@ -120,141 +120,141 @@ public final class SpaceObjectAI implements Serializable {
 		return absAngle;		
 	}
 	
-    private float trackInternal(Vector3f targetPosition, Vector3f targetUp, float desiredRangeSq, float deltaTime, boolean retreat) {
-    	float rate1 = 2.0f * deltaTime;
-        float rate2 = 4.0f * deltaTime;
-        float stickRoll = 0.0f;
-        float stickPitch = 0.0f;
-        float reverse = 1.0f;
-        float minD = 0.004f;
-        float maxCos = 0.995f;
-       
-        float maxPitch = so.getMaxPitchSpeed() * 30 * deltaTime;
-        float maxRoll  = so.getMaxRollSpeed() * 30 * deltaTime;
-        
-        if (retreat) {
-            reverse = -reverse;
-        }
-       
-        so.getPosition().sub(targetPosition, v0);
-        float rangeSq = v0.lengthSq();
-        if (rangeSq > desiredRangeSq) {
-            maxCos = (float) Math.sqrt(1.0 - 0.90 * desiredRangeSq / rangeSq);
-        }
-        if (v0.isZeroVector()) {
-            v0.z = 1.0f;
-        } else {
-            v0.normalize();
-        }
-       
-        float dRight   = v0.dot(so.getRightVector());
-        float dUp      = v0.dot(so.getUpVector());
-        float dForward = v0.dot(so.getForwardVector());
-       
-        if (pitchingOver) {
-        	maxPitch *= 4.0f;
-        	maxRoll *= 4.0f;
-            if (reverse * dUp < 0) {
-                stickPitch = maxPitch;
-            } else {
-                stickPitch = -maxPitch;               
-            }
-            pitchingOver = reverse * dForward < 0.707;
-        }
-       
-        if (dForward < maxCos || retreat) {
-            if (dForward <= -maxCos) {
-                dUp = minD * 2.0f;
-            }
-            if (dUp > minD) {
-                int factor = (int) Math.sqrt(Math.abs(dRight) / Math.abs(minD));
-                if (factor > 8) {
-                    factor = 8;
-                }
-                if (dRight > minD) {
-                    stickRoll = -maxRoll * 0.125f * factor;
-                }
-                if (dRight < -minD) {
-                    stickRoll = maxRoll * 0.125f * factor;
-                }
-                if (Math.abs(dRight) < Math.abs(stickRoll) * deltaTime) {
-                    stickRoll = Math.abs(dRight) / deltaTime * (stickRoll < 0 ? -1 : 1);
-                }
-            }
-            if (dUp < -minD) {
-                int factor = (int) Math.sqrt(Math.abs(dRight) / Math.abs(minD));
-                if (factor > 8) {
-                    factor = 8;
-                }
-                if (dRight > minD) {
-                    stickRoll = maxRoll * 0.125f * factor;
-                }
-                if (dRight < -minD) {
-                    stickRoll = -maxRoll * 0.125f * factor;
-                }
-                if (Math.abs(dRight) < Math.abs(stickRoll) * deltaTime) {
-                    stickRoll = Math.abs(dRight) / deltaTime * (stickRoll < 0 ? -1 : 1);
-                }
-            }
-            if (Math.abs(stickRoll) < 0.0001) {
-                int factor = (int) Math.sqrt(Math.abs(dUp) / Math.abs(minD));
-                if (factor > 8) {
-                    factor = 8;
-                }
-                if (dUp > minD) {
-                    stickPitch = -maxPitch * reverse * 0.125f * factor;
-                }
-                if (dUp < -minD) {
-                    stickPitch = maxPitch * reverse * 0.125f * factor;
-                }
-                if (Math.abs(dUp) < Math.abs(stickPitch) * deltaTime) {
-                    stickPitch = Math.abs(dUp) / deltaTime * (stickPitch < 0 ? -1 : 1);
-                }
-            }
-        }
-       
-//        if (targetUp != null) {
-//        	stickRoll = rollToMatchUp(targetUp);
-//        }
-        
-        if ((stickRoll > 0.0 && flightRoll < 0.0) || (stickRoll < 0.0 && flightRoll > 0.0)) {
-            rate1 *= 4.0f;
-        }
-        if ((stickPitch > 0.0 && flightPitch < 0.0) || (stickPitch < 0.0 && flightPitch > 0.0)) {
-            rate2 *= 4.0f;
-        }
-
-        if (flightRoll < stickRoll - rate1) {
-            stickRoll = flightRoll + rate1;
-        }
-        if (flightRoll > stickRoll + rate1) {
-            stickRoll = flightRoll - rate1;
-        }
-        if (flightPitch < stickPitch - rate2) {        	
-        	stickPitch = flightPitch + rate2;
-        }            
-        if (flightPitch > stickPitch + rate2) {
-            stickPitch = flightPitch - rate2;
-        }
-       
-        flightRoll = stickRoll;
-        flightPitch = stickPitch;
-
-        
-        if (retreat) {
-            dForward *= dForward;
-        }
-
-    	if (dForward < 0.0) {
-            return 0.0f;
-        }
-       
-        if (Math.abs(flightRoll) < 0.0001 && Math.abs(flightPitch) < 0.0001) {
-            return 1.0f;
-        }
-               
-        return dForward;    	
-    }
+	private float trackInternal(Vector3f targetPosition, Vector3f targetUp, float desiredRangeSq, float deltaTime, boolean retreat) {
+		float rate1 = 2.0f * deltaTime;
+		float rate2 = 4.0f * deltaTime;
+		float stickRoll = 0.0f;
+		float stickPitch = 0.0f;
+		float reverse = 1.0f;
+		float minD = 0.004f;
+		float maxCos = 0.995f;
+		
+		float maxPitch = so.getMaxPitchSpeed() * 30 * deltaTime;
+		float maxRoll  = so.getMaxRollSpeed() * 30 * deltaTime;
+		
+		if (retreat) {
+			reverse = -reverse;
+		}
+		
+		so.getPosition().sub(targetPosition, v0);
+		float rangeSq = v0.lengthSq();
+		if (rangeSq > desiredRangeSq) {
+			maxCos = (float) Math.sqrt(1.0 - 0.90 * desiredRangeSq / rangeSq);
+		}
+		if (v0.isZeroVector()) {
+			v0.z = 1.0f;
+		} else {
+			v0.normalize();
+		}
+		
+		float dRight   = v0.dot(so.getRightVector());
+		float dUp      = v0.dot(so.getUpVector());
+		float dForward = v0.dot(so.getForwardVector());
+		
+		if (pitchingOver) {
+			maxPitch *= 4.0f;
+			maxRoll *= 4.0f;
+			if (reverse * dUp < 0) {
+				stickPitch = maxPitch;
+			} else {
+				stickPitch = -maxPitch;               
+			}
+			pitchingOver = reverse * dForward < 0.707;
+		}
+		
+		if (dForward < maxCos || retreat) {
+			if (dForward <= -maxCos) {
+				dUp = minD * 2.0f;
+			}
+			if (dUp > minD) {
+				int factor = (int) Math.sqrt(Math.abs(dRight) / Math.abs(minD));
+				if (factor > 8) {
+					factor = 8;
+				}
+				if (dRight > minD) {
+					stickRoll = -maxRoll * 0.125f * factor;
+				}
+				if (dRight < -minD) {
+					stickRoll = maxRoll * 0.125f * factor;
+				}
+				if (Math.abs(dRight) < Math.abs(stickRoll) * deltaTime) {
+					stickRoll = Math.abs(dRight) * Alite.get().getTimeFactor() / deltaTime * (stickRoll < 0 ? -1 : 1);
+				}
+			}
+			if (dUp < -minD) {
+				int factor = (int) Math.sqrt(Math.abs(dRight) / Math.abs(minD));
+				if (factor > 8) {
+					factor = 8;
+				}
+				if (dRight > minD) {
+					stickRoll = maxRoll * 0.125f * factor;
+				}
+				if (dRight < -minD) {
+					stickRoll = -maxRoll * 0.125f * factor;
+				}
+				if (Math.abs(dRight) < Math.abs(stickRoll) * deltaTime) {
+					stickRoll = Math.abs(dRight) * Alite.get().getTimeFactor() / deltaTime * (stickRoll < 0 ? -1 : 1);
+				}
+			}
+			if (Math.abs(stickRoll) < 0.0001) {
+				int factor = (int) Math.sqrt(Math.abs(dUp) / Math.abs(minD));
+				if (factor > 8) {
+					factor = 8;
+				}
+				if (dUp > minD) {
+					stickPitch = -maxPitch * reverse * 0.125f * factor;
+				}
+				if (dUp < -minD) {
+					stickPitch = maxPitch * reverse * 0.125f * factor;
+				}
+				if (Math.abs(dUp) < Math.abs(stickPitch) * deltaTime) {
+					stickPitch = Math.abs(dUp) * Alite.get().getTimeFactor() / deltaTime * (stickPitch < 0 ? -1 : 1);
+				}
+			}
+		}
+		
+//		if (targetUp != null) {
+//			stickRoll = rollToMatchUp(targetUp);
+//		}
+		
+		if ((stickRoll > 0.0 && flightRoll < 0.0) || (stickRoll < 0.0 && flightRoll > 0.0)) {
+			rate1 *= 4.0f;
+		}
+		if ((stickPitch > 0.0 && flightPitch < 0.0) || (stickPitch < 0.0 && flightPitch > 0.0)) {
+			rate2 *= 4.0f;
+		}
+		
+		if (flightRoll < stickRoll - rate1) {
+			stickRoll = flightRoll + rate1;
+		}
+		if (flightRoll > stickRoll + rate1) {
+			stickRoll = flightRoll - rate1;
+		}
+		if (flightPitch < stickPitch - rate2) {        	
+			stickPitch = flightPitch + rate2;
+		}            
+		if (flightPitch > stickPitch + rate2) {
+			stickPitch = flightPitch - rate2;
+		}
+		
+		flightRoll = stickRoll;
+		flightPitch = stickPitch;
+		
+		
+		if (retreat) {
+			dForward *= dForward;
+		}
+		
+		if (dForward < 0.0) {
+			return 0.0f;
+		}
+		
+		if (Math.abs(flightRoll) < 0.0001 && Math.abs(flightPitch) < 0.0001) {
+			return 1.0f;
+		}
+		
+		return dForward;    	
+	}
         
 	private float executeSteering(float desiredSpeed) {
 		so.applyDeltaRotation(flightPitch, 0, flightRoll);
@@ -320,8 +320,8 @@ public final class SpaceObjectAI implements Serializable {
 		Quaternion.fromMatrix(so.getMatrix(), q1);		
 		q1.normalize();
 		
-    	so.getPosition().sub(targetPosition, v0);    	
-    	v0.normalize();
+		so.getPosition().sub(targetPosition, v0);    	
+		v0.normalize();
 		
 		targetUp.cross(v0, v1);
 		v1.normalize();

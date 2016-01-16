@@ -29,7 +29,9 @@ import de.phbouillon.android.framework.math.Vector3f;
 import de.phbouillon.android.games.alite.Alite;
 import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.Assets;
+import de.phbouillon.android.games.alite.Settings;
 import de.phbouillon.android.games.alite.SoundManager;
+import de.phbouillon.android.games.alite.model.PlayerCobra;
 import de.phbouillon.android.games.alite.screens.opengl.objects.AliteObject;
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.AIState;
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.AiStateCallback;
@@ -148,6 +150,9 @@ final class DockingComputerAI implements AiStateCallbackHandler, Serializable {
 		active = true;
 		inGame.setPlayerControl(false);
 		dcaUpdater.orientationFound = false;
+		if (Settings.dockingComputerMed) {
+			alite.setTimeFactor(PlayerCobra.SPEED_UP_FACTOR);
+		}
 		if (Assets.danube == null) {
 			Assets.danube = alite.getAudio().newMusic("music/blue_danube.ogg", Sound.SoundType.MUSIC);
 		}

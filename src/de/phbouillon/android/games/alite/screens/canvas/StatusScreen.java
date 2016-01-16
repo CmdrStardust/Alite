@@ -115,7 +115,7 @@ public class StatusScreen extends AliteScreen {
 		}
 		g.drawText(player.getCondition().getName(),        400, 230, player.getCondition().getColor(),  Assets.regularFont);
 		g.drawText(player.getLegalStatus().getName(),      400, 270, AliteColors.get().legalStatus(),  Assets.regularFont);
-		g.drawText(player.getRating().getName(),           400, 310, AliteColors.get().rating(),   Assets.regularFont);
+		g.drawText(player.getRating().getName() + "  -  " + player.getScore(), 400, 310, AliteColors.get().rating(),   Assets.regularFont);
 		g.drawText(String.format("%d.%d Light Years", player.getCobra().getFuel() / 10, player.getCobra().getFuel() % 10), 400, 350, AliteColors.get().remainingFuel(), Assets.regularFont);
 		g.drawText(String.format("%d.%d Credits", player.getCash() / 10, player.getCash() % 10), 400, 390, AliteColors.get().balance(), Assets.regularFont);
 		if (!player.getActiveMissions().isEmpty()) {
