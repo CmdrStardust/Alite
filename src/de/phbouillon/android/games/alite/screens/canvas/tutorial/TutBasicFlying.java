@@ -124,6 +124,7 @@ public class TutBasicFlying extends TutorialScreen {
 		alite.getGenerator().setCurrentGalaxy(1);
 		alite.getPlayer().setCurrentSystem(alite.getGenerator().getSystem(7)); // Lave
 		alite.getPlayer().setHyperspaceSystem(alite.getGenerator().getSystem(129)); // Zaonce
+		alite.getPlayer().setLegalValue(0);
 		alite.getCobra().setFuel(70);
 		System.arraycopy(Settings.buttonPosition, 0, savedButtonConfiguration, 0, Settings.buttonPosition.length);
 		for (int i = 0; i < Settings.buttonPosition.length; i++) {
@@ -938,6 +939,7 @@ public class TutBasicFlying extends TutorialScreen {
 			tb.savedCredits = dis.readLong();
 			tb.savedScore = dis.readInt();
 			tb.savedLegalStatus = LegalStatus.values()[dis.readInt()];
+			tb.savedLegalValue = dis.readInt();
 			tb.resetShipPosition = dis.readBoolean();
 			tb.savedMarketFluct = dis.readInt();
 			
@@ -999,6 +1001,7 @@ public class TutBasicFlying extends TutorialScreen {
 		dos.writeLong(savedCredits);
 		dos.writeInt(savedScore);
 		dos.writeInt(savedLegalStatus.ordinal());
+		dos.writeInt(savedLegalValue);
 		dos.writeBoolean(resetShipPosition);	
 		dos.writeInt(savedMarketFluct);
 	}

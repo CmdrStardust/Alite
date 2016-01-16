@@ -58,7 +58,7 @@ public class WitchSpaceRender implements Serializable {
 	void increaseWitchSpaceKillCounter() {
 		witchSpaceKillCounter++;
 		if (driveRepairedMessage == null) {
-			if (hyperdriveMalfunction && witchSpaceKillCounter >= (alite.getPlayer().getRating().ordinal() + 1) * 2) {
+			if (hyperdriveMalfunction && witchSpaceKillCounter >= Math.min(8, (alite.getPlayer().getRating().ordinal() + 1))) {
 				driveRepairedMessage = new TimedEvent((long) ((Math.random() * 5 + 3) * 1000000000l)) {					
 					private static final long serialVersionUID = -5599485138177057364L;
 

@@ -33,6 +33,7 @@ import de.phbouillon.android.games.alite.Settings;
 import de.phbouillon.android.games.alite.model.Equipment;
 import de.phbouillon.android.games.alite.model.EquipmentStore;
 import de.phbouillon.android.games.alite.model.Laser;
+import de.phbouillon.android.games.alite.model.LegalStatus;
 import de.phbouillon.android.games.alite.model.PlayerCobra;
 import de.phbouillon.android.games.alite.model.generator.SystemData;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.FlightScreen;
@@ -51,6 +52,8 @@ public class TutHud extends TutorialScreen {
 	private Laser [] savedLasers = new Laser[4];
 	private int [] savedButtonConfiguration = new int[Settings.buttonPosition.length];
 	private int savedMarketFluct;
+	private LegalStatus savedLegalStatus;
+	private int savedLegalValue;
 	
 	public TutHud(final Alite alite) {
 		this(alite, null);
@@ -73,7 +76,9 @@ public class TutHud extends TutorialScreen {
 		savedLasers[3] = alite.getCobra().getLaser(PlayerCobra.DIR_LEFT);
 		savedFuel = alite.getCobra().getFuel();
 		savedMarketFluct = alite.getPlayer().getMarket().getFluct();
-		
+		savedLegalStatus = alite.getPlayer().getLegalStatus();
+		savedLegalValue = alite.getPlayer().getLegalValue();
+
 		System.arraycopy(Settings.buttonPosition, 0, savedButtonConfiguration, 0, Settings.buttonPosition.length);
 		for (int i = 0; i < Settings.buttonPosition.length; i++) {
 			Settings.buttonPosition[i] = i;
@@ -90,6 +95,7 @@ public class TutHud extends TutorialScreen {
 		alite.getPlayer().setCurrentSystem(alite.getGenerator().getSystem(7)); // Lave
 		alite.getPlayer().setHyperspaceSystem(alite.getGenerator().getSystem(129)); // Zaonce
 		alite.getCobra().setFuel(70);
+		alite.getPlayer().setLegalValue(0);
 		
 		initLine_00();
 		initLine_01();
@@ -615,6 +621,8 @@ public class TutHud extends TutorialScreen {
 				th.savedButtonConfiguration[i] = dis.readInt();
 			}
 			th.savedMarketFluct = dis.readInt();
+			th.savedLegalStatus = LegalStatus.values()[dis.readInt()];
+			th.savedLegalValue = dis.readInt();
 			alite.setScreen(th);
 		} catch (Exception e) {
 			AliteLog.e("Tutorial HUD Screen Initialize", "Error in initializer.", e);
@@ -647,6 +655,8 @@ public class TutHud extends TutorialScreen {
 			dos.writeInt(savedButtonConfiguration[i]);
 		}		
 		dos.writeInt(savedMarketFluct);
+		dos.writeInt(savedLegalStatus.ordinal());
+		dos.writeInt(savedLegalValue);
 	}
 
 	@Override
@@ -695,7 +705,9 @@ public class TutHud extends TutorialScreen {
 		alite.getCobra().setLaser(PlayerCobra.DIR_LEFT, savedLasers[3]);
 		alite.getGenerator().buildGalaxy(savedGalaxySeed[0], savedGalaxySeed[1], savedGalaxySeed[2]);
 		alite.getGenerator().setCurrentGalaxy(alite.getGenerator().getCurrentGalaxyFromSeed());
-		alite.getPlayer().setCurrentSystem(savedPresentSystem); 
+		alite.getPlayer().setCurrentSystem(savedPresentSystem);
+		alite.getPlayer().setLegalStatus(savedLegalStatus);
+		alite.getPlayer().setLegalValue(savedLegalValue);
 		alite.getPlayer().getMarket().setFluct(savedMarketFluct);
 		alite.getPlayer().getMarket().generate();
 		alite.getPlayer().setHyperspaceSystem(savedHyperspaceSystem);
