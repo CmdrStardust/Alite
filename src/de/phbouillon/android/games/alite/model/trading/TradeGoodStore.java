@@ -72,8 +72,11 @@ public abstract class TradeGoodStore {
 	// Convenience methods
 	
 	public int ordinal(TradeGood good) {
+		if (good == null) {
+			return -1;
+		}
 		for (int i = 0; i < goods.length; i++) {
-			if (good == goods[i]) {
+			if (good.equals(goods[i])) {
 				return i;
 			}
 		}

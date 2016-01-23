@@ -203,6 +203,11 @@ public class InGameHelper implements Serializable {
 			cargo instanceof Thargon ? TradeGoodStore.get().alienItems() :
 			TradeGoodStore.get().alloys(); 
 		long price = cargo instanceof CargoCanister ? ((CargoCanister) cargo).getPrice() : 0;
+		if (scoopedTradeGood == null) {
+			AliteLog.e("Scooped null cargo!", "Scooped null cargo!");
+			scoopedTradeGood = TradeGoodStore.get().getRandomTradeGoodForContainer();
+		}
+		AliteLog.d("Scooped Cargo", "Scooped Cargo " + scoopedTradeGood.getName());
 		if (!alite.getCobra().hasCargo(scoopedTradeGood) && cargo instanceof CargoCanister) {
 			// This makes sure that if a player scoops his dropped cargo back up, the
 			// gain/loss calculation stays accurate			

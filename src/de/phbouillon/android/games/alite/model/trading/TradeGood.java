@@ -99,4 +99,17 @@ public class TradeGood implements Serializable {
 	public int getAveragePrice(int galaxyNumber) {
 		return galaxyNumber > 0 && galaxyNumber < 9 ? averagePrice[galaxyNumber] : averagePrice[0];
 	}
+	
+	@Override
+	public int hashCode() {
+		return 17 + name.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (other == null || !(other instanceof TradeGood)) {
+			return false;
+		}
+		return name.equals(((TradeGood) other).getName());
+	}
 }

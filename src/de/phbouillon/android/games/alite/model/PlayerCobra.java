@@ -262,8 +262,12 @@ public class PlayerCobra {
 		return false;
 	}
 	
-	public boolean hasCargo(TradeGood good) {		
-		return inventory[TradeGoodStore.get().ordinal(good)].getWeight().getWeightInGrams() > 0;
+	public boolean hasCargo(TradeGood good) {	
+		int ordinal = TradeGoodStore.get().ordinal(good);
+		if (ordinal == -1) {
+			return false;
+		}
+		return inventory[ordinal].getWeight().getWeightInGrams() > 0;
 	}
 
 	public void clearInventory() {
