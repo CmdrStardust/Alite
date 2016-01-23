@@ -53,6 +53,7 @@ public class ECMTraverser implements SpaceObjectTraverser {
 				}						
 				m.setHullStrength(0);				
 				inGame.explode(m, false, WeaponType.Missile);
+				inGame.reduceShipEnergy(3);
 			}
 		}
 		return false;

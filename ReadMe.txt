@@ -1,4 +1,4 @@
-Alite v. 1.4.0 by Philipp Bouillon and Duane McDonnell
+Alite v. 1.4.1 by Philipp Bouillon and Duane McDonnell
 
 About
 -----
@@ -18,6 +18,11 @@ exploration directly to you - wherever you are.
 
 Version History
 ---------------
+
+Version 1.4.1 Bugfixes: Corrupt image replaced, Planet Info in WitchSpace
+	      enabled, Asteroid course randomized, tutorials now work if the
+	      legal status is not clean. Medium Speed Docking Computer added.
+	      [01/23/2016]
 
 Version 1.4.0 Introduces the TimeWarp feature, implemented by Steven Phillips.
               The TimeWarp lets you pass those regions in space where the torus

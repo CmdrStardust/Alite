@@ -678,7 +678,7 @@ public class InGameManager implements Serializable {
 		laserManager.performUpdate(deltaTime, viewDirection, ship);
 
 		updateTimedEvents();		
-		if (dockingComputerAI.isActive() && Settings.dockingComputerFast && alite.getPlayer().getLegalStatus() == LegalStatus.CLEAN) {
+		if (dockingComputerAI.isActive() && Settings.dockingComputerSpeed == 2 && alite.getPlayer().getLegalStatus() == LegalStatus.CLEAN) {
 			helper.automaticDockingSequence();
 		}
 		updateObjects(deltaTime, allObjects);

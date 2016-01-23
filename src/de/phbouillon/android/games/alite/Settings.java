@@ -70,9 +70,7 @@ public class Settings {
 	public static int particleDensity = 2;
 	public static boolean tapRadarToChangeView = true;
 	public static boolean laserButtonAutofire = true;
-	public static boolean hasBeenPlayedBefore = false;
-	public static boolean dockingComputerFast = false;
-	public static boolean dockingComputerMed = false;
+	public static boolean hasBeenPlayedBefore = false;	
 	public static int [] buttonPosition = new int[12];
     public static boolean engineExhaust = true;
     public static boolean targetBox = true;
@@ -84,12 +82,14 @@ public class Settings {
     public static boolean autoId = true;    
     public static boolean reversePitch = false;
     public static boolean flatButtonDisplay = false;
+    public static int dockingComputerSpeed = 0;
     
 	public static void load(FileIO files) {
 		for (int i = 0; i < 12; i++) {
 			buttonPosition[i] = i;
 		}
 		BufferedReader in = null;
+		boolean fastDC = false;
 		try {
 			in = new BufferedReader(new InputStreamReader(
 					files.readFile(".alite")));
@@ -127,7 +127,7 @@ public class Settings {
 			for (int i = 0; i < 12; i++) {
 				buttonPosition[i] = Integer.parseInt(in.readLine());
 			}
-			dockingComputerFast = Boolean.parseBoolean(in.readLine());
+			fastDC = Boolean.parseBoolean(in.readLine()); // Dummy for fast DC
 			engineExhaust = Boolean.parseBoolean(in.readLine());
 			lockScreen = Integer.parseInt(in.readLine());
 			colorScheme = Integer.parseInt(in.readLine());
@@ -137,8 +137,9 @@ public class Settings {
 			flatButtonDisplay = Boolean.parseBoolean(in.readLine());
 			volumes[Sound.SoundType.COMBAT_FX.getValue()] = Float.parseFloat(in.readLine());
 			vibrateLevel = Float.parseFloat(in.readLine());
-			dockingComputerMed = Boolean.parseBoolean(in.readLine());
+			dockingComputerSpeed = Integer.parseInt(in.readLine());
 		} catch (Throwable t) {
+			dockingComputerSpeed = fastDC ? 2 : 0;
 			// Ignore
 		} finally {
 			try {
@@ -185,7 +186,7 @@ public class Settings {
 			for (int i = 0; i < 12; i++) {
 				out.write(Integer.toString(buttonPosition[i]) + "\n");
 			}
-			out.write(Boolean.toString(dockingComputerFast) + "\n");
+			out.write(Boolean.toString(false) + "\n"); // Backward compatibility
 			out.write(Boolean.toString(engineExhaust) + "\n");
 			out.write(Integer.toString(lockScreen) + "\n");
 			out.write(Integer.toString(colorScheme) + "\n");
@@ -195,7 +196,7 @@ public class Settings {
 			out.write(Boolean.toString(flatButtonDisplay) + "\n");
 			out.write(Float.toString(volumes[Sound.SoundType.COMBAT_FX.getValue()]) + "\n");
 			out.write(Float.toString(vibrateLevel)  + "\n");
-			out.write(Boolean.toString(dockingComputerMed) + "\n");
+			out.write(Integer.toString(dockingComputerSpeed) + "\n");
 		} catch (Exception e) {
 			// Ignore
 		} finally {

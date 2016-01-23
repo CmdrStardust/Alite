@@ -150,9 +150,11 @@ final class DockingComputerAI implements AiStateCallbackHandler, Serializable {
 		active = true;
 		inGame.setPlayerControl(false);
 		dcaUpdater.orientationFound = false;
-		if (Settings.dockingComputerMed) {
+		AliteLog.d("DC Speed", "DC Speed = " + Settings.dockingComputerSpeed);
+		if (Settings.dockingComputerSpeed == 1) {
 			alite.setTimeFactor(PlayerCobra.SPEED_UP_FACTOR);
 		}
+		AliteLog.d("Time Warp", "Time Warp = " + alite.getTimeFactor());
 		if (Assets.danube == null) {
 			Assets.danube = alite.getAudio().newMusic("music/blue_danube.ogg", Sound.SoundType.MUSIC);
 		}

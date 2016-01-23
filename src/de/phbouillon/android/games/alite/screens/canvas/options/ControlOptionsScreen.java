@@ -68,7 +68,7 @@ public class ControlOptionsScreen extends OptionsScreen {
 		autoId                = createSmallButton(2, true, "Auto Id: " + (Settings.autoId ? "On" : "Off"));
 		buttonPositionOptions = createSmallButton(2, false, "Configure Button Positions");
 		buttonPositionOptions.setVisible(!forwardToIntroduction);
-		dockingSpeed          = createSmallButton(3, true, "Docking Computer: " + (Settings.dockingComputerFast ? "Fast" : (Settings.dockingComputerMed ? "Medium" : "Slow")));
+		dockingSpeed          = createSmallButton(3, true, "Docking Computer: " + (Settings.dockingComputerSpeed == 0 ? "Slow" : (Settings.dockingComputerSpeed == 1 ? "Medium" : "Fast")));
 		keyboardLayout        = createSmallButton(3, false, "Keyboard: " + Settings.keyboardLayout);
 		
 		laserAutoFire         = createSmallButton(4, true, "Laser: " + (Settings.laserButtonAutofire ? "Auto Fire" : "Single Shot"));
@@ -169,15 +169,11 @@ public class ControlOptionsScreen extends OptionsScreen {
 				Settings.save(game.getFileIO());
 			} else if (dockingSpeed.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);
-				if(Settings.dockingComputerFast) {
-					Settings.dockingComputerFast = false;
-					Settings.dockingComputerMed = true;
-				} else if(Settings.dockingComputerMed) {
-					Settings.dockingComputerMed = false;
-				} else {
-					Settings.dockingComputerFast = true;
+				Settings.dockingComputerSpeed++;
+				if (Settings.dockingComputerSpeed > 2) {
+					Settings.dockingComputerSpeed = 0;
 				}
-				dockingSpeed.setText("Docking Computer: " + (Settings.dockingComputerFast ? "Fast" : (Settings.dockingComputerMed ? "Medium" : "Slow")));
+				dockingSpeed.setText("Docking Computer: " + (Settings.dockingComputerSpeed == 0 ? "Slow" : (Settings.dockingComputerSpeed == 1 ? "Medium" : "Fast")));				
 				Settings.save(game.getFileIO());
 			} else if (laserAutoFire.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);

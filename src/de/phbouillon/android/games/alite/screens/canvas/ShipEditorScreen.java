@@ -535,17 +535,17 @@ public class ShipEditorScreen extends AliteScreen {
 		else if (currentShip instanceof Thargon) currentShip = new Transporter(a);
 		else if (currentShip instanceof Transporter) currentShip = new Viper(a);
 		else if (currentShip instanceof Viper) currentShip = new WolfMkII(a);
-		else if (currentShip instanceof WolfMkII) currentShip = new Gopher(a); // Textur fehlt
-		else if (currentShip instanceof Gopher) currentShip = new Coral(a);  // Ok
-		else if (currentShip instanceof Coral) currentShip = new Bushmaster(a); // Invertiert!
-		else if (currentShip instanceof Bushmaster) currentShip = new Rattlesnake(a); // Schones Teil
-		else if (currentShip instanceof Rattlesnake) currentShip = new Mussurana(a); // Invertiert?!
-		else if (currentShip instanceof Mussurana) currentShip = new Dugite(a); //Invertiert? Schon!
-		else if (currentShip instanceof Dugite) currentShip = new Yellowbelly(a); //Ok. Auch invertiert?
-		else if (currentShip instanceof Yellowbelly) currentShip = new Indigo(a); // Yay!!
-		else if (currentShip instanceof Indigo) currentShip = new Harlequin(a); // Yeaah!!
-		else if (currentShip instanceof Harlequin) currentShip = new TieFighter(a); // Hmm... Invertiert?
-		else if (currentShip instanceof TieFighter) currentShip = new Lyre(a); // Invertiert...
+		else if (currentShip instanceof WolfMkII) currentShip = new Gopher(a); 
+		else if (currentShip instanceof Gopher) currentShip = new Coral(a);  
+		else if (currentShip instanceof Coral) currentShip = new Bushmaster(a); 
+		else if (currentShip instanceof Bushmaster) currentShip = new Rattlesnake(a); 
+		else if (currentShip instanceof Rattlesnake) currentShip = new Mussurana(a); 
+		else if (currentShip instanceof Mussurana) currentShip = new Dugite(a); 
+		else if (currentShip instanceof Dugite) currentShip = new Yellowbelly(a); 
+		else if (currentShip instanceof Yellowbelly) currentShip = new Indigo(a); 
+		else if (currentShip instanceof Indigo) currentShip = new Harlequin(a);
+		else if (currentShip instanceof Harlequin) currentShip = new TieFighter(a); 
+		else if (currentShip instanceof TieFighter) currentShip = new Lyre(a);
 		else if (currentShip instanceof Lyre) currentShip = new Adder(a);
 	}
 	

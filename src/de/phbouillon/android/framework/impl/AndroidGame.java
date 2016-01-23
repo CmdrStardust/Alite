@@ -136,16 +136,13 @@ public abstract class AndroidGame extends Activity implements Game, Renderer {
 	@Override
 	public void onResume() {
 		super.onResume();
-    if (glView != null) { 
-      glView.onResume();
-    }
-    if (screen != null) {
-      screen.resume();
-    } 
+		if (glView != null) { 
+			glView.onResume();
+		}
+		if (screen != null) {
+			screen.resume();
+		} 
 		state = GLGameState.Running;
-//		if (graphics != null && getCurrentView() == glView) {
-//      glView.onResume();
-//    }
 	}
 	
 	@Override
@@ -364,6 +361,7 @@ public abstract class AndroidGame extends Activity implements Game, Renderer {
 	public float getTimeFactor() {
 		return timeFactor;
 	}
+	
 	public void setTimeFactor(float tf) {
 		if (timeFactorChangeListener != null && Math.abs(timeFactor - tf) > 0.0001f) {			
 			timeFactorChangeListener.timeFactorChanged(timeFactor, tf);			

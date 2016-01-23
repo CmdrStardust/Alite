@@ -238,9 +238,6 @@ public class AliteButtons implements Serializable {
 		ButtonData result = new ButtonData(new Sprite(alite, ct.getTextureCoordX(xt * 150.0f), ct.getTextureCoordY(yt * 150.0f), ct.getTextureCoordX(xt * 150.0f + 200.0f), ct.getTextureCoordY(yt * 150.0f + 200.0f),
                 (x * 200.0f) / 1024.0f, (y * 200.0f) / 1024.0f, ((x + 1.0f) * 200.0f) / 1024.0f, ((y + 1.0f) * 200.0f) / 1024.0f, textureFilename),
 						   xt * 150.0f + 100.0f, yt * 150.0f + 100.0f, name);
-		if ((result == null) || (result.sprite == null)) {
-			throw new RuntimeException("Failed to create Button");
-		}
 		buttonGroup[groupIndex].addButton(result);
 		return result;
 	}
@@ -252,6 +249,9 @@ public class AliteButtons implements Serializable {
 	}
 	
 	private void updateFireButton() {
+		if (buttons[FIRE] == null) {
+			return;
+		}
 		buttons[FIRE].active = alite.getCobra().getLaser(inGame.getViewDirection()) != null;
 		buttons[FIRE].yellow = alite.getLaserManager() != null && alite.getLaserManager().isAutoFire();
 		if (!Settings.laserButtonAutofire) {
@@ -262,6 +262,9 @@ public class AliteButtons implements Serializable {
 	}
 	
 	private void updateMissileButton() {
+		if (buttons[MISSILE] == null) {
+			return;
+		}
 		if (downTime != -1 && (System.nanoTime() - downTime) > 1500000000l && buttons[MISSILE].red) {
 			inGame.handleMissileIcons();
 			downTime = -1;
@@ -283,56 +286,42 @@ public class AliteButtons implements Serializable {
 		buttons[MISSILE].red = alite.getCobra().isMissileLocked();			
 	}
 	
-	private void updateDockingTorusTimeButton() {
-		if (alite.getCobra().isEquipmentInstalled(EquipmentStore.dockingComputer) && inGame.isInSafeZone())
-                {
+	private void updateDockingComputerButton() {
+		if (buttons[DOCKING_COMPUTER] == null) {
+			return;
+		}
+		if (alite.getCobra().isEquipmentInstalled(EquipmentStore.dockingComputer) && inGame.isInSafeZone()) {
 			buttons[DOCKING_COMPUTER].active = true;
 			buttons[DOCKING_COMPUTER].yellow = inGame.isDockingComputerActive();
+		} else {
+			buttons[DOCKING_COMPUTER].active = false;
+		}
+	}
+	
+	private void updateTorusDriveButton() {
+		if (buttons[TORUS_DRIVE] == null) {
+			return;
+		}
+		if (((buttons[DOCKING_COMPUTER] == null) || !buttons[DOCKING_COMPUTER].active) &&
+		    (alite.getCobra().getSpeed() <= -PlayerCobra.MAX_SPEED) &&
+		    !inGame.isInExtendedSafeZone() && !inGame.isWitchSpace() &&
+		    (alite.getCobra().getCabinTemperature() == 0) &&
+		    !inGame.traverseObjects(torusTraverser)) {
+			buttons[TORUS_DRIVE].active = true;
+			if (alite.getCobra().getSpeed() < -PlayerCobra.TORUS_TEST_SPEED) {
+				buttons[TORUS_DRIVE].yellow = true;
+			} else if (alite.getTimeFactor() > 1.0f) {
+				// time drive currently engaged, auto change to torus drive
+				alite.setTimeFactor(1.0f);
+				engageTorusDrive();
+				buttons[TORUS_DRIVE].yellow = true;
+			} else {
+				buttons[TORUS_DRIVE].yellow = false;
+			}
+		} else {
 			buttons[TORUS_DRIVE].active = false;
-			buttons[TIME_DRIVE].active = false;
 			if (alite.getCobra().getSpeed() < -PlayerCobra.TORUS_TEST_SPEED) {
 				engageTorusDrive();
-			}
-		}
-		else
-		{
-			buttons[DOCKING_COMPUTER].active = false;
-			if ((alite.getCobra().getSpeed() <= -PlayerCobra.MAX_SPEED) &&
-			    !inGame.isInExtendedSafeZone() && !inGame.isWitchSpace() &&
-			    (alite.getCobra().getCabinTemperature() == 0) &&
-			    !inGame.traverseObjects(torusTraverser))
-			{
-				buttons[TORUS_DRIVE].active = true;
-				buttons[TIME_DRIVE].active = false;
-				if (alite.getCobra().getSpeed() < -PlayerCobra.TORUS_TEST_SPEED) {
-					buttons[TORUS_DRIVE].yellow = true;
-				}
-				else if (alite.getTimeFactor() > 1.0f) {
-					// time drive currently engaged, auto change to torus drive
-					alite.setTimeFactor(1.0f);
-					engageTorusDrive();
-					buttons[TORUS_DRIVE].yellow = true;
-				}
-				else {
-					buttons[TORUS_DRIVE].yellow = false;
-				}
-			}
-			else
-			{
-				buttons[TORUS_DRIVE].active = false;
-				if (alite.getCobra().getSpeed() < -PlayerCobra.TORUS_TEST_SPEED) {
-					engageTorusDrive();
-				}
-				if ((alite.getPlayer().getCondition() != Condition.RED) && (inGame.getHud() != null)) {
-					// Check for Hud to compensate for brief flickering if come back from Information screen
-					buttons[TIME_DRIVE].active = true;
-					buttons[TIME_DRIVE].yellow = alite.getTimeFactor() > 1.0f;
-				} else {
-					buttons[TIME_DRIVE].active = false;
-					if (alite.getTimeFactor() > 1.0f) {
-						alite.setTimeFactor(1.0f);
-					}
-				}
 			}
 		}
 	}
@@ -341,19 +330,44 @@ public class AliteButtons implements Serializable {
 		if (buttons[TIME_DRIVE] == null) {
 			return;
 		}
+		if (((buttons[DOCKING_COMPUTER] == null) || !buttons[DOCKING_COMPUTER].active) &&
+		    ((buttons[TORUS_DRIVE] == null) || !buttons[TORUS_DRIVE].active) &&			   
+		    alite.getPlayer().getCondition() != Condition.RED &&
+		    inGame.getHud() != null && !inGame.isInSafeZone()) {
+			// Check for Hud to compensate for brief flickering if come back from Information screen
+			buttons[TIME_DRIVE].active = true;
+			buttons[TIME_DRIVE].yellow = alite.getTimeFactor() > 1.0f;
+		} else {
+			if (inGame.isDockingComputerActive()) {
+				return;
+			}
+			buttons[TIME_DRIVE].active = false;
+			if (alite.getTimeFactor() > 1.0f) {
+				alite.setTimeFactor(1.0f);
+			}
+		}
 	}
 	
 	private void updateHyperspaceButton() {
+		if (buttons[HYPERSPACE] == null) {
+			return;
+		}
 		buttons[HYPERSPACE].active = alite.isHyperspaceTargetValid() && 
 				!inGame.isHyperdriveMalfunction();
 	}
 	
 	private void updateGalHyperspaceButton() {
+		if (buttons[GAL_HYPERSPACE] == null) {
+			return;
+		}
 		buttons[GAL_HYPERSPACE].active = alite.getCobra().isEquipmentInstalled(EquipmentStore.galacticHyperdrive) &&
 				!inGame.isHyperdriveMalfunction();
 	}
 	
 	private void updateRetroRocketsButton() {
+		if (buttons[RETRO_ROCKETS] == null) {
+			return;
+		}
 		buttons[RETRO_ROCKETS].active = alite.getCobra().isEquipmentInstalled(EquipmentStore.retroRockets) && alite.getCobra().getSpeed() <= 0.0f;
 	}
 	
@@ -392,7 +406,9 @@ public class AliteButtons implements Serializable {
 	public void update() {
 		updateFireButton();
 		updateMissileButton();
-		updateDockingTorusTimeButton();
+		updateDockingComputerButton();
+		updateTorusDriveButton();
+		updateTimeDriveButton();
 		updateHyperspaceButton();
 		updateGalHyperspaceButton();
 
@@ -638,6 +654,9 @@ public class AliteButtons implements Serializable {
 			return;
 		}
 		ButtonData missile = buttons[MISSILE];
+		if (missile == null) {
+			return;
+		}
 		if (!missile.yellow && !missile.red) {
 			missile.yellow = true;
 			inGame.handleMissileIcons();

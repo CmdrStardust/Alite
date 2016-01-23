@@ -649,11 +649,11 @@ public class TutBasicFlying extends TutorialScreen {
 					flight.getInGameManager().setPlayerControl(true);
 					flight.setHandleUI(true);
 				}
-				// TARGET2 wird serialisiert!!
-				// ALSO wird _AUCH_ (!) der Destruction Callback serialisiert.
-				// DER wiederum muss die Referenz auf die TutorialLine halten --- was knallt, weil
-				// die nicht serializable ist.
-				// LOSUNG: Vor dem write Object die destruction Callbacks der Targets loschen...
+				// TARGET2 is being serialized!!
+				// So, the destruction callback is being serialized, _too_ (!).
+				// The destruction callback must have the reference to the tutorial line,
+				// which is not serializable. This causes problems, of course.
+				// Solution: Delete the destruction callbacks before calling write object....   
 				if (target2.getDestructionCallbacks().isEmpty()) {
 					target2.addDestructionCallback(new DestructionCallback() {
 						transient TutorialLine tLine = line;
