@@ -72,6 +72,7 @@ public class Settings {
 	public static boolean laserButtonAutofire = true;
 	public static boolean hasBeenPlayedBefore = false;
 	public static boolean dockingComputerFast = false;
+	public static boolean dockingComputerMed = false;
 	public static int [] buttonPosition = new int[12];
     public static boolean engineExhaust = true;
     public static boolean targetBox = true;
@@ -136,6 +137,7 @@ public class Settings {
 			flatButtonDisplay = Boolean.parseBoolean(in.readLine());
 			volumes[Sound.SoundType.COMBAT_FX.getValue()] = Float.parseFloat(in.readLine());
 			vibrateLevel = Float.parseFloat(in.readLine());
+			dockingComputerMed = Boolean.parseBoolean(in.readLine());
 		} catch (Throwable t) {
 			// Ignore
 		} finally {
@@ -193,6 +195,7 @@ public class Settings {
 			out.write(Boolean.toString(flatButtonDisplay) + "\n");
 			out.write(Float.toString(volumes[Sound.SoundType.COMBAT_FX.getValue()]) + "\n");
 			out.write(Float.toString(vibrateLevel)  + "\n");
+			out.write(Boolean.toString(dockingComputerMed) + "\n");
 		} catch (Exception e) {
 			// Ignore
 		} finally {

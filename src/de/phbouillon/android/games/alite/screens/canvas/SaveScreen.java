@@ -2,7 +2,7 @@ package de.phbouillon.android.games.alite.screens.canvas;
 
 /* Alite - Discover the Universe on your Favorite Android Device
  * Copyright (C) 2015 Philipp Bouillon
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, version 3 of the License, or
@@ -38,7 +38,7 @@ public class SaveScreen extends CatalogScreen {
 	private final Button saveNewCommanderButton;
 	private boolean confirmedSave = false;
 	private String pendingMessage;
-	
+
 	public SaveScreen(Game game, String title) {
 		super(game, title);
 		saveNewCommanderButton = new Button(50, 950, 500, 100, "Save New Commander", Assets.regularFont, null);
@@ -46,7 +46,7 @@ public class SaveScreen extends CatalogScreen {
 		deleteButton = null;
 		pendingMessage = null;
 	}
-	
+
 	public SaveScreen(Game game, String title, String msg) {
 		super(game, title);
 		saveNewCommanderButton = new Button(50, 950, 500, 100, "Save New Commander", Assets.regularFont, null);
@@ -58,7 +58,7 @@ public class SaveScreen extends CatalogScreen {
 	public static boolean initialize(Alite alite, final DataInputStream dis) {
 		alite.setScreen(new SaveScreen(alite, "Save Commander"));
 		return true;
-	}	
+	}
 
 	@Override
 	public void activate() {
@@ -70,7 +70,7 @@ public class SaveScreen extends CatalogScreen {
 		confirmedSave = pendingMessage != null;
 		pendingMessage = null;
 	}
-		
+
 	@Override
 	protected void processTouch(TouchEvent touch) {
 		super.processTouch(touch);
@@ -78,14 +78,14 @@ public class SaveScreen extends CatalogScreen {
 			return;
 		}
 		if (confirmedSave) {
-			newScreen = new SaveScreen(game, "Save Commander", pendingMessage);
+			newScreen = new StatusScreen(game);
 			confirmedSave = false;
 		}
 		if (touch.type == TouchEvent.TOUCH_UP) {
 			if (saveNewCommanderButton.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);
 				final Alite alite = (Alite) game;
-				TextInputScreen textInput = new TextInputScreen(alite, "New Commander Name", "Enter the name for the new commander", alite.getPlayer().getName(), this, new TextCallback() {					
+				TextInputScreen textInput = new TextInputScreen(alite, "New Commander Name", "Enter the name for the new commander", alite.getPlayer().getName(), this, new TextCallback() {
 					@Override
 					public void onOk(String text) {
 						String fileName;
@@ -98,7 +98,7 @@ public class SaveScreen extends CatalogScreen {
 						pendingMessage = "Commander " + text + " saved successfully.";
 						confirmedSave = true;
 					}
-					
+
 					@Override
 					public void onCancel() {
 					}
@@ -119,11 +119,11 @@ public class SaveScreen extends CatalogScreen {
 						alite.getFileUtils().saveCommander(alite, selectedCommanderData.get(0).getName(), selectedCommanderData.get(0).getFileName());
 						setMessage("Commander " + selectedCommanderData.get(0).getName() + " saved successfully.");
 						SoundManager.play(Assets.alert);
-						confirmedSave = true;					
+						confirmedSave = true;
 					} catch (IOException e) {
 						setMessage("Error while saving commander " + selectedCommanderData.get(0).getName() + ": " + e.getMessage());
 					}
-				} 
+				}
 				clearSelection();
 				messageResult = 0;
 			}
@@ -131,7 +131,7 @@ public class SaveScreen extends CatalogScreen {
 	}
 
 	@Override
-	public void present(float deltaTime) {		
+	public void present(float deltaTime) {
 		if (disposed) {
 			return;
 		}
@@ -139,19 +139,19 @@ public class SaveScreen extends CatalogScreen {
 		Graphics g = game.getGraphics();
 		saveNewCommanderButton.render(g);
 	}
-	
+
 	@Override
 	public void pause() {
 		super.pause();
 	}
-	
+
 	@Override
 	public void resume() {
 		super.resume();
-	}	
+	}
 
 	@Override
 	public int getScreenCode() {
 		return ScreenCodes.SAVE_SCREEN;
-	}	
+	}
 }

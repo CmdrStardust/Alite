@@ -653,7 +653,7 @@ public class TutBasicFlying extends TutorialScreen {
 				// ALSO wird _AUCH_ (!) der Destruction Callback serialisiert.
 				// DER wiederum muss die Referenz auf die TutorialLine halten --- was knallt, weil
 				// die nicht serializable ist.
-				// LÖSUNG: Vor dem write Object die destruction Callbacks der Targets löschen...
+				// LOSUNG: Vor dem write Object die destruction Callbacks der Targets loschen...
 				if (target2.getDestructionCallbacks().isEmpty()) {
 					target2.addDestructionCallback(new DestructionCallback() {
 						transient TutorialLine tLine = line;

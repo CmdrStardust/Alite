@@ -94,7 +94,7 @@ public class AboutScreen extends GlScreen {
 			                       "[ 602.0y]Steven Phillips\n" +
 
 	                               "[2501.5y]Alite is inspired by classic Elite\n" +
-			                       "[ 601.5y]© Acornsoft, Bell & Braben\n" +
+			                       "[ 601.5y]\u00a9 Acornsoft, Bell & Braben\n" +
 	                               
 	                               "[2501.5w]Intro Movie\n" +
 	                               "[1001.5w]Production, Modeling, Rendering\n" +
@@ -145,7 +145,7 @@ public class AboutScreen extends GlScreen {
 	                               "[ 902.0y]Giles Williams\n" +
 	                               "[ 902.0y]Jens Ayton\n" +
 	                               "[ 902.0y]Clym Angus\n" +
-	                               "[ 902.0y]Marko Susimetsä\n" +
+	                               "[ 902.0y]Marko Susimets\u00e4\n" +
 	                               "[ 902.0y]ADCK\n" +
 	                               "[ 902.0y]Captain Beatnik\n" +	                               
 	                               "[ 902.0y]DeepSpace\n" +

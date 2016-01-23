@@ -19,7 +19,7 @@ package de.phbouillon.android.games.alite.screens.opengl.objects.space.ships;
  */
 
 /**
- * Drake Mk II model and texture by Marko Susimetsä (Wolfwood)
+ * Drake Mk II model and texture by Marko Susimetsa (Wolfwood)
  * Renamed to Bushmaster for Alite. 
  */
 

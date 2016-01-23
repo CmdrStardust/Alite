@@ -276,7 +276,7 @@ public class ShipIntroScreen extends AliteScreen {
 		}
 		centerTextWide(currentShip.getName(), 80, Assets.titleFont, AliteColors.get().shipTitle());
 		g.drawText("Alite is inspired by classic Elite", 1450, 1020, AliteColors.get().mainText(), Assets.smallFont);
-		g.drawText("© Acornsoft, Bell & Braben", 1450, 1050, AliteColors.get().mainText(), Assets.smallFont);
+		g.drawText("\u00a9 Acornsoft, Bell & Braben", 1450, 1050, AliteColors.get().mainText(), Assets.smallFont);
 		debugExhausts();
 		((Alite) game).getTextureManager().setTexture(null);
 		yesButton.render(g);

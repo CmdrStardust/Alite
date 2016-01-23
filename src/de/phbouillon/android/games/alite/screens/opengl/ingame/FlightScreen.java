@@ -497,10 +497,10 @@ public class FlightScreen extends GlScreen implements Serializable {
 				performScreenChange(newScreen);
 			} else {	
 				if (star != null) {
-					star.applyDeltaRotation(0.0f, (float) Math.toDegrees(0.02f * deltaTime), 0.0f);
+					star.applyDeltaRotation(0.0f, (float) Math.toDegrees(0.02f * dtf), 0.0f);
 				}
 				if (planet != null) {
-					planet.applyDeltaRotation(0.0f, (float) Math.toDegrees(0.015f * deltaTime), 0.0f); 
+					planet.applyDeltaRotation(0.0f, (float) Math.toDegrees(0.015f * dtf), 0.0f); 
 				}
 				
 				if (spaceStation != null) {
