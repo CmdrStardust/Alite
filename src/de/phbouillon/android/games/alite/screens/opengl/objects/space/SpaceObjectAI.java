@@ -2,7 +2,7 @@ package de.phbouillon.android.games.alite.screens.opengl.objects.space;
 
 /* Alite - Discover the Universe on your Favorite Android Device
  * Copyright (C) 2015 Philipp Bouillon
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, version 3 of the License, or
@@ -41,23 +41,23 @@ import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.Vipe
 
 public final class SpaceObjectAI implements Serializable {
 	private static final long serialVersionUID = 8646121427456794783L;
-	
+
 	private static final float MISSILE_MIN_DIST_SQ                      = 36000000.0f;
 	public  static final float SHOOT_DISTANCE_SQ                        = 81000000.0f;
 	private static final float FIRE_MISSILE_UPON_FIRST_HIT_PROBABILITY  = 5.0f;
 	private static final long  BASE_DELAY_BETWEEN_SHOOT_CHECKS          = 59880239l; // 16.7 FPS
-	private static final long  SHOOT_DELAY_REDUCE_PER_RATING_LEVEL      =  3318363l; // 1.6625 Delta FPS 
+	private static final long  SHOOT_DELAY_REDUCE_PER_RATING_LEVEL      =  3318363l; // 1.6625 Delta FPS
 	                                                                                 // => ~30 FPS at Elite.
 	private final SpaceObject so;
-	
+
 	private final Quaternion q1 = new Quaternion();
 	private final Quaternion q2 = new Quaternion();
 	private final Quaternion q3 = new Quaternion();
 	private final Vector3f   v0 = new Vector3f(0, 0, 0);
 	private final Vector3f   v1 = new Vector3f(0, 0, 0);
-	private final Vector3f   v2 = new Vector3f(0, 0, 0);	
+	private final Vector3f   v2 = new Vector3f(0, 0, 0);
 	private final Vector3f   v3 = new Vector3f(0, 0, 0);
-	
+
 	private Stack <AIState> currentState = new Stack<AIState>();
 	private GraphicObject target = null;
 	private Vector3f evadePosition = new Vector3f(0, 0, 0);
@@ -72,36 +72,36 @@ public final class SpaceObjectAI implements Serializable {
 	private Curve curve = null;
 	private long curveFollowStart;
 	private final Vector3f lastRotation = new Vector3f(0, 0, 0);
-	
+
 	public SpaceObjectAI(final SpaceObject so) {
 		this.so = so;
 		currentState.push(AIState.IDLE);
 	}
-		   
+
 	public float orientUsingRollPitchOnly(Vector3f targetPosition, Vector3f targetUp, float deltaTime) {
 		float result = trackInternal(targetPosition, targetUp, 1000.0f, deltaTime, false);
 		executeSteeringNoSpeedChange(targetPosition);
 		return result;
 	}
-		
+
 	private float trackPosition(Vector3f targetPosition, Vector3f targetUp, float deltaTime) {
 		so.updateInternals();
-		Quaternion.fromMatrix(so.getMatrix(), q1);		
+		Quaternion.fromMatrix(so.getMatrix(), q1);
 		q1.normalize();
-		
-		so.getPosition().sub(targetPosition, v0);    	
+
+		so.getPosition().sub(targetPosition, v0);
 		v0.normalize();
-		
+
 		targetUp.cross(v0, v1);
 		v1.normalize();
 		v0.cross(v1, v2);
 		v2.normalize();
-		
+
 		Quaternion.fromVectors(v1, v2, v0, q2);
-		q2.normalize();	
+		q2.normalize();
 		q1.computeDifference(q2, q3);
 		q3.normalize();
-	
+
 		q3.axisOfRotation(v0);
 		float angle = (float) Math.toDegrees(q3.angleOfRotation());
 		if (angle > 180) {
@@ -115,11 +115,11 @@ public final class SpaceObjectAI implements Serializable {
 		if (Math.abs(angle) > 0.0001f && !Float.isInfinite(angle) && !Float.isNaN(angle)) {
 			Matrix.rotateM(so.getMatrix(), 0, angle, v0.x, v0.y, v0.z);
 			so.computeInternals();
-		}				
-		
-		return absAngle;		
+		}
+
+		return absAngle;
 	}
-	
+
 	private float trackInternal(Vector3f targetPosition, Vector3f targetUp, float desiredRangeSq, float deltaTime, boolean retreat) {
 		float rate1 = 2.0f * deltaTime;
 		float rate2 = 4.0f * deltaTime;
@@ -128,14 +128,14 @@ public final class SpaceObjectAI implements Serializable {
 		float reverse = 1.0f;
 		float minD = 0.004f;
 		float maxCos = 0.995f;
-		
+
 		float maxPitch = so.getMaxPitchSpeed() * 30 * deltaTime;
 		float maxRoll  = so.getMaxRollSpeed() * 30 * deltaTime;
-		
+
 		if (retreat) {
 			reverse = -reverse;
 		}
-		
+
 		so.getPosition().sub(targetPosition, v0);
 		float rangeSq = v0.lengthSq();
 		if (rangeSq > desiredRangeSq) {
@@ -146,22 +146,21 @@ public final class SpaceObjectAI implements Serializable {
 		} else {
 			v0.normalize();
 		}
-		
+
 		float dRight   = v0.dot(so.getRightVector());
 		float dUp      = v0.dot(so.getUpVector());
 		float dForward = v0.dot(so.getForwardVector());
-		
+
 		if (pitchingOver) {
 			maxPitch *= 4.0f;
 			maxRoll *= 4.0f;
 			if (reverse * dUp < 0) {
 				stickPitch = maxPitch;
 			} else {
-				stickPitch = -maxPitch;               
+				stickPitch = -maxPitch;
 			}
 			pitchingOver = reverse * dForward < 0.707;
 		}
-		
 		if (dForward < maxCos || retreat) {
 			if (dForward <= -maxCos) {
 				dUp = minD * 2.0f;
@@ -178,7 +177,7 @@ public final class SpaceObjectAI implements Serializable {
 					stickRoll = maxRoll * 0.125f * factor;
 				}
 				if (Math.abs(dRight) < Math.abs(stickRoll) * deltaTime) {
-					stickRoll = Math.abs(dRight) * Alite.get().getTimeFactor() / deltaTime * (stickRoll < 0 ? -1 : 1);
+					stickRoll = Math.abs(dRight) / deltaTime * (stickRoll < 0 ? -1 : 1);
 				}
 			}
 			if (dUp < -minD) {
@@ -193,7 +192,7 @@ public final class SpaceObjectAI implements Serializable {
 					stickRoll = -maxRoll * 0.125f * factor;
 				}
 				if (Math.abs(dRight) < Math.abs(stickRoll) * deltaTime) {
-					stickRoll = Math.abs(dRight) * Alite.get().getTimeFactor() / deltaTime * (stickRoll < 0 ? -1 : 1);
+					stickRoll = Math.abs(dRight) / deltaTime * (stickRoll < 0 ? -1 : 1);
 				}
 			}
 			if (Math.abs(stickRoll) < 0.0001) {
@@ -208,54 +207,52 @@ public final class SpaceObjectAI implements Serializable {
 					stickPitch = maxPitch * reverse * 0.125f * factor;
 				}
 				if (Math.abs(dUp) < Math.abs(stickPitch) * deltaTime) {
-					stickPitch = Math.abs(dUp) * Alite.get().getTimeFactor() / deltaTime * (stickPitch < 0 ? -1 : 1);
+					stickPitch = Math.abs(dUp) / deltaTime * (stickPitch < 0 ? -1 : 1);
 				}
 			}
 		}
-		
 //		if (targetUp != null) {
 //			stickRoll = rollToMatchUp(targetUp);
 //		}
-		
+
 		if ((stickRoll > 0.0 && flightRoll < 0.0) || (stickRoll < 0.0 && flightRoll > 0.0)) {
 			rate1 *= 4.0f;
 		}
 		if ((stickPitch > 0.0 && flightPitch < 0.0) || (stickPitch < 0.0 && flightPitch > 0.0)) {
 			rate2 *= 4.0f;
 		}
-		
+
 		if (flightRoll < stickRoll - rate1) {
 			stickRoll = flightRoll + rate1;
 		}
 		if (flightRoll > stickRoll + rate1) {
 			stickRoll = flightRoll - rate1;
 		}
-		if (flightPitch < stickPitch - rate2) {        	
+		if (flightPitch < stickPitch - rate2) {
 			stickPitch = flightPitch + rate2;
-		}            
+		}
 		if (flightPitch > stickPitch + rate2) {
 			stickPitch = flightPitch - rate2;
 		}
-		
+
 		flightRoll = stickRoll;
 		flightPitch = stickPitch;
-		
-		
+
+
 		if (retreat) {
 			dForward *= dForward;
 		}
-		
 		if (dForward < 0.0) {
 			return 0.0f;
 		}
-		
+
 		if (Math.abs(flightRoll) < 0.0001 && Math.abs(flightPitch) < 0.0001) {
 			return 1.0f;
 		}
-		
-		return dForward;    	
+
+		return dForward;
 	}
-        
+
 	private float executeSteering(float desiredSpeed) {
 		so.applyDeltaRotation(flightPitch, 0, flightRoll);
 		if (so instanceof CobraMkIII && ((CobraMkIII) so).isPlayerCobra()) {
@@ -279,7 +276,7 @@ public final class SpaceObjectAI implements Serializable {
 		}
 		return angle;
 	}
-    
+
 	private float executeSteeringNoSpeedChange(Vector3f targetPosition) {
 		so.applyDeltaRotation(flightPitch, 0, flightRoll);
 		if (so instanceof CobraMkIII && ((CobraMkIII) so).isPlayerCobra()) {
@@ -310,29 +307,29 @@ public final class SpaceObjectAI implements Serializable {
 		}
 		return angle;
 	}
-	
+
 	private final float clamp(float val, float min, float max) {
 		return val < min ? min : val > max ? max : val;
 	}
 
 	public float orient(Vector3f targetPosition, Vector3f targetUp, float deltaTime) {
 		so.updateInternals();
-		Quaternion.fromMatrix(so.getMatrix(), q1);		
+		Quaternion.fromMatrix(so.getMatrix(), q1);
 		q1.normalize();
-		
-		so.getPosition().sub(targetPosition, v0);    	
+
+		so.getPosition().sub(targetPosition, v0);
 		v0.normalize();
-		
+
 		targetUp.cross(v0, v1);
 		v1.normalize();
 		v0.cross(v1, v2);
 		v2.normalize();
-		
+
 		Quaternion.fromVectors(v1, v2, v0, q2);
-		q2.normalize();	
+		q2.normalize();
 		q1.computeDifference(q2, q3);
 		q3.normalize();
-	
+
 		q3.axisOfRotation(v0);
 		float angle = (float) Math.toDegrees(q3.angleOfRotation());
 		if (angle > 180) {
@@ -357,10 +354,10 @@ public final class SpaceObjectAI implements Serializable {
 				so.getGame().getCobra().setRotation(v0.dot(v1), v0.dot(v2));
 			}
 			so.computeInternals();
-		}				
+		}
 		return result;
 	}
-	
+
 	private final void calculateTrackingSpeed(float angle) {
 		if (so instanceof Missile) {
 			if (angle > 50) {
@@ -390,28 +387,28 @@ public final class SpaceObjectAI implements Serializable {
 			so.adjustSpeed(-so.getMaxSpeed() * 0.8f);
 		} else {
 			so.adjustSpeed(-so.getMaxSpeed());
-		}		
+		}
 	}
-			
+
 	private void avoidCollision() {
 		SpaceObject proximity = so.getProximity();
 		if (proximity != null && !so.inBay) {
 			pushState(AIState.EVADE, proximity);
 		}
 	}
-	
+
 	private void attackObject(float deltaTime) {
 		if (target instanceof CobraMkIII && ((CobraMkIII) target).isPlayerCobra()) {
 			if (InGameManager.playerInSafeZone && !(so instanceof Viper) && !(so.isIgnoreSafeZone())) {
 				waitForSafeZoneExit = true;
 				pushState(AIState.FLEE, target);
 				return;
-			}			
+			}
 		}
 		trackInternal(target.getPosition(), null, 1000.0f, deltaTime, false);
 		avoidCollision();
 		float angle = executeSteering(-1);
-		float distanceSq = so.getPosition().distanceSq(target.getPosition()); 
+		float distanceSq = so.getPosition().distanceSq(target.getPosition());
 		if (angle < 10 && distanceSq < SHOOT_DISTANCE_SQ && !so.hasEjected()) {
 			if (target instanceof SpaceObject && ((SpaceObject) target).isCloaked()) {
 				return;
@@ -426,39 +423,39 @@ public final class SpaceObjectAI implements Serializable {
 					}
 				}
 				lastShootCheck = System.nanoTime();
-			}	
+			}
 		}
 	}
-		
-	private void fleeObject(float deltaTime) {		
+
+	private void fleeObject(float deltaTime) {
 		if (target instanceof CobraMkIII && ((CobraMkIII) target).isPlayerCobra()) {
 			if (!InGameManager.playerInSafeZone && waitForSafeZoneExit) {
 				popState();
 				waitForSafeZoneExit = false;
 				return;
-			}			
+			}
 		}
 		trackInternal(target.getPosition(), null, 1000.0f, deltaTime, true);
 		avoidCollision();
 		executeSteering(so.getMaxSpeed());
 	}
-	
+
 	private void flyStraight(float deltaTime) {
 		avoidCollision();
 	}
 
 	private void flyPath(float deltaTime) {
-		if (waypoints.isEmpty()) {			
+		if (waypoints.isEmpty()) {
 			popState();
 			if (currentState.isEmpty()) {
 				setState(AIState.IDLE, (Object []) null);
 			}
 			so.aiStateCallback(AiStateCallback.EndOfWaypointsReached);
 			return;
-		}		
+		}
 		WayPoint wp = waypoints.get(0);
 		float d = trackInternal(wp.position, wp.upVector, 1000.0f, deltaTime, false);
-		float targetSpeed = wp.orientFirst ? 0.0f : so.getMaxSpeed(); 
+		float targetSpeed = wp.orientFirst ? 0.0f : so.getMaxSpeed();
 		if (Math.abs(1.0 - d) < 0.01 && wp.orientFirst) {
 			targetSpeed = so.getMaxSpeed();
 			wp.orientFirst = false;
@@ -475,22 +472,22 @@ public final class SpaceObjectAI implements Serializable {
 			currentDistance = distance;
 		}
 	}
-		
+
 	private void followCurve(float deltaTime) {
 		float time = (System.nanoTime() - curveFollowStart) / 1000000000.0f;
 		curve.compute(time);
-		
-		so.setPosition(curve.getCurvePosition());				
+
+		so.setPosition(curve.getCurvePosition());
 		so.setForwardVector(curve.getcForward());
 		so.setRightVector(curve.getcRight());
 		so.setUpVector(curve.getcUp());
-		
+
 		curve.getCurveRotation().copy(v0);
 		so.applyDeltaRotation(v0.x, v0.y, v0.z);
 		so.assertOrthoNormal();
-		
+
 //		avoidCollision();
-		
+
 		if (curve.reachedEnd()) {
 			popState();
 			if (currentState.isEmpty()) {
@@ -499,8 +496,8 @@ public final class SpaceObjectAI implements Serializable {
 			}
 		}
 	}
-	
-	private void updateEvade(float deltaTime) {		
+
+	private void updateEvade(float deltaTime) {
 		float distanceSq = so.getPosition().distanceSq(evadePosition);
 		SpaceObject proximity = so.getProximity();
 		boolean clearEvade = false;
@@ -515,17 +512,17 @@ public final class SpaceObjectAI implements Serializable {
 			if (currentState.isEmpty()) {
 				setState(AIState.IDLE, (Object []) null);
 			}
-			return;			
-		}				
-		so.getProximity().getPosition().sub(so.getPosition(), v0);
+			return;
+		}
+		proximity.getPosition().sub(so.getPosition(), v0);
 		v0.scale(0.5f);
 		v0.add(so.getPosition());
-		v0.copy(evadePosition);  
-		evadeRangeSq = (so.getProximity().getBoundingSphereRadiusSq() * 3.0f + so.getBoundingSphereRadiusSq() * 3.0f) * 18;
+		v0.copy(evadePosition);
+		evadeRangeSq = (proximity.getBoundingSphereRadiusSq() * 3.0f + so.getBoundingSphereRadiusSq() * 3.0f) * 18;
 		float dForward = trackInternal(evadePosition, null, evadeRangeSq, deltaTime, true);
 		executeSteering(so.getMaxSpeed() * (0.5f * dForward + 0.5f));
 	}
-	
+
 	private void updateTrack(float deltaTime) {
 		if (so instanceof Missile && target != null) {
 			float angle = trackPosition(target.getPosition(), target.getUpVector(), deltaTime);
@@ -537,7 +534,7 @@ public final class SpaceObjectAI implements Serializable {
 		}
 		executeSteering(so instanceof Missile ? -1 : so.getMaxSpeed());
 	}
-	
+
 	private void initiateTrack(boolean replace, Object [] data) {
 		if (replace) {
 			currentState.clear();
@@ -552,14 +549,14 @@ public final class SpaceObjectAI implements Serializable {
 		if (replace) {
 			currentState.clear();
 		}
-		target = data == null || data[0] == null ? null : (GraphicObject) data[0];		
+		target = data == null || data[0] == null ? null : (GraphicObject) data[0];
 		if (target != null) {
 			float distanceSq = target.getPosition().distanceSq(so.getPosition());
 			if (distanceSq < 9000000) {
 				currentState.push(AIState.TRACK);
 			} else {
 				pushState(AIState.TRACK, target);
-				so.getPosition().copy(v0);				
+				so.getPosition().copy(v0);
 				target.getPosition().sub(v0, v1);
 				v1.scale(0.5f);
 				target.getPosition().sub(v1, v0);
@@ -571,7 +568,7 @@ public final class SpaceObjectAI implements Serializable {
 			}
 		}
 	}
-	
+
 	private void initiateIdle(boolean replace, Object [] data) {
 		if (replace) {
 			currentState.clear();
@@ -596,10 +593,10 @@ public final class SpaceObjectAI implements Serializable {
 				so.setSpeed(-(Float) data[0]);
 			}
 		} else {
-			so.adjustSpeed(-so.getMaxSpeed());			
-		}		
+			so.adjustSpeed(-so.getMaxSpeed());
+		}
 	}
-	
+
 	private void initiatePath(boolean replace, Object [] data) {
 		if (replace) {
 			currentState.clear();
@@ -632,7 +629,7 @@ public final class SpaceObjectAI implements Serializable {
 		}
 		waypoints.clear();
 		if (data != null && data.length > 0) {
-			curve = (Curve) data[0];			
+			curve = (Curve) data[0];
 			curveFollowStart = System.nanoTime();
 		}
 		currentDistance = -1;
@@ -655,21 +652,21 @@ public final class SpaceObjectAI implements Serializable {
 	private void getFartherDirection(Vector3f direction, final Vector3f targetVector, final float scale) {
 		so.getPosition().sub(target.getPosition(), v0);
 		v0.normalize();
-		
+
 		direction.copy(targetVector);
 		targetVector.scale(scale);
-		so.getPosition().add(targetVector, v2);		
+		so.getPosition().add(targetVector, v2);
 		float d1s = v2.distanceSq(target.getPosition());
-		
+
 		targetVector.negate();
 		so.getPosition().add(targetVector, v2);
 		float d2s = v2.distanceSq(target.getPosition());
-		
+
 		if (d1s > d2s) {
 			targetVector.negate();
 		}
 	}
-	
+
 	private void initiateBank(boolean replace, Object [] data) {
 		target = data == null || data[0] == null ? null : (GraphicObject) data[0];
 		if (target == null) {
@@ -689,11 +686,11 @@ public final class SpaceObjectAI implements Serializable {
 		v0.scale(10000.0f);
 		v2.add(v0);
 		WayPoint wp2 = WayPoint.newWayPoint(v2, target.getUpVector());
-		
+
 		if (replace) {
 			setState(AIState.FLY_PATH, wp1, wp2);
 		} else {
-			pushState(AIState.FLY_PATH, wp1, wp2);				
+			pushState(AIState.FLY_PATH, wp1, wp2);
 		}
 	}
 
@@ -710,11 +707,11 @@ public final class SpaceObjectAI implements Serializable {
 		so.getProximity().getPosition().sub(so.getPosition(), v0);
 		v0.scale(0.5f);
 		v0.add(so.getPosition());
-		v0.copy(evadePosition); 
+		v0.copy(evadePosition);
 		evadeRangeSq = (so.getProximity().getBoundingSphereRadiusSq() * 3.0f + so.getBoundingSphereRadiusSq() * 3.0f) * 18;
 		pitchingOver = true;
 	}
-		
+
 	private void initiateAttack(boolean replace, Object [] data) {
 		if (replace) {
 			currentState.clear();
@@ -728,34 +725,34 @@ public final class SpaceObjectAI implements Serializable {
 	private final void alterStateInternal(AIState newState, boolean replace, Object ...data) {
 		switch (newState) {
 			case ATTACK:        initiateAttack(replace, data);
-							    break;
+					    break;
 			case BANK:          initiateBank(replace, data);
-				           	    break;
+					    break;
 			case EVADE:         initiateEvade(replace, data);
 			                    break;
 			case FLEE:          initiateFlee(replace, data);
-				           	    break;
+					    break;
 			case FLY_STRAIGHT:  initiateStraight(replace, data);
-                           	    break;
+					    break;
 			case FLY_PATH:      initiatePath(replace, data);
-				           	    break;
+					    break;
 			case IDLE:          initiateIdle(replace, data);
-					       	    break;
+					    break;
 			case TRACK:         initiateTrack(replace, data);
-				   	       	    break;
-			case MISSILE_TRACK: initiateMissileTrack(replace, data); 
+					    break;
+			case MISSILE_TRACK: initiateMissileTrack(replace, data);
 			                    break;
 			case FOLLOW_CURVE:  initiateFollowCurve(replace, data);
 			                    break;
-			default:            break;		
-		}				
+			default:            break;
+		}
 	}
-		
+
 	final void setState(AIState newState, Object ...data) {
 		alterStateInternal(newState, true, data);
 	}
-	
-	final void pushState(AIState newState, Object ...data) {	
+
+	final void pushState(AIState newState, Object ...data) {
 		alterStateInternal(newState, false, data);
 	}
 
@@ -767,11 +764,11 @@ public final class SpaceObjectAI implements Serializable {
 		AIState state = getState();
 		if (state == AIState.FOLLOW_CURVE) {
 			// Make sure that an interrupted "follow curve" is not resumed.
-			popState(); 
+			popState();
 		}
 	}
-	
-	final void update(float deltaTime) {	
+
+	final void update(float deltaTime) {
 		if (so != null) {
 			if (so.escapeCapsuleCaps > 0 && so.getHullStrength() < 2 && !so.hasEjected()) {
 				if (Math.random() * 100 < 10) {
@@ -785,25 +782,53 @@ public final class SpaceObjectAI implements Serializable {
 		}
 		so.updateSpeed(deltaTime);
 		switch (currentState.peek()) {
-			case ATTACK:       attackObject(deltaTime);
-						       break;
-			case BANK:         AliteLog.e("Updating bank state", "This should not happen...");
-						       break;
-			case EVADE:        updateEvade(deltaTime);
-			                   break;
-			case FLEE:         fleeObject(deltaTime);
-						       break;
-			case FLY_STRAIGHT: flyStraight(deltaTime);
-			                   break;
-			case FLY_PATH:     flyPath(deltaTime);
-						       break;
-			case IDLE:         return;
-			case TRACK:		   updateTrack(deltaTime);
-						       break;
-			case FOLLOW_CURVE: followCurve(deltaTime);
-			                   break;
-			default:           break;		
+		case ATTACK:
+			attackObject(deltaTime);
+			break;
+		case BANK:
+			AliteLog.e("Updating bank state", "This should not happen...");
+			break;
+		case EVADE:
+			updateEvade(deltaTime);
+			break;
+		case FLEE:
+			fleeObject(deltaTime);
+			break;
+		case FLY_STRAIGHT:
+			flyStraight(deltaTime);
+			break;
+		case FLY_PATH:
+			flyPath(deltaTime);
+			break;
+		case IDLE:
+			break;
+		case TRACK:
+			updateTrack(deltaTime);
+			break;
+		case FOLLOW_CURVE:
+			followCurve(deltaTime);
+			break;
 		}
+		if (so instanceof CobraMkIII && ((CobraMkIII) so).isPlayerCobra()) {
+			String sl = "";
+			switch (currentState.peek()) {
+			case ATTACK:       sl = "AT"; break;
+			case BANK:         sl = "BN"; break;
+			case EVADE:        sl = "EV"; break;
+			case FLEE:         sl = "FL"; break;
+			case FLY_STRAIGHT: sl = "FS"; break;
+			case FLY_PATH:     sl = "FP"; break;
+			case IDLE:         sl = "ID"; break;
+			case TRACK:	   sl = "TR"; break;
+			case FOLLOW_CURVE: sl = "FC"; break;
+			default:           sl = "DE"; break;
+			}
+			AliteLog.e("AIS", "SOPATH: Player " + sl + " (" + so.getPosition().x + ":" + so.getPosition().y + ":" + so.getPosition().z +
+				   ":" + so.getForwardVector().x + ":" + so.getForwardVector().y + ":" + so.getForwardVector().z +
+				   ":" + so.getUpVector().x + ":" + so.getUpVector().y + ":" + so.getUpVector().z +
+				   ":" + so.getRightVector().x + ":" + so.getRightVector().y + ":" + so.getRightVector().z +
+				   ")");
+                }
 	}
 
 	public AIState getState() {
@@ -812,15 +837,15 @@ public final class SpaceObjectAI implements Serializable {
 		}
 		return currentState.peek();
 	}
-	
+
 	public String getStateStack() {
 		String stack = "";
 		for (int i = 0; i < currentState.size(); i++) {
-			stack += currentState.get(i) + ", ";	
+			stack += currentState.get(i) + ", ";
 		}
 		return stack;
 	}
-	
+
 	private void bankOrAttack(SpaceObject player) {
 		AIState state = getState();
 		AliteLog.d("Object has been hit", "Object has been hit. Current State == " + state.name());
@@ -859,7 +884,7 @@ public final class SpaceObjectAI implements Serializable {
 			pushState(AIState.BANK, player, true);
 		}
 	}
-	
+
 	private void flee(SpaceObject player) {
 		if (getState() != AIState.FLEE) {
 			if (Math.random() * 100 < FIRE_MISSILE_UPON_FIRST_HIT_PROBABILITY) {
@@ -873,7 +898,7 @@ public final class SpaceObjectAI implements Serializable {
 			setState(AIState.FLEE, player);
 		}
 	}
-	
+
 	private void fleeBankOrAttack(SpaceObject player) {
 		AIState state = getState();
 		if (state == AIState.ATTACK) {
@@ -888,11 +913,11 @@ public final class SpaceObjectAI implements Serializable {
 				bankOrAttack(player);
 			} else {
 				flee(player);
-			}			
+			}
 		}
 		// Else do nothing...
 	}
-	
+
 	void executeHit(SpaceObject player) {
 		if (so.getHullStrength() > 0 && !so.mustBeRemoved() && !so.hasEjected()) {
 			int rand = (int) (Math.random() * 256);
@@ -902,9 +927,9 @@ public final class SpaceObjectAI implements Serializable {
 					so.setMissileCount(so.getMissileCount() - 1);
 					so.addObjectToSpawn(ShipType.Missile);
 				}
-			} 
+			}
 		}
-				
+
 		switch (so.getType()) {
 			case Asteroid:      break; // Nothing to do
 			case CargoCanister: break; // Nothing to do
@@ -920,5 +945,5 @@ public final class SpaceObjectAI implements Serializable {
 			case Buoy:          break; // Nothing to do
 			case Platlet:       break; // Nothing to do
 		}
-	}	
+	}
 }

@@ -301,8 +301,8 @@ public class ObjectSpawnManager implements Serializable {
 		}
 		alite.setTimeFactorChangeListener(new TimeFactorChangeListener() {			
 			@Override
-			public void timeFactorChanged(float oldTimeFactor, float newTimeFactor) {
-				updateTimers(oldTimeFactor / newTimeFactor);
+			public void timeFactorChanged(int oldTimeFactor, int newTimeFactor) {
+				updateTimers(((float) oldTimeFactor) / ((float) newTimeFactor));
 			}
 		});
 	}
@@ -658,7 +658,7 @@ public class ObjectSpawnManager implements Serializable {
 	}
 
 	private void spawnTrader() {
-		traderTimer.event.updateDelay((long) ((((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l) / alite.getTimeFactor()));
+		traderTimer.event.updateDelay((long) ((((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l) / ((float) alite.getTimeFactor())));
 		if (inGame.getWitchSpace() != null) {
 			return;
 		}
@@ -748,7 +748,7 @@ public class ObjectSpawnManager implements Serializable {
 	}
 	
 	private void spawnAsteroid() {	
-		asteroidTimer.event.updateDelay((long) ((((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l) / alite.getTimeFactor()));
+		asteroidTimer.event.updateDelay((long) ((((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l) / ((float) alite.getTimeFactor())));
 		if (inGame.getWitchSpace() != null) {
 			return;
 		}
@@ -799,7 +799,7 @@ public class ObjectSpawnManager implements Serializable {
 	}
 
 	private void spawnShuttleOrTransporter() {	
-		shuttleOrTransportTimer.event.updateDelay((long) ((((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l) / alite.getTimeFactor()));
+		shuttleOrTransportTimer.event.updateDelay((long) ((((600.0f + 300.0f * Math.random()) / 16.7f) * 1000000000l) / ((float) alite.getTimeFactor())));
 		if (inGame.getWitchSpace() != null || !inGame.isInSafeZone()) {
 			return;
 		}

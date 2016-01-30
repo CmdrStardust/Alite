@@ -689,7 +689,7 @@ public class LaserManager implements Serializable {
 
 			@Override
 			public void doPerform() {
-				long nd = ((alite.getCobra().isEquipmentInstalled(EquipmentStore.navalEnergyUnit)) ? NAVAL_REFRESH_RATE:NORMAL_REFRESH_RATE) / ((long) alite.getTimeFactor());
+				long nd = ((alite.getCobra().isEquipmentInstalled(EquipmentStore.navalEnergyUnit)) ? NAVAL_REFRESH_RATE:NORMAL_REFRESH_RATE) / alite.getTimeFactor();
 				if (delay != nd) {
 					updateDelay(nd);
 				}

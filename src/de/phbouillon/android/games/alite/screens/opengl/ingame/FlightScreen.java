@@ -476,9 +476,10 @@ public class FlightScreen extends GlScreen implements Serializable {
 			if (isDisposed || inGame == null) {
 				return;
 			}
-			float dtf = deltaTime * ((Alite) game).getTimeFactor();
-			inGame.performUpdate(dtf, allObjects);
-		
+			int tf = ((Alite) game).getTimeFactor();
+			while((--tf >= 0) && inGame.isPlayerAlive()) {
+				inGame.performUpdate(deltaTime, allObjects);
+			}
 			if (informationScreen != null) {
 				informationScreen.update(deltaTime);
 			} 
@@ -496,18 +497,19 @@ public class FlightScreen extends GlScreen implements Serializable {
 			if (newScreen != null) {
 				performScreenChange(newScreen);
 			} else {	
+				deltaTime *= ((Alite) game).getTimeFactor();
 				if (star != null) {
-					star.applyDeltaRotation(0.0f, (float) Math.toDegrees(0.02f * dtf), 0.0f);
+					star.applyDeltaRotation(0.0f, (float) Math.toDegrees(0.02f * deltaTime), 0.0f);
 				}
 				if (planet != null) {
-					planet.applyDeltaRotation(0.0f, (float) Math.toDegrees(0.015f * dtf), 0.0f); 
+					planet.applyDeltaRotation(0.0f, (float) Math.toDegrees(0.015f * deltaTime), 0.0f); 
 				}
 				
 				if (spaceStation != null) {
 					if (resetSpaceStation) {
 						performResetSpaceStation();
 					}				
-					spaceStation.applyDeltaRotation(0.0f, 0.0f, (float) Math.toDegrees(SPACE_STATION_ROTATION_SPEED * dtf));
+					spaceStation.applyDeltaRotation(0.0f, 0.0f, (float) Math.toDegrees(SPACE_STATION_ROTATION_SPEED * deltaTime));
 				}
 			}
 		} catch (NullPointerException e) {

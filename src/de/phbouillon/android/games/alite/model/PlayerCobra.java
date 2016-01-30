@@ -37,10 +37,10 @@ public class PlayerCobra {
 	public static final int   MAXIMUM_FUEL          = 70;
 	public static final int   MAXIMUM_MISSILES      = 4;
 	public static final int   DEFAULT_MISSILES      = 3;
+	public static final int   SPEED_UP_FACTOR       = 10;       // speed-up factor to use when torus can't be engaged
 	public static final float MAX_SPEED             = 367.4f;   // m/s -- about 1320 km/h; just faster than sonic speed on Earth
 	public static final float TORUS_SPEED           = 33400.0f; // torus drive speed
 	public static final float TORUS_TEST_SPEED      = 10000.0f; // value to use to test if torus is engaged
-	public static final float SPEED_UP_FACTOR       = 10.0f;    // speed-up factor to use when torus can't be engaged
 	public static final float MAX_SHIELD            = 24;
 	public static final float MAX_FUEL              = 70;
 	public static final float MAX_CABIN_TEMPERATURE = 30;

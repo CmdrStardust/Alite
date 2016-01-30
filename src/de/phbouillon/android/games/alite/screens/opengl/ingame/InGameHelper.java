@@ -103,7 +103,7 @@ public class InGameHelper implements Serializable {
 			return;
 		}
 		float distanceSq = ship.getPosition().distanceSq(station.getPosition());
-		if (distanceSq <= STATION_PROXIMITY_DISTANCE_SQ * alite.getTimeFactor() * alite.getTimeFactor()) {
+		if (distanceSq <= STATION_PROXIMITY_DISTANCE_SQ) {
 			if (ship.getProximity() != station) {
 				ship.setProximity(station);
 				AliteLog.e("Proximity", "Setting ship/station proximity");
@@ -125,7 +125,7 @@ public class InGameHelper implements Serializable {
 				continue;
 			}
 			SpaceObject objectA = (SpaceObject) allObjects.get(i);
-			float objectAProximityDistance = objectA.getBoundingSphereRadiusSq() * PROXIMITY_WARNING_RADIUS_FACTOR * alite.getTimeFactor();
+			float objectAProximityDistance = objectA.getBoundingSphereRadiusSq() * PROXIMITY_WARNING_RADIUS_FACTOR;
 			float distanceCamSq = objectA.getPosition().distanceSq(inGame.getShip().getPosition());
 			if (distanceCamSq <= objectAProximityDistance) {
 				objectA.setProximity(inGame.getShip());
@@ -136,7 +136,7 @@ public class InGameHelper implements Serializable {
 				}
 				SpaceObject objectB = (SpaceObject) allObjects.get(j);
 				float distanceSq = objectA.getPosition().distanceSq(objectB.getPosition());
-				float objectBProximityDistance = objectB.getBoundingSphereRadiusSq() * PROXIMITY_WARNING_RADIUS_FACTOR * alite.getTimeFactor();
+				float objectBProximityDistance = objectB.getBoundingSphereRadiusSq() * PROXIMITY_WARNING_RADIUS_FACTOR;
 				if (distanceSq <= objectAProximityDistance + objectBProximityDistance) {
 					objectA.setProximity(objectB);
 					objectB.setProximity(objectA);
