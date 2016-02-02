@@ -30,6 +30,7 @@ import de.phbouillon.android.framework.Sound;
 public class Settings {
 	private static final boolean ALWAYS_WRITE_LOG = false;
 	public static final boolean suppressOnlineLog = false;
+	public static final boolean VIS_DEBUG = false;
 	
 	public static final int FIRE                   =   0;
 	public static final int MISSILE                =   1;

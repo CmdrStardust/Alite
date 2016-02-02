@@ -334,7 +334,7 @@ public abstract class SpaceObject extends AliteObject implements Geometry, Seria
 				return;
 			}
 		}
-		if (this instanceof CobraMkIII && ((CobraMkIII) this).isPlayerCobra()) {
+		if (Settings.VIS_DEBUG) {
 			Vector3f pP = new Vector3f(0, 0, 0);
 			Vector3f pvX = new Vector3f(0, 0, 0);
 			Vector3f pvY = new Vector3f(0, 0, 0);
@@ -380,13 +380,24 @@ public abstract class SpaceObject extends AliteObject implements Geometry, Seria
 			other.getForwardVector().copy(tt);
 			tt.scale(0.0f-other.boundingBox[5]);
 			ovZ.add(tt);
-			AliteLog.e("AIS",
-				   "PRXMTY: Player (" + getPosition().x + ":" + getPosition().y + ":" + getPosition().z + ":" + getBoundingSphereRadius() +
-				   ":" + pP.x + ":" + pP.y + ":" + pP.z + ":" + pvX.x + ":" + pvX.y + ":" + pvX.z + ":" + pvY.x + ":" + pvY.y + ":" + pvY.z + ":" + pvZ.x + ":" + pvZ.y + ":" + pvZ.z +
-				   ") " + other +
-				   " (" + other.getPosition().x + ":" + other.getPosition().y + ":" + other.getPosition().z + ":" + other.getBoundingSphereRadius() +
-				   ":" + oP.x + ":" + oP.y + ":" + oP.z + ":" + ovX.x + ":" + ovX.y + ":" + ovX.z + ":" + ovY.x + ":" + ovY.y + ":" + ovY.z + ":" + ovZ.x + ":" + ovZ.y + ":" + ovZ.z +
-				   ")");
+			if (this instanceof CobraMkIII && ((CobraMkIII) this).isPlayerCobra()) {
+				AliteLog.e("AIS",
+					   "PRXMTY: Player (" + getPosition().x + ":" + getPosition().y + ":" + getPosition().z + ":" + getBoundingSphereRadius() +
+					   ":" + pP.x + ":" + pP.y + ":" + pP.z + ":" + pvX.x + ":" + pvX.y + ":" + pvX.z + ":" + pvY.x + ":" + pvY.y + ":" + pvY.z + ":" + pvZ.x + ":" + pvZ.y + ":" + pvZ.z +
+					   ") " + other +
+					   " (" + other.getPosition().x + ":" + other.getPosition().y + ":" + other.getPosition().z + ":" + other.getBoundingSphereRadius() +
+					   ":" + oP.x + ":" + oP.y + ":" + oP.z + ":" + ovX.x + ":" + ovX.y + ":" + ovX.z + ":" + ovY.x + ":" + ovY.y + ":" + ovY.z + ":" + ovZ.x + ":" + ovZ.y + ":" + ovZ.z +
+					   ")");
+			}
+			else {
+				AliteLog.e("AIS",
+					   "PRXMTY: " + this + " (" + getPosition().x + ":" + getPosition().y + ":" + getPosition().z + ":" + getBoundingSphereRadius() +
+					   ":" + pP.x + ":" + pP.y + ":" + pP.z + ":" + pvX.x + ":" + pvX.y + ":" + pvX.z + ":" + pvY.x + ":" + pvY.y + ":" + pvY.z + ":" + pvZ.x + ":" + pvZ.y + ":" + pvZ.z +
+					   ") " + other +
+					   " (" + other.getPosition().x + ":" + other.getPosition().y + ":" + other.getPosition().z + ":" + other.getBoundingSphereRadius() +
+					   ":" + oP.x + ":" + oP.y + ":" + oP.z + ":" + ovX.x + ":" + ovX.y + ":" + ovX.z + ":" + ovY.x + ":" + ovY.y + ":" + ovY.z + ":" + ovZ.x + ":" + ovZ.y + ":" + ovZ.z +
+					   ")");
+			}
                 }
 		proximity = other;
 	}

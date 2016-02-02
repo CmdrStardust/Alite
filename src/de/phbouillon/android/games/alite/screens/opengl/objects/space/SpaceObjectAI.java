@@ -29,6 +29,7 @@ import de.phbouillon.android.framework.math.Quaternion;
 import de.phbouillon.android.framework.math.Vector3f;
 import de.phbouillon.android.games.alite.Alite;
 import de.phbouillon.android.games.alite.AliteLog;
+import de.phbouillon.android.games.alite.Settings;
 import de.phbouillon.android.games.alite.model.statistics.ShipType;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.InGameManager;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.ObjectType;
@@ -809,26 +810,28 @@ public final class SpaceObjectAI implements Serializable {
 			followCurve(deltaTime);
 			break;
 		}
-		if (so instanceof CobraMkIII && ((CobraMkIII) so).isPlayerCobra()) {
-			String sl = "";
-			switch (currentState.peek()) {
-			case ATTACK:       sl = "AT"; break;
-			case BANK:         sl = "BN"; break;
-			case EVADE:        sl = "EV"; break;
-			case FLEE:         sl = "FL"; break;
-			case FLY_STRAIGHT: sl = "FS"; break;
-			case FLY_PATH:     sl = "FP"; break;
-			case IDLE:         sl = "ID"; break;
-			case TRACK:	   sl = "TR"; break;
-			case FOLLOW_CURVE: sl = "FC"; break;
-			default:           sl = "DE"; break;
+		if (Settings.VIS_DEBUG) {
+			if (so instanceof CobraMkIII && ((CobraMkIII) so).isPlayerCobra()) {
+				String sl = "";
+				switch (currentState.peek()) {
+				case ATTACK:       sl = "AT"; break;
+				case BANK:         sl = "BN"; break;
+				case EVADE:        sl = "EV"; break;
+				case FLEE:         sl = "FL"; break;
+				case FLY_STRAIGHT: sl = "FS"; break;
+				case FLY_PATH:     sl = "FP"; break;
+				case IDLE:         sl = "ID"; break;
+				case TRACK:	   sl = "TR"; break;
+				case FOLLOW_CURVE: sl = "FC"; break;
+				default:           sl = "DE"; break;
+				}
+				AliteLog.e("AIS", "SOPATH: Player " + sl + " (" + so.getPosition().x + ":" + so.getPosition().y + ":" + so.getPosition().z +
+					   ":" + so.getForwardVector().x + ":" + so.getForwardVector().y + ":" + so.getForwardVector().z +
+					   ":" + so.getUpVector().x + ":" + so.getUpVector().y + ":" + so.getUpVector().z +
+					   ":" + so.getRightVector().x + ":" + so.getRightVector().y + ":" + so.getRightVector().z +
+					   ")");
 			}
-			AliteLog.e("AIS", "SOPATH: Player " + sl + " (" + so.getPosition().x + ":" + so.getPosition().y + ":" + so.getPosition().z +
-				   ":" + so.getForwardVector().x + ":" + so.getForwardVector().y + ":" + so.getForwardVector().z +
-				   ":" + so.getUpVector().x + ":" + so.getUpVector().y + ":" + so.getUpVector().z +
-				   ":" + so.getRightVector().x + ":" + so.getRightVector().y + ":" + so.getRightVector().z +
-				   ")");
-                }
+		}
 	}
 
 	public AIState getState() {
