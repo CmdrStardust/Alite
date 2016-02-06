@@ -140,7 +140,13 @@ public class Billboard extends AliteObject implements Geometry {
 	}
 
 	protected void updateTextureCoordinates(SpriteData sprite) {
-		texCoordBuffer.clear();
+		if (sprite == null) {
+			// This can only happen if the player pauses the game when an
+			// explosion billboard is on the screen... We ignore it, it will
+			// be cleaned up in later frames anyway.
+			return;
+		}
+		texCoordBuffer.clear();		
 		texCoordBuffer.put(sprite.x);
 		texCoordBuffer.put(sprite.y);
 		texCoordBuffer.put(sprite.x);

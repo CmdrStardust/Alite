@@ -783,32 +783,34 @@ public final class SpaceObjectAI implements Serializable {
 		}
 		so.updateSpeed(deltaTime);
 		switch (currentState.peek()) {
-		case ATTACK:
-			attackObject(deltaTime);
-			break;
-		case BANK:
-			AliteLog.e("Updating bank state", "This should not happen...");
-			break;
-		case EVADE:
-			updateEvade(deltaTime);
-			break;
-		case FLEE:
-			fleeObject(deltaTime);
-			break;
-		case FLY_STRAIGHT:
-			flyStraight(deltaTime);
-			break;
-		case FLY_PATH:
-			flyPath(deltaTime);
-			break;
-		case IDLE:
-			break;
-		case TRACK:
-			updateTrack(deltaTime);
-			break;
-		case FOLLOW_CURVE:
-			followCurve(deltaTime);
-			break;
+			case ATTACK:
+				attackObject(deltaTime);
+				break;
+			case BANK:
+				AliteLog.e("Updating bank state", "This should not happen...");
+				break;
+			case EVADE:
+				updateEvade(deltaTime);
+				break;
+			case FLEE:
+				fleeObject(deltaTime);
+				break;
+			case FLY_STRAIGHT:
+				flyStraight(deltaTime);
+				break;
+			case FLY_PATH:
+				flyPath(deltaTime);
+				break;
+			case IDLE:
+				break;
+			case TRACK:
+				updateTrack(deltaTime);
+				break;
+			case FOLLOW_CURVE:
+				followCurve(deltaTime);
+				break;
+			default:
+				break;
 		}
 		if (Settings.VIS_DEBUG) {
 			if (so instanceof CobraMkIII && ((CobraMkIII) so).isPlayerCobra()) {
