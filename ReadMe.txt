@@ -1,4 +1,4 @@
-Alite v. 1.4.1 by Philipp Bouillon and Duane McDonnell
+Alite v. 1.4.2 by Philipp Bouillon and Duane McDonnell
 
 About
 -----
@@ -19,6 +19,12 @@ exploration directly to you - wherever you are.
 Version History
 ---------------
 
+Version 1.4.2 Comes with an improved "Medium Speed" Docking Computer. The
+              algorithm now correctly evades other ships (and the space
+              station), without crashing into them. Another bug regarding
+              pausing the game when explosions were visible, was fixed.
+              [02/07/2016]
+              
 Version 1.4.1 Bugfixes: Corrupt image replaced, Planet Info in WitchSpace
 	      enabled, Asteroid course randomized, tutorials now work if the
 	      legal status is not clean. Medium Speed Docking Computer added.
