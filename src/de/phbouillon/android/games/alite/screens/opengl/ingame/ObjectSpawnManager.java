@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Iterator;
 
 import android.opengl.Matrix;
 import de.phbouillon.android.framework.TimeFactorChangeListener;
@@ -264,7 +265,9 @@ public class ObjectSpawnManager implements Serializable {
 				spawnViper();
 			}
 		});
-		for (Mission mission: alite.getPlayer().getActiveMissions()) {
+		Iterator<Mission> missionIterator = alite.getPlayer().getActiveMissions().iterator();
+		while (missionIterator.hasNext()) {
+			Mission mission = missionIterator.next();
 			TimedEvent te = inGame.isWitchSpace() ? mission.getWitchSpaceSpawnEvent(this) : mission.getSpawnEvent(this);
 			if (te != null) {
 				inGame.addTimedEvent(te);

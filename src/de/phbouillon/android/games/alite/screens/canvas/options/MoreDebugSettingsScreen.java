@@ -31,6 +31,7 @@ import de.phbouillon.android.games.alite.SoundManager;
 import de.phbouillon.android.games.alite.colors.AliteColors;
 import de.phbouillon.android.games.alite.model.missions.ConstrictorMission;
 import de.phbouillon.android.games.alite.model.missions.CougarMission;
+import de.phbouillon.android.games.alite.model.missions.Mission;
 import de.phbouillon.android.games.alite.model.missions.MissionManager;
 import de.phbouillon.android.games.alite.model.missions.SupernovaMission;
 import de.phbouillon.android.games.alite.model.missions.ThargoidDocumentsMission;
@@ -45,7 +46,7 @@ public class MoreDebugSettingsScreen extends AliteScreen {
 	private Button startSupernovaMission;
 	private Button startCougarMission;
 	private Button startThargoidBaseMission;
-	private Button causeError;
+	private Button clearMission;
     private Button back;
     
 	public MoreDebugSettingsScreen(Game game) {
@@ -64,8 +65,8 @@ public class MoreDebugSettingsScreen extends AliteScreen {
 		startCougarMission.setGradient(true);
 		startThargoidBaseMission = new Button(50, 610, 1620, 100, "Start Thargoid Base Mission", Assets.titleFont, null);
 		startThargoidBaseMission.setGradient(true);
-		causeError = new Button(50, 730, 1620, 100, "Throw Runtime Exception", Assets.titleFont, null);
-		causeError.setGradient(true);
+		clearMission = new Button(50, 730, 1620, 100, "Clear Active Mission", Assets.titleFont, null);
+		clearMission.setGradient(true);
 		back = new Button(50, 970, 1620, 100, "Back", Assets.titleFont, null);
 		back.setGradient(true);
 	}
@@ -84,7 +85,7 @@ public class MoreDebugSettingsScreen extends AliteScreen {
 		startSupernovaMission.render(g);
 		startCougarMission.render(g);
 		startThargoidBaseMission.render(g);
-		causeError.render(g);
+		clearMission.render(g);
 		back.render(g);
 	}
 
@@ -142,9 +143,14 @@ public class MoreDebugSettingsScreen extends AliteScreen {
 				MissionManager.getInstance().get(ThargoidStationMission.ID).resetStarted();
 				alite.getPlayer().resetIntergalacticJumpCounter();
 				alite.getPlayer().setJumpCounter(63);																
-			} else if (causeError.isTouched(touch.x, touch.y)) { 
+			} else if (clearMission.isTouched(touch.x, touch.y)) { 
 				SoundManager.play(Assets.click);
-				throw new RuntimeException("You asked for it: Deliberate Alite crash.");
+				alite.getPlayer().getActiveMissions().clear();
+				String completedMissions = "Completed Missions: ";
+				for (Mission m: alite.getPlayer().getCompletedMissions()) {
+					completedMissions += m.getClass().getName() + "; ";
+				}
+				setMessage(completedMissions);				
 			} else if (back.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);
 				newScreen = new DebugSettingsScreen(game);

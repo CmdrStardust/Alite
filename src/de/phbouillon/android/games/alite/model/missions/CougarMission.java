@@ -206,15 +206,17 @@ public class CougarMission extends Mission {
 	public TimedEvent getSpawnEvent(final ObjectSpawnManager manager) {
 		boolean result = !positionMatchesTarget(galaxySeed, targetIndex);
 		if (state == 1 && result && !cougarCreated) {
-			alite.getPlayer().addCompletedMission(this);
-			alite.getPlayer().removeActiveMission(this);
+			alite.getPlayer().addCompletedMission(this);			
 			alite.getPlayer().resetIntergalacticJumpCounter();
 			alite.getPlayer().resetJumpCounter();
-			return new TimedEvent(0) {				
+			return new TimedEvent(4000000000l) {				
 				private static final long serialVersionUID = -8640036894816728823L;
 
 				@Override
 				public void doPerform() {
+					if (cougarCreated) {
+						return;
+					}
 					cougarCreated = true;
 					manager.lockConditionRedEvent();
 					setRemove(true);
@@ -227,6 +229,7 @@ public class CougarMission extends Mission {
 					manager.spawnEnemyAndAttackPlayer(asp1, 0, spawnPosition, true);
 					manager.spawnEnemyAndAttackPlayer(cougar, 1, spawnPosition, true);
 					manager.spawnEnemyAndAttackPlayer(asp2, 2, spawnPosition, true);
+					alite.getPlayer().removeActiveMission(CougarMission.this);
 					cougar.setUpdater(new CougarCloakingUpdater(cougar));
 					cougar.addDestructionCallback(new DestructionCallback() {						
 						private static final long serialVersionUID = -4949764387008051526L;

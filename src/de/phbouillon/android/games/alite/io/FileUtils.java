@@ -33,8 +33,10 @@ import java.nio.charset.Charset;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -440,6 +442,7 @@ public class FileUtils {
 			int activeMissionCount = dis.readInt();
 			AliteLog.d("Loading Commander", "Active missions: " + activeMissionCount);
 			int completedMissionCount = dis.readInt();
+			Set <Integer> missionIds = new HashSet<Integer>();
 			for (int i = 0; i < activeMissionCount; i++) {
 				int missionId = dis.readInt();
 				Mission m = MissionManager.getInstance().get(missionId);
@@ -448,8 +451,13 @@ public class FileUtils {
 					continue;
 				}
 				m.load(dis);
-				player.addActiveMission(m);
-				AliteLog.d("Loading Commander", "  Active mission: " + m.getClass().getName());
+				if (!missionIds.contains(missionId)) {
+					missionIds.add(missionId);
+					player.addActiveMission(m);
+					AliteLog.d("Loading Commander", "  Active mission: " + m.getClass().getName());
+				} else {
+					AliteLog.d("Warning: Duplicate mission", "  Duplicate mission: " + m.getClass().getName() + " -- ignoring.");
+				}								
 			}
 			for (int i = 0; i < completedMissionCount; i++) {
 				int missionId = dis.readInt();
@@ -457,6 +465,9 @@ public class FileUtils {
 				if (m == null) {
 					AliteLog.e("[ALITE] loadCommander", "Invalid completed mission id: " + missionId + " - skipping. The commander file seems to be broken.");
 					continue;
+				}
+				if (missionIds.contains(missionId)) {
+					player.removeActiveMission(m);
 				}
 				player.addCompletedMission(m);
 			}
