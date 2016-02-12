@@ -1,4 +1,4 @@
-Alite v. 1.4.2 by Philipp Bouillon and Duane McDonnell
+Alite v. 1.4.4 by Philipp Bouillon and Duane McDonnell
 
 About
 -----
@@ -19,6 +19,13 @@ exploration directly to you - wherever you are.
 Version History
 ---------------
 
+Version 1.4.4 Repairs the broken 1.4.3, which contained a typo and thus
+              rendered the version useless. [02/12/2016]
+              
+Version 1.4.3 Fixes a bug in mission 4, which causes an exception when
+              entering hyperspace after receiving this mission.
+              [02/11/2016]
+              
 Version 1.4.2 Comes with an improved "Medium Speed" Docking Computer. The
               algorithm now correctly evades other ships (and the space
               station), without crashing into them. Another bug regarding
