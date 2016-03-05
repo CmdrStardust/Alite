@@ -24,8 +24,8 @@ import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import de.phbouillon.android.framework.impl.AndroidFileIO;
+import de.phbouillon.android.games.alite.AliteConfig;
 import de.phbouillon.android.games.alite.AliteLog;
-import de.phbouillon.android.games.alite.AliteStartManager;
 
 class MissionLine implements OnCompletionListener {
 	private final String text;
@@ -34,7 +34,7 @@ class MissionLine implements OnCompletionListener {
 	
 	MissionLine(AndroidFileIO fio, String speechPath, String text) throws IOException {
 		if (speechPath != null) {
-			if (AliteStartManager.HAS_EXTENSION_APK) {
+			if (AliteConfig.HAS_EXTENSION_APK) {
 				speechObject = fio.getPrivatePath(speechPath);
 			} else {
 				speechObject = fio.getFileDescriptor(speechPath);
@@ -52,7 +52,7 @@ class MissionLine implements OnCompletionListener {
 		try {
 			isPlaying = true;
 			mp.reset();
-			if (AliteStartManager.HAS_EXTENSION_APK) {
+			if (AliteConfig.HAS_EXTENSION_APK) {
 				mp.setDataSource((String) speechObject);
 			} else {
 				AssetFileDescriptor afd = ((AssetFileDescriptor) speechObject); 

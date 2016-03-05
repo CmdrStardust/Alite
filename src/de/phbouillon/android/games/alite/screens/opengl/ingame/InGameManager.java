@@ -32,6 +32,7 @@ import android.opengl.Matrix;
 import de.phbouillon.android.framework.Geometry;
 import de.phbouillon.android.framework.Input.TouchEvent;
 import de.phbouillon.android.framework.Screen;
+import de.phbouillon.android.framework.impl.AccelerometerHandler;
 import de.phbouillon.android.framework.impl.AndroidGraphics;
 import de.phbouillon.android.framework.impl.gl.GlUtils;
 import de.phbouillon.android.framework.math.Vector3f;
@@ -89,8 +90,6 @@ public class InGameManager implements Serializable {
 	private transient String            feeText           = null;
 	private transient Alite             alite;
 	
-	private final Vector3f              zero                  = new Vector3f(0, 0, 0);
-	private final Vector3f              deltaOrientation      = new Vector3f(0, 0, 0);
 	private final Vector3f              deltaYawRollPitch     = new Vector3f(0, 0, 0);
 	private final Vector3f              tempVector            = new Vector3f(0, 0, -1);
 	private final Vector3f              systemStationPosition = new Vector3f(0, 0, 0);
@@ -186,6 +185,7 @@ public class InGameManager implements Serializable {
 		spawnManager.startSimulation(alite.getPlayer().getCurrentSystem());			
 		alite.getCobra().setMissileLocked(false);		
 		objectPicker = new ObjectPicker(this, visibleArea);		
+		AccelerometerHandler.needsCalibration = true;
 	}
 	
 	public LaserManager getLaserManager() {
@@ -415,7 +415,8 @@ public class InGameManager implements Serializable {
 	}
 			
 	private final float clamp(float val, float min, float max) {
-		return val < min ? min : val > max ? max : val;
+		float result = val < min ? min : val > max ? max : val;
+		return result;
 	}
 
 	public CobraMkIII getShip() {
@@ -425,36 +426,32 @@ public class InGameManager implements Serializable {
 	public void calibrate() {
 		// Ensures that a re-calibration occurs on the next frame.
 		calibrated = false;
+		AccelerometerHandler.needsCalibration = true;
 	}
-	
+		
 	private void getAccelerometerData() {
 		if (!calibrated) {			
-			zero.x = alite.getInput().getAccelX();
-			zero.y = alite.getInput().getAccelY();
-			zero.z = alite.getInput().getAccelZ();
 			calibrated = true;
-		} else {
-			deltaOrientation.x = -clamp(((int) ((alite.getInput().getAccelX() - zero.x) * 10.0f)) / 4.0f, -2.0f, 2.0f);
-			deltaOrientation.y =  clamp(((int) ((alite.getInput().getAccelY() - zero.y) * 50.0f)) / 10.0f, -2.0f, 2.0f);
-			deltaOrientation.z = -clamp(((int) ((alite.getInput().getAccelZ() - zero.z) * 50.0f)) / 10.0f, -2.0f, 2.0f);
-			
-			deltaYawRollPitch.z = (float) (30.0f * Math.PI / 180.0f) * deltaOrientation.z;
-			if (Settings.reversePitch) {
-				deltaYawRollPitch.z = -deltaYawRollPitch.z;
-			}
-			deltaYawRollPitch.y = (float) (30.0f * Math.PI / 180.0f) * deltaOrientation.y;
-		}				
+		}
+		float accelY = alite.getInput().getAccelY();
+		float accelZ = alite.getInput().getAccelZ();
+
+		deltaYawRollPitch.x = 0;
+		deltaYawRollPitch.y = -clamp((int) (accelY * 50.0f) / 10.0f, -2.0f, 2.0f);
+		deltaYawRollPitch.z =  clamp((int) (accelZ * 30.0f) / 10.0f, -2.0f, 2.0f);
+					
+		if (Settings.reversePitch) {
+			deltaYawRollPitch.z = -deltaYawRollPitch.z;
+		}
 	}
 	
 	private void getHudControlData() {
 		if (hud != null) {
-			deltaOrientation.z = hud.getZ();
-			deltaOrientation.y = hud.getY();
-			deltaYawRollPitch.z = (float) (30.0f * Math.PI / 180.0f) * deltaOrientation.z;
+			deltaYawRollPitch.z = hud.getZ();
 			if (Settings.reversePitch) {
 				deltaYawRollPitch.z = -deltaYawRollPitch.z;
 			}
-			deltaYawRollPitch.y = (float) (30.0f * Math.PI / 180.0f) * deltaOrientation.y;
+			deltaYawRollPitch.y = hud.getY();
 		} 		
 	}
 		
@@ -963,7 +960,7 @@ public class InGameManager implements Serializable {
 		GLES11.glMatrixMode(GLES11.GL_MODELVIEW);
 		GLES11.glLoadIdentity();
 		if (playerControl) {
-			alite.getCobra().setRotation(deltaOrientation.z, deltaOrientation.y);
+			alite.getCobra().setRotation(deltaYawRollPitch.z, deltaYawRollPitch.y);
 		}
 		alite.getCobra().setSpeed(ship.getSpeed());
 		hud.render();	
@@ -1164,7 +1161,7 @@ public class InGameManager implements Serializable {
 										missileLock = (SpaceObject) go;
 										SoundManager.play(Assets.missileLocked);
 										targetMissile = false;
-									} else if (Settings.autoId) {
+									} else if (Settings.autoId && isPlayerAlive()) {
 										SoundManager.play(Assets.identify);
 										setMessage(go.getName());										
 									}

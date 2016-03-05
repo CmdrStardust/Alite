@@ -1,4 +1,4 @@
-Alite v. 1.4.4 by Philipp Bouillon and Duane McDonnell
+Alite v. 1.4.6 by Philipp Bouillon and Duane McDonnell
 
 About
 -----
@@ -19,6 +19,14 @@ exploration directly to you - wherever you are.
 Version History
 ---------------
 
+Version 1.4.6 Really fixes the accelerometer control. It's now independent of
+              the orientation. Also changed the radar color of cargo
+              canisters. [03/03/2016]
+
+Version 1.4.5 Tries to fix a problem with the accelerometer control: If you
+              are playing lying down, the pitch will change in mid-movement.
+              [02/28/2016]
+
 Version 1.4.4 Repairs the broken 1.4.3, which contained a typo and thus
               rendered the version useless. [02/12/2016]
               
@@ -33,9 +41,9 @@ Version 1.4.2 Comes with an improved "Medium Speed" Docking Computer. The
               [02/07/2016]
               
 Version 1.4.1 Bugfixes: Corrupt image replaced, Planet Info in WitchSpace
-	      enabled, Asteroid course randomized, tutorials now work if the
-	      legal status is not clean. Medium Speed Docking Computer added.
-	      [01/23/2016]
+	          enabled, Asteroid course randomized, tutorials now work if
+	          the legal status is not clean. Medium Speed Docking Computer
+	          added. [01/23/2016]
 
 Version 1.4.0 Introduces the TimeWarp feature, implemented by Steven Phillips.
               The TimeWarp lets you pass those regions in space where the torus
@@ -98,10 +106,10 @@ If you import Alite into ADT and connect your device, you can install it
 without the need to download any additional libraries. However, there are a
 couple of things you need to know:
 
-In the class "de.phbouillon.android.games.alite.AliteStartManager", you find
+In the class "de.phbouillon.android.games.alite.AliteConfig", you find
 the constant HAS_EXTENSION_APK, which is set to true. This means that all
 assets of Alite are stored in an "obb" file, which needs to be installed in
-the directory "<phone>/Android/obb/de.phbouillon.android.games.alite/main.2180.de.phbouillon.android.games.alite.obb".
+the directory "<phone>/Android/obb/de.phbouillon.android.games.alite/main.2192.de.phbouillon.android.games.alite.obb".
 
 Now you have two options:
 
@@ -131,9 +139,9 @@ a command prompt or shell in that directory and type:
 java -jar jobb.jar -d Resources -o main.<VERSION>.de.phbouillon.android.games.alite.obb -pn de.phbouillon.android.games.alite -pv <VERSION>
 
 and make sure that <VERSION> _exactly!_ matches the version number you
-specified in the AliteStartManager, see EXTENSION_FILE_VERSION.
+specified in the AliteConfig, see EXTENSION_FILE_VERSION.
 
-Once built set EXTENSION_FILE_LENGTH in AliteStartManager to the size of your
+Once built set EXTENSION_FILE_LENGTH in AliteConfig to the size of your
 new obb file in bytes and rebuild & install Alite.
 
 Why is that so complicated?! I wish I knew :). The thing is that the jobb tool
@@ -153,17 +161,16 @@ article here: http://developer.android.com/google/play/expansion-files.html
 
 If you only want to enhance Alite and test it on your device, or you don't
 want to bother handling OBBs, set the "HAS_EXTENSION_APK" flag to false in
-the AliteStartManager class.
+the AliteConfig class.
 This tells Alite that all files have to be loaded from the assets directory.
 So, if you set the flag to "false", copy all files from the Resources/assets
-directory to the assets/directory.
+directory to the assets/ directory.
 Next, copy the files from the Resources/intro directory to the res/raw
 directory ("raw" has to be created).
 Now, one more thing to do:
-In "AliteIntro", you'll find the method "determineIntroId(int quality)" and
-several commented lines below it: uncomment those and comment the final return.
-In line 179, replace the "introId = -1;" with
-"introId = R.raw.alite_intro_b1920;".
+In "AliteConfig", you'll find the constants ALITE_INTRO_XXX. Replace their
+-1 value with the "R.raw.alite_intro_xxx" value you'll find in the comments
+of the AliteConfig file. 
 
 Done. When you now deploy Alite, you don't have to keep an OBB file on your
 phone and you'll instantly see changes to resources you made. But deployment

@@ -20,8 +20,6 @@ package de.phbouillon.android.games.alite.screens.opengl.ingame;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import de.phbouillon.android.framework.Updater;
 import de.phbouillon.android.framework.impl.gl.GraphicObject;
@@ -29,7 +27,6 @@ import de.phbouillon.android.framework.math.Vector3f;
 import de.phbouillon.android.games.alite.Alite;
 import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.model.statistics.WeaponType;
-import de.phbouillon.android.games.alite.screens.opengl.objects.AliteObject;
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.CobraMkIII;
 
 class GameOverUpdater implements Updater {
@@ -84,6 +81,7 @@ class GameOverUpdater implements Updater {
 	private final void spawnShip() {
 		ship.computeMatrix();
 		cobra = new CobraMkIII(alite);
+		cobra.setIdentified();
 		cobra.setUpVector(ship.getUpVector());
 		cobra.setRightVector(ship.getRightVector());
 		cobra.setForwardVector(ship.getForwardVector());
@@ -112,12 +110,8 @@ class GameOverUpdater implements Updater {
 	
 	private final void destroyShip() {
 		if (needsDestruction) {
-			List<AliteObject> objectsToBeAdded = new ArrayList<AliteObject>();		
 			cobra.setHullStrength(0);
 			inGame.explode(cobra, true, WeaponType.BeamLaser);
-			for (AliteObject o: objectsToBeAdded) {
-				inGame.addObject(o);
-			}
 			needsDestruction = false;
 		}
 		if ((System.nanoTime() - startTime) > 10000000000l) {

@@ -84,23 +84,22 @@ public class AliteIntro extends Activity implements OnClickListener {
 	}
 	
 	private int determineIntroId(int quality) {
-//		switch (quality) {
-//			case 0: AliteLog.d("Video Playback", "Using video resolution 1920x1080");
-//			        return R.raw.alite_intro_b1920;
-//			case 1: AliteLog.d("Video Playback", "Using video resolution 1280x720");
-//				    return R.raw.alite_intro_b1280;
-//			case 2:	AliteLog.d("Video Playback", "Using video resolution 640x360");
-//					return R.raw.alite_intro_b640;					
-//			case 3: AliteLog.d("Video Playback", "Using video resolution 320x180");
-//					return R.raw.alite_intro_b320;
-//			case 4: AliteLog.d("Video Playback", "Failsafe mode 1: 288");
-//					return R.raw.alite_intro_288;
-//			case 5: AliteLog.d("Video Playback", "Failsafe mode 2: 240");
-//					return R.raw.alite_intro_b240;
-//			default: AliteLog.d("Video Playback", "No mode found. Giving up :(.");
-//					 return -1;
-//		}
-		return -1;
+		switch (quality) {
+			case 0: AliteLog.d("Video Playback", "Using video resolution 1920x1080");
+			        return AliteConfig.ALITE_INTRO_B1920;
+			case 1: AliteLog.d("Video Playback", "Using video resolution 1280x720");
+				    return AliteConfig.ALITE_INTRO_B1280; 
+			case 2:	AliteLog.d("Video Playback", "Using video resolution 640x360");
+					return AliteConfig.ALITE_INTRO_B640; 					
+			case 3: AliteLog.d("Video Playback", "Using video resolution 320x180");
+					return AliteConfig.ALITE_INTRO_B320;
+			case 4: AliteLog.d("Video Playback", "Failsafe mode 1: 288");
+					return AliteConfig.ALITE_INTRO_288;
+			case 5: AliteLog.d("Video Playback", "Failsafe mode 2: 240");
+					return AliteConfig.ALITE_INTRO_B240;
+			default: AliteLog.d("Video Playback", "No mode found. Giving up :(.");
+					 return -1;
+		}
 	}
 
 	private String determineIntroFilename(int quality) {
@@ -164,7 +163,7 @@ public class AliteIntro extends Activity implements OnClickListener {
 		if (videoView == null) {
 			initializeVideoView();
 		}
-		if (AliteStartManager.HAS_EXTENSION_APK) {
+		if (AliteConfig.HAS_EXTENSION_APK) {
 			playVideoFromOBB();
 		} else {
 			playVideoFromRawFolder();
@@ -178,7 +177,7 @@ public class AliteIntro extends Activity implements OnClickListener {
 		if (Settings.introVideoQuality == 255) {
 			cyclingThroughVideoQualities = 0;
 			AliteLog.d("Video Playback", "Using video resolution 1920x1080");
-			introId = -1; //R.raw.alite_intro_b1920;
+			introId = AliteConfig.ALITE_INTRO_B1920;
 		} else {
 			introId = determineIntroId(Settings.introVideoQuality);
 		}
@@ -260,7 +259,7 @@ public class AliteIntro extends Activity implements OnClickListener {
 			@Override
 			public boolean onError(MediaPlayer mp, int what, int extra) {
 				AliteLog.d("cyclingThroughVideoQualities [1]", "cyclingThroughVideoQualities = " + cyclingThroughVideoQualities);
-				if (AliteStartManager.HAS_EXTENSION_APK) {
+				if (AliteConfig.HAS_EXTENSION_APK) {
 					if (errorHandlerObb(mp)) {
 						return true;
 					}
@@ -340,7 +339,7 @@ public class AliteIntro extends Activity implements OnClickListener {
 									// Ignore
 								}
 							}
-							if (AliteStartManager.HAS_EXTENSION_APK) {
+							if (AliteConfig.HAS_EXTENSION_APK) {
 								videoViewFileInputStream = new FileInputStream(getAbsolutePath(introFilename));
 								AliteLog.d("Intro path", "Intro path: " + getAbsolutePath(introFilename));
 								videoView.setVideoFD(videoViewFileInputStream.getFD());

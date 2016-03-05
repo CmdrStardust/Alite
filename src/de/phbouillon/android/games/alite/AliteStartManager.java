@@ -46,9 +46,6 @@ import de.phbouillon.android.games.alite.io.AliteFiles;
 import de.phbouillon.android.games.alite.screens.canvas.tutorial.IMethodHook;
 
 public class AliteStartManager extends Activity implements IDownloaderClient {	
-	public static final boolean HAS_EXTENSION_APK = true;
-	public static final int EXTENSION_FILE_VERSION = 2192;
-	private static final long EXTENSION_FILE_LENGTH = 427312705l;
 	public static final int ALITE_RESULT_CLOSE_ALL = 78615265;
 		
 	public static final String ALITE_STATE_FILE = "current_state.dat";
@@ -81,10 +78,10 @@ public class AliteStartManager extends Activity implements IDownloaderClient {
         if (oldObb.exists()) {
         	oldObb.delete();
         }
-	    String fileName = Helpers.getExpansionAPKFileName(this, true, EXTENSION_FILE_VERSION);
+	    String fileName = Helpers.getExpansionAPKFileName(this, true, AliteConfig.EXTENSION_FILE_VERSION);
 	    File fileForNewFile = new File(Helpers.generateSaveFileName(this, fileName));
 	    AliteLog.e("Check for OBB", "OBB exists? " + fileForNewFile.getAbsolutePath());
-	    return Helpers.doesFileExist(this, fileName, EXTENSION_FILE_LENGTH, false);
+	    return Helpers.doesFileExist(this, fileName, AliteConfig.EXTENSION_FILE_LENGTH, false);
 	}
 		
 	private void setStatus(String status) {
@@ -151,7 +148,7 @@ public class AliteStartManager extends Activity implements IDownloaderClient {
 		AliteLog.d("Alite Start Manager", "Alite Start Manager has been created.");
 		Settings.load(fileIO);
 
-		if (HAS_EXTENSION_APK) {
+		if (AliteConfig.HAS_EXTENSION_APK) {
 			checkDownload();
 		} else {
 			startGame();
@@ -254,7 +251,7 @@ public class AliteStartManager extends Activity implements IDownloaderClient {
 		setStatus(getString(Helpers.getDownloaderStringResourceIDFromState(newState)));
 		if (newState == IDownloaderClient.STATE_COMPLETED) {
 			((TextView) findViewById(R.id.downloadProgressPercentTextView)).setText("100%");
-			((ProgressBar) findViewById(R.id.downloadProgressBar)).setProgress((int) EXTENSION_FILE_LENGTH);
+			((ProgressBar) findViewById(R.id.downloadProgressBar)).setProgress((int) AliteConfig.EXTENSION_FILE_LENGTH);
 			((TextView) findViewById(R.id.downloadTextView)).setText("Download complete.");
 			AliteFiles.performMount(this, new IMethodHook() {
 				private static final long serialVersionUID = -5369313962579796580L;

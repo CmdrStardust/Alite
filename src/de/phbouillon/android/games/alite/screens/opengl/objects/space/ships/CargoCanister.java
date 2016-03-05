@@ -36,7 +36,7 @@ import de.phbouillon.android.games.alite.screens.opengl.objects.space.SpaceObjec
 public class CargoCanister extends SpaceObject {
 	private static final long serialVersionUID = -7940435691937589868L;
 
-	public static final Vector3f HUD_COLOR = new Vector3f(0.94f, 0.0f, 0.94f);
+	public static final Vector3f HUD_COLOR = new Vector3f(0.54f, 0.0f, 0.94f);
     
     private TradeGood content;
     private Weight weight;

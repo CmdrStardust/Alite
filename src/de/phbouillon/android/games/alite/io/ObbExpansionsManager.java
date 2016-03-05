@@ -26,8 +26,8 @@ import android.content.Context;
 import android.os.Environment;
 import android.os.storage.OnObbStateChangeListener;
 import android.os.storage.StorageManager;
+import de.phbouillon.android.games.alite.AliteConfig;
 import de.phbouillon.android.games.alite.AliteLog;
-import de.phbouillon.android.games.alite.AliteStartManager;
 
 /**
  * For more info about APK Expansion files see http://developer.android.com/google/play/expansion-files.html
@@ -56,7 +56,7 @@ public class ObbExpansionsManager {
         packageName = context.getPackageName();
         AliteLog.d(TAG, "Package name = " + packageName);
 
-        packageVersion = AliteStartManager.EXTENSION_FILE_VERSION;
+        packageVersion = AliteConfig.EXTENSION_FILE_VERSION;
         AliteLog.d(TAG, "Package version = " + packageVersion);
         this.listener = listener;
         sm = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
@@ -121,7 +121,7 @@ public class ObbExpansionsManager {
     public static boolean isMainFileExists(Context context) {
         String packageName = context.getPackageName();
         AliteLog.d(TAG, "Package name = " + packageName);
-        int packageVersion = AliteStartManager.EXTENSION_FILE_VERSION;
+        int packageVersion = AliteConfig.EXTENSION_FILE_VERSION;
         AliteLog.d(TAG, "Package version = " + packageVersion);
         File main = new File(Environment.getExternalStorageDirectory() + "/Android/obb/" + packageName + "/"
                 + "main." + packageVersion + "." + packageName + ".obb");

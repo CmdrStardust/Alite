@@ -37,7 +37,7 @@ import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.os.Environment;
 import de.phbouillon.android.framework.FileIO;
-import de.phbouillon.android.games.alite.AliteStartManager;
+import de.phbouillon.android.games.alite.AliteConfig;
 import de.phbouillon.android.games.alite.io.ObbExpansionsManager;
 
 public class AndroidFileIO implements FileIO {
@@ -318,7 +318,7 @@ public class AndroidFileIO implements FileIO {
 
 	@Override
 	public boolean existsPrivateFile(String fileName) throws IOException {
-		if (AliteStartManager.HAS_EXTENSION_APK) {
+		if (AliteConfig.HAS_EXTENSION_APK) {
 			return new File(ObbExpansionsManager.getInstance().getMainRoot() + "assets/" + fileName).exists();
 		}
 		try {
@@ -332,14 +332,14 @@ public class AndroidFileIO implements FileIO {
 	
 	@Override
 	public InputStream readPrivateFile(String fileName) throws IOException {
-		if (AliteStartManager.HAS_EXTENSION_APK) {
+		if (AliteConfig.HAS_EXTENSION_APK) {
 			return new FileInputStream(getPrivatePath(fileName));
 		}
 		return assets.open(fileName);
 	}
 	
 	public AssetFileDescriptor getFileDescriptor(String fileName) throws IOException {
-		if (AliteStartManager.HAS_EXTENSION_APK) {
+		if (AliteConfig.HAS_EXTENSION_APK) {
 			throw new IOException("Cannot access extension assets via AssetDescriptor. Use private path instead.");
 		}
 		return assets.openFd(fileName);
@@ -347,7 +347,7 @@ public class AndroidFileIO implements FileIO {
 
 	@Override
 	public String getPrivatePath(String fileName) throws IOException {
-		if (AliteStartManager.HAS_EXTENSION_APK) {
+		if (AliteConfig.HAS_EXTENSION_APK) {
 			String path; 		
 			if (ObbExpansionsManager.getInstance() == null) {
 				throw new IOException("Obb not loaded. Please try all-in-one solution from http://alite.mobi.");

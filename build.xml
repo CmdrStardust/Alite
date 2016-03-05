@@ -86,7 +86,26 @@
          In all cases you must update the value of version-tag below to read 'custom' instead of an integer,
          in order to avoid having your file be overridden by tools such as "android update project"
     -->
-    <!-- version-tag: 1 -->
+    
+    <target name="release"
+            depends="-set-release-mode, -package, -post-package, -release-sign, -post-build"
+            description="Builds the application in release mode.">
+    </target>
+    
+    <target name="-config" depends="clean">
+      <property name="config-target-path" value="${source.dir}/de/phbouillon/android/games/alite"/>
+
+      <copy file="config/AliteConfig.java" todir="${config-target-path}" overwrite="true" encoding="utf-8">
+        <filterset>
+          <filter token="CONFIG.HAS_EXTENSION_APK" value="false"/>
+        </filterset>
+      </copy>
+    </target>
+    
+    <target name="release-all" depends="-config">    
+    </target>
+    
+    <!-- version-tag: custom -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
 
 </project>

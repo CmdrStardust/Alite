@@ -224,7 +224,7 @@ public class LaserManager implements Serializable {
 		}
 		if (so.getCargoType() == null || !so.spawnsCargoCanisters()) {
 			// Legacy: The cargo type is still declared at a ship, but not longer used...
-			// However, if it was defined that a ship has no carho type, we still
+			// However, if it was defined that a ship has no cargo type, we still
 			// exit here...
 			return;
 		}

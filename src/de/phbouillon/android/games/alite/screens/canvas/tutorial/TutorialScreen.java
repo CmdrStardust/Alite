@@ -33,8 +33,8 @@ import de.phbouillon.android.framework.impl.AndroidFileIO;
 import de.phbouillon.android.framework.impl.AndroidGraphics;
 import de.phbouillon.android.framework.impl.PulsingHighlighter;
 import de.phbouillon.android.games.alite.Alite;
+import de.phbouillon.android.games.alite.AliteConfig;
 import de.phbouillon.android.games.alite.AliteLog;
-import de.phbouillon.android.games.alite.AliteStartManager;
 import de.phbouillon.android.games.alite.Assets;
 import de.phbouillon.android.games.alite.Button;
 import de.phbouillon.android.games.alite.SoundManager;
@@ -138,7 +138,7 @@ public abstract class TutorialScreen extends AliteScreen {
 			AndroidFileIO afi = (AndroidFileIO) alite.getFileIO();
 			String audioName = path + (index < 10 ? "0" + index : index) + ".mp3";
 			for (String t: texts) {
-				lines.add(new TutorialLine(AliteStartManager.HAS_EXTENSION_APK ? afi.getPrivatePath(audioName) :
+				lines.add(new TutorialLine(AliteConfig.HAS_EXTENSION_APK ? afi.getPrivatePath(audioName) :
 					                                                             afi.getFileDescriptor(audioName), t));
 				index++;
 			} 
@@ -153,7 +153,7 @@ public abstract class TutorialScreen extends AliteScreen {
 			int index = lines.size() + 1;
 			AndroidFileIO afi = (AndroidFileIO) alite.getFileIO();
 			String audioName = path + (index < 10 ? "0" + index : index) + ".mp3";
-			TutorialLine result = new TutorialLine(AliteStartManager.HAS_EXTENSION_APK ? afi.getPrivatePath(audioName) :
+			TutorialLine result = new TutorialLine(AliteConfig.HAS_EXTENSION_APK ? afi.getPrivatePath(audioName) :
 				                                                                         afi.getFileDescriptor(audioName), line);
 			lines.add(result);
 			return result;
@@ -169,9 +169,9 @@ public abstract class TutorialScreen extends AliteScreen {
 		AndroidFileIO afi = (AndroidFileIO) alite.getFileIO();
 		String audioName = path + (index < 10 ? "0" + index : index);
 		try {
-			TutorialLine result = new TutorialLine(AliteStartManager.HAS_EXTENSION_APK ? afi.getPrivatePath(audioName + ".mp3") :
+			TutorialLine result = new TutorialLine(AliteConfig.HAS_EXTENSION_APK ? afi.getPrivatePath(audioName + ".mp3") :
 				                                                                         afi.getFileDescriptor(audioName + ".mp3"), line);
-			result.addSpeech(AliteStartManager.HAS_EXTENSION_APK ? afi.getPrivatePath(audioName + option + ".mp3") :
+			result.addSpeech(AliteConfig.HAS_EXTENSION_APK ? afi.getPrivatePath(audioName + option + ".mp3") :
 				                                                   afi.getFileDescriptor(audioName + option + ".mp3"));
 			lines.add(result);
 			return result;

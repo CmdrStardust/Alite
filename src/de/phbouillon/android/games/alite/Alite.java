@@ -70,7 +70,7 @@ import de.phbouillon.android.games.alite.screens.opengl.ingame.LaserManager;
 import de.phbouillon.android.games.alite.screens.opengl.sprites.AliteFont;
 
 public class Alite extends AndroidGame {
-	public static final String VERSION_STRING = "1.4.4 " + (AliteStartManager.HAS_EXTENSION_APK ? "OBB" : "SFI"); 
+	public static final String VERSION_STRING = AliteConfig.VERSION_STRING + " " + (AliteConfig.HAS_EXTENSION_APK ? "OBB" : "SFI"); 
 	public static final String LOG_IS_INITIALIZED = "logIsInitialized";
 	
 	private Player player;
@@ -448,8 +448,9 @@ public class Alite extends AndroidGame {
 		Assets.italicFont     = new GLText();
 		Assets.boldItalicFont = new GLText();
 		Assets.titleFont      = new GLText(); 
-		Assets.smallFont      = new GLText(); 
-		if (AliteStartManager.HAS_EXTENSION_APK) {
+		Assets.smallFont      = new GLText();
+
+		if (AliteConfig.HAS_EXTENSION_APK) {
 			Assets.regularFont.load(ObbExpansionsManager.getInstance().getMainRoot() + "assets/robotor.ttf", (int) (40.0f * scaleFactor), 40, 2, 2);
 			Assets.boldFont.load(ObbExpansionsManager.getInstance().getMainRoot() + "assets/robotob.ttf", (int) (40.0f * scaleFactor), 40, 2, 2);
 			Assets.italicFont.load(ObbExpansionsManager.getInstance().getMainRoot() + "assets/robotoi.ttf", (int) (40.0f * scaleFactor), 40, 2, 2);

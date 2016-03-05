@@ -28,8 +28,8 @@ import android.media.SoundPool;
 import de.phbouillon.android.framework.Audio;
 import de.phbouillon.android.framework.Music;
 import de.phbouillon.android.framework.Sound;
+import de.phbouillon.android.games.alite.AliteConfig;
 import de.phbouillon.android.games.alite.AliteLog;
-import de.phbouillon.android.games.alite.AliteStartManager;
 
 public class AndroidAudio implements Audio {
 	public static final int MAXIMUM_NUMBER_OF_CONCURRENT_SAMPLES = 20;
@@ -47,7 +47,7 @@ public class AndroidAudio implements Audio {
 	
 	@Override
 	public Music newMusic(String fileName, Sound.SoundType soundType) {
-		if (AliteStartManager.HAS_EXTENSION_APK) {
+		if (AliteConfig.HAS_EXTENSION_APK) {
 			try {
 				return new AndroidMusic(fileIO, fileName, soundType);
 			} catch (IOException e) {
@@ -70,7 +70,7 @@ public class AndroidAudio implements Audio {
 	@Override
 	public Sound newSound(String fileName, Sound.SoundType soundType) {
 		try {			
-			int soundId = AliteStartManager.HAS_EXTENSION_APK ? 
+			int soundId = AliteConfig.HAS_EXTENSION_APK ? 
 					soundPool.load(fileIO.getPrivatePath(fileName), 0) :
 					soundPool.load(fileIO.getFileDescriptor(fileName), 0);
 			return new AndroidSound(soundPool, soundId, soundType);
