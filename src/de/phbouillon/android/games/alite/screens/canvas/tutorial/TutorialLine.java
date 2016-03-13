@@ -75,6 +75,7 @@ class TutorialLine implements OnCompletionListener {
 			if (speechObject instanceof String) {
 				mp.setDataSource((String) speechObject);
 			} else {
+				@SuppressWarnings("resource")
 				AssetFileDescriptor afd = ((AssetFileDescriptor) speechObject); 
 				mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
 			}

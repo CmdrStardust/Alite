@@ -1,4 +1,4 @@
-Alite v. 1.4.6 by Philipp Bouillon and Duane McDonnell
+Alite v. 1.4.7 by Philipp Bouillon and Duane McDonnell
 
 About
 -----
@@ -19,6 +19,16 @@ exploration directly to you - wherever you are.
 Version History
 ---------------
 
+Version 1.4.7 Works around a bug in Android 5.0 -- and some versions above 
+              (https://code.google.com/p/android/issues/detail?id=81187).
+              Loading of small sound files is very slow, since this is a bug
+              in Android, all Alite can do to reduce its effect is to put
+              loading of sounds in the background. While on most Android
+              versions, loading of all sounds takes about 2s, on "bad"
+              versions, it takes up to 2 minutes. So, on Android 5, it
+              can happen that there should be a sound but it isn't played
+              until it is finally loaded. [03/13/2016]
+              
 Version 1.4.6 Really fixes the accelerometer control. It's now independent of
               the orientation. Also changed the radar color of cargo
               canisters. [03/03/2016]

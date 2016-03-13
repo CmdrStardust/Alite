@@ -24,7 +24,7 @@ import de.phbouillon.android.framework.Sound;
 public class SoundManager {
 	public static void play(Sound sound) {
 		if (sound == null) {
-			AliteLog.dumpStack("Sound == null", "Sound == null");
+			AliteLog.w("Sound not yet loaded.", "Can't play sound, because it wasn't loaded yet.");
 			return;
 		}
 		sound.play(Settings.volumes[sound.getType().getValue()]);
@@ -32,7 +32,7 @@ public class SoundManager {
 	
 	public static void playOnce(Sound sound, long delayInMs) {
 		if (sound == null) {
-			AliteLog.dumpStack("Sound == null", "Sound == null");
+			AliteLog.w("Sound not yet loaded.", "Can't play sound, because it wasn't loaded yet.");
 			return;
 		}
 		sound.playOnce(Settings.volumes[sound.getType().getValue()], delayInMs);
@@ -40,7 +40,7 @@ public class SoundManager {
 
 	public static boolean isPlaying(Sound sound) {
 		if (sound == null) {
-			AliteLog.dumpStack("Sound == null", "Sound == null");
+			AliteLog.w("Sound not yet loaded.", "Can't play sound, because it wasn't loaded yet.");
 			return false;
 		}
 		return sound.isPlaying();
@@ -48,7 +48,7 @@ public class SoundManager {
 	
 	public static void repeat(Sound sound) {
 		if (sound == null) {
-			AliteLog.dumpStack("Sound == null", "Sound == null");
+			AliteLog.w("Sound not yet loaded.", "Can't play sound, because it wasn't loaded yet.");
 			return;
 		}
 		sound.repeat(Settings.volumes[sound.getType().getValue()]);
@@ -56,7 +56,7 @@ public class SoundManager {
 	
 	public static void stop(Sound sound) {
 		if (sound == null) {
-			AliteLog.dumpStack("Sound == null", "Sound == null");
+			AliteLog.w("Sound not yet loaded.", "Can't play sound, because it wasn't loaded yet.");
 			return;
 		}
 		sound.stop();

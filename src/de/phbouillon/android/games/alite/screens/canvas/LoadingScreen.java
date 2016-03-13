@@ -41,20 +41,22 @@ public class LoadingScreen extends AliteScreen {
 	private void loadSounds() {
 		Assets.click                         = game.getAudio().newSound("sound/guiclick.ogg",Sound.SoundType.SOUND_FX);
 		Assets.alert                         = game.getAudio().newSound("sound/beep.ogg",Sound.SoundType.SOUND_FX);
-		Assets.energyLow                     = game.getAudio().newSound("sound/alert.ogg",Sound.SoundType.SOUND_FX);
-		Assets.altitudeLow                   = game.getAudio().newSound("sound/alert.ogg",Sound.SoundType.SOUND_FX);
-		Assets.temperatureHigh               = game.getAudio().newSound("sound/alert.ogg",Sound.SoundType.SOUND_FX);
-		Assets.criticalCondition             = game.getAudio().newSound("sound/alert.ogg",Sound.SoundType.SOUND_FX);
-		Assets.error                         = game.getAudio().newSound("sound/witchabort.ogg",Sound.SoundType.SOUND_FX);
 		Assets.kaChing                       = game.getAudio().newSound("sound/buy.ogg",Sound.SoundType.SOUND_FX);
 		Assets.fireLaser                     = game.getAudio().newSound("sound/laser.ogg",Sound.SoundType.COMBAT_FX);
 		Assets.laserHit                      = game.getAudio().newSound("sound/laserhit.ogg",Sound.SoundType.COMBAT_FX);
 		Assets.enemyFireLaser                = game.getAudio().newSound("sound/enemy_laser.ogg",Sound.SoundType.COMBAT_FX);
 		Assets.hullDamage                    = game.getAudio().newSound("sound/enemy_laserhit.ogg",Sound.SoundType.COMBAT_FX);
+
+		Assets.energyLow                     = game.getAudio().newSound("sound/alert.ogg",Sound.SoundType.SOUND_FX);
+		Assets.altitudeLow                   = Assets.energyLow;
+		Assets.temperatureHigh               = Assets.energyLow;
+		Assets.criticalCondition             = Assets.energyLow;
+		Assets.error                         = game.getAudio().newSound("sound/witchabort.ogg",Sound.SoundType.SOUND_FX);
+		
 		Assets.shipDestroyed                 = game.getAudio().newSound("sound/explosion.ogg",Sound.SoundType.COMBAT_FX);
 		Assets.scooped                       = game.getAudio().newSound("sound/scoop.ogg",Sound.SoundType.SOUND_FX);
 		Assets.fireMissile                   = game.getAudio().newSound("sound/missile.ogg",Sound.SoundType.SOUND_FX);
-		Assets.missileLocked                 = game.getAudio().newSound("sound/beep.ogg",Sound.SoundType.SOUND_FX);
+		Assets.missileLocked                 = Assets.alert;
 		Assets.torus                         = game.getAudio().newSound("sound/torus.ogg",Sound.SoundType.SOUND_FX);
 		Assets.ecm                           = game.getAudio().newSound("sound/ecm.ogg",Sound.SoundType.SOUND_FX);
 		Assets.identify                      = game.getAudio().newSound("sound/boop.ogg",Sound.SoundType.SOUND_FX);
@@ -89,20 +91,32 @@ public class LoadingScreen extends AliteScreen {
 	public void update(float deltaTime) {
 		AliteLog.d("Starting LoadingScreen", "Starting loading screen");
 		long m1 = System.currentTimeMillis();
+		AliteLog.d("Debug-1", "Now loading Alite Logo");
 		Assets.aliteLogoSmall = game.getGraphics().newPixmap("alite_logo_small.png", true);
-				
-		loadSounds();
+		AliteLog.d("Debug-2", "Logo loaded; skipping sound load");		
+		Thread t = new Thread(){
+			public void run() {
+				loadSounds();		
+			}
+		};
+		t.start();
+		AliteLog.d("Debug-3", "Now loading Alite Settings");
 		Settings.load(game.getFileIO());
-		
+		AliteLog.d("Debug-4", "Settings loaded");
 		game.getGraphics().setClip(-1, -1, -1, -1);
-			
+		AliteLog.d("Debug-5", "Clip reset");			
 		AliteLog.d("End LoadingScreen", "End LoadingScreen. Resource load took: " + (System.currentTimeMillis() - m1));
 		try {
+			AliteLog.d("Debug-6", "Now loading Alite Game State (if present)");
 			if (!((Alite) game).getFileUtils().readState((Alite) game, game.getFileIO())) {
+				AliteLog.d("Debug-7", "No game state present, defaulting to SIS");
 				game.setScreen(new ShipIntroScreen(game));
+				AliteLog.d("Debug-8", "SIS set.");
 			}
 		} catch (IOException e) {
+			AliteLog.d("Debug-9", "IO-Ex, defaulting to SIS");
 			game.setScreen(new ShipIntroScreen(game));
+			AliteLog.d("Debug-10", "SIS set.");
 		}		
 	}
 

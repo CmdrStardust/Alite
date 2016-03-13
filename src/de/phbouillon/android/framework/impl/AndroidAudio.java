@@ -69,7 +69,8 @@ public class AndroidAudio implements Audio {
 
 	@Override
 	public Sound newSound(String fileName, Sound.SoundType soundType) {
-		try {			
+		try {		
+			AliteLog.d("Loading Sound", "Loading sound " + fileName);
 			int soundId = AliteConfig.HAS_EXTENSION_APK ? 
 					soundPool.load(fileIO.getPrivatePath(fileName), 0) :
 					soundPool.load(fileIO.getFileDescriptor(fileName), 0);
