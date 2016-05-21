@@ -499,10 +499,10 @@ public class FileUtils {
 	public final void loadCommander(Alite alite, String fileName) throws IOException {
 		AliteLog.d("LOADING COMMANDER", "Filename = " + fileName);
 		byte [] commanderData = null;
-			ByteArrayInputStream bis = new ByteArrayInputStream(alite.getFileIO().readPartialFileContents(fileName, 2));
-			int length = bis.read() * 256 + bis.read();
-			commanderData = unzipBytes(decrypt(alite.getFileIO().readFileContents(fileName, 2 + length), 
-					getKey(fileName)));
+		ByteArrayInputStream bis = new ByteArrayInputStream(alite.getFileIO().readPartialFileContents(fileName, 2));
+		int length = bis.read() * 256 + bis.read();
+		commanderData = unzipBytes(decrypt(alite.getFileIO().readFileContents(fileName, 2 + length), 
+				getKey(fileName)));
 		if (commanderData == null) {
 			throw new IOException("Ouch! Couldn't load commander " + fileName + ". No changes to current commander were made.");
 		}
@@ -545,7 +545,7 @@ public class FileUtils {
 		}
 		return false;
 	}
-	
+		
 	public final void saveCommander(final Alite alite, DataOutputStream dos) throws IOException {
 		Player player = alite.getPlayer();
 		GalaxyGenerator generator = alite.getGenerator();
@@ -690,8 +690,71 @@ public class FileUtils {
 		return youngestFilename;
 	}
 
+	private void copyCommander(Alite alite, String oldFileName, String newFileName, CommanderData info) throws IOException {
+		byte [] commanderData = null;
+		ByteArrayInputStream bis = new ByteArrayInputStream(alite.getFileIO().readPartialFileContents(oldFileName, 2));
+		int length = bis.read() * 256 + bis.read();
+		commanderData = unzipBytes(decrypt(alite.getFileIO().readFileContents(oldFileName, 2 + length), 
+				getKey(oldFileName)));
+		if (commanderData == null) {
+			throw new IOException("Ouch! Couldn't load commander " + oldFileName + ". No changes to current commander were made.");
+		}
+		bis = new ByteArrayInputStream(commanderData);
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(1024);
+		byte[] buffer = new byte[1024];
+		int len;
+		while ((len = bis.read(buffer)) != -1) {
+		    bos.write(buffer, 0, len);
+		}
+		bis.close();
+		commanderData = encrypt(zipBytes(bos.toByteArray()), getKey(newFileName));
+		
+		bos = new ByteArrayOutputStream(1024);
+		DataOutputStream dos = new DataOutputStream(bos);
+		writeString(dos, info.getName(), 16);
+		writeString(dos, info.getDockedSystem(), 8);
+		dos.writeLong(info.getGameTime());
+		dos.writeInt(info.getPoints());
+		bos.write(info.getRating().ordinal());	
+		byte [] headerData = encrypt(bos.toByteArray(), getKey(newFileName));
+		
+		OutputStream fos = null;
+		try {
+			if (!alite.getFileIO().exists("commanders")) {
+				alite.getFileIO().mkDir("commanders");
+			}
+			fos = alite.getFileIO().writeFile(newFileName);
+			fos.write(headerData.length >> 8);
+			fos.write(headerData.length & 255);
+			fos.write(headerData);
+			fos.write(commanderData);			
+		} finally {
+			try {
+				if (fos != null) {
+					fos.close();
+				}
+				bos.close();
+			} catch (IOException e) {
+				AliteLog.e("[Alite] saveCommander", "Error when writing commander.", e);
+			}
+		}
+		AliteLog.d("[Alite] copyCommander", "Copied Commander '" + info.getName() + "'.");
+	}
+	
 	public final void autoSave(Alite alite) throws IOException {
-		saveCommander(alite, null, determineOldestAutosaveSlot(alite));
+		String commanderName = determineOldestAutosaveSlot(alite);
+		if (alite.getFileIO().exists(commanderName)) {
+			try {
+				CommanderData commanderData = getQuickCommanderInfo(alite, commanderName);
+				if (commanderData != null && commanderData.getGameTime() > alite.getGameTime()) {
+					// Trying to overwrite an "older" commander. Backup first.
+					copyCommander(alite, commanderName, FileUtils.generateRandomFilename("commanders", "", 12, ".cmdr", alite.getFileIO()), commanderData);
+				}
+			} catch (Exception e) {
+				AliteLog.e("Error Occurred", "Error while creating backup.", e);
+			}
+		}
+		saveCommander(alite, null, commanderName);
 	}
 	
 	public final void autoLoad(Alite alite) throws IOException {

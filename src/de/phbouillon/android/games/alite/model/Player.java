@@ -24,6 +24,7 @@ import java.util.List;
 import android.graphics.Point;
 import de.phbouillon.android.games.alite.Alite;
 import de.phbouillon.android.games.alite.model.generator.SystemData;
+import de.phbouillon.android.games.alite.model.generator.enums.Government;
 import de.phbouillon.android.games.alite.model.missions.Mission;
 import de.phbouillon.android.games.alite.model.trading.AliteMarket;
 import de.phbouillon.android.games.alite.model.trading.Market;
@@ -259,5 +260,23 @@ public class Player {
 
 	public void setCheater(boolean b) {
 		cheater = b;
+	}
+
+	public int getLegalProblemLikelihoodInPercent() {
+		if (getCurrentSystem() == null) {
+			return 0;
+		}
+		Government g = getCurrentSystem().getGovernment();
+		switch (g) {
+			case ANARCHY: return 0;
+			case FEUDAL: return 10;
+			case MULTI_GOVERNMENT: return 20;
+			case DICTATORSHIP: return 40;
+			case COMMUNIST: return 60;
+			case CONFEDERACY: return 80;
+			case DEMOCRACY: return 100;
+			case CORPORATE_STATE: return 100;		
+		}
+		return 0;
 	}
 }

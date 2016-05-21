@@ -400,4 +400,9 @@ public class EscapeCapsule extends SpaceObject {
     public float getDistanceFromCenterToBorder(Vector3f dir) {
         return 50.0f;
     }
+
+    @Override
+    public void hasBeenHitByPlayer() {
+    	computeLegalStatusAfterFriendlyHit();	
+    }
 }

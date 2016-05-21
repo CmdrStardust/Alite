@@ -272,8 +272,11 @@ public class BuyScreen extends TradeScreen {
     		SoundManager.play(Assets.kaChing);
     		cashLeft = String.format("Cash left: %d.%d Cr", player.getCash() / 10, player.getCash() % 10);
     		selection = null;
-    		((Alite) game).getPlayer().setLegalValue(
+    		int chanceInPercent = ((Alite) game).getPlayer().getLegalProblemLikelihoodInPercent();
+    		if (Math.random() * 100 < chanceInPercent) {
+    			((Alite) game).getPlayer().setLegalValue(
     				((Alite) game).getPlayer().getLegalValue() + (int) (tradeGood.getLegalityType() * buyAmount));
+    		}
     	}
 	}
 

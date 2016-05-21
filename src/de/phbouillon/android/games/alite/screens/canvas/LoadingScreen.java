@@ -26,6 +26,11 @@ import de.phbouillon.android.games.alite.Alite;
 import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.Assets;
 import de.phbouillon.android.games.alite.Settings;
+import de.phbouillon.android.games.alite.model.EquipmentStore;
+import de.phbouillon.android.games.alite.model.LegalStatus;
+import de.phbouillon.android.games.alite.model.Player;
+import de.phbouillon.android.games.alite.model.PlayerCobra;
+import de.phbouillon.android.games.alite.model.Rating;
 
 //This screen never needs to be serialized, as it is not part of the InGame state.
 @SuppressWarnings("serial")
@@ -104,7 +109,8 @@ public class LoadingScreen extends AliteScreen {
 		Settings.load(game.getFileIO());
 		AliteLog.d("Debug-4", "Settings loaded");
 		game.getGraphics().setClip(-1, -1, -1, -1);
-		AliteLog.d("Debug-5", "Clip reset");			
+		AliteLog.d("Debug-5", "Clip reset");	
+				
 		AliteLog.d("End LoadingScreen", "End LoadingScreen. Resource load took: " + (System.currentTimeMillis() - m1));
 		try {
 			AliteLog.d("Debug-6", "Now loading Alite Game State (if present)");

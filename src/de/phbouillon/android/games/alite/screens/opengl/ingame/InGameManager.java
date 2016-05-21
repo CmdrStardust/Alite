@@ -44,6 +44,7 @@ import de.phbouillon.android.games.alite.SoundManager;
 import de.phbouillon.android.games.alite.model.LegalStatus;
 import de.phbouillon.android.games.alite.model.PlayerCobra;
 import de.phbouillon.android.games.alite.model.generator.SystemData;
+import de.phbouillon.android.games.alite.model.generator.enums.Government;
 import de.phbouillon.android.games.alite.model.missions.Mission;
 import de.phbouillon.android.games.alite.model.missions.MissionManager;
 import de.phbouillon.android.games.alite.model.statistics.ShipType;
@@ -83,6 +84,7 @@ public class InGameManager implements Serializable {
 	
 	public static boolean     OVERRIDE_SPEED = false;	
 	public static boolean     playerInSafeZone = false;
+	public static boolean     safeZoneViolated = false;
 	
 	private transient AliteScreen       postDockingScreen = null;
 	private transient IMethodHook       postDockingHook   = null;
@@ -93,6 +95,8 @@ public class InGameManager implements Serializable {
 	private final Vector3f              deltaYawRollPitch     = new Vector3f(0, 0, 0);
 	private final Vector3f              tempVector            = new Vector3f(0, 0, -1);
 	private final Vector3f              systemStationPosition = new Vector3f(0, 0, 0);
+	private final Vector3f              zero                  = new Vector3f(0, 0, 0);
+	private final Vector3f              deltaOrientation      = new Vector3f(0, 0, 0);
 	
 	private final float [][]            tempMatrix = new float[3][16];
 	private final float []              viewMatrix = new float[16];		
@@ -142,8 +146,9 @@ public class InGameManager implements Serializable {
 	private boolean                     planetWasSet = false;
 	private boolean                     playerControl = true;	
 	private boolean                     targetMissile = false;
-	private boolean                     viewDirectionChanged = false;
-				
+	private boolean                     viewDirectionChanged = false;    
+    private boolean                     vipersWillEngage = false;
+    
 	private int                         viewDirection = 0;
 	private int                         lastX = -1;
 	private int                         lastY = -1;	
@@ -188,6 +193,35 @@ public class InGameManager implements Serializable {
 		AccelerometerHandler.needsCalibration = true;
 	}
 	
+	void initializeViperAction() {
+		safeZoneViolated = false;
+	    SystemData currentSystem = alite.getPlayer().getCurrentSystem();
+	    if (alite.getPlayer().getLegalStatus() == LegalStatus.CLEAN) {
+	    	vipersWillEngage = false;
+	    	return;
+	    }
+	    if (currentSystem != null) {	    	
+	    	vipersWillEngage = true;
+	    	if (getStation() != null) {	    		
+	    		int hitCount = ((SpaceStation) getStation()).getHitCount();
+	    		if (hitCount > 1) {
+	    			safeZoneViolated = true;
+	    			vipersWillEngage = true;
+	    		}
+	    	}
+	    	Government government = currentSystem.getGovernment();
+	    	if ((government == Government.ANARCHY ||
+	    		government == Government.FEUDAL) && !safeZoneViolated) {
+	    		vipersWillEngage = false;
+	    	}	    	
+	    	int roll = (int) (Math.random() * 100);
+	    	if (!safeZoneViolated && roll >= alite.getPlayer().getLegalProblemLikelihoodInPercent()) {
+	    		vipersWillEngage = false;
+	    	}
+	    	AliteLog.d("Checking Viper Attack", "Roll: " + roll + ", Likelihood: " + alite.getPlayer().getLegalProblemLikelihoodInPercent() + ", Result: " + vipersWillEngage);
+	    }
+	}
+
 	public LaserManager getLaserManager() {
 		return laserManager;
 	}
@@ -429,6 +463,25 @@ public class InGameManager implements Serializable {
 		AccelerometerHandler.needsCalibration = true;
 	}
 		
+	private void getAlternativeAccelerometerData() {
+		if (!calibrated) {			
+			zero.x = alite.getInput().getAccelX();
+			zero.y = alite.getInput().getAccelY();
+			zero.z = alite.getInput().getAccelZ();
+			calibrated = true;
+		} else {
+			deltaOrientation.x = -clamp(((int) ((alite.getInput().getAccelX() - zero.x) * 10.0f)) / 4.0f, -2.0f, 2.0f);
+			deltaOrientation.y =  clamp(((int) ((alite.getInput().getAccelY() - zero.y) * 50.0f)) / 10.0f, -2.0f, 2.0f);
+			deltaOrientation.z = -clamp(((int) ((alite.getInput().getAccelZ() - zero.z) * 50.0f)) / 10.0f, -2.0f, 2.0f);
+			
+			deltaYawRollPitch.z = /*(float) (30.0f * Math.PI / 180.0f) **/ deltaOrientation.z;
+			if (Settings.reversePitch) {
+				deltaYawRollPitch.z = -deltaYawRollPitch.z;
+			}
+			deltaYawRollPitch.y = /*(float) (30.0f * Math.PI / 180.0f) **/ deltaOrientation.y;
+		}				
+	}
+
 	private void getAccelerometerData() {
 		if (!calibrated) {			
 			calibrated = true;
@@ -461,6 +514,7 @@ public class InGameManager implements Serializable {
 		}
 		switch (Settings.controlMode) {
 			case ACCELEROMETER: getAccelerometerData(); break;
+			case ALTERNATIVE_ACCELEROMETER: getAlternativeAccelerometerData(); break;
 			case CONTROL_PAD: getHudControlData(); break;
 			case CURSOR_BLOCK: getHudControlData(); break;
 			case CURSOR_SPLIT_BLOCK: getHudControlData(); break;
@@ -675,8 +729,14 @@ public class InGameManager implements Serializable {
 		laserManager.performUpdate(deltaTime, viewDirection, ship);
 
 		updateTimedEvents();		
-		if (dockingComputerAI.isActive() && Settings.dockingComputerSpeed == 2 && alite.getPlayer().getLegalStatus() == LegalStatus.CLEAN) {
-			helper.automaticDockingSequence();
+		if (dockingComputerAI.isActive() && Settings.dockingComputerSpeed == 2) {
+			if (alite.getPlayer().getLegalStatus() == LegalStatus.CLEAN || !vipersWillEngage) {		
+				helper.automaticDockingSequence();
+			} else if (alite.getPlayer().getCurrentSystem().getGovernment() == Government.ANARCHY || alite.getPlayer().getCurrentSystem().getGovernment() == Government.FEUDAL) {
+				if (!safeZoneViolated) {
+					helper.automaticDockingSequence();
+				}
+			}
 		}
 		updateObjects(deltaTime, allObjects);
 		
@@ -1002,8 +1062,12 @@ public class InGameManager implements Serializable {
 			return;
 		}
 		if (go.isVisibleOnHud() && hud != null) {
-			Matrix.multiplyMM(tempMatrix[1], 0, viewMatrix, 0, go.getMatrix(), 0);
-			hud.setObject(hudIndex++, tempMatrix[1][12], tempMatrix[1][13], tempMatrix[1][14], go.getHudColor(), isEnemy(go));
+			Matrix.multiplyMM(tempMatrix[1], 0, viewMatrix, 0, go.getMatrix(), 0);			
+			if (go instanceof SpaceObject && ((SpaceObject) go).hasOverrideColor()) {
+				hud.setObject(hudIndex++, tempMatrix[1][12], tempMatrix[1][13], tempMatrix[1][14], ((SpaceObject) go).getOverrideColor(), isEnemy(go));
+			} else {
+				hud.setObject(hudIndex++, tempMatrix[1][12], tempMatrix[1][13], tempMatrix[1][14], go.getHudColor(), isEnemy(go));
+			}
 		}
 		if (go instanceof SpaceObject
 				&& ((SpaceObject) go).getType() == ObjectType.SpaceStation
@@ -1573,5 +1637,13 @@ public class InGameManager implements Serializable {
 	
 	public SpaceObject getMissileLock() {
 		return missileLock;
+	}
+
+	public boolean isVipersWillEngage() {
+		return vipersWillEngage;
+	}
+
+	public void setVipersWillEngage(boolean b) {
+		vipersWillEngage = b;
 	}
 }

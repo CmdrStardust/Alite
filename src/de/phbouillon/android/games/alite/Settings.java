@@ -84,7 +84,9 @@ public class Settings {
     public static boolean reversePitch = false;
     public static boolean flatButtonDisplay = false;
     public static int dockingComputerSpeed = 0;
-    
+    public static int difficultyLevel = 3;
+	public static int restoredCommanderCount = 0;
+        
 	public static void load(FileIO files) {
 		for (int i = 0; i < 12; i++) {
 			buttonPosition[i] = i;
@@ -139,6 +141,8 @@ public class Settings {
 			volumes[Sound.SoundType.COMBAT_FX.getValue()] = Float.parseFloat(in.readLine());
 			vibrateLevel = Float.parseFloat(in.readLine());
 			dockingComputerSpeed = Integer.parseInt(in.readLine());
+			difficultyLevel = Integer.parseInt(in.readLine());
+			restoredCommanderCount = Integer.parseInt(in.readLine());
 		} catch (Throwable t) {
 			dockingComputerSpeed = fastDC ? 2 : 0;
 			// Ignore
@@ -198,6 +202,8 @@ public class Settings {
 			out.write(Float.toString(volumes[Sound.SoundType.COMBAT_FX.getValue()]) + "\n");
 			out.write(Float.toString(vibrateLevel)  + "\n");
 			out.write(Integer.toString(dockingComputerSpeed) + "\n");
+			out.write(Integer.toString(difficultyLevel) + "\n");
+			out.write(Integer.toString(restoredCommanderCount) + "\n");
 		} catch (Exception e) {
 			// Ignore
 		} finally {

@@ -1,4 +1,4 @@
-Alite v. 1.4.7 by Philipp Bouillon and Duane McDonnell
+Alite v. 1.5.0 by Philipp Bouillon and Duane McDonnell
 
 About
 -----
@@ -19,7 +19,17 @@ exploration directly to you - wherever you are.
 Version History
 ---------------
 
-Version 1.4.7 Works around a bug in Android 5.0 -- and some versions above 
+Version 1.5.0 Has a new legal system: Vipers won't attack the player in unsafer
+              systems. Fixed a corrupt texture and improved the commander save
+              routines. [05/08/2016]
+
+Version 1.4.8 Brings back the old accelerometer control in addition to the new
+              one, as the new one has problems on some devices (for example
+              the Nexus 10). Also, in 1.4.8 we finally have a difficulty
+              level, so that you can reduce the number of enemies if the game
+              is too hard in the beginning. [04/03/2016]
+
+Version 1.4.7 Works around a bug in Android 5.0 -- and some versions above
               (https://code.google.com/p/android/issues/detail?id=81187).
               Loading of small sound files is very slow, since this is a bug
               in Android, all Alite can do to reduce its effect is to put
@@ -28,7 +38,7 @@ Version 1.4.7 Works around a bug in Android 5.0 -- and some versions above
               versions, it takes up to 2 minutes. So, on Android 5, it
               can happen that there should be a sound but it isn't played
               until it is finally loaded. [03/13/2016]
-              
+
 Version 1.4.6 Really fixes the accelerometer control. It's now independent of
               the orientation. Also changed the radar color of cargo
               canisters. [03/03/2016]
@@ -39,21 +49,21 @@ Version 1.4.5 Tries to fix a problem with the accelerometer control: If you
 
 Version 1.4.4 Repairs the broken 1.4.3, which contained a typo and thus
               rendered the version useless. [02/12/2016]
-              
+
 Version 1.4.3 Fixes a bug in mission 4, which causes an exception when
               entering hyperspace after receiving this mission.
               [02/11/2016]
-              
+
 Version 1.4.2 Comes with an improved "Medium Speed" Docking Computer. The
               algorithm now correctly evades other ships (and the space
               station), without crashing into them. Another bug regarding
               pausing the game when explosions were visible, was fixed.
               [02/07/2016]
-              
+
 Version 1.4.1 Bugfixes: Corrupt image replaced, Planet Info in WitchSpace
-	          enabled, Asteroid course randomized, tutorials now work if
-	          the legal status is not clean. Medium Speed Docking Computer
-	          added. [01/23/2016]
+	      enabled, Asteroid course randomized, tutorials now work if
+	      the legal status is not clean. Medium Speed Docking Computer
+	      added. [01/23/2016]
 
 Version 1.4.0 Introduces the TimeWarp feature, implemented by Steven Phillips.
               The TimeWarp lets you pass those regions in space where the torus
@@ -180,7 +190,7 @@ directory ("raw" has to be created).
 Now, one more thing to do:
 In "AliteConfig", you'll find the constants ALITE_INTRO_XXX. Replace their
 -1 value with the "R.raw.alite_intro_xxx" value you'll find in the comments
-of the AliteConfig file. 
+of the AliteConfig file.
 
 Done. When you now deploy Alite, you don't have to keep an OBB file on your
 phone and you'll instantly see changes to resources you made. But deployment

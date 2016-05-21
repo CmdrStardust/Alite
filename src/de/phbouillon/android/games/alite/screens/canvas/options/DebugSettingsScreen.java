@@ -181,24 +181,27 @@ public class DebugSettingsScreen extends AliteScreen {
 				SoundManager.play(Assets.click);
 				Player player = ((Alite) game).getPlayer();
 				int score = player.getScore();
-				if (score < Rating.HARMLESS.getScoreThreshold()) {
+				if (score < Rating.HARMLESS.getScoreThreshold() - 1) {
 					score = Rating.HARMLESS.getScoreThreshold() - 1;
-				} else if (score < Rating.MOSTLY_HARMLESS.getScoreThreshold()) {
+				} else if (score < Rating.MOSTLY_HARMLESS.getScoreThreshold() - 1) {
 					score = Rating.MOSTLY_HARMLESS.getScoreThreshold() - 1;
-				} else if (score < Rating.POOR.getScoreThreshold()) {
+				} else if (score < Rating.POOR.getScoreThreshold() - 1) {
 					score = Rating.POOR.getScoreThreshold() - 1;
-				} else if (score < Rating.AVERAGE.getScoreThreshold()) {
+				} else if (score < Rating.AVERAGE.getScoreThreshold() - 1) {
 					score = Rating.AVERAGE.getScoreThreshold() - 1;
-				} else if (score < Rating.ABOVE_AVERAGE.getScoreThreshold()) {
+				} else if (score < Rating.ABOVE_AVERAGE.getScoreThreshold() - 1) {
 					score = Rating.ABOVE_AVERAGE.getScoreThreshold() - 1;
-				} else if (score < Rating.COMPETENT.getScoreThreshold()) {
+				} else if (score < Rating.COMPETENT.getScoreThreshold() - 1) {
 					score = Rating.COMPETENT.getScoreThreshold() - 1;
-				} else if (score < Rating.DANGEROUS.getScoreThreshold()) {
+				} else if (score < Rating.DANGEROUS.getScoreThreshold() - 1) {
 					score = Rating.DANGEROUS.getScoreThreshold() - 1;
-				} else if (score < Rating.DEADLY.getScoreThreshold()) {
+				} else if (score < Rating.DEADLY.getScoreThreshold() - 1) {
 					score = Rating.DEADLY.getScoreThreshold() - 1;
 				}
-				player.setScore(score);
+				player.setScore(score);				
+				while (score >= ((Alite) game).getPlayer().getRating().getScoreThreshold() && ((Alite) game).getPlayer().getRating().getScoreThreshold() > 0) {
+					((Alite) game).getPlayer().setRating(Rating.values()[((Alite) game).getPlayer().getRating().ordinal() + 1]);
+				}
 				adjustScore.setText("Adjust Score (" + ((Alite) game).getPlayer().getScore() + ")");
 			} else if (addDockingComputer.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);

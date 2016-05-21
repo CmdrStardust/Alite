@@ -33,8 +33,10 @@ import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.Assets;
 import de.phbouillon.android.games.alite.Settings;
 import de.phbouillon.android.games.alite.SoundManager;
+import de.phbouillon.android.games.alite.model.Condition;
 import de.phbouillon.android.games.alite.model.LegalStatus;
 import de.phbouillon.android.games.alite.model.generator.SystemData;
+import de.phbouillon.android.games.alite.model.generator.enums.Government;
 import de.phbouillon.android.games.alite.model.missions.Mission;
 import de.phbouillon.android.games.alite.screens.canvas.tutorial.IMethodHook;
 import de.phbouillon.android.games.alite.screens.opengl.objects.BoxSpaceObject;
@@ -64,18 +66,21 @@ public class ObjectSpawnManager implements Serializable {
 	public static boolean THARGOIDS_ENABLED             = true;
 	public static boolean THARGONS_ENABLED              = true;
 	
-	private static final int MAX_TRADE_SHIP_COUNT = 2;
-	private static final int MAX_ASTEROID_COUNT   = 4;
-	private static final int MAX_SHUTTLE_COUNT    = 2;
-	private static final int MAX_THARGOID_COUNT   = 4;
-	private static final int MAX_ENEMY_COUNT      = 8;
-	private static final int MAX_VIPER_COUNT      = 12;
+	private transient int maxNumberOfTradeShips;
+	private transient int maxNumberOfAsteroids;
+	private transient int maxNumberOfShuttles;
+	private transient int maxNumberOfThargoids;
+	private transient int maxNumberOfEnemies;
+	private transient int maxNumberOfVipers;
+	
 	private static final long LAUNCH_BREAK_TIMER  = 15 * 1000000000l;
 	
 	private static final float SPAWN_INTER_SHIP_DISTANCE            = 1500.0f;
 	private static final float TRANSPORT_PLANET_DISTANCE_SQ         = 7225000000.0f;
 	
-	private static final int [] spawnMatrix = new int [] {1, 0, -1, 0, 0, -1, 0, 1, 1, 1};
+	private static final int [] spawnMatrix = new int [] {0, 0,  1, 0,   -1, 0,   0, -1,   0, 1,   1, 1,
+		                                                 -2, -2,  2, 0,   -2, 0,   0, -2,   0, 2,   2, 2};
+	
 	private static final float [] thargonSpawnMatrix = new float [] {0, -1,  0.7071067f, -0.7071067f,  1, 0,  0.7071067f, 0.7071067f, 
 																	 0,  1, -0.7071067f,  0.7071067f, -1, 0, -0.7071067f, -0.7071067f};	
 	private transient Alite alite;
@@ -149,6 +154,7 @@ public class ObjectSpawnManager implements Serializable {
 	ObjectSpawnManager(final Alite alite, final InGameManager inGame) {
 		this.alite = alite;
 		this.inGame = inGame;
+		initializeLimits();
 	}
 		
 	boolean needsInitialization() {
@@ -179,9 +185,20 @@ public class ObjectSpawnManager implements Serializable {
 			timedEventsMustBeInitialized = true;
 			gateWatcher = new BoxSpaceObject(alite, "GateWatcher", 510, 510, 100);
 			AliteLog.e("readObject", "ObjectSpawnManager.readObject II");
+			initializeLimits();
 		} catch (ClassNotFoundException e) {
 			AliteLog.e("Class not found", e.getMessage(), e);
 		}
+	}
+	
+	private void initializeLimits() {
+		int d = Settings.difficultyLevel;
+		maxNumberOfTradeShips = 2;
+		maxNumberOfAsteroids = 4;
+		maxNumberOfShuttles = 2;
+		maxNumberOfThargoids = d == 0 ? 0 : d == 1 ? 0 : d == 2 ? 1 : d == 3 ? 4 : d == 4 ? 8 : 10;
+		maxNumberOfEnemies = d == 0 ? 0 : d == 1 ? 2 : d == 2 ? 5 : d == 3 ? 8 : d == 4 ? 12 : 20;
+		maxNumberOfVipers = d == 0 ? 1 : d == 1 ? 1 : d == 2 ? 3 : d == 3 ? 8 : d == 4 ? 12 : 20;		
 	}
 	
 	void initTimedEvents(InGameManager inGame) {
@@ -413,7 +430,7 @@ public class ObjectSpawnManager implements Serializable {
 		inGame.addObject(ship);
 		ship.assertOrthoNormal();
 		ship.setAIState(AIState.ATTACK, inGame.getShip());
-		if (index < 5) {
+		if (index < 12) {
 			vector.x = spawnPosition.x + spawnMatrix[index * 2]     * SPAWN_INTER_SHIP_DISTANCE;
 			vector.y = spawnPosition.y + spawnMatrix[index * 2 + 1] * SPAWN_INTER_SHIP_DISTANCE;
 		}
@@ -475,8 +492,8 @@ public class ObjectSpawnManager implements Serializable {
 		inGame.repeatMessage("Condition Red!", 3);
 		int num = calculateNumberOfObjectsToSpawn();
 		int enemies = inGame.getNumberOfObjects(ObjectType.EnemyShip);
-		if (num + enemies > MAX_ENEMY_COUNT) {
-			num = MAX_ENEMY_COUNT - enemies;
+		if (num + enemies > maxNumberOfEnemies) {
+			num = maxNumberOfEnemies - enemies;
 		}
 		if (num < 0) {
 			return;
@@ -504,6 +521,19 @@ public class ObjectSpawnManager implements Serializable {
 		if (inGame.isInSafeZone()) {
 			return;
 		}
+		int thargoidNum = checkSpawnThargoid();
+		int thargoids = inGame.getNumberOfObjects(ObjectType.Thargoid);
+		if (thargoidNum + thargoids > maxNumberOfThargoids) {
+			thargoidNum = maxNumberOfThargoids - thargoids;
+		}
+		int num = calculateNumberOfObjectsToSpawn();
+		int enemies = inGame.getNumberOfObjects(ObjectType.EnemyShip);
+		if (num + enemies > maxNumberOfEnemies) {
+			num = maxNumberOfEnemies - enemies;
+		}
+		if ((thargoidNum + num) <= 0 || !CONDITION_RED_OBJECTS_ENABLED) {
+			return;
+		}
 		if (torus) {
 			int randByte = (int) (Math.random() * 256);
 			if ((system.getGovernment().ordinal() << 5) > randByte) {
@@ -514,11 +544,6 @@ public class ObjectSpawnManager implements Serializable {
 		}		
 		SoundManager.play(Assets.com_conditionRed);
 		inGame.repeatMessage("Condition Red!", 3);
-		int thargoidNum = checkSpawnThargoid();
-		int thargoids = inGame.getNumberOfObjects(ObjectType.Thargoid);
-		if (thargoidNum + thargoids > MAX_THARGOID_COUNT) {
-			thargoidNum = MAX_THARGOID_COUNT - thargoids;
-		}
 		if (thargoidNum > 0 && THARGOIDS_ENABLED) {			
 			conditionRedTimer.event.lock();
 			Vector3f spawnPosition = spawnObject(getSpawnDistance());		 
@@ -529,14 +554,6 @@ public class ObjectSpawnManager implements Serializable {
 			}
 			return;
 		} 
-		int num = calculateNumberOfObjectsToSpawn();
-		int enemies = inGame.getNumberOfObjects(ObjectType.EnemyShip);
-		if (num + enemies > MAX_ENEMY_COUNT) {
-			num = MAX_ENEMY_COUNT - enemies;
-		}
-		if (num <= 0 || !CONDITION_RED_OBJECTS_ENABLED) {
-			return;
-		}
 		conditionRedTimer.event.lock();
 		Vector3f spawnPosition = spawnObject(getSpawnDistance());		 
 		for (int i = 0; i < num; i++) {
@@ -554,8 +571,16 @@ public class ObjectSpawnManager implements Serializable {
 	}
 	
 	private int checkSpawnThargoid() {
-		if ((int) (Math.random() * 100) < Math.min(alite.getPlayer().getRating().ordinal() * 4, 20)) {
-			return alite.getPlayer().getRating().ordinal() < 5 ? 1 : Math.random() < 0.8 ? 1 : 2;
+		if (Settings.difficultyLevel < 2) {
+			return 0;
+		}
+		int prob = alite.getPlayer().getRating().ordinal() * Settings.difficultyLevel;
+		int maxProb = 20 + 5 * (Settings.difficultyLevel - 3);
+		int minNum = 1;
+		int maxNum = 2 + (Settings.difficultyLevel - 3);
+			
+		if ((int) (Math.random() * 100) < Math.min(prob, maxProb)) {
+			return alite.getPlayer().getRating().ordinal() < 5 ? 1 : Math.random() < 0.8 ? minNum : maxNum;
 		}
 		return 0;
 	}
@@ -567,9 +592,11 @@ public class ObjectSpawnManager implements Serializable {
 		if (launchBreak != -1 && System.nanoTime() < launchBreak) {
 			return false;
 		}
-		if (trader && alite.getPlayer().getLegalStatus() != LegalStatus.CLEAN) {
+		if (trader) {
 			// Vipers fly out of the docking port, so it is forbidden for all other ships ;)
-			return false;
+			if (inGame.isVipersWillEngage()) {
+				return false;
+			}
 		}
 		if (inGame.getShipInDockingBay() != null) {
 			return false;
@@ -598,7 +625,7 @@ public class ObjectSpawnManager implements Serializable {
 			AliteLog.d("Forward vector", "FV (speed normal): " + vector2);
 		}		
 		float intersectionDistance = LaserManager.computeIntersectionDistance(vector2, inGame.getShip().getPosition(), vector, 580, vector3);
-		float travelDistance = -calcSpeed * 6.0f;
+		float travelDistance = -calcSpeed * 8.5f;
 		float distShipStationSq = inGame.getShip().getPosition().distanceSq(vector);
 		AliteLog.d("Intersection check", "Intersection distance: " + intersectionDistance + ", travelDistance: " + travelDistance + ", Speed: " + calcSpeed + ", Distance: " + inGame.getShip().getPosition().distance(vector));
 		if (intersectionDistance >= 0 && distShipStationSq < 640000) {
@@ -665,7 +692,7 @@ public class ObjectSpawnManager implements Serializable {
 		if (inGame.getWitchSpace() != null) {
 			return;
 		}
-		if (inGame.getNumberOfObjects(ObjectType.Trader) >= MAX_TRADE_SHIP_COUNT || !TRADERS_ENABLED || Settings.disableTraders) {
+		if (inGame.getNumberOfObjects(ObjectType.Trader) >= maxNumberOfTradeShips || !TRADERS_ENABLED || Settings.disableTraders) {
 			return;
 		}
 		if (inGame.isInSafeZone()) {
@@ -755,7 +782,7 @@ public class ObjectSpawnManager implements Serializable {
 		if (inGame.getWitchSpace() != null) {
 			return;
 		}
-		if (inGame.getNumberOfObjects(ObjectType.Asteroid) >= MAX_ASTEROID_COUNT || !ASTEROIDS_ENABLED) {
+		if (inGame.getNumberOfObjects(ObjectType.Asteroid) >= maxNumberOfAsteroids || !ASTEROIDS_ENABLED) {
 			return;
 		}
 		if (inGame.isInSafeZone()) {
@@ -812,7 +839,7 @@ public class ObjectSpawnManager implements Serializable {
 		if (!isLaunchFromStationSafe(true)) {
 			return;
 		}
-		if (inGame.getNumberOfObjects(ObjectType.Shuttle) >= MAX_SHUTTLE_COUNT) {
+		if (inGame.getNumberOfObjects(ObjectType.Shuttle) >= maxNumberOfShuttles) {
 			return;
 		}
 		final SpaceObject shuttleOrTransport;
@@ -845,14 +872,15 @@ public class ObjectSpawnManager implements Serializable {
 	}
 	
 	private void spawnViper() {
+		AliteLog.d("Spawn Viper", "SafeZoneViolated: " + InGameManager.safeZoneViolated + ", VipersWillEngage: " + inGame.isVipersWillEngage());
 		if (inGame.getWitchSpace() != null) {
 			return;
 		}
 		if (alite.getPlayer().getLegalStatus() == LegalStatus.CLEAN) {
 			return;
 		}
-		int currentNumberOfVipers = inGame.getNumberOfObjects(ObjectType.Viper); 
-		if (inGame.getNumberOfObjects(ObjectType.Viper) >= MAX_VIPER_COUNT || !VIPERS_ENABLED) {
+		int currentNumberOfVipers = inGame.getNumberOfObjects(ObjectType.Viper) + inGame.getNumberOfObjects(ObjectType.EnemyShip); 
+		if (inGame.getNumberOfObjects(ObjectType.Viper) >= maxNumberOfVipers || !VIPERS_ENABLED) {
 			return;
 		}		
 		if (!isLaunchFromStationSafe(false)) {
@@ -865,7 +893,38 @@ public class ObjectSpawnManager implements Serializable {
 		if (currentNumberOfVipers >= maxNumberOfVipers) {
 			return;
 		}
-		final Viper viper = new Viper(alite);
+	    SystemData currentSystem = alite.getPlayer().getCurrentSystem();
+	    SpaceObject shipType = null;
+	    if (currentSystem != null) {	    	
+	    	boolean playerIsCurrentlyOffensive = InGameManager.safeZoneViolated;
+	    	if (!playerIsCurrentlyOffensive && inGame.getStation() != null) {	    		
+	    		int hitCount = ((SpaceStation) inGame.getStation()).getHitCount();
+	    		if (hitCount > 1) {
+	    			playerIsCurrentlyOffensive = true;
+	    		}
+	    	}
+	    	Government government = currentSystem.getGovernment();
+	    	if ((government == Government.ANARCHY ||
+	    		government == Government.FEUDAL) && !playerIsCurrentlyOffensive) {
+	    		return;
+	    	}
+	    	if (!playerIsCurrentlyOffensive && !inGame.isVipersWillEngage()) {
+	    		return;
+	    	}
+	    	inGame.setVipersWillEngage(true);
+	    	shipType = government == Government.ANARCHY || government == Government.FEUDAL ? 
+	    			SpaceObject.createRandomDefensiveShip(alite) : new Viper(alite);
+	    	shipType.setHudColor(Viper.HUD_COLOR);
+			Condition conditionOld = alite.getPlayer().getCondition();
+			alite.getPlayer().setCondition(Condition.RED);
+			if (conditionOld != Condition.RED) {
+				SoundManager.play(Assets.com_conditionRed);
+				inGame.repeatMessage("Condition Red!", 3);
+			}
+	    }
+	    
+		final SpaceObject viper = shipType == null ? new Viper(alite) : shipType;	
+		viper.setIgnoreSafeZone(true);
 		launchFromBay(viper, new AiStateCallbackHandler() {
 			private static final long serialVersionUID = -2431074037545740323L;
 
@@ -879,13 +938,20 @@ public class ObjectSpawnManager implements Serializable {
 	}
 	
 	private int calculateNumberOfObjectsToSpawn() {
+		int d = Settings.difficultyLevel;
 		int result = (int) (Math.random() * ((alite.getPlayer().getRating().ordinal() + 3) >> 1)) + 1;
+		if (d > 3) {
+			result += (d - 3);
+		}
 		result += alite.getPlayer().getLegalStatus().ordinal() * (Math.random() < 0.05 ? 1 : 0);
 		if (alite.getPlayer().getCurrentSystem() != null && alite.getPlayer().getCurrentSystem().getGovernment().ordinal() < 2) {
 			result += Math.random() < 0.05 ? 1 : 0;
 		}
-		if (result > 6) {
-			result = 6;
+		
+		int maxAtATime = d == 0 ? 0 : d == 1 ? 2 : d == 2 ? 3 : d == 3 ? 4 : d == 4 ? 6 : 12;
+				
+		if (result > maxAtATime) {
+			result = maxAtATime;
 		}
 		return result; 
 	}

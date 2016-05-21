@@ -37,10 +37,13 @@ import de.phbouillon.android.framework.math.Vector3f;
 import de.phbouillon.android.games.alite.Alite;
 import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.Settings;
+import de.phbouillon.android.games.alite.model.generator.SystemData;
+import de.phbouillon.android.games.alite.model.generator.enums.Government;
 import de.phbouillon.android.games.alite.model.statistics.ShipType;
 import de.phbouillon.android.games.alite.model.trading.TradeGood;
 import de.phbouillon.android.games.alite.model.trading.TradeGoodStore;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.EngineExhaust;
+import de.phbouillon.android.games.alite.screens.opengl.ingame.InGameManager;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.LaserManager;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.ObjectType;
 import de.phbouillon.android.games.alite.screens.opengl.objects.AliteObject;
@@ -124,13 +127,13 @@ public abstract class SpaceObject extends AliteObject implements Geometry, Seria
 
 	private final List <ShipType> objectsToSpawn = new ArrayList<ShipType>();
 
-
 	private final static String [] matrixString = new String[] {"", "", "", ""};
 	private final SpaceObjectAI ai = new SpaceObjectAI(this);
 	private ObjectType type;
 	protected TargetBoxSpaceObject targetBox;
-
 	protected SpaceObject proximity;
+
+	private Vector3f overrideColor = new Vector3f(0, 0, 0);
 
 	public SpaceObject(Alite alite, String name, ObjectType type) {
 		super(name);
@@ -138,7 +141,7 @@ public abstract class SpaceObject extends AliteObject implements Geometry, Seria
 		this.spawnCargoCanisters = true;
 		this.type = type;
 	}
-
+	
 	protected abstract void init();
 
 	protected void initTargetBox() {
@@ -276,6 +279,33 @@ public abstract class SpaceObject extends AliteObject implements Geometry, Seria
 	public void hasBeenHitByPlayer() {
 	}
 
+	protected void computeLegalStatusAfterFriendlyHit() {
+	    SystemData currentSystem = alite.getPlayer().getCurrentSystem();
+	    int legalValue = alite.getPlayer().getLegalValue();	 
+	    if (InGameManager.playerInSafeZone) {
+	    	if (getType() == ObjectType.SpaceStation || alite.getPlayer().getCurrentSystem().getGovernment() != Government.ANARCHY) {
+	    		InGameManager.safeZoneViolated = true;	    		
+	    	}
+	    }
+	    if (currentSystem != null) {
+	    	Government government = currentSystem.getGovernment();
+	    	switch (government) {
+	    		case ANARCHY: break; // In anarchies, you can do whatever you want.
+	    		case FEUDAL: if (hullStrength < 10 && Math.random() > 0.9) { legalValue += 16; } break;
+	    		case MULTI_GOVERNMENT: if (hullStrength < 10 && Math.random() > 0.8) { legalValue += 24; } break;
+	    		case DICTATORSHIP: if (hullStrength < 10 && Math.random() > 0.6) { legalValue += 32; } break;
+	    		case COMMUNIST: if (hullStrength < 20 && Math.random() > 0.4) { legalValue += 40; } break;
+	    		case CONFEDERACY: if (hullStrength < 30 && Math.random() > 0.2) { legalValue += 48; } break;
+	    		case DEMOCRACY: legalValue += 56; break;
+	    		case CORPORATE_STATE: legalValue += 64; break;
+	    	}
+	    } else {
+	    	// Default behavior as a "safeguard". Shouldn't really happen...
+	    	legalValue += 64;
+	    }
+	    alite.getPlayer().setLegalValue(legalValue);	    
+	}
+	
 	public void setProximity(SpaceObject other) {
 		if (other == null) {
 			proximity = null;
@@ -836,6 +866,51 @@ public abstract class SpaceObject extends AliteObject implements Geometry, Seria
 		return new Krait(alite);
 	}
 
+	private static SpaceObject createGalaxyLocalDefensiveShip(final Alite alite, int extraShip, int which) {
+		if (extraShip == 11 || extraShip == 12) {
+			return new Cottonmouth(alite);
+		}
+		if (extraShip == 13 || extraShip == 14) {
+			return which == 0 ? new Gopher(alite) : new Mussurana(alite);      // Galaxy 4
+		}
+		if (extraShip == 10 || extraShip == 15) {
+			return which == 0 ? new Bushmaster(alite) : new Indigo(alite);     // Galaxy 5
+		}
+		if (extraShip == 4 || extraShip == 0) {
+			return new Coral(alite);     // Galaxy 6
+		}
+		if (extraShip == 9 || extraShip == 1) {
+			return new Lyre(alite);           // Galaxy 7
+		}
+		return null;
+	}
+
+	public static SpaceObject createRandomDefensiveShip(final Alite alite) {
+		int extraShip = ((int) alite.getGenerator().getCurrentSeed()[0] >> 12);
+		int type = (int) (Math.random() * 10 + (extraShip == 5 || extraShip == 8 ? 0 : 2));
+		if (type > 9) {
+			SpaceObject result = createGalaxyLocalDefensiveShip(alite, extraShip, type - 10);
+			if (result == null) {
+				type = (int) (Math.random() * 10);
+			} else {
+				return result;
+			}
+		}
+		switch (type) {
+			case 0: return new CobraMkIII(alite);
+			case 1: return new Krait(alite);
+			case 2: return new Adder(alite);
+			case 3: return new Mamba(alite);
+			case 4: return new FerDeLance(alite);
+			case 5: return new CobraMkI(alite);
+			case 6: return new Python(alite);
+			case 7: return new AspMkII(alite);
+			case 8: return new Sidewinder(alite);
+			case 9: return new WolfMkII(alite);
+		}
+		return new AspMkII(alite);
+	}
+	
 	public static SpaceObject createRandomTrader(final Alite alite) {
 		int type = (int) (Math.random() * 5);
 		switch (type) {
@@ -938,5 +1013,17 @@ public abstract class SpaceObject extends AliteObject implements Geometry, Seria
 
 	public void setIdentified() {
 		identified = true;
+	}
+
+	public void setHudColor(Vector3f hudColor) {
+		hudColor.copy(overrideColor);
+	}
+
+	public boolean hasOverrideColor() {
+		return overrideColor.lengthSq() > 0.005f;
+	}
+	
+	public Vector3f getOverrideColor() {
+		return overrideColor;
 	}
 }

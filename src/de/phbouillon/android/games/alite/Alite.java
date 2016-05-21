@@ -66,6 +66,7 @@ import de.phbouillon.android.games.alite.screens.opengl.DefaultCoordinateTransfo
 import de.phbouillon.android.games.alite.screens.opengl.HyperspaceScreen;
 import de.phbouillon.android.games.alite.screens.opengl.TextureManager;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.FlightScreen;
+import de.phbouillon.android.games.alite.screens.opengl.ingame.InGameManager;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.LaserManager;
 import de.phbouillon.android.games.alite.screens.opengl.sprites.AliteFont;
 
@@ -270,7 +271,8 @@ public class Alite extends AndroidGame {
 		return (int) Math.sqrt(dx * dx + dy * dy) << 2;		
 	}
 	
-	public boolean performHyperspaceJump() {
+	public boolean performHyperspaceJump() {		
+		InGameManager.safeZoneViolated = false;
 		if (player.getActiveMissions().size() == 0) {
 			player.increaseJumpCounter();
 		}
@@ -310,6 +312,7 @@ public class Alite extends AndroidGame {
 	}
 	
 	public boolean performIntergalacticJump() {
+		InGameManager.safeZoneViolated = false;
 		if (player.getActiveMissions().size() == 0) {
 			player.increaseIntergalacticJumpCounter();
 			if (player.getIntergalacticJumpCounter() == 1) {

@@ -26,22 +26,11 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.view.OrientationEventListener;
 import android.view.WindowManager;
-import de.phbouillon.android.framework.math.Vector3f;
 import de.phbouillon.android.games.alite.Settings;
 
-public class AccelerometerHandler implements SensorEventListener, IAccelerometerHandler {
-	public static boolean needsCalibration = true;
-	
+public class AlternativeAccelHandler implements SensorEventListener, IAccelerometerHandler {
 	private float [] accelValues = new float[3];
 	private float [] adjustedValues = new float[3];
-	private Vector3f accelerationVector      = new Vector3f(0, 0, 0);
-	private Vector3f accelerationMean        = new Vector3f(0, 0, 0);
-	private Vector3f accelerationCalibration = new Vector3f(0, 0, 0);
-	private Vector3f rollVector = new Vector3f(0, 0, 0);
-	private Vector3f pitchVector = new Vector3f(0, 0, 0);
-	private Vector3f upVector = new Vector3f(0, 1, 0);
-	private Vector3f tempVector = new Vector3f(0, 0, 0);
-	
 	private final AndroidGame game;
 	private int defaultOrientation;
 	private boolean reversedLandscape = false;
@@ -98,7 +87,7 @@ public class AccelerometerHandler implements SensorEventListener, IAccelerometer
 		}
 	};		
 
-	public AccelerometerHandler(AndroidGame game) {
+	public AlternativeAccelHandler(AndroidGame game) {
 		this.game = game;
 		defaultOrientation = getDeviceDefaultOrientation();		
 		deviceOrientationManager = new DeviceOrientationManager();
@@ -135,23 +124,20 @@ public class AccelerometerHandler implements SensorEventListener, IAccelerometer
 		
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		accelerationVector.x = event.values[0];
-		accelerationVector.y = event.values[1];
-		accelerationVector.z = event.values[2];
-		accelerationVector.normalize();
-		
-		accelerationVector.copy(accelerationMean);
-		if (needsCalibration) {			
-			needsCalibration = false;
-			accelerationVector.copy(accelerationCalibration);
-			upVector.copy(rollVector);
-			upVector.cross(accelerationCalibration, pitchVector);
+		switch (event.sensor.getType()) {
+			case Sensor.TYPE_ACCELEROMETER:
+				for (int i = 0; i < 3; i++) {
+					accelValues[i] = event.values[i];
+				}
+				break;
 		}
-		
-		accelerationMean.sub(accelerationCalibration, tempVector);		
-		accelValues[0] = 0;                           // Yaw
-		accelValues[1] = tempVector.dot(rollVector);  // Roll
-		accelValues[2] = tempVector.dot(pitchVector); // Pitch		
+
+		float roll  = (float) Math.atan2(accelValues[0], accelValues[2]);
+		float pitch = (float) Math.atan2(accelValues[1], accelValues[2]);
+
+		accelValues[2] = -roll;
+		accelValues[1] = -pitch;
+		accelValues[0] = 0;
 		adjustAccelOrientation(accelValues);
 	}
 		

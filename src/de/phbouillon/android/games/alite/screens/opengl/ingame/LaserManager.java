@@ -18,8 +18,6 @@ package de.phbouillon.android.games.alite.screens.opengl.ingame;
  * http://http://www.gnu.org/licenses/gpl-3.0.txt.
  */
 
-import android.content.Context;
-import android.os.Vibrator;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -28,8 +26,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import android.content.Context;
 import android.opengl.GLES11;
 import android.opengl.Matrix;
+import android.os.Vibrator;
 import de.phbouillon.android.framework.Updater;
 import de.phbouillon.android.framework.impl.Pool;
 import de.phbouillon.android.framework.impl.Pool.PoolObjectFactory;
@@ -434,7 +434,20 @@ public class LaserManager implements Serializable {
 	}
 
 	final void computeScore(SpaceObject destroyedObject, WeaponType wt) {
-		alite.getPlayer().setScore(alite.getPlayer().getScore() + destroyedObject.getScore());
+		int points = destroyedObject.getScore();
+		if (Settings.difficultyLevel == 0) {
+			points >>= 1;
+		} else if (Settings.difficultyLevel == 1) {
+			points = (int) (points * 0.75f);
+		} else if (Settings.difficultyLevel == 2) {
+			points = (int) (points * 0.85f);
+		} else if (Settings.difficultyLevel == 4) {
+			points = (int) (points * 1.25f);
+		} else if (Settings.difficultyLevel == 5) {
+			points <<= 1;
+		}			
+		AliteLog.d("Player kill", "Destroyed " + destroyedObject.getName() + " at Difficulty " + Settings.difficultyLevel + " for " + points + " points.");	
+		alite.getPlayer().setScore(alite.getPlayer().getScore() + points);
 		checkPromotion();
 		if (destroyedObject.getScore() > 0) {
 			alite.getPlayer().increaseKillCount(1);

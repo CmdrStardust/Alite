@@ -33,6 +33,7 @@ import de.phbouillon.android.games.alite.model.EquipmentStore;
 import de.phbouillon.android.games.alite.model.LegalStatus;
 import de.phbouillon.android.games.alite.model.PlayerCobra;
 import de.phbouillon.android.games.alite.model.Weight;
+import de.phbouillon.android.games.alite.model.generator.enums.Government;
 import de.phbouillon.android.games.alite.model.statistics.WeaponType;
 import de.phbouillon.android.games.alite.model.trading.TradeGood;
 import de.phbouillon.android.games.alite.model.trading.TradeGoodStore;
@@ -350,7 +351,26 @@ public class InGameHelper implements Serializable {
 			if (target.getType() == ObjectType.SpaceStation ||
 			    target.getType() == ObjectType.Shuttle ||
 			    target.getType() == ObjectType.Trader) {
-				alite.getPlayer().setLegalValue(alite.getPlayer().getLegalValue() + 32);
+				int legalValue = alite.getPlayer().getLegalValue();
+				if (InGameManager.playerInSafeZone) {
+					InGameManager.safeZoneViolated = true;
+				}
+				if (alite.getPlayer().getCurrentSystem() != null) {
+					Government g = alite.getPlayer().getCurrentSystem().getGovernment();
+					switch (g) {
+		    			case ANARCHY: break; // In anarchies, you can do whatever you want.
+		    			case FEUDAL: if (Math.random() > 0.9) { legalValue += 16; } break;
+		    			case MULTI_GOVERNMENT: if (Math.random() > 0.8) { legalValue += 24; } break;
+		    			case DICTATORSHIP: if (Math.random() > 0.6) { legalValue += 32; } break;
+		    			case COMMUNIST: if (Math.random() > 0.4) { legalValue += 32; } break;
+		    			case CONFEDERACY: if (Math.random() > 0.2) { legalValue += 32; } break;
+		    			case DEMOCRACY: legalValue += 32; break;
+		    			case CORPORATE_STATE: legalValue += 32; break;					
+					}
+				} else {
+					legalValue += 32;
+				}
+				alite.getPlayer().setLegalValue(legalValue);
 			}
 		}
 		missile.setAIState(AIState.MISSILE_TRACK, target);

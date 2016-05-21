@@ -19,6 +19,7 @@ package de.phbouillon.android.games.alite.screens.canvas.options;
  */
 
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.util.Locale;
 
 import android.content.Intent;
@@ -35,6 +36,12 @@ import de.phbouillon.android.games.alite.Settings;
 import de.phbouillon.android.games.alite.Slider;
 import de.phbouillon.android.games.alite.SoundManager;
 import de.phbouillon.android.games.alite.colors.AliteColors;
+import de.phbouillon.android.games.alite.io.FileUtils;
+import de.phbouillon.android.games.alite.model.EquipmentStore;
+import de.phbouillon.android.games.alite.model.LegalStatus;
+import de.phbouillon.android.games.alite.model.Player;
+import de.phbouillon.android.games.alite.model.PlayerCobra;
+import de.phbouillon.android.games.alite.model.Rating;
 import de.phbouillon.android.games.alite.screens.canvas.AliteScreen;
 import de.phbouillon.android.games.alite.screens.opengl.AboutScreen;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.FlightScreen;
@@ -43,10 +50,12 @@ import de.phbouillon.android.games.alite.screens.opengl.ingame.FlightScreen;
 @SuppressWarnings("serial")
 public class OptionsScreen extends AliteScreen {
 	public static boolean SHOW_DEBUG_MENU = false;
+	private static final boolean RESTORE_SAVEGAME = false;
 	
 	private Button resetGame;
 	private Button about;
 	private Button debug;
+	private Button gameplayOptions;
 	private Button displayOptions;
 	private Button controlOptions;
 	private Button audioOptions;
@@ -88,15 +97,16 @@ public class OptionsScreen extends AliteScreen {
 
 	@Override
 	public void activate() {
-		displayOptions = createButton(0, "Display Options");
-		audioOptions   = createButton(1, "Audio Options");
-		controlOptions = createButton(2, "Control Options");
-		resetGame      = createButton(3, "Reset Game");
-		about          = createButton(4, "About");
+		gameplayOptions = createButton(0, "Gameplay Options");
+		displayOptions  = createButton(1, "Display Options");
+		audioOptions    = createButton(2, "Audio Options");
+		controlOptions  = createButton(3, "Control Options");
+		resetGame       = createButton(4, "Reset Game");
+		about           = createButton(5, "About");
+		debug           = createButton(6, SHOW_DEBUG_MENU ? "Debug Menu" : ("Log to file: " + (Settings.logToFile ? "Yes" : "No")));
 		if (((Alite) game).getCurrentScreen() instanceof FlightScreen) {
 			about.setVisible(false);
 		}
-		debug          = createButton(5, SHOW_DEBUG_MENU ? "Debug Menu" : ("Log to file: " + (Settings.logToFile ? "Yes" : "No")));
 	}
 			
 	@Override
@@ -108,6 +118,7 @@ public class OptionsScreen extends AliteScreen {
 		g.clear(AliteColors.get().background());
 		
 		displayTitle("Options");
+		gameplayOptions.render(g);
 		displayOptions.render(g);
 		audioOptions.render(g);
 		controlOptions.render(g);
@@ -133,12 +144,45 @@ public class OptionsScreen extends AliteScreen {
 					Alite alite = (Alite) game;
 					alite.getPlayer().reset();
 					alite.setGameTime(0);
+					
+					if (RESTORE_SAVEGAME) {
+						Player player = ((Alite) game).getPlayer();
+						PlayerCobra cobra = ((Alite) game).getPlayer().getCobra();
+						player.setCash(5200);
+						player.setLegalStatus(LegalStatus.CLEAN);
+						player.setLegalValue(0);
+						player.setRating(Rating.ABOVE_AVERAGE);
+						player.setScore(24800);
+						player.setName("richard");
+						player.setCurrentSystem(((Alite) game).getGenerator()
+								.getSystem(55));
+						player.setHyperspaceSystem(((Alite) game)
+								.getGenerator().getSystem(55));
+						cobra.addEquipment(EquipmentStore.fuelScoop);
+						cobra.setLaser(PlayerCobra.DIR_FRONT,
+								EquipmentStore.beamLaser);
+						((Alite) game).setGameTime((long) (9l * 60l * 60l
+								* 1000l * 1000l * 1000l + 458172675200l));
+						try {
+							String fileName = FileUtils.generateRandomFilename(
+									"commanders", "", 12, ".cmdr",
+									game.getFileIO());
+							((Alite) game).getFileUtils().saveCommander(
+									(Alite) game, "richard", fileName);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+					
 					Intent intent = new Intent(alite, AliteIntro.class);
 					intent.putExtra(Alite.LOG_IS_INITIALIZED, true);
 					alite.startActivityForResult(intent, 0);
 				}
 			}
-			if (displayOptions.isTouched(touch.x, touch.y)) {
+			if (gameplayOptions.isTouched(touch.x, touch.y)) {
+				SoundManager.play(Assets.click);
+				newScreen = new GameplayOptionsScreen(game);
+			} else if (displayOptions.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);
 				newScreen = new DisplayOptionsScreen(game);
 			} else if (audioOptions.isTouched(touch.x, touch.y)) {

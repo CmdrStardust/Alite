@@ -23,17 +23,43 @@ import java.util.Vector;
 import android.os.Build.VERSION;
 import android.view.View;
 import de.phbouillon.android.framework.Input;
+import de.phbouillon.android.games.alite.Settings;
+import de.phbouillon.android.games.alite.ShipControl;
 
 public class AndroidInput implements Input {
-	private final AccelerometerHandler accelHandler;
+	private IAccelerometerHandler accelHandler;
 	private final TouchHandler touchHandler;
-		
+	private final AndroidGame game;
+	
 	public AndroidInput(AndroidGame game, View view, float scaleX, float scaleY, int offsetX, int offsetY) {
-		accelHandler = new AccelerometerHandler(game);
+		this.game = game;
+		accelHandler = Settings.controlMode == ShipControl.ALTERNATIVE_ACCELEROMETER ? 
+							new AlternativeAccelHandler(game) : 
+							new AccelerometerHandler(game);
 		int sdkVersion = VERSION.SDK_INT;		
 		touchHandler = sdkVersion < 5 ? 
 				new SingleTouchHandler(view, scaleX, scaleY, offsetX, offsetY) :
 				new MultiTouchHandler(view, scaleX, scaleY, offsetX, offsetY);			
+	}
+		
+	@Override
+	public void switchAccelerometerHandler() {
+		if (accelHandler != null) {
+			if (accelHandler instanceof AccelerometerHandler) {
+				accelHandler.dispose();
+				accelHandler = new AlternativeAccelHandler(game);
+			} else if (accelHandler instanceof AlternativeAccelHandler) {
+				accelHandler.dispose();
+				accelHandler = new AccelerometerHandler(game);
+			}
+		} else {
+			accelHandler = new AccelerometerHandler(game);
+		}
+	}
+	
+	@Override
+	public boolean isAlternativeAccelerometer() {
+		return accelHandler instanceof AlternativeAccelHandler;
 	}
 	
 	public void setView(View view) {

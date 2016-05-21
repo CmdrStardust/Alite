@@ -282,7 +282,8 @@ public class TutBasicFlying extends TutorialScreen {
 	private void initLine_10() {
 		addLine(6, "I will let you control the pitch and roll of your " +
 				"Cobra. To control pitch, "
-			+ (Settings.controlMode == ShipControl.ACCELEROMETER ?
+			+ (Settings.controlMode == ShipControl.ACCELEROMETER ||
+			   Settings.controlMode == ShipControl.ALTERNATIVE_ACCELEROMETER ?
 				"tilt your screen towards you to go up and away from " +
 				"you to go down." :
 			   Settings.controlMode == ShipControl.CONTROL_PAD ?
@@ -290,14 +291,16 @@ public class TutBasicFlying extends TutorialScreen {
 				"the lower part to go up." :
 				"tap the arrow pointing up to go down and the arrow " +
 				"pointing down to go up."),
-				Settings.controlMode == ShipControl.ACCELEROMETER ? "a" :
+				Settings.controlMode == ShipControl.ACCELEROMETER ||
+				Settings.controlMode == ShipControl.ALTERNATIVE_ACCELEROMETER ? "a" :
 				Settings.controlMode == ShipControl.CONTROL_PAD ? "b" : "c").
 			setX(250).setWidth(1420).setY(20).setHeight(220);
 	}
 	
 	private void initLine_11() {
 		addLine(6, "To control roll, "
-			+ (Settings.controlMode == ShipControl.ACCELEROMETER ?
+			+ (Settings.controlMode == ShipControl.ACCELEROMETER ||
+			   Settings.controlMode == ShipControl.ALTERNATIVE_ACCELEROMETER ?
 				"rotate the left side of your screen away from you to roll " +
 				"left and rotate it towards you to roll right." :
 			   Settings.controlMode == ShipControl.CONTROL_PAD ?
@@ -305,7 +308,8 @@ public class TutBasicFlying extends TutorialScreen {
 			    "right part to roll right." :
 				"tap the arrow pointing left to roll left and the arrow " +
 				"pointing right to roll right."),
-				Settings.controlMode == ShipControl.ACCELEROMETER ? "a" :
+				Settings.controlMode == ShipControl.ACCELEROMETER ||
+				Settings.controlMode == ShipControl.ALTERNATIVE_ACCELEROMETER ? "a" :
 				Settings.controlMode == ShipControl.CONTROL_PAD ? "b" : "c").
 			setX(250).setWidth(1420).setY(20).setHeight(220);
 	}

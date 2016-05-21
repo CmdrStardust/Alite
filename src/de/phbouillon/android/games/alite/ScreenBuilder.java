@@ -48,6 +48,7 @@ import de.phbouillon.android.games.alite.screens.canvas.options.AudioOptionsScre
 import de.phbouillon.android.games.alite.screens.canvas.options.ControlOptionsScreen;
 import de.phbouillon.android.games.alite.screens.canvas.options.DebugSettingsScreen;
 import de.phbouillon.android.games.alite.screens.canvas.options.DisplayOptionsScreen;
+import de.phbouillon.android.games.alite.screens.canvas.options.GameplayOptionsScreen;
 import de.phbouillon.android.games.alite.screens.canvas.options.InFlightButtonsOptionsScreen;
 import de.phbouillon.android.games.alite.screens.canvas.options.MoreDebugSettingsScreen;
 import de.phbouillon.android.games.alite.screens.canvas.options.OptionsScreen;
@@ -90,6 +91,7 @@ public class ScreenBuilder {
 				case ScreenCodes.DISPLAY_OPTIONS_SCREEN: return DisplayOptionsScreen.initialize(alite, dis);
 				case ScreenCodes.AUDIO_OPTIONS_SCREEN: return AudioOptionsScreen.initialize(alite, dis);
 				case ScreenCodes.CONTROL_OPTIONS_SCREEN: return ControlOptionsScreen.initialize(alite, dis);
+				case ScreenCodes.GAMEPLAY_OPTIONS_SCREEN: return GameplayOptionsScreen.initialize(alite, dis);
 				case ScreenCodes.INFLIGHT_BUTTONS_OPTIONS_SCREEN: return InFlightButtonsOptionsScreen.initialize(alite, dis);
 				case ScreenCodes.DEBUG_SCREEN: return DebugSettingsScreen.initialize(alite, dis);
 				case ScreenCodes.MORE_DEBUG_OPTIONS_SCREEN: return MoreDebugSettingsScreen.initialize(alite, dis);

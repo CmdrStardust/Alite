@@ -110,7 +110,7 @@ public class OrbitShuttle extends SpaceObject {
 
     @Override
     public void hasBeenHitByPlayer() {
-    	alite.getPlayer().setLegalValue(alite.getPlayer().getLegalValue() + 64);	
+    	computeLegalStatusAfterFriendlyHit();	
     }
 
     @Override

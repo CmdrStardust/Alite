@@ -57,6 +57,7 @@ import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.Cobr
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.CobraMkIII;
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.Constrictor;
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.Coral;
+import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.Coriolis;
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.Cottonmouth;
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.Cougar;
 import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.Dugite;
@@ -91,7 +92,9 @@ import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.Yell
 public class ShipIntroScreen extends AliteScreen {
 	private static final boolean DEBUG_EXHAUST = false;
 	private static final boolean ONLY_CHANGE_SHIPS_AFTER_SWEEP = false;
-
+	private static final boolean SHOW_DOCKING = false;
+	private static final boolean DANCE = true;
+	
 	private final float [] lightAmbient  = { 0.5f, 0.5f, 0.7f, 1.0f };
 	private final float [] lightDiffuse  = { 0.4f, 0.4f, 0.8f, 1.0f };
 	private final float [] lightSpecular = { 0.5f, 0.5f, 1.0f, 1.0f };
@@ -120,7 +123,8 @@ public class ShipIntroScreen extends AliteScreen {
 	private Pixmap yesIcon;
 	private Pixmap noIcon;
 	private boolean selectPreviousShip = false;
-
+	private Coriolis coriolis;
+	
 	enum DisplayMode {
 		ZOOM_IN,
 		DANCE,
@@ -195,7 +199,9 @@ public class ShipIntroScreen extends AliteScreen {
 	@Override
 	public void update(float deltaTime) {
 		updateWithoutNavigation(deltaTime);
-		updateAxes();
+		if (DANCE) {
+			updateAxes();
+		}
 		if (currentShip != null) {
 			currentShip.applyDeltaRotation(currentDeltaX, currentDeltaY, currentDeltaZ);
 			((SpaceObject) currentShip).update(deltaTime);
@@ -326,11 +332,17 @@ public class ShipIntroScreen extends AliteScreen {
 
 		initDisplay(visibleArea);
 
+		if (SHOW_DOCKING && coriolis != null) {
+			GLES11.glPushMatrix();
+			  GLES11.glMultMatrixf(coriolis.getMatrix(), 0);
+			  coriolis.render();
+			GLES11.glPopMatrix();
+		}
 		GLES11.glPushMatrix();
 		  GLES11.glMultMatrixf(currentShip.getMatrix(), 0);
 		  ((Geometry) currentShip).render();
 		GLES11.glPopMatrix();
-
+		
 		endDisplay(visibleArea);
 	}
 
@@ -341,6 +353,11 @@ public class ShipIntroScreen extends AliteScreen {
 		AliteObject ao = getShipForCurrentIndex();
 		ao.setPosition(0.0f, 0.0f, -(((SpaceObject) ao).getMaxExtentWithoutExhaust()) * 2.0f);
 
+		if (SHOW_DOCKING) {
+			coriolis = new Coriolis((Alite) game);
+			coriolis.applyDeltaRotation(0, 0, 90);
+			coriolis.setPosition(0, 0, -1300);
+		}
 		targetDeltaX = Math.random() < 0.5 ? (float) Math.random() * 2.0f + 2.0f : -(float) Math.random() * 2.0f - 2.0f;
 		targetDeltaY = Math.random() < 0.5 ? (float) Math.random() * 2.0f + 2.0f : -(float) Math.random() * 2.0f - 2.0f;
 		targetDeltaZ = Math.random() < 0.5 ? (float) Math.random() * 2.0f + 2.0f : -(float) Math.random() * 2.0f - 2.0f;
@@ -455,7 +472,7 @@ public class ShipIntroScreen extends AliteScreen {
 	}
 
 	private final void dance(float deltaTime) {
-		if ((System.nanoTime() - lastChangeTime) > 4000000000l) {
+		if (DANCE && (System.nanoTime() - lastChangeTime) > 4000000000l) {
 			targetDeltaX = Math.random() < 0.5 ? (float) Math.random() * 2.0f + 2.0f : -(float) Math.random() * 2.0f - 2.0f;
 			targetDeltaY = Math.random() < 0.5 ? (float) Math.random() * 2.0f + 2.0f : -(float) Math.random() * 2.0f - 2.0f;
 			targetDeltaZ = Math.random() < 0.5 ? (float) Math.random() * 2.0f + 2.0f : -(float) Math.random() * 2.0f - 2.0f;

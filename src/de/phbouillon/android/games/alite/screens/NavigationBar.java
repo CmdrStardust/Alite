@@ -38,6 +38,7 @@ import de.phbouillon.android.games.alite.colors.AliteColors;
 import de.phbouillon.android.games.alite.screens.canvas.DiskScreen;
 import de.phbouillon.android.games.alite.screens.canvas.QuitScreen;
 import de.phbouillon.android.games.alite.screens.opengl.ingame.FlightScreen;
+import de.phbouillon.android.games.alite.screens.opengl.ingame.InGameManager;
 
 public class NavigationBar {	
 	public static final int SIZE = 200;
@@ -102,6 +103,7 @@ public class NavigationBar {
 			case ScreenCodes.SAVE_SCREEN: setActiveIndex(9); break;
 			case ScreenCodes.OPTIONS_SCREEN: setActiveIndex(10); break;
 			case ScreenCodes.DISPLAY_OPTIONS_SCREEN: setActiveIndex(9); break;
+			case ScreenCodes.GAMEPLAY_OPTIONS_SCREEN: setActiveIndex(9); break;
 			case ScreenCodes.AUDIO_OPTIONS_SCREEN: setActiveIndex(9); break;
 			case ScreenCodes.CONTROL_OPTIONS_SCREEN: setActiveIndex(9); break;
 			case ScreenCodes.DEBUG_SCREEN: setActiveIndex(9); break;
@@ -417,6 +419,7 @@ public class NavigationBar {
 					AliteLog.e("[ALITE]", "Autosaving commander failed.", e);
 				}
 //				newScreen = new AutomaticLaunchScreen(game);
+				InGameManager.safeZoneViolated = false;
 				newScreen = new FlightScreen(game, true);
 			} else if (entry.title.equals("Gal. Jump")) {
 				SoundManager.play(Assets.click);

@@ -62,4 +62,5 @@ public class ScreenCodes {
 	public static final byte QUANTITY_PAD_SCREEN              = 41;
 	public static final byte HEX_NUMBER_PAD_SCREEN            = 42;
 	public static final byte END_MISSION_SCREEN               = 43;
+	public static final byte GAMEPLAY_OPTIONS_SCREEN          = 44;
 }

@@ -21,4 +21,5 @@ package de.phbouillon.android.games.alite.screens.opengl.objects.space;
 public interface SpaceStation {
 	void denyAccess();
 	boolean accessAllowed();
+	int getHitCount();
 }

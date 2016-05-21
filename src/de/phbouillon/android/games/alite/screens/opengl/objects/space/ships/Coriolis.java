@@ -142,6 +142,9 @@ public class Coriolis extends SpaceObject implements SpaceStation {
     	}
     	alite.getPlayer().setLegalValue(alite.getPlayer().getLegalValue() + 10);
     	playerHitCount++;
+    	if (playerHitCount > 1) {
+    		computeLegalStatusAfterFriendlyHit();
+    	}
     }
 
     @Override
@@ -178,5 +181,10 @@ public class Coriolis extends SpaceObject implements SpaceStation {
 	@Override
 	public void denyAccess() {
 		accessAllowed = false;		
+	}
+
+	@Override
+	public int getHitCount() {
+		return playerHitCount;
 	}
 }	

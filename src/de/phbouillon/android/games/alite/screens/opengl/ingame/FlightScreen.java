@@ -355,6 +355,7 @@ public class FlightScreen extends GlScreen implements Serializable {
 		inGame.setSunGlow(starGlow);
 		inGame.setPlanet(planet);
 		inGame.setStation(spaceStation);
+		inGame.initializeViperAction();
 	}
 	
 	private void initializeGameOverParade() {

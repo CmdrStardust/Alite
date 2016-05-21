@@ -41,18 +41,14 @@ import de.phbouillon.android.games.alite.screens.canvas.tutorial.TutIntroduction
 public class ControlOptionsScreen extends OptionsScreen {
 	private Button shipControlMode;
 	private Button controlDisplaySide;
-	private Button keyboardLayout;
-	private Button dockingSpeed;
-	private Button laserAutoFire;
-	private Button radarTapZoom;
-	private Button autoId;
-	private Button buttonPositionOptions;
 	private Button reverseDiveClimb;
-	private Button flatButtons;
-    
+
+	private Button radarTapZoom;		
+	private Button buttonPositionOptions;
+	private Button linearLayout;    
 	private Button back;
 	private boolean forwardToIntroduction;
-	
+
 	public ControlOptionsScreen(Game game, boolean forwardToIntroduction) {
 		super(game);
 		this.forwardToIntroduction = forwardToIntroduction;
@@ -63,26 +59,23 @@ public class ControlOptionsScreen extends OptionsScreen {
 	public void activate() {
 		shipControlMode       = createButton(0, "Ship Control: " + Settings.controlMode.getDescription());
 		controlDisplaySide    = createButton(1, computeControlDisplaySideText()); 
-		controlDisplaySide.setVisible(Settings.controlMode != ShipControl.ACCELEROMETER);
 		
-		autoId                = createSmallButton(2, true, "Auto Id: " + (Settings.autoId ? "On" : "Off"));
-		buttonPositionOptions = createSmallButton(2, false, "Configure Button Positions");
-		buttonPositionOptions.setVisible(!forwardToIntroduction);
-		dockingSpeed          = createSmallButton(3, true, "Docking Computer: " + (Settings.dockingComputerSpeed == 0 ? "Slow" : (Settings.dockingComputerSpeed == 1 ? "Medium" : "Fast")));
-		keyboardLayout        = createSmallButton(3, false, "Keyboard: " + Settings.keyboardLayout);
-		
-		laserAutoFire         = createSmallButton(4, true, "Laser: " + (Settings.laserButtonAutofire ? "Auto Fire" : "Single Shot"));
-		radarTapZoom          = createSmallButton(4, false, "Change View: " + (Settings.tapRadarToChangeView ? "Tap" : "Slide"));
-				
-		reverseDiveClimb      = createSmallButton(5, true, "Reverse Climb: " + (Settings.reversePitch ? "Yes" : "No"));
-		flatButtons           = createSmallButton(5, false, "Linear Layout: " + (Settings.flatButtonDisplay ? "Yes" : "No"));
+		buttonPositionOptions = createButton(2, "Configure Button Positions");
+		reverseDiveClimb      = createButton(3, "Reverse Climb: " + (Settings.reversePitch ? "Yes" : "No"));
+		radarTapZoom          = createButton(4, "Change View: " + (Settings.tapRadarToChangeView ? "Tap" : "Slide"));				
+		linearLayout          = createButton(5, "Linear Layout: " + (Settings.flatButtonDisplay ? "Yes" : "No"));
 		
 		back                  = createButton(6, forwardToIntroduction ? "Start Training" : "Back");
+		
+		buttonPositionOptions.setVisible(!forwardToIntroduction);
+		controlDisplaySide.setVisible(Settings.controlMode != ShipControl.ACCELEROMETER &&
+				                      Settings.controlMode != ShipControl.ALTERNATIVE_ACCELEROMETER);
 	}
 			
 	private String computeControlDisplaySideText() {
 		switch (Settings.controlMode) {
 			case ACCELEROMETER: return "";
+			case ALTERNATIVE_ACCELEROMETER: return "";
 			case CONTROL_PAD: return "Position: " + (Settings.controlPosition == 0 ? "Left" : "Right"); 
 			case CURSOR_BLOCK: return "Position: " + (Settings.controlPosition == 0 ? "Left" : "Right");
 			case CURSOR_SPLIT_BLOCK: return "Dive/Climb is: " + (Settings.controlPosition == 0 ? "Left" : "Right");
@@ -101,19 +94,21 @@ public class ControlOptionsScreen extends OptionsScreen {
 		displayTitle("Control Options");
 		shipControlMode.render(g);
 		controlDisplaySide.render(g);
-		autoId.render(g);
 		buttonPositionOptions.render(g);
-		dockingSpeed.render(g);
-		keyboardLayout.render(g);		
-		laserAutoFire.render(g);
+		reverseDiveClimb.render(g);		
 		radarTapZoom.render(g);
-		reverseDiveClimb.render(g);
-		flatButtons.render(g);
+		linearLayout.render(g);
 		
 		back.render(g);
 		if (forwardToIntroduction) {
 			centerText("Please review your Control Settings before we begin your training.",
 					115, Assets.regularFont, AliteColors.get().mainText());
+		}
+		if (Settings.controlMode == ShipControl.ALTERNATIVE_ACCELEROMETER) {
+			centerText("Use this option, if Accelerometer controls don't work for you (Nexus 10 for example).",
+					275, Assets.regularFont, AliteColors.get().mainText());			
+			centerText("Note however that alternative Accelerometer controls only work sitting up (Sorry!).",
+					315, Assets.regularFont, AliteColors.get().mainText());			
 		}
 	}
 
@@ -128,8 +123,14 @@ public class ControlOptionsScreen extends OptionsScreen {
 					val = 0;
 				}
 				Settings.controlMode = ShipControl.values()[val];
+				if (Settings.controlMode == ShipControl.ACCELEROMETER && game.getInput().isAlternativeAccelerometer()) {
+					game.getInput().switchAccelerometerHandler();
+				} else if (Settings.controlMode == ShipControl.ALTERNATIVE_ACCELEROMETER && !game.getInput().isAlternativeAccelerometer()) {
+					game.getInput().switchAccelerometerHandler();
+				}
 				shipControlMode.setText("Ship Control: " + Settings.controlMode.getDescription());
-				controlDisplaySide.setVisible(Settings.controlMode != ShipControl.ACCELEROMETER);
+				controlDisplaySide.setVisible(Settings.controlMode != ShipControl.ACCELEROMETER &&
+						                      Settings.controlMode != ShipControl.ALTERNATIVE_ACCELEROMETER);
 				controlDisplaySide.setText(computeControlDisplaySideText());
 				Settings.save(game.getFileIO());
 			} else if (controlDisplaySide.isTouched(touch.x, touch.y)) {
@@ -137,49 +138,22 @@ public class ControlOptionsScreen extends OptionsScreen {
                 Settings.controlPosition = -Settings.controlPosition + 1;
                 controlDisplaySide.setText(computeControlDisplaySideText());
 				Settings.save(game.getFileIO());
-			} else if (autoId.isTouched(touch.x, touch.y)) {
-				SoundManager.play(Assets.click);
-				Settings.autoId = !Settings.autoId;
-				autoId.setText("Auto Id: " + (Settings.autoId ? "On" : "Off"));
-				Settings.save(game.getFileIO());
 			} else if (buttonPositionOptions.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);
 				newScreen = new InFlightButtonsOptionsScreen(game);				
+			} else if (linearLayout.isTouched(touch.x, touch.y)) {
+				SoundManager.play(Assets.click);
+				Settings.flatButtonDisplay = !Settings.flatButtonDisplay;
+				linearLayout.setText("Linear Layout: " + (Settings.flatButtonDisplay ? "Yes" : "No"));
+				Settings.save(game.getFileIO());
+			} else if (back.isTouched(touch.x, touch.y)) {
+				SoundManager.play(Assets.click);
+				newScreen = forwardToIntroduction ? new TutIntroduction((Alite) game) : new OptionsScreen(game);
 			} else if (reverseDiveClimb.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);
 				Settings.reversePitch = !Settings.reversePitch;
 				reverseDiveClimb.setText("Reverse Climb: " + (Settings.reversePitch ? "Yes" : "No"));
 				Settings.save(game.getFileIO());
-			} else if (flatButtons.isTouched(touch.x, touch.y)) {
-				SoundManager.play(Assets.click);
-				Settings.flatButtonDisplay = !Settings.flatButtonDisplay;
-				flatButtons.setText("Linear Layout: " + (Settings.flatButtonDisplay ? "Yes" : "No"));
-				Settings.save(game.getFileIO());
-			} else if (back.isTouched(touch.x, touch.y)) {
-				SoundManager.play(Assets.click);
-				newScreen = forwardToIntroduction ? new TutIntroduction((Alite) game) : new OptionsScreen(game);
-			} else if (keyboardLayout.isTouched(touch.x, touch.y)) {
-				SoundManager.play(Assets.click);
-				if ("QWERTY".equals(Settings.keyboardLayout)) {
-					Settings.keyboardLayout = "QWERTZ";
-				} else {
-					Settings.keyboardLayout = "QWERTY";
-				}
-				keyboardLayout.setText("Keyboard: " + Settings.keyboardLayout);
-				Settings.save(game.getFileIO());
-			} else if (dockingSpeed.isTouched(touch.x, touch.y)) {
-				SoundManager.play(Assets.click);
-				Settings.dockingComputerSpeed++;
-				if (Settings.dockingComputerSpeed > 2) {
-					Settings.dockingComputerSpeed = 0;
-				}
-				dockingSpeed.setText("Docking Computer: " + (Settings.dockingComputerSpeed == 0 ? "Slow" : (Settings.dockingComputerSpeed == 1 ? "Medium" : "Fast")));				
-				Settings.save(game.getFileIO());
-			} else if (laserAutoFire.isTouched(touch.x, touch.y)) {
-				SoundManager.play(Assets.click);
-				Settings.laserButtonAutofire = !Settings.laserButtonAutofire;
-				laserAutoFire.setText("Laser: " + (Settings.laserButtonAutofire ? "Auto Fire" : "Single Shot"));
-				Settings.save(game.getFileIO());				
 			} else if (radarTapZoom.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);
 				Settings.tapRadarToChangeView = !Settings.tapRadarToChangeView;

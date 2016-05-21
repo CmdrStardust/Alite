@@ -20,6 +20,7 @@ package de.phbouillon.android.games.alite;
 
 public enum ShipControl {
 	ACCELEROMETER("Accelerometer"),
+	ALTERNATIVE_ACCELEROMETER("Alternative Accelerometer"),
 	CONTROL_PAD("Control Pad"),
 	CURSOR_BLOCK("Cursor Block"),
 	CURSOR_SPLIT_BLOCK("Split Cursor Blocks");

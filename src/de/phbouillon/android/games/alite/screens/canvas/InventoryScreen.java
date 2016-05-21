@@ -324,8 +324,11 @@ public class InventoryScreen extends TradeScreen {
     	Market market = player.getMarket();    			
 		int factor = pair.good.getUnit() == Unit.TON ? 1000000 : pair.good.getUnit() == Unit.KILOGRAM ? 1000 : 1;
 		long price = computePrice(market, factor, pair.item.getWeight().getWeightInGrams(), pair.good);
-		((Alite) game).getPlayer().setLegalValue(
-				((Alite) game).getPlayer().getLegalValue() + (int) (tradeGood.getLegalityType() * pair.item.getUnpunished().getQuantityInAppropriateUnit()));
+		int chanceInPercent = ((Alite) game).getPlayer().getLegalProblemLikelihoodInPercent();
+		if (Math.random() * 100 < chanceInPercent) {
+			((Alite) game).getPlayer().setLegalValue(
+					((Alite) game).getPlayer().getLegalValue() + (int) (tradeGood.getLegalityType() * pair.item.getUnpunished().getQuantityInAppropriateUnit()));
+		}
 		player.getCobra().removeTradeGood(tradeGood);
     	player.setCash(player.getCash() + price);
     	cashLeft = String.format("Cash: %d.%d Cr", player.getCash() / 10, player.getCash() % 10);    
