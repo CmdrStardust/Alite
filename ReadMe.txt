@@ -16,6 +16,8 @@ skills.
 Designed specifically for Android devices, Alite brings space action and
 exploration directly to you - wherever you are.
 
+Alite is inspired by classic Elite, (c) Acornsoft, Bell & Braben.
+
 Version History
 ---------------
 
