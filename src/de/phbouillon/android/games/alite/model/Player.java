@@ -79,7 +79,7 @@ public class Player {
 		clearMissions();
 		jumpCounter = 0;
 		intergalacticJumpCounter = 0;
-		cheater = false;
+		cheater = false;		
 	}
 		
 	public PlayerCobra getCobra() {

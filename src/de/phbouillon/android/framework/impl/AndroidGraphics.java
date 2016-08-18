@@ -146,7 +146,7 @@ public class AndroidGraphics implements Graphics {
 			canvas.setBitmap(scaledBitmap);
 			canvas.setMatrix(scaleMatrix);
 			canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, filterPaint);
-
+			
 			MemUtil.freeBitmap(bitmap);
 			bitmap = scaledBitmap;
 		}

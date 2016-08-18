@@ -35,6 +35,7 @@ public class AlternativeAccelHandler implements SensorEventListener, IAccelerome
 	private int defaultOrientation;
 	private boolean reversedLandscape = false;
 	private final DeviceOrientationManager deviceOrientationManager;
+	private boolean getUpdates;
 	
 	private class DeviceOrientationManager extends OrientationEventListener {
 		public DeviceOrientationManager() {
@@ -95,6 +96,7 @@ public class AlternativeAccelHandler implements SensorEventListener, IAccelerome
 		if (manager.getSensorList(Sensor.TYPE_ACCELEROMETER).size() > 0) {
 			Sensor accelerometer = manager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
 			manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+			getUpdates = true;
 		} 
 		deviceOrientationManager.enable();
 	}
@@ -124,6 +126,13 @@ public class AlternativeAccelHandler implements SensorEventListener, IAccelerome
 		
 	@Override
 	public void onSensorChanged(SensorEvent event) {
+		if (!getUpdates) {
+			SensorManager manager = (SensorManager) game.getSystemService(Context.SENSOR_SERVICE);
+			if (manager.getSensorList(Sensor.TYPE_ACCELEROMETER).size() > 0) {
+				manager.unregisterListener(this);
+			}			
+			return;
+		}
 		switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
 				for (int i = 0; i < 3; i++) {
@@ -154,6 +163,13 @@ public class AlternativeAccelHandler implements SensorEventListener, IAccelerome
 	}
 	
 	public void dispose() {
-		deviceOrientationManager.disable();
+		if (deviceOrientationManager != null) {
+			deviceOrientationManager.disable();
+		}
+		SensorManager manager = (SensorManager) game.getSystemService(Context.SENSOR_SERVICE);
+		if (manager.getSensorList(Sensor.TYPE_ACCELEROMETER).size() > 0) {
+			manager.unregisterListener(this);
+		}			
+		getUpdates = false;
 	}
 }

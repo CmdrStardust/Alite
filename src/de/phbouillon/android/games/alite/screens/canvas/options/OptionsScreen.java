@@ -148,21 +148,36 @@ public class OptionsScreen extends AliteScreen {
 					if (RESTORE_SAVEGAME) {
 						Player player = ((Alite) game).getPlayer();
 						PlayerCobra cobra = ((Alite) game).getPlayer().getCobra();
-						player.setCash(5200);
+						player.setCash(831095);
 						player.setLegalStatus(LegalStatus.CLEAN);
 						player.setLegalValue(0);
-						player.setRating(Rating.ABOVE_AVERAGE);
-						player.setScore(24800);
+						player.setRating(Rating.DEADLY);
+						player.setScore(386655);
 						player.setName("richard");
 						player.setCurrentSystem(((Alite) game).getGenerator()
-								.getSystem(55));
+								.getSystem(84));
 						player.setHyperspaceSystem(((Alite) game)
-								.getGenerator().getSystem(55));
+								.getGenerator().getSystem(84));
 						cobra.addEquipment(EquipmentStore.fuelScoop);
+						cobra.addEquipment(EquipmentStore.retroRockets);
+						cobra.addEquipment(EquipmentStore.galacticHyperdrive);
+						cobra.addEquipment(EquipmentStore.dockingComputer);
+						cobra.addEquipment(EquipmentStore.extraEnergyUnit);
+						cobra.addEquipment(EquipmentStore.energyBomb);
+						cobra.addEquipment(EquipmentStore.escapeCapsule);
+						cobra.addEquipment(EquipmentStore.ecmSystem);
+						cobra.addEquipment(EquipmentStore.largeCargoBay);
+						cobra.setMissiles(4);
 						cobra.setLaser(PlayerCobra.DIR_FRONT,
-								EquipmentStore.beamLaser);
-						((Alite) game).setGameTime((long) (9l * 60l * 60l
-								* 1000l * 1000l * 1000l + 458172675200l));
+								EquipmentStore.militaryLaser);
+						cobra.setLaser(PlayerCobra.DIR_REAR,
+								EquipmentStore.militaryLaser);
+						cobra.setLaser(PlayerCobra.DIR_LEFT,
+								EquipmentStore.militaryLaser);
+						cobra.setLaser(PlayerCobra.DIR_RIGHT,
+								EquipmentStore.militaryLaser);
+
+						((Alite) game).setGameTime((long) (283216l * 1000l * 1000l * 1000l));
 						try {
 							String fileName = FileUtils.generateRandomFilename(
 									"commanders", "", 12, ".cmdr",

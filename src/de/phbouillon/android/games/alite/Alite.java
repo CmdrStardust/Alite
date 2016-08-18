@@ -100,6 +100,12 @@ public class Alite extends AndroidGame {
 	}
 		
 	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);		
+		AndroidUtil.setImmersion(getCurrentView());
+	}
+	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
@@ -348,12 +354,15 @@ public class Alite extends AndroidGame {
 		
 	@Override
 	public void onPause() {
-		AliteLog.d("Alite.onPause", "onPause begin");
+		AliteLog.d("Alite.onPause", "onPause begin");		
 		try {
 			setSaving(true);
 			super.onPause();
 		} finally {
 			setSaving(false);
+		}	
+		if (getInput() != null) {
+			getInput().dispose();
 		}
 		if (textureManager != null) {
 			textureManager.freeAllTextures();
@@ -417,6 +426,7 @@ public class Alite extends AndroidGame {
 		if (textureManager != null) {
 			textureManager.clear();
 		}
+		createInputIfNecessary();
 		super.onResume();
 		AliteLog.d("Alite.onResume", "onResume end");
 	}

@@ -413,6 +413,12 @@ public class AliteIntro extends Activity implements OnClickListener {
 		savedInstanceState.putInt("position", stopPosition);
 	}
 	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);		
+		AndroidUtil.setImmersion(videoView);
+	}
+
 	public void onClick(View v) {
 		if (v instanceof VideoView) {
 			VideoView videoView = (VideoView) v;

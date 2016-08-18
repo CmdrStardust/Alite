@@ -111,7 +111,7 @@ public class ObbExpansionsManager {
                     	mainChecker.cancel();
                     }
                 } else {
-                    AliteLog.dumpStack(TAG, "Mounting main file failed with state = " + state);
+                    AliteLog.d(TAG, "Mounting main file failed with state = " + state);
                     if ( listener != null ) 
                     	listener.onObbStateChange(path, state);
                 }

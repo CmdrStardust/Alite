@@ -46,6 +46,7 @@ public class AccelerometerHandler implements SensorEventListener, IAccelerometer
 	private int defaultOrientation;
 	private boolean reversedLandscape = false;
 	private final DeviceOrientationManager deviceOrientationManager;
+	private boolean getUpdates;
 	
 	private class DeviceOrientationManager extends OrientationEventListener {
 		public DeviceOrientationManager() {
@@ -106,6 +107,7 @@ public class AccelerometerHandler implements SensorEventListener, IAccelerometer
 		if (manager.getSensorList(Sensor.TYPE_ACCELEROMETER).size() > 0) {
 			Sensor accelerometer = manager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
 			manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+			getUpdates = true;
 		} 
 		deviceOrientationManager.enable();
 	}
@@ -135,6 +137,13 @@ public class AccelerometerHandler implements SensorEventListener, IAccelerometer
 		
 	@Override
 	public void onSensorChanged(SensorEvent event) {
+		if (!getUpdates) {
+			SensorManager manager = (SensorManager) game.getSystemService(Context.SENSOR_SERVICE);
+			if (manager.getSensorList(Sensor.TYPE_ACCELEROMETER).size() > 0) {
+				manager.unregisterListener(this);
+			}			
+			return;
+		}
 		accelerationVector.x = event.values[0];
 		accelerationVector.y = event.values[1];
 		accelerationVector.z = event.values[2];
@@ -147,7 +156,7 @@ public class AccelerometerHandler implements SensorEventListener, IAccelerometer
 			upVector.copy(rollVector);
 			upVector.cross(accelerationCalibration, pitchVector);
 		}
-		
+	
 		accelerationMean.sub(accelerationCalibration, tempVector);		
 		accelValues[0] = 0;                           // Yaw
 		accelValues[1] = tempVector.dot(rollVector);  // Roll
@@ -168,6 +177,13 @@ public class AccelerometerHandler implements SensorEventListener, IAccelerometer
 	}
 	
 	public void dispose() {
-		deviceOrientationManager.disable();
+		if (deviceOrientationManager != null) {
+			deviceOrientationManager.disable();
+		}
+		SensorManager manager = (SensorManager) game.getSystemService(Context.SENSOR_SERVICE);
+		if (manager.getSensorList(Sensor.TYPE_ACCELEROMETER).size() > 0) {
+			manager.unregisterListener(this);			
+		}
+		getUpdates = false;
 	}
 }

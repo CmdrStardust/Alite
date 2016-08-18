@@ -86,7 +86,8 @@ public class Settings {
     public static int dockingComputerSpeed = 0;
     public static int difficultyLevel = 3;
 	public static int restoredCommanderCount = 0;
-        
+    public static boolean navButtonsVisible = true;
+    
 	public static void load(FileIO files) {
 		for (int i = 0; i < 12; i++) {
 			buttonPosition[i] = i;
@@ -143,6 +144,7 @@ public class Settings {
 			dockingComputerSpeed = Integer.parseInt(in.readLine());
 			difficultyLevel = Integer.parseInt(in.readLine());
 			restoredCommanderCount = Integer.parseInt(in.readLine());
+			navButtonsVisible = Boolean.parseBoolean(in.readLine());
 		} catch (Throwable t) {
 			dockingComputerSpeed = fastDC ? 2 : 0;
 			// Ignore
@@ -204,6 +206,7 @@ public class Settings {
 			out.write(Integer.toString(dockingComputerSpeed) + "\n");
 			out.write(Integer.toString(difficultyLevel) + "\n");
 			out.write(Integer.toString(restoredCommanderCount) + "\n");
+			out.write(Boolean.toString(navButtonsVisible) + "\n");
 		} catch (Exception e) {
 			// Ignore
 		} finally {

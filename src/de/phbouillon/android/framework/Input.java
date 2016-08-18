@@ -51,6 +51,7 @@ public interface Input {
 	public Vector <TouchEvent> getTouchEvents();
 	public Vector <TouchEvent> getAndRetainTouchEvents();
 	public void dispose();
+	public boolean isDisposed();
 	public void switchAccelerometerHandler();
 	public boolean isAlternativeAccelerometer();
 }

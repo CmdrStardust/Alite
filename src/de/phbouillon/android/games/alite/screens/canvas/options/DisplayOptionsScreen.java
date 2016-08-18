@@ -48,6 +48,7 @@ public class DisplayOptionsScreen extends OptionsScreen {
 	private Button stardustDensity;
 	private Slider alpha;
 	private Slider controlsAlpha;
+	private Button immersion;
 	private Button back;
 	
 	public DisplayOptionsScreen(Game game) {
@@ -67,7 +68,8 @@ public class DisplayOptionsScreen extends OptionsScreen {
 	
 		animations      = createSmallButton(5, true, "Animations: " + (Settings.animationsEnabled ? "On" : "Off"));
 		colorScheme     = createSmallButton(5, false, "Color scheme: " + (Settings.colorScheme == 1 ? "Modern" : "Classic"));
-		back            = createButton(6, "Back");
+		immersion       = createSmallButton(6, true, "Immersion: " + (Settings.navButtonsVisible ? "Off" : "Full"));
+		back            = createSmallButton(6, false, "Back");
 	}
 	
 	private String getTextureLevelString(int i) {
@@ -117,6 +119,7 @@ public class DisplayOptionsScreen extends OptionsScreen {
 		controlsAlpha.render(g);
 		animations.render(g);
 		colorScheme.render(g);
+		immersion.render(g);
 		back.render(g);
 	}
 
@@ -187,6 +190,11 @@ public class DisplayOptionsScreen extends OptionsScreen {
 				SoundManager.play(Assets.click);
 				Settings.engineExhaust = !Settings.engineExhaust;
 				engineExhaust.setText("Engine Exhaust: " + (Settings.engineExhaust ? "On" : "Off"));
+				Settings.save(game.getFileIO());				
+			} else if (immersion.isTouched(touch.x, touch.y)) {
+				SoundManager.play(Assets.click);
+				Settings.navButtonsVisible = !Settings.navButtonsVisible;
+				immersion.setText("Immersion: " + (Settings.navButtonsVisible ? "Off" : "Full"));
 				Settings.save(game.getFileIO());				
 			} else if (back.isTouched(touch.x, touch.y)) {
 				SoundManager.play(Assets.click);

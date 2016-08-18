@@ -59,7 +59,7 @@ public class AndroidAudio implements Audio {
 				AliteLog.d("Loading Music", "Loading music " + fileName + ", Type:" + soundType);
 				AssetFileDescriptor assetDescriptor = assets.openFd(fileName);
 				AliteLog.d("Loading Music", "Loading music " + assetDescriptor.getStartOffset() + ", " + assetDescriptor.getLength() + ", " + assetDescriptor.getFileDescriptor().valid());
-				return new AndroidMusic(assetDescriptor, soundType);
+				return new AndroidMusic(assetDescriptor, soundType, fileName);
 			} catch (IOException e) {
 				AliteLog.e("Cannot load music", "Music " + fileName + " not found.");
 				return null;

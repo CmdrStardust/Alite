@@ -25,32 +25,37 @@ import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnPreparedListener;
 import de.phbouillon.android.framework.Music;
 import de.phbouillon.android.framework.Sound;
 import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.Settings;
 
-public class AndroidMusic implements Music, OnCompletionListener {
+public class AndroidMusic implements Music, OnCompletionListener, OnPreparedListener {
 	private final MediaPlayer mediaPlayer;
 	private boolean isPrepared = false;
 	private final Sound.SoundType soundType;
+	private final String musicInfo;
+	private boolean playWhenReady = false;
 	
 	public AndroidMusic(AndroidFileIO afi, String path, Sound.SoundType soundType) throws IOException {
 		mediaPlayer = new MediaPlayer();
 		FileInputStream fis = null;
 		Object musicObject;
 		musicObject = afi.getPrivatePath(path);
+		musicInfo = (String) musicObject;
+		
 		try {
 			AliteLog.d("Loading Music", "Loading Music " + path + ", Type: " + soundType);
 			fis = new FileInputStream((String) musicObject);
 			mediaPlayer.setDataSource(fis.getFD());
-			mediaPlayer.prepare();
-			isPrepared = true;
+			mediaPlayer.prepareAsync();
+			mediaPlayer.setOnPreparedListener(this);
 			mediaPlayer.setOnCompletionListener(this);
 			this.soundType = soundType;
 		} catch (Exception e) {
-			AliteLog.e("Loading Music caused an Error", e.getMessage(), e);
-			throw new RuntimeException("Couldn't load music.");
+			AliteLog.e("Loading Music " + musicInfo + " caused an Error", e.getMessage(), e);
+			throw new RuntimeException("Couldn't load music " + musicInfo + ".", e);
 		} finally {
 			if (fis != null) {
 				try {
@@ -62,18 +67,19 @@ public class AndroidMusic implements Music, OnCompletionListener {
 		}
 	}
 	
-	public AndroidMusic(AssetFileDescriptor afd, Sound.SoundType soundType) throws IOException {
+	public AndroidMusic(AssetFileDescriptor afd, Sound.SoundType soundType, String fileName) throws IOException {
 		mediaPlayer = new MediaPlayer();
+		musicInfo = fileName;
 		try {
 			mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 			mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-			mediaPlayer.prepare();
-			isPrepared = true;
+			mediaPlayer.prepareAsync();
+			mediaPlayer.setOnPreparedListener(this);
 			mediaPlayer.setOnCompletionListener(this);
 			this.soundType = soundType;
 		} catch (Exception e) {
-			AliteLog.e("Loading Music caused an Error", e.getMessage(), e);
-			throw new RuntimeException("Couldn't load music.");
+			AliteLog.e("Loading Music " + musicInfo + " caused an Error", e.getMessage(), e);
+			throw new RuntimeException("Couldn't load music " + musicInfo + ".", e);
 		} 
 	}
 
@@ -93,20 +99,17 @@ public class AndroidMusic implements Music, OnCompletionListener {
 		try {
 			synchronized(this) {
 				if (!isPrepared) {
-					try {
-						mediaPlayer.prepare();
-					} catch (IllegalStateException e) {
-						AliteLog.w("Music Playback", "Suppressed ISE in play.");
-					}
-					isPrepared = true;
+					playWhenReady = true;
 				}
-				mediaPlayer.start();
+				if (isPrepared) {
+					mediaPlayer.start();
+				} else {
+					AliteLog.w("Music Playback", "Could not play back music " + musicInfo + " instantly. Player is not prepared. Will try again later.");
+				}
 			}
 		} catch (IllegalStateException e) {
-			AliteLog.e("Music Playback", "IllegalStateException occurred when trying to play back music.", e);
-		} catch (IOException e) {
-			AliteLog.e("Music Playback", "IOException occurred when trying to play back music.", e);
-		}
+			AliteLog.e("Music Playback", "IllegalStateException occurred when trying to play back music " + musicInfo + ".", e);
+		} 
 	}
 
 	@Override
@@ -155,5 +158,13 @@ public class AndroidMusic implements Music, OnCompletionListener {
 			mediaPlayer.stop();
 		}
 		mediaPlayer.release();
+	}
+
+	@Override
+	public void onPrepared(MediaPlayer mp) {		
+		isPrepared = true;
+		if (playWhenReady) {
+			mediaPlayer.start();
+		}
 	}
 }

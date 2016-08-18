@@ -30,9 +30,11 @@ public class AndroidInput implements Input {
 	private IAccelerometerHandler accelHandler;
 	private final TouchHandler touchHandler;
 	private final AndroidGame game;
+	private boolean disposed = false;
 	
 	public AndroidInput(AndroidGame game, View view, float scaleX, float scaleY, int offsetX, int offsetY) {
 		this.game = game;
+		AccelerometerHandler.needsCalibration = true;
 		accelHandler = Settings.controlMode == ShipControl.ALTERNATIVE_ACCELEROMETER ? 
 							new AlternativeAccelHandler(game) : 
 							new AccelerometerHandler(game);
@@ -50,9 +52,11 @@ public class AndroidInput implements Input {
 				accelHandler = new AlternativeAccelHandler(game);
 			} else if (accelHandler instanceof AlternativeAccelHandler) {
 				accelHandler.dispose();
+				AccelerometerHandler.needsCalibration = true;
 				accelHandler = new AccelerometerHandler(game);
 			}
 		} else {
+			AccelerometerHandler.needsCalibration = true;
 			accelHandler = new AccelerometerHandler(game);
 		}
 	}
@@ -122,6 +126,15 @@ public class AndroidInput implements Input {
 		
 	@Override
 	public void dispose() {
-		accelHandler.dispose();
+		if (accelHandler != null) {
+			accelHandler.dispose();
+			accelHandler = null;
+		}
+		disposed = true;
+	}
+	
+	@Override
+	public boolean isDisposed() {
+		return disposed;
 	}
 }

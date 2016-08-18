@@ -1,4 +1,4 @@
-Alite v. 1.5.0 by Philipp Bouillon and Duane McDonnell
+Alite v. 1.5.4 by Philipp Bouillon and Duane McDonnell
 
 About
 -----
@@ -20,6 +20,21 @@ Alite is inspired by classic Elite, (c) Acornsoft, Bell & Braben.
 
 Version History
 ---------------
+Version 1.5.4 FINALLY fixes the accelerometer controls. More often than not, 
+              they were broken after Alite was resumed, or when you play the
+              tutorial. No more. Also, some devices crashed when playing back
+              music. This has also been fixed. [08/18/2016]
+
+Version 1.5.3 Lets you toggle full immersion mode in the Options; note that
+              Alite needs to be restarted for the changes to take effect.
+              [08/05/2016]
+
+Version 1.5.2 Fixes a bug in the full immersion mode and recenters the screen
+              again. Only available on the PlayStore. [08/02/2016]
+
+Version 1.5.1 Gives you full immersion mode, which means nothing on most devices,
+              but will hide the annoying lights of the navigation bar on some
+              tablets. Only available on the PlayStore. [07/30/2016]
 
 Version 1.5.0 Has a new legal system: Vipers won't attack the player in unsafer
               systems. Fixed a corrupt texture and improved the commander save

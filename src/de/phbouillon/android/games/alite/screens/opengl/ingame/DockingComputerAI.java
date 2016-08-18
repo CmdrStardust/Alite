@@ -182,6 +182,8 @@ final class DockingComputerAI implements AiStateCallbackHandler, Serializable {
 		inGame.setPlayerControl(true);
 		if (Assets.danube != null) {
 			Assets.danube.stop();
+			Assets.danube.dispose();
+			Assets.danube = null;
 		}
 	}
 	
