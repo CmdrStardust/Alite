@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.phbouillon.android.games.alite"
-    android:versionCode="2204"
-    android:versionName="1.5.4"
+    android:versionCode="2205"
+    android:versionName="1.5.5"
     android:installLocation="auto" xmlns:tools="http://schemas.android.com/tools">
+    
+    <permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" android:protectionLevel="signature"/>
     
     <uses-sdk
         android:minSdkVersion="11"
@@ -17,6 +19,7 @@
     
     <application
         android:allowBackup="true"
+        android:largeHeap="true"
         android:icon="@drawable/icon"
         android:label="Alite"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen"

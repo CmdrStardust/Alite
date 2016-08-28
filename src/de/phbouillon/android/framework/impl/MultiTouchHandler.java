@@ -77,7 +77,9 @@ public class MultiTouchHandler implements TouchHandler {
 		public boolean onFling(MotionEvent start, MotionEvent finish, float xVelocity, float yVelocity) {
 			TouchEvent touchEvent = touchEventPool.newObject();
 			touchEvent.type = TouchEvent.TOUCH_SWEEP;
-
+			if (start == null) {
+				return true;
+			}
 			touchEvent.x = (int) ((start.getRawX() - offsetX) * scaleX);
 			touchEvent.y = (int) ((start.getRawY() - offsetY) * scaleY);
 			touchEvent.x2 = (int) (xVelocity / (100.0f / scaleX));

@@ -321,10 +321,10 @@ public class InGameHelper implements Serializable {
 		} else if (inGame.getViewDirection() == PlayerCobra.DIR_LEFT) {
 			source.getRightVector().copy(tempVector);
 		}
-		
-		float x = shipPos.x + tempVector.x * -10f;
-		float y = shipPos.y + tempVector.y * -10f;
-		float z = shipPos.z + tempVector.z * -10f;
+				
+		float x = shipPos.x + tempVector.x * -1000f;
+		float y = shipPos.y + tempVector.y * -1000f;
+		float z = shipPos.z + tempVector.z * -10f;		
 		Missile missile = new Missile(alite);
 		missile.setPosition(x, y, z);
 		missile.orientTowards(x + tempVector.x * -1000.0f,

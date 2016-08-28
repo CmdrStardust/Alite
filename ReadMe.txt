@@ -1,4 +1,4 @@
-Alite v. 1.5.4 by Philipp Bouillon and Duane McDonnell
+Alite v. 1.5.5 by Philipp Bouillon and Duane McDonnell
 
 About
 -----
@@ -20,6 +20,10 @@ Alite is inspired by classic Elite, (c) Acornsoft, Bell & Braben.
 
 Version History
 ---------------
+Version 1.5.5 Launches the missiles from below the ship so that they do not
+              cross the laser fire immediately. Small bugfix for multi user
+              phones.
+              
 Version 1.5.4 FINALLY fixes the accelerometer controls. More often than not, 
               they were broken after Alite was resumed, or when you play the
               tutorial. No more. Also, some devices crashed when playing back
