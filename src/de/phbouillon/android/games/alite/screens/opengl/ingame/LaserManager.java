@@ -730,6 +730,9 @@ public class LaserManager implements Serializable {
 			return;
 		}
 		int energy = alite.getCobra().getEnergy();
+		if (energy < PlayerCobra.MAX_ENERGY_BANK) {
+			AliteLog.d("EnergyLow", "EnergyLow! -- Playing? " + SoundManager.isPlaying(Assets.energyLow));
+		}
 		if (energy < PlayerCobra.MAX_ENERGY_BANK && !SoundManager.isPlaying(Assets.energyLow)) {
 			SoundManager.repeat(Assets.energyLow);
 		} else if (energy >= PlayerCobra.MAX_ENERGY_BANK && SoundManager.isPlaying(Assets.energyLow)) {

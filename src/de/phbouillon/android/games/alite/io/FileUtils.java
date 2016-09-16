@@ -350,8 +350,16 @@ public class FileUtils {
 				dis.readChar()
 		};
 		generator.buildGalaxy(seed[0], seed[1], seed[2]);
-		player.setCurrentSystem(generator.getSystem(readByte(dis)));
+		player.setCurrentSystem(generator.getSystem(readByte(dis)));		
 		player.setHyperspaceSystem(generator.getSystem(readByte(dis)));
+		if (player.getCurrentSystem() == null) {
+			if (player.getHyperspaceSystem() == null) {
+				player.setHyperspaceSystem(generator.getSystem(0));
+				player.setCurrentSystem(generator.getSystem(0));
+			} else {
+				player.setCurrentSystem(player.getHyperspaceSystem());
+			}
+		}
 		cobra.setFuel(readByte(dis));
 		player.setCash(dis.readLong());
 		player.setRating(Rating.values()[readByte(dis)]);

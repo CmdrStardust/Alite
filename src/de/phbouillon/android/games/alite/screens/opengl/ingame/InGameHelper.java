@@ -434,8 +434,10 @@ public class InGameHelper implements Serializable {
 			SoundManager.repeat(Assets.altitudeLow);
 			inGame.getMessage().repeatText("Altitude Low", 1000000000l);
 		} else if (altitude >= 6 && SoundManager.isPlaying(Assets.altitudeLow)) {
-			SoundManager.stop(Assets.altitudeLow);
-			inGame.getMessage().clearRepetition();
+			if (alite.getCobra().getEnergy() > PlayerCobra.MAX_ENERGY_BANK) {
+				SoundManager.stop(Assets.altitudeLow);
+				inGame.getMessage().clearRepetition();
+			}
 		}				
 		if (altitude < 2) {
 			inGame.gameOver();
@@ -452,8 +454,10 @@ public class InGameHelper implements Serializable {
 			SoundManager.repeat(Assets.temperatureHigh);
 			inGame.getMessage().repeatText("Temperature Level Critical", 1000000000l);
 		} else if (cabinTemperature <= 24 && SoundManager.isPlaying(Assets.temperatureHigh)) {			
-			SoundManager.stop(Assets.temperatureHigh);
-			inGame.getMessage().clearRepetition();
+			if (alite.getCobra().getEnergy() > PlayerCobra.MAX_ENERGY_BANK) {
+				SoundManager.stop(Assets.temperatureHigh);
+				inGame.getMessage().clearRepetition();
+			}
 		}
 		if (cabinTemperature > 26 && alite.getCobra().isEquipmentInstalled(EquipmentStore.fuelScoop) && alite.getCobra().getFuel() < PlayerCobra.MAXIMUM_FUEL) {
 			inGame.getMessage().repeatText("Fuel Scoop Activated", 1000000000l);

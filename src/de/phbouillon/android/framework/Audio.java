@@ -1,5 +1,6 @@
 package de.phbouillon.android.framework;
 
+
 /* Alite - Discover the Universe on your Favorite Android Device
  * Copyright (C) 2015 Philipp Bouillon
  * 

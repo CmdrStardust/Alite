@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Locale;
 
 import android.graphics.Point;
 import android.util.SparseIntArray;
@@ -138,7 +139,11 @@ public class GalaxyScreen extends AliteScreen {
 		}
 		return closestSystem;
 	}
-
+	
+	private String capitalize(String t) {		
+		return t == null || t.length() < 1 ? "" : t.length() < 2 ? t : Character.toUpperCase(t.charAt(0)) + t.substring(1).toLowerCase(Locale.getDefault());
+	}
+	
 	private void findSystem() {
 		final Alite alite = (Alite) game;
 		TextInputScreen textInput = new TextInputScreen(alite, "Find Planet", "Enter planet name", "", this,
@@ -159,8 +164,15 @@ public class GalaxyScreen extends AliteScreen {
 						}
 					}
 					if (!found) {
-						setMessage("Planet " + text + " not found in this galaxy.");
-						SoundManager.play(Assets.error);
+						int galaxy = alite.getGenerator().findGalaxyOfPlanet(text);
+						if (galaxy == -1) {
+							setMessage("Planet " + capitalize(text) + " is unknown.");
+							SoundManager.play(Assets.error);
+						} else {
+							setMessage("Planet " + capitalize(text) + " is in Galaxy " + galaxy + 
+									". You are currently in Galaxy " + alite.getGenerator().getCurrentGalaxy() + ".");
+							SoundManager.play(Assets.alert);
+						}						
 					}
 				}
 

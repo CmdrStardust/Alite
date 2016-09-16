@@ -20,6 +20,12 @@ Alite is inspired by classic Elite, (c) Acornsoft, Bell & Braben.
 
 Version History
 ---------------
+Version 1.5.6 Bugfix: If the cobra is spinning endlessly in space, the state
+              is now reset after 10s. Bugfix: If leaving Alite by pressing
+              'Home' the game state is now saved again. Improvement: If
+              searching for a planet outside the current galaxy, the number
+              of the galaxy the planet is in will be displayed.
+              
 Version 1.5.5 Launches the missiles from below the ship so that they do not
               cross the laser fire immediately. Small bugfix for multi user
               phones. [08/28/2016]

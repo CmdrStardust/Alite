@@ -61,7 +61,7 @@ public class SoundManager {
 		}
 		sound.stop();
 	}
-	
+		
 	private static final void stopInternal(Sound asset) {
 		if (asset != null) {
 			asset.stop();

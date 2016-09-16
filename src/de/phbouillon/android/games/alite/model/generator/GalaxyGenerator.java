@@ -1,5 +1,6 @@
 package de.phbouillon.android.games.alite.model.generator;
 
+import de.phbouillon.android.games.alite.AliteLog;
 import de.phbouillon.android.games.alite.model.trading.TradeGood;
 
 /* Alite - Discover the Universe on your Favorite Android Device
@@ -144,5 +145,25 @@ public class GalaxyGenerator {
 
 	public int getAveragePrice(TradeGood tradeGood) {
 		return tradeGood.getAveragePrice(currentGalaxy);
+	}
+
+	public int findGalaxyOfPlanet(String name) {
+		int oldGalaxy = currentGalaxy;
+				
+		int i = oldGalaxy - 1;
+		for (int j = 0; j < 7; j++) {
+			i = (i + 1) % 8 + 1;
+			AliteLog.d("Analyzing Galaxy", "Analyzing Galaxy " + i);
+			buildGalaxy(i);
+			for (SystemData s: system) {
+				if (s.getName().equalsIgnoreCase(name)) {
+					buildGalaxy(oldGalaxy);
+					return i;
+				}
+			}
+			i--;
+		}
+		buildGalaxy(oldGalaxy);
+		return -1;
 	}
 }

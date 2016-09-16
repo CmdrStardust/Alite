@@ -354,7 +354,15 @@ public class Alite extends AndroidGame {
 		
 	@Override
 	public void onPause() {
-		AliteLog.d("Alite.onPause", "onPause begin");		
+		AliteLog.d("Alite.onPause", "onPause begin");
+		if (getCurrentScreen() != null && !(getCurrentScreen() instanceof FlightScreen)) {
+			try {
+				AliteLog.d("[ALITE]", "Performing autosave.");
+				getFileUtils().autoSave(this);
+			} catch (Exception e) {
+				AliteLog.e("[ALITE]", "Autosaving commander failed.", e);
+			}
+		}
 		try {
 			setSaving(true);
 			super.onPause();
