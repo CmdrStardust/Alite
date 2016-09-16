@@ -334,6 +334,11 @@ public class InventoryScreen extends TradeScreen {
     	cashLeft = String.format("Cash: %d.%d Cr", player.getCash() / 10, player.getCash() % 10);    
 		SoundManager.play(Assets.kaChing);		
     	createButtons();
+		try {
+			((Alite) game).getFileUtils().autoSave((Alite) game);
+		} catch (IOException e) {
+			AliteLog.e("Auto saving failed", e.getMessage(), e);
+		}    	
 	}
 
     public String getCashLeft() {

@@ -277,6 +277,11 @@ public class BuyScreen extends TradeScreen {
     			((Alite) game).getPlayer().setLegalValue(
     				((Alite) game).getPlayer().getLegalValue() + (int) (tradeGood.getLegalityType() * buyAmount));
     		}
+    		try {
+				((Alite) game).getFileUtils().autoSave((Alite) game);
+			} catch (IOException e) {
+				AliteLog.e("Auto saving failed", e.getMessage(), e);
+			}
     	}
 	}
 

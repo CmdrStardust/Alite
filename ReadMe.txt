@@ -20,6 +20,10 @@ Alite is inspired by classic Elite, (c) Acornsoft, Bell & Braben.
 
 Version History
 ---------------
+Version 1.5.7 Bugfix: When pressing "Home", it might have happened that the
+              old Commander was replaced by a new one (introduced in 1.5.6)
+              this is now fixed. [09/17/2016]
+              
 Version 1.5.6 Bugfix: If the cobra is spinning endlessly in space, the state
               is now reset after 10s. Bugfix: If leaving Alite by pressing
               'Home' the game state is now saved again. Improvement: If

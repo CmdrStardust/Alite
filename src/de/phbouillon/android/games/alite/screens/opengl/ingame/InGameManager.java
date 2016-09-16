@@ -488,7 +488,7 @@ public class InGameManager implements Serializable {
 		}
 		float accelY = alite.getInput().getAccelY();
 		float accelZ = alite.getInput().getAccelZ();
-
+		
 		deltaYawRollPitch.x = 0;
 		deltaYawRollPitch.y = -clamp((int) (accelY * 50.0f) / 10.0f, -2.0f, 2.0f);
 		deltaYawRollPitch.z =  clamp((int) (accelZ * 30.0f) / 10.0f, -2.0f, 2.0f);

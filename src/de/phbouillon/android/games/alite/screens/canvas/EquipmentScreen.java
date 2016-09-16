@@ -349,6 +349,11 @@ public class EquipmentScreen extends TradeScreen {
 			selection = null;
 			cashLeft = String.format("Cash left: %d.%d Cr", player.getCash() / 10, player.getCash() % 10);
 			equippedEquipment = equipment;
+    		try {
+				((Alite) game).getFileUtils().autoSave((Alite) game);
+			} catch (IOException e) {
+				AliteLog.e("Auto saving failed", e.getMessage(), e);
+			}			
 		}
 	}
 
