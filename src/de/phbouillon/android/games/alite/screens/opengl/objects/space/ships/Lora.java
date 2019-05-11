@@ -363,7 +363,7 @@ public class Lora extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);    	
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 10, 10, 300, 0, 15, -60, 1.0f, 0.44f, 0.4f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 10, 10, 30, 0, 15, -60, 1.0f, 0.44f, 0.4f, 0.7f));
         }
         initTargetBox();
     }

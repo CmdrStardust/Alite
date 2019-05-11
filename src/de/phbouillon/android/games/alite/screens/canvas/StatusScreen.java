@@ -29,6 +29,7 @@ import de.phbouillon.android.framework.Game;
 import de.phbouillon.android.framework.Graphics;
 import de.phbouillon.android.framework.Input.TouchEvent;
 import de.phbouillon.android.framework.Pixmap;
+import de.phbouillon.android.framework.Screen;
 import de.phbouillon.android.framework.impl.AndroidGraphics;
 import de.phbouillon.android.games.alite.Alite;
 import de.phbouillon.android.games.alite.Assets;
@@ -227,6 +228,21 @@ public class StatusScreen extends AliteScreen {
 			messageIsModal = true;
 		}
 	}
+
+	private Screen processAnswer() {
+		Screen screen = null;
+		requireAnswer = false;			
+		if (messageResult == 1) {
+			screen = new ControlOptionsScreen(game, !pendingShowControlOptions);
+		} else if (!pendingShowControlOptions) {				
+			setLargeMessage("If you want to visit the Academy later, you can find it at the bottom of the Command Console. Before you launch, it might be a good idea to review your Control Settings. Would you like to do so, now?", MessageType.YESNO, Assets.regularFont);
+			requireAnswer = true;
+			pendingShowControlOptions = true;
+			messageIsModal = true;							
+		}
+		messageResult = 0;
+		return screen;
+	}
 	
 	@Override 
 	public void processTouch(TouchEvent touch) {
@@ -240,16 +256,15 @@ public class StatusScreen extends AliteScreen {
 			}
 		}
 		if (requireAnswer && messageResult != 0) {
-			requireAnswer = false;			
-			if (messageResult == 1) {
-				newScreen = new ControlOptionsScreen(game, !pendingShowControlOptions);
-			} else if (!pendingShowControlOptions) {				
-				setLargeMessage("If you want to visit the Academy later, you can find it at the bottom of the Command Console. Before you launch, it might be a good idea to review your Control Settings. Would you like to do so, now?", MessageType.YESNO, Assets.regularFont);
-				requireAnswer = true;
-				pendingShowControlOptions = true;
-				messageIsModal = true;							
-			}
-			messageResult = 0;
+			newScreen = processAnswer();
+		}		
+	}
+	
+	@Override
+	public void processButtonUp(int button) {
+		super.processButtonUp(button);
+		if (requireAnswer && messageResult != 0) {
+			newControlScreen = processAnswer();
 		}		
 	}
 	

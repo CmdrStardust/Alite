@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Moray Star Boat</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_moray"/>
+	<p>Developed initially as a submarine flyingboat, Marine Trench Co.
+	soon saw the possibilities for extending their operations into space
+	and the Moray SFB became the &apos;Star Boat&apos; after its
+	ingenious adaptations were completed. Aquatic space-faring races are
+	the main users of this multi-purpose vessel, whose hull is able to
+	withstand the pressures of depths of up to 5500 fathoms. Standard
+	fittings include: highpower seal locks, 2 torpedo tube/single
+	missile pods and flood-lock cabins for subaquatic life-forms.</p>
+	<table>[o]Dimensions:[/o],[o]110x46x120m[/o];
+        Cargo Capacity:,7 TC;
+        Armaments:,Geret Starseeker Missile System;
+	Maximum Velocity:,0.25 LM;
+	Inservice Date:,3028 AD;
+	Crew Number:,6;
+	Hull Stress Factor:,TKo 24;
+	Manouevrability:,CF 4;
+	Drive Motors:,Turbulan Quark Re-charger Model 1287;
+	Hyperspace Capability:,Yes;
+        </table>
+    </Text>
+    <Image name="moray"/>
+  </Content>
+  <Next>gui_mussurana</Next>
+  <Previous>gui_mamba</Previous>
+</Page>
+

@@ -124,8 +124,8 @@ public class Adder extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 13, 13, 180, -25, 0, 0, 0.7f, 0.0f, 0.56f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 13, 13, 180,  25, 0, 0, 0.7f, 0.0f, 0.56f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 13, 18, -25, 0, 0, 0.7f, 0.0f, 0.56f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 13, 18,  25, 0, 0, 0.7f, 0.0f, 0.56f, 0.7f));
         }
         initTargetBox();
     }

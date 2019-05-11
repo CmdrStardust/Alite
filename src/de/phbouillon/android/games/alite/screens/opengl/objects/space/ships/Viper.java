@@ -105,8 +105,8 @@ public class Viper extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);   
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 10, 10, 300, -40, 0, 0, 0.97f, 0.66f, 0.0f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 10, 10, 300,  40, 0, 0, 0.97f, 0.66f, 0.0f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 10, 10, 30, -40, 0, 0, 0.97f, 0.66f, 0.0f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 10, 10, 30,  40, 0, 0, 0.97f, 0.66f, 0.0f, 0.7f));
         }
         initTargetBox();
     }

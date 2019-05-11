@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Safety Zone</Header>
+  <Content>
+    <Text>
+	<p>The Orbit space around any Coriolis Space Station is safe. The
+	Station&apos;s own defences will come to your immediate assistance.
+	Entry to safety zone is signalled with a large &apos;S&apos; on the
+	astrogation console.</p>
+    </Text>
+  </Content>
+  <Next>ip_d_shields</Next>
+  <Previous>ip_defensive</Previous>
+</Page>
+

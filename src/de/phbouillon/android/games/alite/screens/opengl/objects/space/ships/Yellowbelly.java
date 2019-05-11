@@ -311,9 +311,9 @@ public class Yellowbelly extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 5, 5, 200,  25,  5, -30, 0.7f, 0.8f, 0.8f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 5, 5, 200, -25,  5, -30, 0.7f, 0.8f, 0.8f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 5, 5, 200,   0, 20, -30, 0.7f, 0.8f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 5, 5, 20,  25,  5, -30, 0.7f, 0.8f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 5, 5, 20, -25,  5, -30, 0.7f, 0.8f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 5, 5, 20,   0, 20, -30, 0.7f, 0.8f, 0.8f, 0.7f));
         }
         initTargetBox();
     }

@@ -571,8 +571,8 @@ public class Lyre extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 13, 13, 300, -35, 0, 0, 0.86f, 0.18f, 0.7f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 13, 13, 300,  35, 0, 0, 0.86f, 0.18f, 0.7f, 0.7f));        	
+        	addExhaust(new EngineExhaust(this, 13, 13, 30, -35, 0, 0, 0.86f, 0.18f, 0.7f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 13, 30,  35, 0, 0, 0.86f, 0.18f, 0.7f, 0.7f));        	
         }
         initTargetBox();
     }

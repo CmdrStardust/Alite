@@ -117,7 +117,7 @@ public class Constrictor extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);  
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 25, 8, 300, 0, 0, 0, 0.92f, 0.60f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 25, 8, 30, 0, 0, 0, 0.92f, 0.60f, 0.8f, 0.7f));
         }
         initTargetBox();
     }

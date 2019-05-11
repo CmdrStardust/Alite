@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Krait</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_krait"/>
+	<p>Small, reliable one-man fighter, common until the standardised
+	version of the Mamba became available on the open market. But after
+	a short Mamba boom, many pilots later on preferred the Krait to its
+	successor, because of the weak shielding of the Mamba, so the Krait
+	can still be found everywhere.</p>
+	<table>[o]Dimensions:[/o],[o]180x40x160m[/o];
+        Cargo Capacity:,10 TC;
+        Armaments:,Ergon laser system;
+	Maximum Velocity:,0.30 LM;
+	Inservice Date:,3027 AD (deLacy ShipWorks Inines);
+	Crew Number:,1;
+	Hull Stress Factor:,TKo 19;
+	Manouevrability:,CF 8;
+	Drive Motors:,deLacy Spinlonic ZX 14;
+	Hyperspace Capability:,No;
+        </table>
+    </Text>
+    <Image name="krait_gui"/>
+  </Content>
+  <Next>gui_lora</Next>
+  <Previous>gui_indigo</Previous>
+</Page>
+

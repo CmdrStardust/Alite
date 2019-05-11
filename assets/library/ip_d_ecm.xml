@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>ECM</Header>
+  <Content>
+    <Text>
+        <InlineImage name="ecm"/>
+	<p>An ECM System (literally Electronic Counter Measures System) is
+	offered for sale at Tech level 2, and may be used any number of
+	times given sufficient energy replacement. When activated by the
+	button above, ECM destroys all missiles in your vicinity. Some
+	enemy ships, especially traders, will have this and may use it
+	against your missiles. Your ship&apos;s computer displays an E
+	on the console when it detects ECM broadcasts.</p>
+	<p>[b]Anti-missile (ECM) system specification:[/b] Radiant-Magnetic
+	&apos;wipe-out&apos; using ion-saturation theory developed by
+	McDonnell and Bouillon on Orerve 359. Electronic Counter Measures
+	Systems use minute charged particles of InterSpac Heavy Element
+	dust, releasing their radiant energy and setting up expanding
+	nuclear flux chains.</p>
+    </Text>
+  </Content>
+  <Next>ip_d_escape</Next>
+  <Previous>ip_d_shields</Previous>
+</Page>
+

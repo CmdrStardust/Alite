@@ -114,7 +114,7 @@ public class Python extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);    	
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 31, 19, 440, 0, 0, 0));
+        	addExhaust(new EngineExhaust(this, 31, 19, 40, 0, 0, 0));
         }
         initTargetBox();
     }

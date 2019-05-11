@@ -122,7 +122,7 @@ public class AspMkII extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 32, 16, 460, 0, 0, 0, 1.0f, 0.45f, 0.0f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 32, 16, 40, 0, 0, 0, 1.0f, 0.45f, 0.0f, 0.7f));
         }
         initTargetBox();
     }

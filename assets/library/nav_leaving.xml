@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Leaving The Space Station</Header>
+  <Content>
+    <Text>
+    	<p>On coding for Station Depart, by selecting [ip]Launch[/pi]
+    	from the command console, the pilot is advised to accept a 10-second
+    	MemnSomn to dispense with subjective experience of the passage from
+    	docking bay to Coriolis station egress. The screen will then show a
+    	break-pattern, which is the passage through the protective field
+    	over the Coriolis entrance tunnel.</p>
+    </Text>
+    <Image name="leaving_lave">
+      <Text>
+	Leaving a Coriolis station and approaching the planet, Lave.
+      </Text>
+    </Image>
+  </Content>
+  <Next>nav_basic_manoeuvres</Next>
+  <Previous>nav_coriolis</Previous>
+</Page>
+

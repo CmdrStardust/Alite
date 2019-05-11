@@ -112,8 +112,8 @@ public class Krait extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);    
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 13, 13, 300, -30, 0, -20, 1.0f, 0.67f, 0.0f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 13, 13, 300, 30, 0, -20, 1.0f, 0.67f, 0.0f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 13, 30, -30, 0, -20, 1.0f, 0.67f, 0.0f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 13, 30, 30, 0, -20, 1.0f, 0.67f, 0.0f, 0.7f));
         }
         initTargetBox();
     }

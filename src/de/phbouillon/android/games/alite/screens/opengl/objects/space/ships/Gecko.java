@@ -104,7 +104,7 @@ public class Gecko extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);  
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 13, 13, 300, 0, 0, 0, 0.81f, 0.38f, 0.71f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 13, 30, 0, 0, 0, 0.81f, 0.38f, 0.71f, 0.7f));
         }
         initTargetBox();
     }

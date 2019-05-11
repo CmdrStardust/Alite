@@ -193,7 +193,7 @@ public class Mussurana extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 19, 19, 240, 0, 10, -25, 1.0f, 0.75f, 0.30f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 19, 19, 24, 0, 10, -25, 1.0f, 0.75f, 0.30f, 0.7f));
         }
         initTargetBox();
     }

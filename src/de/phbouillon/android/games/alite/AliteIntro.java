@@ -33,6 +33,8 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.InputDevice;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -74,6 +76,39 @@ public class AliteIntro extends Activity implements OnClickListener {
 		} catch (InterruptedException e) {			
 		}
 		throw new RuntimeException("Mount OBB Error");
+	}
+	
+	private boolean isController(int sourceId) {
+		return (sourceId & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD ||
+			   (sourceId & InputDevice.SOURCE_DPAD) == InputDevice.SOURCE_DPAD ||
+			   (sourceId & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK;
+	}
+
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (isController(event.getSource())) {
+			switch (event.getKeyCode()) {
+				case KeyEvent.KEYCODE_BUTTON_A:
+				case KeyEvent.KEYCODE_BUTTON_B:
+				case KeyEvent.KEYCODE_BUTTON_X:
+				case KeyEvent.KEYCODE_BUTTON_Y:
+				case KeyEvent.KEYCODE_BUTTON_L1:
+				case KeyEvent.KEYCODE_BUTTON_L2:
+					if (getCurrentFocus() instanceof VideoView) {
+						VideoView videoView = (VideoView) getCurrentFocus();
+						if (videoView != null) {
+							try {
+								videoView.stopPlayback();
+							} catch (IllegalStateException e) {
+								// Ignore...
+							}
+						}
+						startAlite(videoView);
+					}		
+					break;
+			}
+		}
+		return super.dispatchKeyEvent(event);
 	}
 	
 	private FileDescriptor getFileDescriptor(String file) throws IOException {

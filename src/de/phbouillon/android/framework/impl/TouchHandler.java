@@ -30,5 +30,5 @@ public interface TouchHandler extends OnTouchListener {
 	public int getTouchY(int pointer);
 	public void setZoomFactor(float zoomFactor);
 	public Vector <TouchEvent> getTouchEvents();
-	public Vector <TouchEvent> getAndRetainTouchEvents();
+	public Vector <TouchEvent> getAndRetainTouchEvents();	
 }

@@ -98,7 +98,7 @@ public class MorayStarBoat extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename); 
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 19, 4, 300, 0, -5, 0));
+        	addExhaust(new EngineExhaust(this, 19, 4, 30, 0, -5, 0));
         }
         initTargetBox();
     }

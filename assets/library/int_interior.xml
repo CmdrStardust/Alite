@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Interior of a Cobra Mk III</Header>
+  <Content>
+    <Text>
+      <p>The Cobra is essentially a single-pilot trade-ship, but has
+      been designed to support a second person, provided
+      that person is of ordinary human or humanoid dimensions
+      and physiology. The ship itself consists of five main areas:</p>
+      <p>[bp]The cargo hold[/pb] fills the bulk of the mid-space area, and
+      the cargo bay doors open downwards. The capacity in an
+      unmodified Cobra is 20 1-tonne canisters. Extra cargo
+      space may be acquired by extending the cargo bay,
+      which does not affect manoeuvrability. Tonne canisters
+      (TC) attach magnetically to the cargo arms within the
+      bay, and two AutoShuttles occupy the central space.</p>
+      <p>[bp]The bridge[/pb] has seats for pilot and co-pilot, a MedStim
+      Centre, entrance to the escape pod, descent well to living
+      quarters, communications console, special suit locker,
+      RemLock supply case, attachment facilities for AutoDock
+      System and a hand-weapons locker. The main wall
+      is occupied by the scanner screen, astrogation console and
+      main systems monitors.</p>
+      <p>[bp]The drive sector[/pb] houses the directional thrusts, the
+      System Space Kruger &apos;lightfast&apos; motors, and the Irrikon
+      Thru-Space drives. Also here are the rear laser housings,
+      the ECM capsule, the Zieman shield generators, and
+      energy banks, and the Witch-Space fuel condensors
+      (Quirium). There are both internal and external access
+      panels. Radiation level is high.</p>
+      <p>[bp]The living and hygiene section[/pb] is below the main bridge,
+      and reached through a descending gravity well. Two
+      bunks, food dispensing facilities, waste disposal (including
+      high-tox copper exudate for Aonians), SynPleasure
+      relaxapads, and videos.</p>
+      <p>[bp]The equipment level[/pb] runs throughout the ship, and
+      houses all energy banks for lasers, plus the missile rests,
+      with dispatch shafts to the lower hull. The communications
+      centre is here, and the escape pod (with a
+      separate entrance from the bridge) life support systems,
+      cryogen tanks (two) and forty cubic metres of FacsEnvironment
+      for emergency use.</p>
+    </Text>
+  </Content>
+  <Next>int_status</Next>
+  <Previous>intro</Previous>
+</Page>
+

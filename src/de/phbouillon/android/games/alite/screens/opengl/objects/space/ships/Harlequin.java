@@ -246,9 +246,9 @@ public class Harlequin extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 10, 10, 440, -100, -75, -15, 0.33f, 0.22f, 0.8f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 10, 10, 440,  100, -75, -15, 0.33f, 0.22f, 0.8f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 10, 10, 440,    0, 105, -15, 0.33f, 0.22f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 10, 10, 40, -100, -75, -15, 0.33f, 0.22f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 10, 10, 40,  100, -75, -15, 0.33f, 0.22f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 10, 10, 40,    0, 105, -15, 0.33f, 0.22f, 0.8f, 0.7f));
         }
         initTargetBox();
     }

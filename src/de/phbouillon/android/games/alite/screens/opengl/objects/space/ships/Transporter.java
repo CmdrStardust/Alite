@@ -123,8 +123,8 @@ public class Transporter extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);   
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 13, 13, 300, -37, -5, 0));
-        	addExhaust(new EngineExhaust(this, 13, 13, 300,  37, -5, 0));
+        	addExhaust(new EngineExhaust(this, 13, 13, 30, -37, -5, 0));
+        	addExhaust(new EngineExhaust(this, 13, 13, 30,  37, -5, 0));
         }
         initTargetBox();
     }

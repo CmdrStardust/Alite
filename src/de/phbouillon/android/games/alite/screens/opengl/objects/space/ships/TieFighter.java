@@ -657,8 +657,8 @@ public class TieFighter extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 4, 4, 300, -55, 0, -120, 1.0f, 0.1f, 0.0f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 4, 4, 300,  55, 0, -120, 1.0f, 0.1f, 0.0f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 4, 4, 30, -55, 0, -120, 1.0f, 0.1f, 0.0f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 4, 4, 30,  55, 0, -120, 1.0f, 0.1f, 0.0f, 0.7f));
         }
         initTargetBox();
     }

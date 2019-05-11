@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Illegal Trading</Header>
+  <Content>
+    <Text>
+        <p>Most systems will penalize either buying or selling
+        of illegal trade items, notably firearms, narcotics
+        (especially Arcturan Megaweed) and slaves. Slaves are supplied in
+        cryosuspension in transporter coffins, and often turn out to be
+        old and sick specimens of vaguely humanoid life forms. Most
+        systems take recriminatory action if you trade those items on
+        their station.</p>
+    </Text>
+  </Content>
+  <Next>politics</Next>
+  <Previous>trade_a_cargo</Previous>
+</Page>
+

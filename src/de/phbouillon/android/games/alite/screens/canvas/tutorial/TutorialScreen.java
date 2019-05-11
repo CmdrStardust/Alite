@@ -271,14 +271,21 @@ public abstract class TutorialScreen extends AliteScreen {
 		}
 	}
 
-	@Override
-	public void processTouch(TouchEvent event) {
-		super.processTouch(event);
+	private Screen handleMessage() {
 		if (messageResult == 1) {
 			if (currentLine != null) {
 				mediaPlayer.reset();
 			}
-			newScreen = new TutorialSelectionScreen(alite);			
+			return new TutorialSelectionScreen(alite);			
+		}
+		return null;
+	}
+	
+	@Override
+	public void processTouch(TouchEvent event) {
+		super.processTouch(event);
+		newScreen = handleMessage();
+		if (newScreen != null) {
 			performScreenChange();
 			postScreenChange();			
 			tutorialAborted = true;
@@ -286,8 +293,23 @@ public abstract class TutorialScreen extends AliteScreen {
 	}
 	
 	@Override
+	public void processButtonUp(int button) {
+		super.processButtonUp(button);
+		newControlScreen = handleMessage();
+		if (newControlScreen != null) {
+			tutorialAborted = true;			
+		}
+	}
+		
+	@Override
 	public void update(float deltaTime) {
 		if (tutorialAborted) {
+			if (newControlScreen != null) {				
+				newScreen = newControlScreen;
+				performScreenChange();
+				postScreenChange();			
+				newControlScreen = null;
+			}
 			game.getInput().getTouchEvents();
 			return;
 		}

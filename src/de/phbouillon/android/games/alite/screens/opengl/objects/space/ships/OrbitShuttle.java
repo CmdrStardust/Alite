@@ -100,10 +100,10 @@ public class OrbitShuttle extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);  
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 10, 10, 120, -25,  25, 0, 0.81f, 0.35f, 0.63f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 10, 10, 120,  25,  25, 0, 0.81f, 0.35f, 0.63f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 10, 10, 120, -25, -25, 0, 0.81f, 0.35f, 0.63f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 10, 10, 120,  25, -25, 0, 0.81f, 0.35f, 0.63f, 0.7f));        	
+        	addExhaust(new EngineExhaust(this, 10, 10, 12, -25,  25, 0, 0.81f, 0.35f, 0.63f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 10, 10, 12,  25,  25, 0, 0.81f, 0.35f, 0.63f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 10, 10, 12, -25, -25, 0, 0.81f, 0.35f, 0.63f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 10, 10, 12,  25, -25, 0, 0.81f, 0.35f, 0.63f, 0.7f));        	
         }
         initTargetBox();
     }

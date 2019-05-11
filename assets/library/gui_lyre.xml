@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Lyre</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_lyre"/>
+	<p>Data missing</p>
+	<table>[o]Dimensions:[/o],[o]140x28x133m[/o];
+        Cargo Capacity:,unknown;
+        Armaments:,unknown;
+	Maximum Velocity:,unknown;
+	Inservice Date:,unknown;
+	Crew Number:,unknown;
+	Hull Stress Factor:,unknown;
+	Manouevrability:,unknown;
+	Drive Motors:,unknown;
+	Hyperspace Capability:,Local only;
+	Home Galaxy:,7;
+        </table>
+    </Text>
+    <Image name="lyre"/>
+  </Content>
+  <Next>gui_mamba</Next>
+  <Previous>gui_lora</Previous>
+</Page>
+

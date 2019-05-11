@@ -379,9 +379,9 @@ public class EscapeCapsule extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);    
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 13, 13, 160, -40, -25, -35, 0.80f, 0.53f, 0.8f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 13, 13, 160,  40, -25, -35, 0.80f, 0.53f, 0.8f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 13, 13, 160,   0,  50, -35, 0.80f, 0.53f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 13, 16, -40, -25, -35, 0.80f, 0.53f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 13, 16,  40, -25, -35, 0.80f, 0.53f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 13, 16,   0,  50, -35, 0.80f, 0.53f, 0.8f, 0.7f));
         }        
         initTargetBox();
     }

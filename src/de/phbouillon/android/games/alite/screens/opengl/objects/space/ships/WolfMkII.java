@@ -191,7 +191,7 @@ public class WolfMkII extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);    
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 27, 7, 660, 0, 0, -10, 0.97f, 0.10f, 0.8f, 0.7f));        	
+        	addExhaust(new EngineExhaust(this, 27, 7, 40, 0, 0, -10, 0.97f, 0.10f, 0.8f, 0.7f));        	
         }
         initTargetBox();
     }

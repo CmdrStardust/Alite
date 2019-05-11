@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Bushmaster</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_bushmaster"/>
+	<p>The Bushmaster is the only known ship built by Lizards.
+	Originally intended to rid its home planet of the Lethaloids, the
+	ship grew fast in popularity due to its powerful shielding. Not
+	operable by human pilots, the Bushmaster is not widely spread and
+	a lack of a galactic hyperdrive adds to that.</p>
+	<table>[o]Dimensions:[/o],[o]200x82x279m[/o];
+        Cargo Capacity:,40TC;
+        Armaments:,Standard Beam Lasers[c];
+        ,Geret Starseeker Missile;
+	Maximum Velocity:,0.34 LM;
+	Inservice Date:,2897 AD (Leonrala);
+	Crew Number:,4;
+	Hull Stress Factor:,TJi 24;
+	Manouevrability:,CF 2;
+	Drive Motors:,Hamilton Drive;
+	Hyperspace Capability:,Local only;
+	Home Galaxy:,5;
+        </table>
+    </Text>
+    <Image name="bushmaster"/>
+  </Content>
+  <Next>gui_cobrai</Next>
+  <Previous>gui_boa</Previous>
+</Page>
+

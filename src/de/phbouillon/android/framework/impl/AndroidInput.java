@@ -31,8 +31,8 @@ public class AndroidInput implements Input {
 	private final TouchHandler touchHandler;
 	private final AndroidGame game;
 	private boolean disposed = false;
-	
-	public AndroidInput(AndroidGame game, View view, float scaleX, float scaleY, int offsetX, int offsetY) {
+		
+	public AndroidInput(AndroidGame game, AndroidView view, float scaleX, float scaleY, int offsetX, int offsetY) {
 		this.game = game;
 		AccelerometerHandler.needsCalibration = true;
 		accelHandler = Settings.controlMode == ShipControl.ALTERNATIVE_ACCELEROMETER ? 
@@ -136,5 +136,5 @@ public class AndroidInput implements Input {
 	@Override
 	public boolean isDisposed() {
 		return disposed;
-	}
+	}	
 }

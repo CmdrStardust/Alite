@@ -152,8 +152,8 @@ public class ShipEditorScreen extends AliteScreen {
 		exp.b1 = 0.8f;
 		exp.a1 = 0.7f;
 
-		currentShip.addExhaust(new EngineExhaust(currentShip, 13.0f, 13.0f, 300.0f, -50.0f, 0, 0));
-		currentShip.addExhaust(new EngineExhaust(currentShip, 13.0f, 13.0f, 300.0f,  50.0f, 0, 0));
+		currentShip.addExhaust(new EngineExhaust(currentShip, 13.0f, 13.0f, 30.0f, -50.0f, 0, 0));
+		currentShip.addExhaust(new EngineExhaust(currentShip, 13.0f, 13.0f, 30.0f,  50.0f, 0, 0));
 		currentShip.setPosition(0, 0, -700.0f);	
 		currentShip.setAIState(AIState.IDLE, (Object []) null);
 		currentShip.setSpeed(-currentShip.getMaxSpeed());

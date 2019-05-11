@@ -112,9 +112,9 @@ public class Coral extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 13, 24, 300, -45, 5, -80, 0.60f, 0.08f, 0.8f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 13, 24, 300,  45, 5, -80, 0.60f, 0.08f, 0.8f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 13, 24, 300,   0, 5, -80, 0.60f, 0.08f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 24, 30, -45, 5, -80, 0.60f, 0.08f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 24, 30,  45, 5, -80, 0.60f, 0.08f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 24, 30,   0, 5, -80, 0.60f, 0.08f, 0.8f, 0.7f));
         }
         initTargetBox();
     }

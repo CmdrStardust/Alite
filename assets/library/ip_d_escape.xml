@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Escape capsule</Header>
+  <Content>
+    <Text>
+        <InlineImage name="escape_capsule"/>
+	<p>An escape capsule can be fitted in place of your cabin at any
+	world of Tech level 6 or higher. If the button above is hit during
+	combat the capsule will be jettisoned from the ship, be
+	automatically tracked by the nearest world and will travel safely
+	to a Coriolis space station. Your cash will be preserved but all
+	your cargo will be lost.</p>
+	<p>However, this item comes with a widely recognised insurance cover
+	which will guarantee you a new Cobra Class ship, equipped in like
+	manner. The contents of the cargo hold is exempt from this
+	protection.</p>
+	<p>Since the unique IR signature of a ship&apos;s hull is used to
+	file police records, abandoning your ship in this way will have the
+	effect (unfortunately exploited as much by galactic brigands as
+	trader victims) of clearing your police record.</p>
+	<p>You may see an escape capsule leaving an enemy ship. This will
+	not harm you unless you crash into it.</p>
+	<p>[b]Escape capsule specification:[/b] Recommended model is the
+	Xeeslan FastJet LSC 7, which can support two human life-forms for
+	seven weeks, in moderate suspended An.state.</p>
+    </Text>
+    <Image name="escaping">
+      <Text>
+         Once a defensive shield is depleted, enemy missiles and lasers will
+         take energy directly from your ship&apos;s energy banks (1, 2, 3, 4
+         on your console). ENERGY LOW appears on-screen when further attacks
+         will very soon spell disaster for your ship. This fortunate
+         commander has used his escape capsule just in time. His badly
+         beaten Cobra can be seen floating in the distance.
+      </Text>
+    </Image>
+  </Content>
+  <Next>ip_noncombat</Next>
+  <Previous>ip_d_ecm</Previous>
+</Page>
+

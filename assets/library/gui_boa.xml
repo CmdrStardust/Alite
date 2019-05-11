@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Boa Class Cruiser</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_boa"/>
+	<p>Although marginally smaller than the Python, which it superseded,
+	the Boa has a greater cargo capacity due to refinements in equipment
+	design (e.g. the Renold Astrogation bloc is one fifth the size of
+	the previous Machanalian Interspatial Wayfinder) and reduced number
+	of necessary crew. Largely developed out of the recommendations left
+	by Commodore Monty, a Python Captain of 45 years experience.</p>
+	<table>[o]Dimensions:[/o],[o]113x104x200m[/o];
+        Cargo Capacity:,125TC;
+        Armaments:,Ergon Laser system[c];
+        ,Standard JK Pulse laser[c];
+        ,IFS Seek &amp; Hunt missiles;
+	Maximum Velocity:,0.24 LM;
+	Inservice Date:,3017 AD (Gerege Federation Space Works);
+	Crew Number:,15-28;
+	Hull Stress Factor:,TYo 20;
+	Manouevrability:,CF 4;
+	Drive Motors:,4 C40KV Ames Drive motors[c];
+	,Seeklight Thrust Systems;
+	Hyperspace Capability:,Yes;
+        </table>
+    </Text>
+    <Image name="boaclasscruiser"/>
+  </Content>
+  <Next>gui_bushmaster</Next>
+  <Previous>gui_asp</Previous>
+</Page>
+

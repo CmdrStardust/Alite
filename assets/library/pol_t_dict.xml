@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Dictatorships</Header>
+  <Content>
+    <Text>
+        <p>Dictatorships such as the worlds [b]LAVE[/b] and [b]ENZAER[/b],
+        are only moderately safe to trade with, but are well worth the risk
+        (provided the trader is well defended and combat trained). Very
+        often pirate attack will [i]not[/i] occur because of an agreement
+        between pirate fleets and the world itself. A proportion of all
+        incoming trade is &apos;allowed&apos; to be stolen by pirates, who
+        will then leave the world alone, and protect its ships from aliens
+        or rogue traders. It is an uneasy liaison, which often breaks
+        down.</p>
+        <p>Lave is an agricultural world, and Enzaer an industrial planet,
+        but a similar principle operates on both surfaces. There are two
+        trading standards, that of the People and that of the Aristocracy.
+        Standards of living are artifically generated, a veneer of progress,
+        and luxury goods, machinery and textiles sell well -- usually. The
+        great demand, however, is for basic commodities, especially
+        foodstuffs, clothing and raw materials. These will sell well when
+        the voice of the People has been raised in protest.</p>
+    </Text>
+  </Content>
+  <Next>pol_t_anar</Next>
+  <Previous>pol_t_corp</Previous>
+</Page>
+

@@ -32,6 +32,8 @@ class ModernColorScheme extends ColorScheme {
 	public static final long DARK_ELECTRIC_BLUE    = 0xff085290l;	       	       	
 	public static final long LIGHT_ORANGE          = 0xffeeacacl;        
 	public static final long DARK_ORANGE           = 0xff885555l;        
+	public static final long LIGHT_GREEN           = 0xff22ac22l;        
+	public static final long DARK_GREEN            = 0xff115511l;        
 	public static final long LIGHT_GRAY            = 0xff888888l;       
 	public static final long DARK_GRAY             = 0xff444444l;       
 	public static final long DARK_GRAY_MED_ALPHA   = 0xaa444444l;
@@ -265,6 +267,16 @@ class ModernColorScheme extends ColorScheme {
 	}
 	
 	@Override
+	public long activeColoredFrameLight() {
+		return LIGHT_GREEN;
+	}
+
+	@Override
+	public long activeColoredFrameDark() {
+		return DARK_GREEN;
+	}		
+	
+	@Override
 	public long pulsingHighlighterDark() {
 		return DARK_GREEN_LOW_ALPHA;
 	}
@@ -382,5 +394,5 @@ class ModernColorScheme extends ColorScheme {
 	@Override
 	public long highlightColor() {
 		return DARK_GREEN_LOW_ALPHA;
-	}		
+	}
 }

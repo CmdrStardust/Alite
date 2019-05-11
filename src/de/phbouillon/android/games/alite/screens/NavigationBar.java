@@ -49,6 +49,7 @@ public class NavigationBar {
 	private int pendingIndex = -1;
 	private boolean active = true;
 	private final Alite alite;
+	private int highlightedPosition = -1;
 	
 	static class NavigationEntry {
 		String title;
@@ -88,6 +89,14 @@ public class NavigationBar {
 		Assets.quitIcon      = game.getGraphics().newPixmap("navigation_icons/quit_icon.png", true);
 	}
 	
+	public int getHighlightedPosition() {
+		return highlightedPosition;
+	}
+	
+	public void setHighlightedPosition(int pos) {
+		highlightedPosition = pos;
+	}
+	
 	public void moveToScreen(int screenCode) {
 		switch (screenCode) {
 			case ScreenCodes.STATUS_SCREEN: setActiveIndex(2); break; 
@@ -124,7 +133,7 @@ public class NavigationBar {
 		moveToScreen(screen.getScreenCode());
 	}
 	
-	private void ensureVisible() {
+	public void ensureVisible(int index) {
 		position = 0;
 		int realSize = targets.size();
 		for (int i = 0; i < targets.size(); i++) {
@@ -132,17 +141,20 @@ public class NavigationBar {
 				realSize--;
 			}
 		}
-		boolean found = (position + 1080) / SIZE > (activeIndex + 1);
+		boolean found = (position + 1080) / SIZE > (index + 1);
 		while (!found) {
 			position += SIZE;
 			if (position > (SIZE * realSize - 1080)) {
 				found = true;
 				position = SIZE * realSize - 1080;
 			} else {
-				found = (position + 1080) / SIZE > (activeIndex + 1);
+				found = (position + 1080) / SIZE > (index + 1);
 			}
-		}
-
+		}		
+	}
+	
+	private void ensureVisible() {
+		ensureVisible(activeIndex);
 	}
 	
 	public int getPosition() {
@@ -229,8 +241,13 @@ public class NavigationBar {
 				selX = x;
 				selY = y;
 			}
-			g.rec3d(x, y, SIZE, SIZE, 5, counter == activeIndex ? AliteColors.get().selectedColoredFrameLight() : AliteColors.get().coloredFrameLight(), 
-					                     counter == activeIndex ? AliteColors.get().selectedColoredFrameDark() : AliteColors.get().coloredFrameDark());
+			if (counter == highlightedPosition) {
+				g.rec3d(x, y, SIZE, SIZE, 5, counter == activeIndex ? AliteColors.get().selectedColoredFrameLight() : AliteColors.get().activeColoredFrameLight(), 
+						 				     counter == activeIndex ? AliteColors.get().selectedColoredFrameDark() : AliteColors.get().activeColoredFrameDark());				
+			} else {
+				g.rec3d(x, y, SIZE, SIZE, 5, counter == activeIndex ? AliteColors.get().selectedColoredFrameLight() : AliteColors.get().coloredFrameLight(), 
+											 counter == activeIndex ? AliteColors.get().selectedColoredFrameDark() : AliteColors.get().coloredFrameDark());
+			}
 
 			y = positionCounter * SIZE;
 			long color = counter == activeIndex ? AliteColors.get().selectedText() : AliteColors.get().message();
@@ -248,6 +265,10 @@ public class NavigationBar {
 	
 	public void setActiveIndex(int newIndex) {
 		activeIndex = newIndex;
+	}
+	
+	public int getActiveIndex() {
+		return activeIndex;
 	}
 	
 	public void increasePosition(int delta) {		
@@ -289,6 +310,38 @@ public class NavigationBar {
 		}
 	}
 	
+	public int getNextPosition(int pos) {
+		for (int i = pos + 1; i < targets.size(); i++) {
+			if (targets.get(i).visible) {
+				return i;
+			}
+		}
+		for (int i = 0; i < Math.min(pos, targets.size()); i++) {
+			if (targets.get(i).visible) {
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	public int getPreviousPosition(int pos) {
+		for (int i = pos - 1; i >= 0; i--) {
+			if (targets.get(i).visible) {
+				return i;
+			}
+		}
+		for (int i = targets.size() - 1; i > pos; i--) {
+			if (targets.get(i).visible) {
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	public Screen getScreenForSelection(Alite game, int selection) {
+		return getScreenFromNavigationEntry(game, targets.get(selection));
+	}
+	
 	public int getRealIndex(int index) {
 		int realIndex = index;
 		for (int i = 0; i <= index; i++) {
@@ -304,20 +357,7 @@ public class NavigationBar {
 		return index;
 	}
 	
-	public Screen getScreenForIndex(Alite game, int index) {
-		int realIndex = index;
-		for (int i = 0; i <= index; i++) {
-			if (i >= targets.size()) {
-				AliteLog.e("NavigationBar", "Index out of bounds: " + index);
-				return null;				
-			}
-			if (!targets.get(i).visible) {
-				realIndex++;
-			}
-		}
-		index = realIndex;
-
-		NavigationEntry entry = targets.get(index);
+	private Screen getScreenFromNavigationEntry(Alite game, NavigationEntry entry) {
 		Screen newScreen = null;
 		if (entry.navigationTarget != null) {
 			SoundManager.play(Assets.click);
@@ -342,9 +382,30 @@ public class NavigationBar {
 			} else if (entry.title.equals("Gal. Jump")) {
 				SoundManager.play(Assets.click);
 				newScreen = new FlightScreen(game, true);				
-			} 
-		}
+			} else if (entry.title.equals("Quit")) {
+				SoundManager.play(Assets.click);
+				FlightScreen fs = game.getCurrentScreen() instanceof FlightScreen ? (FlightScreen) game.getCurrentScreen() : null;
+				newScreen = new QuitScreen(game, fs);
+			}
+		}		
 		return newScreen;
+	}
+	
+	public Screen getScreenForIndex(Alite game, int index) {
+		int realIndex = index;
+		for (int i = 0; i <= index; i++) {
+			if (i >= targets.size()) {
+				AliteLog.e("NavigationBar", "Index out of bounds: " + index);
+				return null;				
+			}
+			if (!targets.get(i).visible) {
+				realIndex++;
+			}
+		}
+		index = realIndex;
+
+		NavigationEntry entry = targets.get(index);		
+		return getScreenFromNavigationEntry(game, entry);
 	}
 	
 	public Screen touched(Alite game, int x, int y) {
@@ -437,6 +498,10 @@ public class NavigationBar {
 		return newScreen;
 	}
 	
+	public void setPendingIndex(int idx) {
+		pendingIndex = idx;
+	}
+	
 	public void resetPending() {
 		pendingIndex = -1;
 	}
@@ -444,7 +509,8 @@ public class NavigationBar {
 	public void performScreenChange() {
 		if (pendingIndex != -1) {
 			activeIndex = pendingIndex;
-			pendingIndex = -1;			
+			pendingIndex = -1;
+			highlightedPosition = -1;
 		}
 	}
 }

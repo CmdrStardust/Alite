@@ -92,9 +92,9 @@ public class Mamba extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);    
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this,  7,  7, 300, -60, 0, 0, 1.0f, 0.81f, 0.2f, 0.7f));
-        	addExhaust(new EngineExhaust(this,  7,  7, 300,  60, 0, 0, 1.0f, 0.81f, 0.2f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 22, 13, 540,   0, 0, 0, 1.0f, 0.5f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this,  7,  7, 30, -60, 0, 0, 1.0f, 0.81f, 0.2f, 0.7f));
+        	addExhaust(new EngineExhaust(this,  7,  7, 30,  60, 0, 0, 1.0f, 0.81f, 0.2f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 22, 13, 40,   0, 0, 0, 1.0f, 0.5f, 0.8f, 0.7f));
         }
         initTargetBox();
     }

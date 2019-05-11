@@ -70,6 +70,8 @@ public abstract class ColorScheme {
 	public abstract long coloredFrameDark();
 	public abstract long selectedColoredFrameLight();
 	public abstract long selectedColoredFrameDark();
+	public abstract long activeColoredFrameLight();
+	public abstract long activeColoredFrameDark();
 	
 	public abstract long pulsingHighlighterDark();
 	public abstract long pulsingHighlighterLight();

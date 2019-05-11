@@ -226,6 +226,14 @@ public class EquipmentScreen extends TradeScreen {
     	return 0;
 	}
 	
+	private void performAutoSave() {
+		try {
+			((Alite) game).getFileUtils().autoSave((Alite) game);
+		} catch (IOException e) {
+			AliteLog.e("Auto saving failed", e.getMessage(), e);
+		}			
+	}
+	
     @Override
 	protected void performTrade(int row, int column) {
     	Equipment equipment = ((Alite) game).getCobra().getEquipment(row * COLUMNS + column);
@@ -292,6 +300,11 @@ public class EquipmentScreen extends TradeScreen {
 				cashLeft = String.format("Cash left: %d.%d Cr", player.getCash() / 10, player.getCash() % 10);
 
 				SoundManager.play(Assets.kaChing);
+	    		try {
+					((Alite) game).getFileUtils().autoSave((Alite) game);
+				} catch (IOException e) {
+					AliteLog.e("Auto saving failed", e.getMessage(), e);
+				}			
 			}
 		} else {
 			if (equipment.getCost() == -1) {
@@ -314,6 +327,7 @@ public class EquipmentScreen extends TradeScreen {
 				cashLeft = String.format("Cash left: %d.%d Cr", player.getCash() / 10, player.getCash() % 10);
 				SoundManager.play(Assets.kaChing);
 				equippedEquipment = EquipmentStore.fuel;
+				performAutoSave();
 				return;
 			} else if (equipment == EquipmentStore.missiles) {
 				if (cobra.getMissiles() == PlayerCobra.MAXIMUM_MISSILES) {
@@ -331,6 +345,7 @@ public class EquipmentScreen extends TradeScreen {
 				cashLeft = String.format("Cash left: %d.%d Cr", player.getCash() / 10, player.getCash() % 10);
 				SoundManager.play(Assets.kaChing);
 				equippedEquipment = EquipmentStore.missiles;
+				performAutoSave();
 				return;
 			}
 			player.setCash(player.getCash() - price);
@@ -349,11 +364,7 @@ public class EquipmentScreen extends TradeScreen {
 			selection = null;
 			cashLeft = String.format("Cash left: %d.%d Cr", player.getCash() / 10, player.getCash() % 10);
 			equippedEquipment = equipment;
-    		try {
-				((Alite) game).getFileUtils().autoSave((Alite) game);
-			} catch (IOException e) {
-				AliteLog.e("Auto saving failed", e.getMessage(), e);
-			}			
+			performAutoSave();
 		}
 	}
 

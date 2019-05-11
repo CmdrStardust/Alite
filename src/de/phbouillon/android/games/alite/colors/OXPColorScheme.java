@@ -578,6 +578,15 @@ public class OXPColorScheme extends ColorScheme {
 	@Override
 	public long highlightColor() {
 		return highlightColor;
-	}		
+	}
 
+	@Override
+	public long activeColoredFrameLight() {
+		return selectedColoredFrameLight;
+	}
+
+	@Override
+	public long activeColoredFrameDark() {
+		return selectedColoredFrameDark;
+	}		
 }

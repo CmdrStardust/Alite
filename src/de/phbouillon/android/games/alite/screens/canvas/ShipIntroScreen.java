@@ -26,6 +26,7 @@ import java.io.IOException;
 
 import android.graphics.Rect;
 import android.opengl.GLES11;
+import android.view.KeyEvent;
 import de.phbouillon.android.framework.Game;
 import de.phbouillon.android.framework.Geometry;
 import de.phbouillon.android.framework.Graphics;
@@ -34,6 +35,7 @@ import de.phbouillon.android.framework.Music;
 import de.phbouillon.android.framework.Pixmap;
 import de.phbouillon.android.framework.Sound;
 import de.phbouillon.android.framework.impl.AndroidGraphics;
+import de.phbouillon.android.framework.impl.Dpad;
 import de.phbouillon.android.framework.impl.gl.GlUtils;
 import de.phbouillon.android.framework.math.Vector3f;
 import de.phbouillon.android.games.alite.Alite;
@@ -90,8 +92,8 @@ import de.phbouillon.android.games.alite.screens.opengl.objects.space.ships.Yell
 //This screen never needs to be serialized, as it is not part of the InGame state.
 @SuppressWarnings("serial")
 public class ShipIntroScreen extends AliteScreen {
-	private static final boolean DEBUG_EXHAUST = false;
-	private static final boolean ONLY_CHANGE_SHIPS_AFTER_SWEEP = false;
+	private static final boolean DEBUG_EXHAUST = true;
+	private static final boolean ONLY_CHANGE_SHIPS_AFTER_SWEEP = true;
 	private static final boolean SHOW_DOCKING = false;
 	private static final boolean DANCE = true;
 	
@@ -120,6 +122,7 @@ public class ShipIntroScreen extends AliteScreen {
 	private Button yesButton;
 	private Button noButton;
 	private Button tapToStartButton;
+	private Button selectedButton;
 	private Pixmap yesIcon;
 	private Pixmap noIcon;
 	private boolean selectPreviousShip = false;
@@ -250,9 +253,59 @@ public class ShipIntroScreen extends AliteScreen {
 	}
 
 	@Override
+	public void processDPad(int direction) {
+		if (direction == Dpad.LEFT) {
+			if (displayMode == DisplayMode.DANCE) {
+				displayMode = DisplayMode.ZOOM_OUT;
+			}
+			selectPreviousShip = true;			
+		}
+		if (direction == Dpad.RIGHT) {
+			if (displayMode == DisplayMode.DANCE) {
+				displayMode = DisplayMode.ZOOM_OUT;
+			}			
+		}		
+	}
+	
+	@Override
+	public void processJoystick(float x, float y, float z, float rz, float hatX, float hatY) {		
+		if (x > 0.75f && displayMode == DisplayMode.DANCE) {
+			displayMode = DisplayMode.ZOOM_OUT;
+		} else if (x < -0.75f && displayMode == DisplayMode.DANCE) {
+			displayMode = DisplayMode.ZOOM_OUT;
+			selectPreviousShip = true;
+		}		
+		if (showLoadNewCommander && movedAxis(AXIS_Z, z) != 0) {
+			if (selectedButton != null) {
+				selectedButton.fingerUp(5);
+			}
+			if (selectedButton == null || selectedButton == noButton) {
+				selectedButton = yesButton;
+			} else {
+				selectedButton = noButton;
+			}
+			selectedButton.fingerDown(5);
+		}
+	}
+	
+	@Override
+	public void processButtonUp(int button) {
+		if (button == KeyEvent.KEYCODE_BUTTON_A) {
+			if (!showLoadNewCommander || selectedButton == null || selectedButton == noButton) {
+				SoundManager.play(Assets.click);
+				newControlScreen = new StatusScreen(game);
+			} else {
+				SoundManager.play(Assets.click);
+				newControlScreen = new LoadScreen(game, "Load Commander");
+				((Alite) game).getNavigationBar().moveToScreen(newScreen);					
+			}			
+		}
+	}
+	
+	@Override
 	public void renderNavigationBar() {
 	}
-
+			
 	private void debugExhausts() {
 		if (DEBUG_EXHAUST) {
 			if (currentShip instanceof SpaceObject) {

@@ -11,9 +11,9 @@ public final class R {
     public static final class attr {
     }
     public static final class dimen {
-        public static final int padding_large=0x7f040002;
-        public static final int padding_medium=0x7f040001;
-        public static final int padding_small=0x7f040000;
+        public static final int padding_large=0x7f050002;
+        public static final int padding_medium=0x7f050001;
+        public static final int padding_small=0x7f050000;
     }
     public static final class drawable {
         public static final int icon=0x7f020000;
@@ -23,22 +23,22 @@ public final class R {
         public static final int wheel_val=0x7f020004;
     }
     public static final class id {
-        public static final int appIcon=0x7f080007;
-        public static final int description=0x7f08000d;
-        public static final int downloadHeader=0x7f080001;
-        public static final int downloadProgressBar=0x7f080003;
-        public static final int downloadProgressPercentTextView=0x7f080004;
-        public static final int downloadTextView=0x7f080002;
-        public static final int introContainer=0x7f080000;
-        public static final int menu_settings=0x7f08000f;
-        public static final int notificationLayout=0x7f080006;
-        public static final int progress_bar=0x7f08000c;
-        public static final int progress_bar_frame=0x7f08000b;
-        public static final int progress_text=0x7f080008;
-        public static final int statusTextView=0x7f080005;
-        public static final int time_item=0x7f08000e;
-        public static final int time_remaining=0x7f08000a;
-        public static final int title=0x7f080009;
+        public static final int appIcon=0x7f090007;
+        public static final int description=0x7f09000d;
+        public static final int downloadHeader=0x7f090001;
+        public static final int downloadProgressBar=0x7f090003;
+        public static final int downloadProgressPercentTextView=0x7f090004;
+        public static final int downloadTextView=0x7f090002;
+        public static final int introContainer=0x7f090000;
+        public static final int menu_settings=0x7f09000f;
+        public static final int notificationLayout=0x7f090006;
+        public static final int progress_bar=0x7f09000c;
+        public static final int progress_bar_frame=0x7f09000b;
+        public static final int progress_text=0x7f090008;
+        public static final int statusTextView=0x7f090005;
+        public static final int time_item=0x7f09000e;
+        public static final int time_remaining=0x7f09000a;
+        public static final int title=0x7f090009;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -47,55 +47,63 @@ public final class R {
         public static final int status_bar_ongoing_event_progress_bar=0x7f030003;
     }
     public static final class menu {
-        public static final int activity_main=0x7f070000;
+        public static final int activity_main=0x7f080000;
+    }
+    public static final class raw {
+        public static final int alite_intro_288=0x7f040000;
+        public static final int alite_intro_b1280=0x7f040001;
+        public static final int alite_intro_b1920=0x7f040002;
+        public static final int alite_intro_b240=0x7f040003;
+        public static final int alite_intro_b320=0x7f040004;
+        public static final int alite_intro_b640=0x7f040005;
     }
     public static final class string {
-        public static final int app_name=0x7f050000;
-        public static final int hello_world=0x7f050001;
-        public static final int kilobytes_per_second=0x7f050018;
-        public static final int menu_settings=0x7f050002;
+        public static final int app_name=0x7f060000;
+        public static final int hello_world=0x7f060001;
+        public static final int kilobytes_per_second=0x7f060018;
+        public static final int menu_settings=0x7f060002;
         /**  When a download completes, a notification is displayed, and this
         string is used to indicate that the download successfully completed.
         Note that such a download could have been initiated by a variety of
         applications, including (but not limited to) the browser, an email
         application, a content marketplace. 
          */
-        public static final int notification_download_complete=0x7f050004;
+        public static final int notification_download_complete=0x7f060004;
         /**  When a download completes, a notification is displayed, and this
         string is used to indicate that the download failed.
         Note that such a download could have been initiated by a variety of
         applications, including (but not limited to) the browser, an email
         application, a content marketplace. 
          */
-        public static final int notification_download_failed=0x7f050005;
-        public static final int state_completed=0x7f05000b;
-        public static final int state_connecting=0x7f050009;
-        public static final int state_downloading=0x7f05000a;
-        public static final int state_failed=0x7f050017;
-        public static final int state_failed_cancelled=0x7f050016;
-        public static final int state_failed_fetching_url=0x7f050014;
-        public static final int state_failed_sdcard_full=0x7f050015;
-        public static final int state_failed_unlicensed=0x7f050013;
-        public static final int state_fetching_url=0x7f050008;
-        public static final int state_idle=0x7f050007;
-        public static final int state_paused_by_request=0x7f05000e;
-        public static final int state_paused_network_setup_failure=0x7f05000d;
-        public static final int state_paused_network_unavailable=0x7f05000c;
-        public static final int state_paused_roaming=0x7f050011;
-        public static final int state_paused_sdcard_unavailable=0x7f050012;
-        public static final int state_paused_wifi_disabled=0x7f050010;
-        public static final int state_paused_wifi_unavailable=0x7f05000f;
-        public static final int state_unknown=0x7f050006;
-        public static final int time_remaining=0x7f050019;
-        public static final int time_remaining_notification=0x7f05001a;
-        public static final int title_activity_main=0x7f050003;
+        public static final int notification_download_failed=0x7f060005;
+        public static final int state_completed=0x7f06000b;
+        public static final int state_connecting=0x7f060009;
+        public static final int state_downloading=0x7f06000a;
+        public static final int state_failed=0x7f060017;
+        public static final int state_failed_cancelled=0x7f060016;
+        public static final int state_failed_fetching_url=0x7f060014;
+        public static final int state_failed_sdcard_full=0x7f060015;
+        public static final int state_failed_unlicensed=0x7f060013;
+        public static final int state_fetching_url=0x7f060008;
+        public static final int state_idle=0x7f060007;
+        public static final int state_paused_by_request=0x7f06000e;
+        public static final int state_paused_network_setup_failure=0x7f06000d;
+        public static final int state_paused_network_unavailable=0x7f06000c;
+        public static final int state_paused_roaming=0x7f060011;
+        public static final int state_paused_sdcard_unavailable=0x7f060012;
+        public static final int state_paused_wifi_disabled=0x7f060010;
+        public static final int state_paused_wifi_unavailable=0x7f06000f;
+        public static final int state_unknown=0x7f060006;
+        public static final int time_remaining=0x7f060019;
+        public static final int time_remaining_notification=0x7f06001a;
+        public static final int title_activity_main=0x7f060003;
     }
     public static final class style {
-        public static final int AppTheme=0x7f060000;
-        public static final int ButtonBackground=0x7f060004;
-        public static final int NotificationText=0x7f060001;
-        public static final int NotificationTextSecondary=0x7f060005;
-        public static final int NotificationTextShadow=0x7f060002;
-        public static final int NotificationTitle=0x7f060003;
+        public static final int AppTheme=0x7f070000;
+        public static final int ButtonBackground=0x7f070004;
+        public static final int NotificationText=0x7f070001;
+        public static final int NotificationTextSecondary=0x7f070005;
+        public static final int NotificationTextShadow=0x7f070002;
+        public static final int NotificationTitle=0x7f070003;
     }
 }

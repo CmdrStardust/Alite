@@ -281,7 +281,7 @@ public class Hognose2 extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);    
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 18, 15, 360, 0, -45, -195, 0.7f, 0.75f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 18, 15, 36, 0, -45, -195, 0.7f, 0.75f, 0.8f, 0.7f));
         }
         initTargetBox();
     }

@@ -126,8 +126,8 @@ public class Anaconda extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 19, 19, 400, -40, 25, -30));
-        	addExhaust(new EngineExhaust(this, 19, 19, 400,  40, 25, -30));
+        	addExhaust(new EngineExhaust(this, 19, 19, 40, -40, 25, -30));
+        	addExhaust(new EngineExhaust(this, 19, 19, 40,  40, 25, -30));
         }
         initTargetBox();
     }

@@ -187,9 +187,9 @@ public class Gopher extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 16, 16, 220, -40, -10, 0, 0.55f, 0.56f, 0.8f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 16, 16, 220,  40, -10, 0, 0.55f, 0.56f, 0.8f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 16, 16, 220,   0, -10, 0, 0.55f, 0.56f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 16, 16, 22, -40, -10, 0, 0.55f, 0.56f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 16, 16, 22,  40, -10, 0, 0.55f, 0.56f, 0.8f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 16, 16, 22,   0, -10, 0, 0.55f, 0.56f, 0.8f, 0.7f));
         }
         initTargetBox();
     }

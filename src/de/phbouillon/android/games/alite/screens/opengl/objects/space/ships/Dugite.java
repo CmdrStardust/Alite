@@ -288,7 +288,7 @@ public class Dugite extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 18, 18, 300, 0, -5, 0, 1.0f, 0.68f, 0.22f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 18, 18, 30, 0, -5, 0, 1.0f, 0.68f, 0.22f, 0.7f));
         }
         initTargetBox();
     }

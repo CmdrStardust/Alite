@@ -109,8 +109,8 @@ public class Cougar extends SpaceObject implements Serializable {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename); 
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 13, 13, 420, -30, 0, 0, 0.32f, 0.95f, 0.14f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 13, 13, 420,  30, 0, 0, 0.32f, 0.95f, 0.14f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 13, 40, -30, 0, 0, 0.32f, 0.95f, 0.14f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 13, 40,  30, 0, 0, 0.32f, 0.95f, 0.14f, 0.7f));
         }
         initTargetBox();
     }

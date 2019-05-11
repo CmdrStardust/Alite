@@ -307,7 +307,7 @@ public class Boomslang extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);  
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 13, 13, 300, 60, 0, 0, 0.82f, 0.51f, 0.72f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 13, 30, 60, 0, 0, 0.82f, 0.51f, 0.72f, 0.7f));
         }
         initTargetBox();
     }

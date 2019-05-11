@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Shields and energy banks</Header>
+  <Content>
+    <Text>
+	<p>Your ship comes equipped with fore and aft shields and energy
+	banks. The shields protect your ship from aggressive fire, and will
+	be recharged from the energy banks. Constant fire will harm the
+	shields. Once a shield is depleted, enemy lasers and missiles
+	striking that shield will take energy directly from the energy banks
+	and may even destroy items of cargo or ship fittings. When all your
+	energy banks are empty your ship will be destroyed. Using lasers or
+	an ECM system will also deplete your energy banks.</p>
+	<p>The ship&apos;s computer will keep you informed of any damage to
+	your ship and will also warn you when energy levels are dangerously
+	low.</p>
+	<p>An Extra Energy Unit may be fitted at planets of Tech level 8 or
+	higher, and doubles the energy bank replenishment rate. This is the
+	energy unit with the copper coloured top. No other unit looks like
+	it, or lasts like it</p>
+	<p>[b]Defensive shield specification:[/b] The shields consist of
+	hi-tense flux webs of Zieman-charged sub-particles. They are
+	weakest where the laser and missile tubes pass through the
+	ship&apos;s hull, and along the central ship band where the two
+	shields overlap, and cause a stress zone.</p>
+    </Text>
+  </Content>
+  <Next>ip_d_ecm</Next>
+  <Previous>ip_d_safety</Previous>
+</Page>
+

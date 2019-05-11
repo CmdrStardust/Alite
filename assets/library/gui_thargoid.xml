@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Thargoid Invasion Ships</Header>
+  <Content>
+    <Text>
+        <InlineImage name="sc_thargoid"/>
+	<p>Though most of the Thargoid Space Fleet is currently engaged by
+	the Galactic Navy in Intergalactic Space, a few of the smaller
+	battle ships make occasional sorties into Human Space. These ships
+	are extremely fast for their size and invariably have ECM Systems
+	(this was originally a Thargoid invention to counter Navy missiles,
+	subsequently copied by the Navy from captured Thargoid ships).</p>
+	<p>Additionally, most Thargoid battle ships carry a few small
+	remote-controlled ships, each equipped with a single pulse laser. It
+	is rumoured that the Galactic Navy are designing their own
+	remote-controlled fighter and will pay well for Thargoid ones to
+	study.</p>
+	<table>[o]Dimensions:[/o],[o]328x72x328m[/o];
+        Cargo Capacity:,None;
+        Armaments:,Widely varying. Mounting available for most systems;
+	Maximum Velocity:,0.30 LM;
+	Inservice Date:,Uncertain;
+	Crew Number:,150;
+	Hull Stress Factor:,Uncertain;
+	Manouevrability:,CF 6;
+	Drive Motors:,Thargoid invention;
+	Hyperspace Capability:,Yes;
+        </table>
+    </Text>
+    <Image name="thargoid_gui"/>
+  </Content>
+  <Next>gui_thargon</Next>
+  <Previous>gui_sidewinder</Previous>
+</Page>
+

@@ -118,7 +118,7 @@ public class BoaClassCruiser extends SpaceObject {
 		texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
 		alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 13, 13, 300, 0, 20, -5, 0.63f, 0.23f, 0.7f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 13, 13, 30, 0, 20, -5, 0.63f, 0.23f, 0.7f, 0.7f));
         }
         initTargetBox();
     }

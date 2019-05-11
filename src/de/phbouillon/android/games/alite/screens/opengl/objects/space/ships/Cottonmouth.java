@@ -308,8 +308,8 @@ public class Cottonmouth extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 20, 20, 220, -100, -30, 0));
-        	addExhaust(new EngineExhaust(this, 20, 20, 220, 100, -30, 0));
+        	addExhaust(new EngineExhaust(this, 20, 20, 22, -100, -30, 0));
+        	addExhaust(new EngineExhaust(this, 20, 20, 22, 100, -30, 0));
         }
         initTargetBox();
     }

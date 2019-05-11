@@ -150,8 +150,8 @@ public class Bushmaster extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 52, 19, 300, -100, 15, 0, 0.84f, 0.12f, 0.18f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 52, 19, 300,  100, 15, 0, 0.84f, 0.12f, 0.18f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 52, 19, 30, -100, 15, 0, 0.84f, 0.12f, 0.18f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 52, 19, 30,  100, 15, 0, 0.84f, 0.12f, 0.18f, 0.7f));
         }
         initTargetBox();
     }

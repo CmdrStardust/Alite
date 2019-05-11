@@ -106,7 +106,7 @@ public class FerDeLance extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);  
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 14, 14, 220, 0, -20, 0, 0.94f, 0.73f, 0.23f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 14, 14, 22, 0, -20, 0, 0.94f, 0.73f, 0.23f, 0.7f));
         }
         initTargetBox();
     }

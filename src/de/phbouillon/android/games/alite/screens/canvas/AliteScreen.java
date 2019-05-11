@@ -23,6 +23,7 @@ import java.util.List;
 
 import android.graphics.Rect;
 import android.opengl.GLES11;
+import android.view.KeyEvent;
 import de.phbouillon.android.framework.Game;
 import de.phbouillon.android.framework.Graphics;
 import de.phbouillon.android.framework.Input.TouchEvent;
@@ -44,6 +45,11 @@ import de.phbouillon.android.games.alite.screens.opengl.ingame.FlightScreen;
 //This screen never needs to be serialized, as it is not part of the InGame state.
 @SuppressWarnings("serial")
 public abstract class AliteScreen extends Screen {
+	protected static final int AXIS_X  = 0;
+	protected static final int AXIS_Y  = 1;
+	protected static final int AXIS_Z  = 2;
+	protected static final int AXIS_RZ = 3;
+	
 	protected int startX = -1;
 	protected int startY = -1;
 	protected int lastX = -1;
@@ -54,13 +60,19 @@ public abstract class AliteScreen extends Screen {
 	private Button ok = null;
 	private Button yes = null;
 	private Button no = null;
+	private Button selectedButton = null;
 	protected Screen newScreen;
+	protected Screen newControlScreen;
 	protected boolean disposed = false;
 	protected int messageResult = 0;
 	private final List <String> textToDisplay = new ArrayList<String>();
 	private TextData[] messageTextData;
+	private boolean [] axisAtMax = new boolean[] {false, false, false, false};
+	private boolean [] axisAtMin = new boolean[] {false, false, false, false};
 	protected boolean messageIsModal = false;
 	protected boolean largeMessage = false;
+	private int selectedMenuIndex = -1;
+	private boolean executeNavigation;
 	
 	public static enum MessageType {
 		OK,
@@ -174,9 +186,63 @@ public abstract class AliteScreen extends Screen {
 		}
 	}
 
+	protected int movedAxis(int axis, float value) {
+		int result = 0;
+		if (value > 0.75f) {
+			if (!axisAtMax[axis]) {
+				axisAtMax[axis] = true;
+				result = 1;
+			}
+		}
+		if (value < -0.75f) {
+			if (!axisAtMin[axis]) {
+				axisAtMin[axis] = true;
+				result = -1;
+			}
+		}
+		if (value < 0.2f) {
+			axisAtMax[axis] = false;
+		}
+		if (value > -0.2f) {
+			axisAtMin[axis] = false;
+		}
+		return result;
+	}
+		
+	public void processNavigationJoystick(float z, float rz) {	
+		float rzAxis = movedAxis(AXIS_RZ, rz);
+		if (rzAxis == -1) {
+			NavigationBar navBar = ((Alite) game).getNavigationBar();
+			if (selectedMenuIndex == -1) {
+				selectedMenuIndex = navBar.getActiveIndex();
+			}
+			selectedMenuIndex = navBar.getPreviousPosition(selectedMenuIndex);
+		}
+		if (rzAxis == 1) {
+			NavigationBar navBar = ((Alite) game).getNavigationBar();
+			if (selectedMenuIndex == -1) {
+				selectedMenuIndex = navBar.getActiveIndex();
+			}
+			selectedMenuIndex = navBar.getNextPosition(selectedMenuIndex);
+		}
+	}
+	
+	public void processNavigationButtonDown(int button) {		
+	}
+	
+	public void processNavigationButtonUp(int button) {	
+		if (selectedMenuIndex != -1 && button == KeyEvent.KEYCODE_BUTTON_B) {			
+			executeNavigation = true;
+		}
+	}
+
 	@Override
 	public synchronized void update(float deltaTime) {
 		NavigationBar navBar = ((Alite) game).getNavigationBar();
+		if (selectedMenuIndex != -1) {
+			navBar.setHighlightedPosition(selectedMenuIndex);
+			navBar.ensureVisible(selectedMenuIndex);
+		}
 		newScreen = null;
 		for (TouchEvent event: game.getInput().getTouchEvents()) {
 			if (event.type == TouchEvent.TOUCH_DOWN && event.x >= (1920 - NavigationBar.SIZE)) {
@@ -199,7 +265,23 @@ public abstract class AliteScreen extends Screen {
 			}
 			ButtonRegistry.get().processTouch(event);
 			processTouch(event);
-		}		
+		}	
+		if (executeNavigation) {
+			executeNavigation = false;
+			newScreen = navBar.getScreenForSelection((Alite) game, selectedMenuIndex);			
+			if (newScreen != null && newScreen.getClass().getName().equals(getClass().getName())) {
+				newScreen = null;
+			}
+			if (newScreen != null) {
+				navBar.setPendingIndex(selectedMenuIndex);
+			}
+			navBar.setHighlightedPosition(-1);
+			selectedMenuIndex = -1;
+		}
+		if (newScreen == null) {
+			newScreen = newControlScreen;
+		}
+		newControlScreen = null;
 		if (newScreen != null) {
 			performScreenChange();
 			postScreenChange();
@@ -207,11 +289,17 @@ public abstract class AliteScreen extends Screen {
 	}	
 	
 	public synchronized void updateWithoutNavigation(float deltaTime) {
+		selectedMenuIndex = -1;
 		newScreen = null;
+		executeNavigation = false;
 		for (TouchEvent event: game.getInput().getTouchEvents()) {
 			ButtonRegistry.get().processTouch(event);
 			processTouch(event);
-		}		
+		}	
+		if (newScreen == null) {
+			newScreen = newControlScreen;
+		}
+		newControlScreen = null;
 		if (newScreen != null) {
 			performScreenChange();
 			postScreenChange();
@@ -241,6 +329,7 @@ public abstract class AliteScreen extends Screen {
 	}
 	
 	protected void performScreenChange() {
+		executeNavigation = false;
 		if (inFlightScreenChange()) {
 			return;
 		}		
@@ -254,66 +343,132 @@ public abstract class AliteScreen extends Screen {
 		oldScreen = null;
 	}
 	
+	private void cancelMessage() {
+		SoundManager.play(Assets.click);
+		message = null;
+		yes = null;
+		no = null;
+		messageResult = -1;
+		game.getInput().getTouchEvents();
+		ButtonRegistry.get().clearMessageButtons();						
+	}
+	
+	private void hitOk() {
+		SoundManager.play(Assets.click);
+		message = null;
+		ok = null;
+		game.getInput().getTouchEvents();
+		ButtonRegistry.get().clearMessageButtons();
+		messageIsModal = false;
+		largeMessage = false;		
+	}
+	
+	private void hitYes() {
+		SoundManager.play(Assets.click);
+		message = null;
+		yes = null;
+		no = null;
+		messageResult = 1;
+		game.getInput().getTouchEvents();
+		ButtonRegistry.get().clearMessageButtons();
+		messageIsModal = false;
+		largeMessage = false;		
+	}
+	
+	private void hitNo() {
+		SoundManager.play(Assets.click);
+		message = null;
+		yes = null;
+		no = null;
+		messageResult = -1;
+		game.getInput().getTouchEvents();
+		ButtonRegistry.get().clearMessageButtons();
+		messageIsModal = false;
+		largeMessage = false;		
+	}
+	
+	@Override
+	public void processJoystick(float x, float y, float z, float rz, float hatX, float hatY) {		
+		if (movedAxis(AXIS_Z, z) != 0) {
+			if (selectedButton != null) {
+				selectedButton.fingerUp(5);
+			}
+			if (selectedButton == null) {
+				selectedButton = ok != null ? ok : yes != null ? yes : null;
+			} else {
+				if (ok != null) {
+					selectedButton = ok;
+				} else {
+					if (yes != null && no != null) {
+						selectedButton = selectedButton == yes ? no : yes;
+					}
+				}
+			}
+			if (selectedButton != null) {
+				selectedButton.fingerDown(5);
+			}
+		}
+	}
+
+	@Override
+	public void processButtonUp(int button) {
+		if (button == KeyEvent.KEYCODE_BUTTON_A) {
+			if (selectedButton == null) {
+				if (ok != null) {
+					hitOk();
+				} else if (no != null) {
+					hitNo();
+				}
+			} else {
+				if (selectedButton == ok) {
+					hitOk();
+				} else if (selectedButton == yes) {
+					hitYes();
+				} else if (selectedButton == no) {
+					hitNo();
+				}
+			}
+			selectedButton = null;
+		}
+		if (button == KeyEvent.KEYCODE_BUTTON_X) {
+			if (message != null && !messageIsModal) {
+				cancelMessage();
+			}
+		}
+	}
+
 	protected void processTouch(TouchEvent touch) {		
 		if (touch.type != TouchEvent.TOUCH_UP) {
 			return;
 		}
 		if (message != null && !messageIsModal) {
 			if (touch.x < 510 || touch.y < 340 || touch.x > 1210 || touch.y > 740) {
-				SoundManager.play(Assets.click);
-				message = null;
-				yes = null;
-				no = null;
-				messageResult = -1;
+				cancelMessage();
 				touch.x = -1;
 				touch.y = -1;
-				game.getInput().getTouchEvents();
-				ButtonRegistry.get().clearMessageButtons();				
 			}
 		}
 		if (ok != null) {
 			if (ok.isTouched(touch.x, touch.y)) {
-				SoundManager.play(Assets.click);
-				message = null;
-				ok = null;
+				hitOk();
 				touch.x = -1;
 				touch.y = -1;
-				game.getInput().getTouchEvents();
-				ButtonRegistry.get().clearMessageButtons();
-				messageIsModal = false;
-				largeMessage = false;
 				return;
 			}			
 		}
 		if (yes != null) {
 			if (yes.isTouched(touch.x, touch.y)) {
-				SoundManager.play(Assets.click);
-				message = null;
-				yes = null;
-				no = null;
-				messageResult = 1;
+				hitYes();
 				touch.x = -1;
-				touch.y = -1;
-				game.getInput().getTouchEvents();
-				ButtonRegistry.get().clearMessageButtons();
-				messageIsModal = false;
-				largeMessage = false;
+				touch.y = -1;				
 				return;
 			}			
 		}
 		if (no != null) {		
 			if (no.isTouched(touch.x, touch.y)) {
-				SoundManager.play(Assets.click);
-				message = null;
-				yes = null;
-				no = null;
-				messageResult = -1;
+				hitNo();
 				touch.x = -1;
 				touch.y = -1;
-				game.getInput().getTouchEvents();
-				ButtonRegistry.get().clearMessageButtons();
-				messageIsModal = false;
-				largeMessage = false;
 				return;			
 			}			
 		}

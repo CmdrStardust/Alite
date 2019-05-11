@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Manoeuvring</Header>
+  <Content>
+    <Text>
+      <p>The Cobra tradeship is fast, and has a very tight turning
+      circle (though less tight at full speed); it is an ideal
+      combat ship against small packs of enemy vessels. It will
+      outrun many attack craft by speed alone, but it will not
+      outrun a missile. Spinning, fast-slow, and duck-and-weave
+      manoeuvres are very effective against the larger, less
+      manoeuvrable ships when they attack. A sudden decrease
+      in speed followed by a tight 180° turn and an increase
+      in velocity will often give you a big advantage over
+      pursuing enemy craft.</p>
+    </Text>
+    <Image name="combat">
+      <Text>
+      You must be prepared to
+      outwit your enemies
+      tactically. Speed of
+      reaction will not in itself
+      always be enough.
+      </Text>
+    </Image>
+  </Content>
+  <Next>ip_danger</Next>
+  <Previous>interplanet</Previous>
+</Page>
+

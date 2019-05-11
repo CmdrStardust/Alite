@@ -1952,10 +1952,10 @@ public class Rattlesnake extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(getTextureCoordinateData());
         alite.getTextureManager().addTexture(textureFilename);
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 9, 7, 240, -35, 0, -40, 0.83f, 0.7f, 0.23f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 9, 7, 240,  35, 0, -40, 0.83f, 0.7f, 0.23f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 7, 9, 240,   0, -35, -40, 0.83f, 0.7f, 0.23f, 0.7f));
-        	addExhaust(new EngineExhaust(this, 7, 9, 240,   0,  35, -40, 0.83f, 0.7f, 0.23f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 9, 7, 24, -35, 0, -40, 0.83f, 0.7f, 0.23f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 9, 7, 24,  35, 0, -40, 0.83f, 0.7f, 0.23f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 7, 9, 24,   0, -35, -40, 0.83f, 0.7f, 0.23f, 0.7f));
+        	addExhaust(new EngineExhaust(this, 7, 9, 24,   0,  35, -40, 0.83f, 0.7f, 0.23f, 0.7f));
         }
         initTargetBox();
     }

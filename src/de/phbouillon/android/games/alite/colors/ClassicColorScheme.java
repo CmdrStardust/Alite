@@ -32,6 +32,8 @@ class ClassicColorScheme extends ColorScheme {
 	public static final long DARK_BLUE            = 0xff555588l;       
 	public static final long LIGHT_ORANGE         = 0xffeeacacl;        
 	public static final long DARK_ORANGE          = 0xff885555l;        
+	public static final long LIGHT_GREEN          = 0xff22ac22l;        
+	public static final long DARK_GREEN           = 0xff115511l;        
 	public static final long LIGHT_GRAY           = 0xff888888l;       
 	public static final long DARK_GRAY            = 0xff444444l;       
 	public static final long DARK_GRAY_MED_ALPHA  = 0xaa444444l;
@@ -264,6 +266,16 @@ class ClassicColorScheme extends ColorScheme {
 	@Override
 	public long selectedColoredFrameDark() {
 		return DARK_ORANGE;
+	}
+	
+	@Override
+	public long activeColoredFrameLight() {
+		return LIGHT_GREEN;
+	}
+
+	@Override
+	public long activeColoredFrameDark() {
+		return DARK_GREEN;
 	}
 	
 	@Override

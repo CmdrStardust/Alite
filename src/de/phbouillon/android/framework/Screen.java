@@ -59,6 +59,27 @@ public abstract class Screen implements Serializable {
 	public abstract void activate();
 	public abstract void postScreenChange();
 	public abstract int  getScreenCode();
+		
+	public void processDPad(int direction) {		
+	}
+	
+	public void processNavigationJoystick(float z, float rz) {	
+	}
+	
+	public void processNavigationButtonDown(int button) {		
+	}
+	
+	public void processNavigationButtonUp(int button) {		
+	}
+	
+	public void processJoystick(float x, float y, float z, float rz, float hatX, float hatY) {		
+	}
+	
+	public void processButtonUp(int button) {	
+	}
+	
+	public void processButtonDown(int button) {		
+	}
 	
 	public void saveScreenState(DataOutputStream dos) throws IOException {		
 	}

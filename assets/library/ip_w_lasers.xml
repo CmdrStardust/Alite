@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Lasers</Header>
+  <Content>
+    <Text>
+    	<p>Pulse lasers are initially housed only in the front of the ship,
+    	and so no sights appear across rear or side views until such time as
+    	you have sufficient credits (from combat and trading) to afford
+    	lasers for these mountings. As we shall see, with sufficient cash
+    	you will also be able to upgrade pulse to more powerful beam lasers.</p>
+    	<InlineImage name="fire"/>
+    	<p>The Cobra astrogation console accomodates a single laser-fire button
+    	shown above. Even fully equipped only one laser may be fired at a time.
+    	If a laser overheats it will not fire (observe the laser temperature bar).</p>
+    	<p>Lasers are the principal armament of all space fighters.</p>
+    	<p>Pulse lasers will be offered for sale at planets of Tech level 3 or above
+    	(see Trading). Beam lasers will be offered at Tech level 4 or above. If a
+    	beam laser replaces a pulse laser, the price of the pulse laser is refunded
+    	after the beam one has been fitted.</p>
+    	<p>[b]Pulse laser specification:[/b] Ingram Model 1919A4 Pulse Laser is
+    	recommended for all positional laser mountings, but is especially effective
+    	for rear-shooting. Fires intermittent laser &apos;rods&apos; with a cycle
+    	rate of 1500 RoPM. The barrel is of high grade Allutium fibre, lined with
+    	tempered QuQuorian Silica. Power provided directly from inverse energy
+    	banks contained in main ship's drive. Each rod is capable of piercing
+    	267mm of Flux-Locked metal.</p>
+    	<p>[b]Beam laser specification:[/b] Ingram Model M1928A2 is
+    	[i]highly recommended[/i] for front shooting. Beam lasers fire continuous
+    	laser strands, up to 150 in parallel. Barrel is Allutium and lined with
+    	tensioned plastiglass, and as with the 1919A4 Pulse laser, power is provided
+    	by main drive link. Beam lasers are capable of slicing through 410mm
+    	FL metal.</p>
+    	<p>Military lasers are the very height of sophistication. Costing fifteen
+    	times the price of a pulse laser and available only on planets at Tech
+    	level 10, it is an extremely effective piece of hardware.</p>
+    	<p>(See alo Mining lasers under [b]Non-combative Equipment[/b] )</p>
+    	<p>[b]Military laser specification:[/b] Range and penetration twice
+    	as effective as the Ingram model M1928A2 beam laser. This is
+    	Lance &amp; Ferman&apos;s entré into the laser market. Hitherto known
+    	for their highly effective and relatively cheap missile systems,
+    	in the military laser they have in effect created a whole new
+    	laser market. The LF90 is the current computer-aided model and
+    	comes with x4SUSAT sights.</p>
+    </Text>
+  </Content>
+  <Next>ip_w_missiles</Next>
+  <Previous>ip_weaponry</Previous>
+</Page>
+

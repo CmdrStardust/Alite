@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page>
+  <Header>Likely Enemies</Header>
+  <Content>
+    <Text>
+      <p>Lone-wolf traders -- such as Cobra pilots -- are constantly
+      at risk from other Spacefaring types. An understanding of other
+      loners, packhunters, and bounty killers is essential.</p>
+    </Text>
+  </Content>
+  <Next>ip_e_bounty</Next>
+  <Previous>ip_danger</Previous>
+</Page>
+

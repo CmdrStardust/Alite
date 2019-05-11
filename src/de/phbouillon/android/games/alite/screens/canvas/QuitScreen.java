@@ -63,9 +63,7 @@ public class QuitScreen extends AliteScreen {
 	}
 	
 	@SuppressLint("NewApi")
-	@Override 
-	public void processTouch(TouchEvent touch) {
-		super.processTouch(touch);
+	private Screen handleMessage() {
 		if (messageResult != 0) {
 			if (messageResult == 1) {
 				try {
@@ -74,16 +72,29 @@ public class QuitScreen extends AliteScreen {
 				} catch (Exception e) {
 					AliteLog.e("[ALITE]", "Autosaving commander failed.", e);
 				}
-			  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-			    ((Alite) game).finishAffinity();
-			  } else {
-	        ((Alite) game).setResult(AliteStartManager.ALITE_RESULT_CLOSE_ALL);
-			    ((Alite) game).finish();
-			  }
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+					((Alite) game).finishAffinity();
+				} else {
+					((Alite) game).setResult(AliteStartManager.ALITE_RESULT_CLOSE_ALL);
+					((Alite) game).finish();
+				}
 			} else {
-			  newScreen = callingScreen; 
+				return callingScreen;
 			}
 		}		
+		return null;
+	}
+	
+	@Override 
+	public void processTouch(TouchEvent touch) {
+		super.processTouch(touch);
+		newScreen = handleMessage();
+	}
+	
+	@Override
+	public void processButtonUp(int button) {
+		super.processButtonUp(button);
+		newControlScreen = handleMessage();
 	}
 	
 	@Override

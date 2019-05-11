@@ -108,8 +108,8 @@ public class CobraMkI extends SpaceObject {
         texCoordBuffer = GlUtils.toFloatBufferPositionZero(TEXTURE_COORDINATE_DATA);
         alite.getTextureManager().addTexture(textureFilename);    	
         if (Settings.engineExhaust) {
-        	addExhaust(new EngineExhaust(this, 18, 13, 240, -30, 0, 0));
-        	addExhaust(new EngineExhaust(this, 18, 13, 240,  30, 0, 0));
+        	addExhaust(new EngineExhaust(this, 18, 13, 24, -30, 0, 0));
+        	addExhaust(new EngineExhaust(this, 18, 13, 24,  30, 0, 0));
         }
         initTargetBox();
     }
