@@ -1,4 +1,4 @@
-Alite v. 1.5.5 by Philipp Bouillon and Duane McDonnell
+Alite v. 1.5.9 by Philipp Bouillon and Duane McDonnell
 
 About
 -----
@@ -20,6 +20,26 @@ Alite is inspired by classic Elite, (c) Acornsoft, Bell & Braben.
 
 Version History
 ---------------
+Version 1.5.9 Beginning of a controller implementation that allows the
+              complete control of Alite via a gamepad. The general
+              architecture is now present. The tedious bit is now to
+              implement the controls for each and every screen.
+              For now, the "simple ones" work: Intro-Movie (skip by
+              pressing any button), ShipIntroScreen (change the ships
+              by pressing left/right on the dpad or by using the
+              primary stick, acknowledge the tap to start button by
+              pushing A, or changing between the Load New Commander
+              Yes/No options by using the second stick), Navigation
+              Bar (secondary stick up/down, B to select), dialogs
+              (secondary stick left/right, A to select -- does not
+              work for all modal dialogs, yet).
+                            
+Version 1.5.8 Bugfix: Missiles, fuel, and lasers would be lost if you
+              equipped them and immediately pressed "Home". Activated the
+              ship debug mode. If that bothers you, change DEBUG_EXHAUST
+              and ONLY_CHANGE_SHIPS_AFTER_SWEEP to false in the
+              ShipIntroScreen.              
+              
 Version 1.5.7 Bugfix: When pressing "Home", it might have happened that the
               old Commander was replaced by a new one (introduced in 1.5.6)
               this is now fixed. [09/17/2016]
@@ -165,6 +185,8 @@ the directory "<phone>/Android/obb/de.phbouillon.android.games.alite/main.2192.d
 Now you have two options:
 
 --- Option 1: Use an extension file ----
+[Attention, outdated: This version no longer supports OBB files; it
+might still work, but I don't know]
 (Pro: Fast testing of code changes in Alite, deployment is fast,
  Con: Devilishly complicated to create an obb file, need to create
       a new obb file for each change in assets (textures/music/...))
@@ -206,6 +228,8 @@ article here: http://developer.android.com/google/play/expansion-files.html
 (but be wary: It's a slippery road :))
 
 --- Option 2: Do not use an extension file ----
+[Attention: Already set up; the files are in the necessary places for this
+option]
 (Pro: Easy to set-up,
  Con: Slow deployment. It takes several minutes to deploy a new Alite version;
       if you're making many small changes to the code, that can be annoying)
